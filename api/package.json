@@ -1,0 +1,39 @@
+{
+  "name": "@mstacm/api",
+  "version": "1.0.0",
+  "description": "GraphQL api for mstacm.org",
+  "main": "index.ts",
+  "repository": "https://github.com/sigdotcom/mstacm.org",
+  "author": "ACM Web",
+  "license": "MPL-2.0",
+  "private": false,
+  "dependencies": {
+    "apollo-server": "^2.6.4",
+    "graphql": "^14.3.1",
+    "nodemon": "^1.19.1",
+    "pg": "^7.11.0",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.18.0",
+    "type-graphql": "^0.17.4",
+    "typedi": "^0.8.0",
+    "typeorm": "^0.2.18",
+    "typeorm-typedi-extensions": "^0.2.3"
+  },
+  "devDependencies": {
+    "@types/graphql": "^14.2.1",
+    "jest": "^24.8.0",
+    "prettier": "^1.18.2",
+    "ts-jest": "^24.0.2",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-microsoft-contrib": "^6.2.0",
+    "typescript": "^3.5.2"
+  },
+  "scripts": {
+    "start:dev": "NODE_ENV='development' nodemon --watch 'src/**/*' -e ts,tsx --exec \"ts-node\" --files ./src/index.ts",
+    "build": "tsc -p tsconfig.release.json",
+    "build:watch": "tsc -w -p tsconfig.release.json",
+    "lint": "tslint -t stylish --project \"tsconfig.json\"",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  }
+}
