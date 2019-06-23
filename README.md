@@ -8,4 +8,6 @@ git clone git@github.com:sigdotcom/mstacm.org.git
 cd mstacm.org/api/
 cp .docker/web.env.default .docker/web.env
 docker-compose up
+# Navigate to http://localhost on your favorite browser for the GraphQL
+# playground
 ```
