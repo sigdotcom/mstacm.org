@@ -1,6 +1,6 @@
 import { getRepository } from "typeorm";
 
-import { User } from "./user/user.entity";
+import { User } from "../resources/User";
 
 export async function seedDatabase() {
   const userRepository = getRepository(User);
@@ -8,6 +8,7 @@ export async function seedDatabase() {
   const defaultUser = userRepository.create({
     email: "test@mst.edu",
     firstName: "Kevin",
+    googleSub: "123421",
     lastName: "Schoonover"
   });
   await userRepository.save(defaultUser);
@@ -18,7 +19,3 @@ export async function seedDatabase() {
 }
 
 export type Lazy<T extends object> = Promise<T> | T;
-
-export interface Context {
-  user?: User;
-}

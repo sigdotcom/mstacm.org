@@ -13,7 +13,7 @@ module.exports = {
   logger: "advanced-console",
   dropSchema: true,
   cache: true,
-  entities: [ROOT_DIR + "entities/**/*" + EXT, ROOT_DIR + "**/*.entity" + EXT],
+  entities: [ROOT_DIR + "/**/entity" + EXT],
   migrations: [ROOT_DIR + "migrations/**/*" + EXT],
   subscribers: [ROOT_DIR + "subscribers/**/*" + EXT],
   cli: {

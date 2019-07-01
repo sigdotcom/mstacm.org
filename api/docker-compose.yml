@@ -1,25 +1,25 @@
 version: '3'
 
-services: 
-  db: 
+services:
+  db:
     image: "postgres"
     networks:
       - db_nw
-    environment: 
+    environment:
       - POSTGRES_USER=phoenix
       - POSTGRES_PASSWORD=phoenix
-  web: 
+  web:
     build: .
     volumes:
       - .:/server
     networks:
       - db_nw
       - web_nw
-    depends_on: 
-      - db 
+    depends_on:
+      - db
     env_file:
       - ./.docker/web.env
-    environment: 
+    environment:
       - DB_HOST=db
       - DB_USERNAME=phoenix
       - DB_PASSWORD=phoenix
