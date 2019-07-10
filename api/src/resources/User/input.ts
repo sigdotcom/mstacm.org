@@ -11,6 +11,9 @@ export class UserCreateInput implements Partial<User> {
 
   @Field()
   public email: string;
+
+  @Field()
+  public googleSub: string;
 }
 
 @InputType()
