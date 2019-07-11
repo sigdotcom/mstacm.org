@@ -1,4 +1,4 @@
-import { Field, ID, InputType, ObjectType } from "type-graphql";
+import { Field, ID, ObjectType } from "type-graphql";
 import { BaseEntity, Entity, ManyToMany, PrimaryColumn } from "typeorm";
 import { Lazy } from "../../lib/helpers";
 import { Group } from "../Group";

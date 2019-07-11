@@ -1,2 +1,2 @@
-import { Transaction } from "./entity";
-export { Transaction };
+import { Transaction, TransactionStatus } from "./entity";
+export { Transaction, TransactionStatus };

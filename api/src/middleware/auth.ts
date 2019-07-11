@@ -3,11 +3,7 @@ import * as passport from "koa-passport";
 
 import * as JWT from "jsonwebtoken";
 
-import {
-  IStrategyOptions as BearerStrategyOptions,
-  IVerifyOptions as BearerVerifyOptions,
-  Strategy as BearerStrategy
-} from "passport-http-bearer";
+import { Strategy as BearerStrategy } from "passport-http-bearer";
 import {
   ExtractJwt,
   Strategy as JwtStrategy,
@@ -26,7 +22,7 @@ export const authFromBearer = async (
 ) => {
   if (ctx.headers.authorization) {
     const potentialJwt: string = ctx.headers.authorization.split(" ")[1];
-    const decodedJwt: string | { [key: string]: any } = JWT.decode(
+    const decodedJwt: string | { [key: string]: any } | null = JWT.decode(
       potentialJwt,
       { complete: true }
     );
