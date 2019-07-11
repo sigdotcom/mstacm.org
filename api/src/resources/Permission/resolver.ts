@@ -1,25 +1,7 @@
-import {
-  Arg,
-  Authorized,
-  Ctx,
-  FieldResolver,
-  Mutation,
-  Query,
-  Resolver,
-  Root
-} from "type-graphql";
+import { Arg, Authorized, Mutation, Query, Resolver } from "type-graphql";
 import { DeepPartial, getRepository, Repository } from "typeorm";
-import { IContext } from "../../lib/interfaces";
-import { ResourceResolver } from "../Resource";
 import { Permission } from "./entity";
-import {
-  PermissionCreateInput,
-  PermissionDeletePayload,
-  PermissionUpdateInput
-} from "./input";
-
-const resource = Permission;
-type resourceType = Permission;
+import { PermissionCreateInput } from "./input";
 
 @Resolver((returns: void) => Permission)
 export class PermissionResolver {
