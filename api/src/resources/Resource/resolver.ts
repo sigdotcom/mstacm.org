@@ -1,22 +1,8 @@
-import {
-  Arg,
-  Args,
-  ArgsType,
-  ClassType,
-  Field,
-  FieldResolver,
-  Int,
-  Mutation,
-  Query,
-  Resolver,
-  Root
-} from "type-graphql";
+import { Arg, ClassType, Mutation, Query, Resolver } from "type-graphql";
 import { Service } from "typedi";
 import { BaseEntity, DeepPartial, Repository } from "typeorm";
 
 import { ApolloError } from "apollo-server";
-
-import { User } from "../User";
 
 export function ResourceResolver<T extends BaseEntity>(
   ResourceCls: ClassType<T>,

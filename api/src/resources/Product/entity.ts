@@ -1,26 +1,28 @@
 import {
   BaseEntity,
   Column,
-  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
   OneToMany,
-  PrimaryColumn,
-  PrimaryGeneratedColumn
+  PrimaryColumn
 } from "typeorm";
+
+import { Field, ObjectType } from "type-graphql";
 
 import { Lazy } from "../../lib/helpers";
 import { ProductCategory } from "../ProductCategory";
 import { Transaction } from "../Transaction";
 
+@ObjectType()
 @Entity()
 export class Product extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
-  public id: string;
+  @Field()
+  @PrimaryColumn()
+  public name: string;
 
   @Column()
-  public name: string;
+  public displayName: string;
 
   @Column()
   public description: string;

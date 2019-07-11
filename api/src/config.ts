@@ -32,5 +32,5 @@ export const config: IConfig = {
   STRIPE_PUBLIC_TOKEN: process.env.STRIPE_PUBLIC_TOKEN || "TEST",
   ext: process.env.NODE_ENV !== "production" ? ".ts" : ".js",
   host: process.env.HOST || "0.0.0.0",
-  port: parseInt(process.env.NODE_PORT, 10) || 3000
+  port: parseInt(process.env.NODE_PORT || "3000", 10)
 };
