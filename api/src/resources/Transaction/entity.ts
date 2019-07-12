@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn
 } from "typeorm";
@@ -39,7 +40,7 @@ export class Transaction extends BaseEntity {
     enum: TransactionStatus,
     type: "enum"
   })
-  public status: string;
+  public status: TransactionStatus;
 
   @Field((returns: void) => User)
   @ManyToOne((type: void) => User, (user: User) => user.transactions, {
@@ -47,10 +48,10 @@ export class Transaction extends BaseEntity {
   })
   public user: Lazy<User>;
 
-  @ManyToOne(
+  @ManyToMany(
     (type: void) => Product,
     (product: Product) => product.transactions,
     { lazy: true }
   )
-  public product: Lazy<Product>;
+  public products: Lazy<Product[]>;
 }
