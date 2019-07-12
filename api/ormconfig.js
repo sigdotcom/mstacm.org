@@ -4,8 +4,8 @@ const EXT = process.env.NODE_ENV != "production" ? ".ts" : ".js";
 module.exports = {
   type: "postgres",
   host: process.env.DB_HOST,
-  username: process.env.DB_USERNAME || "postgres",
-  password: process.env.DB_PASSWORD || "",
+  username: process.env.DB_USERNAME || "phoenix",
+  password: process.env.DB_PASSWORD || "phoenix",
   database: process.env.DB_TABLE || "phoenix",
   port: process.env.DB_PORT || 5432,
   synchronize: true,

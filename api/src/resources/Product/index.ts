@@ -1,2 +1,2 @@
-import { Product } from "./entity";
-export { Product };
+import { Product, ProductNames } from "./entity";
+export { Product, ProductNames };
