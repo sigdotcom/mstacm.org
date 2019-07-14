@@ -3,15 +3,15 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn
 } from "typeorm";
 
 import { Field, ID, ObjectType } from "type-graphql";
 
 import { Lazy } from "../../lib/helpers";
-import { Product } from "../Product";
+import { Purchase } from "../Purchase";
 import { User } from "../User";
 
 export enum TransactionStatus {
@@ -35,6 +35,10 @@ export class Transaction extends BaseEntity {
   public intent: string;
 
   @Field()
+  @Column({ nullable: true })
+  public charged?: number;
+
+  @Field()
   @Column({
     default: TransactionStatus.STARTED,
     enum: TransactionStatus,
@@ -48,10 +52,11 @@ export class Transaction extends BaseEntity {
   })
   public user: Lazy<User>;
 
-  @ManyToMany(
-    (type: void) => Product,
-    (product: Product) => product.transactions,
+  @Field((returns: void) => [Purchase])
+  @OneToMany(
+    (type: void) => Purchase,
+    (purchase: Purchase) => purchase.transaction,
     { lazy: true }
   )
-  public products: Lazy<Product[]>;
+  public purchases: Lazy<Purchase[]>;
 }

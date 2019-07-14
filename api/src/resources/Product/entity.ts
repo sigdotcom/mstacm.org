@@ -5,6 +5,7 @@ import {
   Index,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn
 } from "typeorm";
 
@@ -12,7 +13,7 @@ import { Field, ID, ObjectType, registerEnumType } from "type-graphql";
 
 import { Lazy } from "../../lib/helpers";
 import { ProductCategory } from "../ProductCategory";
-import { Transaction } from "../Transaction";
+import { Purchase } from "../Purchase";
 
 export enum ProductNames {
   SEMESTER_MEMBERSHIP = "semester_membership",
@@ -24,6 +25,15 @@ registerEnumType(ProductNames, {
   name: "ProductNames"
 });
 
+class ColumnNumericTransformer {
+  public to(data: number): number {
+    return data;
+  }
+  public from(data: string): number {
+    return parseFloat(data);
+  }
+}
+
 @ObjectType()
 @Entity()
 export class Product extends BaseEntity {
@@ -31,6 +41,7 @@ export class Product extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   public id: string;
 
+  @Field((returns: void) => ProductNames)
   @Index({ unique: true })
   @Column({
     enum: ProductNames,
@@ -44,15 +55,15 @@ export class Product extends BaseEntity {
   @Column()
   public description: string;
 
-  @Column("numeric", { default: 0 })
+  @Column("numeric", {
+    default: 0,
+    scale: 2,
+    transformer: new ColumnNumericTransformer()
+  })
   public price: number;
 
-  @ManyToMany(
-    (type: void) => Transaction,
-    (transaction: Transaction) => transaction.products
-  )
-  @JoinTable()
-  public transactions: Lazy<Transaction[]>;
+  @OneToMany((type: void) => Purchase, (purchase: Purchase) => purchase.product)
+  public purchases: Lazy<Purchase[]>;
 
   @ManyToMany(
     (type: void) => ProductCategory,
