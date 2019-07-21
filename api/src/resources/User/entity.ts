@@ -5,15 +5,18 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn
 } from "typeorm";
 import { Lazy } from "../../lib/helpers";
 import { Application } from "../Application";
 import { Group } from "../Group";
 import { Permission } from "../Permission";
+import { Resume } from "../Resume";
 import { Sig } from "../Sig";
 import { Transaction } from "../Transaction";
 
@@ -62,6 +65,14 @@ export class User extends BaseEntity {
   @Column({ default: true })
   public isActive: boolean;
 
+  @Field((returns: void) => Resume, { nullable: true })
+  @OneToOne((type: void) => Resume, (resume: Resume) => resume.user, {
+    lazy: true,
+    onDelete: "SET NULL"
+  })
+  @JoinColumn()
+  public resume: Lazy<Resume>;
+
   @Field((returns: void) => [Permission])
   @JoinTable()
   @ManyToMany(
@@ -97,7 +108,10 @@ export class User extends BaseEntity {
   @JoinTable()
   public transactions: Lazy<Transaction[]>;
 
-  @ManyToMany((type: void) => Sig, (sig: Sig) => sig.users, { lazy: true })
+  @ManyToMany((type: void) => Sig, (sig: Sig) => sig.users, {
+    lazy: true,
+    nullable: true
+  })
   @JoinTable()
   public sigs: Lazy<Sig[]>;
 }
