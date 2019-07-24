@@ -12,6 +12,36 @@ const Wrapper = styled.div`
     background: white;
   }
 
+  @media all and (max-width: 1300px) {
+    .sectionWrapper {
+      padding: 65px 45px;
+    }
+  }
+
+  @media all and (max-width: 1200px) {
+    .sectionWrapper {
+      padding: 57px 40px;
+    }
+  }
+
+  @media all and (max-width: 1100px) {
+    .sectionWrapper {
+      padding: 49px 35px;
+    }
+  }
+
+  @media all and (max-width: 1000px) {
+    .sectionWrapper {
+      padding: 39px 30px;
+    }
+  }
+
+  @media all and (max-width: 900px) {
+    h.sectionWrapper {
+      padding: 25px 35px;
+    }
+  }
+
   @media all and (max-width: 800px) {
     .sectionWrapper {  
       flex-direction: column;
@@ -35,6 +65,26 @@ const SectionHeader = styled.h1`
   font-weight: 500;
   margin: 0;
 
+  @media all and (max-width: 1300px) {
+    font-size: 36px;
+  }
+
+  @media all and (max-width: 1200px) {
+    font-size: 33px;
+  }
+
+  @media all and (max-width: 1100px) {
+    font-size: 30px;
+  }
+
+  @media all and (max-width: 1000px) {
+    font-size: 26px;
+  }
+
+  @media all and (max-width: 900px) {
+    font-size: 23px;
+  }
+
   @media all and (max-width: 800px) {
     font-size: 32px;
   }
@@ -44,6 +94,26 @@ const SectionText = styled.p`
   color: #092B35;
   font-size: 18px;
   font-weight: 600;
+
+  @media all and (max-width: 1300px) {
+    font-size: 16px;
+  }
+
+  @media all and (max-width: 1200px) {
+    font-size: 15px;
+  }
+
+  @media all and (max-width: 1100px) {
+    font-size: 13.5px;
+  }
+
+  @media all and (max-width: 1000px) {
+    font-size: 12px;
+  }
+
+  @media all and (max-width: 900px) {
+    font-size: 10.5px;
+  }
 
   @media all and (max-width: 800px) {
     font-size: 14px;
@@ -71,4 +141,4 @@ const About: React.FC<{}> = () => {
   );
 };
 
-export { About };
+export default About;

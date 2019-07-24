@@ -1,6 +1,44 @@
 @import "~antd/dist/antd.css";
-/* Import the fonts locally at some point */
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700,800|Roboto:400,500,700&display=swap');
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../fonts/Nunito/Nunito-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../fonts/Nunito/Nunito-SemiBold.ttf');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../fonts/Nunito/Nunito-Bold.ttf');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../fonts/Nunito/Nunito-ExtraBold.ttf');
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../fonts/Roboto/Roboto-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../fonts/Roboto/Roboto-Medium.ttf');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../fonts/Roboto/Roboto-Bold.ttf');
+  font-weight: 700;
+}
 
 body {
   margin: 0;
