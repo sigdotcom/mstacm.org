@@ -4,6 +4,7 @@ import * as TypeGraphQL from "type-graphql";
 import { Container } from "typedi";
 import { createConnection, useContainer } from "typeorm";
 import { app } from "./app";
+import "./lib/errors";
 
 import { authChecker } from "./lib/auth";
 

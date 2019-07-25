@@ -55,13 +55,6 @@ export function ResourceResolver<T extends BaseEntity>(
     ): Promise<{ id: string }> {
       const response = await repository.delete(id);
 
-      if (response.affected === 0) {
-        throw new ApolloError(
-          `Could not delete ${id}. Resource not found.`,
-          "RESOURCE_NOT_FOUND"
-        );
-      }
-
       return { id };
     }
 
