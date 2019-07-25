@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import windowSize from 'react-window-size';
 
 const Wrapper = styled.div`
-  height: 70vh;
+  height: 800px;
   background: #F4F5F8;
   margin-top: -20px;
   position: relative;
@@ -15,24 +15,44 @@ const Wrapper = styled.div`
     transition: opacity 600ms, visibility 600ms;
   }
 
+  @media all and (max-width: 1800px) {
+    height: 750px;
+  }
+
+  @media all and (max-width: 1700px) {
+    height: 710px;
+  }
+
+  @media all and (max-width: 1600px) {
+    height: 675px;
+  }
+
+  @media all and (max-width: 1500px) {
+    height: 625px;
+  }
+
+  @media all and (max-width: 1400px) {
+    height: 585px;
+  }
+
   @media all and (max-width: 1300px) {
-    height: 65vh;
+    height: 495px;
   }
 
   @media all and (max-width: 1200px) {
-    height: 60vh;
+    height: 425px;
   }
 
   @media all and (max-width: 1100px) {
-    height: 55vh;
+    height: 355px;
   }
 
   @media all and (max-width: 1000px) {
-    height: 50vh;
+    height: 280px;
   }
 
   @media all and (max-width: 900px) {
-    height: 45vh;
+    height: 230px;
   }
 
   @media all and (max-width: 800px) {
