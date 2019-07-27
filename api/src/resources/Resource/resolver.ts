@@ -2,8 +2,6 @@ import { Arg, ClassType, Mutation, Query, Resolver } from "type-graphql";
 import { Service } from "typedi";
 import { BaseEntity, DeepPartial, Repository } from "typeorm";
 
-import { ApolloError } from "apollo-server";
-
 export function ResourceResolver<T extends BaseEntity>(
   ResourceCls: ClassType<T>,
   // See https://github.com/sigdotcom/mstacm.org/issues/2
@@ -52,8 +50,8 @@ export function ResourceResolver<T extends BaseEntity>(
     })
     public async remove(
       @Arg("id", (argType: void) => String) id: string
-    ): Promise<{ id: string }> {
-      const response = await repository.delete(id);
+    ):Promise<{ id: string }> {
+      await repository.delete(id);
 
       return { id };
     }

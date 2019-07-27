@@ -14,8 +14,8 @@ import {
 import { config } from "../config";
 import { http } from "../lib/http";
 
+import { Application } from "../resources/Application";
 import { User } from "../resources/User";
-import { Application } from "../entity/Application";
 
 export const authFromBearer = async (
   ctx: Koa.ParameterizedContext,
@@ -120,17 +120,12 @@ passport.use(
         return done(new Error("Invalid UUID Length"), undefined);
       }
 
-      const application: undefined = undefined;
-      const user: undefined = undefined;
-      // const application = await Application.findOne(
-      //   { token },
-      //   { relations: ["account", "account.permissions"] }
-      // );
-      // const user = application.account;
-
+      const application = await Application.findOne({ token });
       if (!application) {
         return done(new Error("Application was not found"), undefined);
       }
+
+      const user = await application.user;
 
       return done(undefined, user, { scope: "all" });
     } catch (err) {
