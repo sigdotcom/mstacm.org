@@ -16,7 +16,6 @@ import { http } from "../lib/http";
 
 import { Application } from "../resources/Application";
 import { User } from "../resources/User";
-import { Application } from "../entity/Application";
 
 export const authFromBearer = async (
   ctx: Koa.ParameterizedContext,
@@ -85,7 +84,7 @@ const JWT_OPTS: StrategyOptions = {
 };
 passport.use(
   new JwtStrategy(JWT_OPTS, async (payload: any, done: VerifiedCallback) => {
-    const { hd, given_name, family_name, email, sub } = payload;
+    const { hd, given_name, family_name, email, sub, picture } = payload;
 
     if (hd !== config.HOSTED_DOMAIN) {
       done(
@@ -105,6 +104,7 @@ passport.use(
         user.lastName = family_name;
         user.email = email;
         user.googleSub = sub;
+        user.profilePictureUrl = picture;
         user = await user.save();
       }
       done(undefined, user);

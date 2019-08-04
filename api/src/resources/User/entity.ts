@@ -49,6 +49,10 @@ export class User extends BaseEntity {
   })
   public email: string;
 
+  @Field()
+  @Column()
+  public profilePictureUrl: string;
+
   @Field({ defaultValue: false })
   @Column({ default: false })
   public isSuperAdmin: boolean;
@@ -56,6 +60,10 @@ export class User extends BaseEntity {
   @Field()
   @CreateDateColumn()
   public readonly dateJoined: Date;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  public graduationDate?: Date;
 
   @Field({ nullable: true })
   @Column({ nullable: true })
