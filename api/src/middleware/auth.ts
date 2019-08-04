@@ -3,11 +3,7 @@ import * as passport from "koa-passport";
 
 import * as JWT from "jsonwebtoken";
 
-import {
-  IStrategyOptions as BearerStrategyOptions,
-  IVerifyOptions as BearerVerifyOptions,
-  Strategy as BearerStrategy
-} from "passport-http-bearer";
+import { Strategy as BearerStrategy } from "passport-http-bearer";
 import {
   ExtractJwt,
   Strategy as JwtStrategy,
@@ -18,6 +14,7 @@ import {
 import { config } from "../config";
 import { http } from "../lib/http";
 
+import { Application } from "../resources/Application";
 import { User } from "../resources/User";
 
 export const authFromBearer = async (
@@ -26,7 +23,7 @@ export const authFromBearer = async (
 ) => {
   if (ctx.headers.authorization) {
     const potentialJwt: string = ctx.headers.authorization.split(" ")[1];
-    const decodedJwt: string | { [key: string]: any } = JWT.decode(
+    const decodedJwt: string | { [key: string]: any } | null = JWT.decode(
       potentialJwt,
       { complete: true }
     );
@@ -123,17 +120,12 @@ passport.use(
         return done(new Error("Invalid UUID Length"), undefined);
       }
 
-      const application: undefined = undefined;
-      const user: undefined = undefined;
-      // const application = await Application.findOne(
-      //   { token },
-      //   { relations: ["account", "account.permissions"] }
-      // );
-      // const user = application.account;
-
+      const application = await Application.findOne({ token });
       if (!application) {
         return done(new Error("Application was not found"), undefined);
       }
+
+      const user = await application.user;
 
       return done(undefined, user, { scope: "all" });
     } catch (err) {

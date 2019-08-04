@@ -4,12 +4,12 @@ import * as TypeGraphQL from "type-graphql";
 import { Container } from "typedi";
 import { createConnection, useContainer } from "typeorm";
 import { app } from "./app";
+import "./lib/errors";
 
 import { authChecker } from "./lib/auth";
 
 import { ParameterizedContext as KoaContext } from "koa";
 import { seedDatabase } from "./lib/helpers";
-import { User } from "./resources/User";
 
 // register 3rd party IOC container
 useContainer(Container);
@@ -20,7 +20,7 @@ async function bootstrap() {
     await createConnection();
 
     // seed database with some data
-    const { defaultUser } = await seedDatabase();
+    await seedDatabase();
 
     // build TypeGraphQL executable schema
     const schema = await TypeGraphQL.buildSchema({
