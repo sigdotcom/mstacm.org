@@ -1,4 +1,6 @@
 export interface IConfig {
+  AZURE_STORAGE_ACCOUNT: string;
+  AZURE_STORAGE_ACCOUNT_KEY: string;
   GOOGLE_CERTS_DOMAIN: string;
   GOOGLE_CLIENT_ID: string;
   GOOGLE_CLIENT_SECRET: string;
@@ -17,6 +19,8 @@ export interface IConfig {
 }
 
 export const config: IConfig = {
+  AZURE_STORAGE_ACCOUNT: process.env.AZURE_STORAGE_ACCOUNT || "mstacm",
+  AZURE_STORAGE_ACCOUNT_KEY: process.env.AZURE_STORAGE_ACCOUNT_KEY || "",
   GOOGLE_CERTS_DOMAIN: "https://www.googleapis.com/oauth2/v1/certs",
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || "TEST_CLIENT_ID",
   GOOGLE_CLIENT_SECRET:

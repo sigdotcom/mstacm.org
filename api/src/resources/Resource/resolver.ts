@@ -50,7 +50,7 @@ export function ResourceResolver<T extends BaseEntity>(
     })
     public async remove(
       @Arg("id", (argType: void) => String) id: string
-    ):Promise<{ id: string }> {
+    ): Promise<{ id: string }> {
       await repository.delete(id);
 
       return { id };

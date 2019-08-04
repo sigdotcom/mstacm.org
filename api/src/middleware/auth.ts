@@ -16,6 +16,7 @@ import { http } from "../lib/http";
 
 import { Application } from "../resources/Application";
 import { User } from "../resources/User";
+import { Application } from "../entity/Application";
 
 export const authFromBearer = async (
   ctx: Koa.ParameterizedContext,

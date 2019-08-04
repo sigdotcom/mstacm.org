@@ -3,11 +3,17 @@ import { IContext } from "./interfaces";
 
 // create auth checker function
 export const authChecker: AuthChecker<IContext> = (
-  { context: { user } }: { context: IContext },
+  {
+    context: {
+      state: { user }
+    }
+  }: { context: IContext },
   roles: string[]
 ) => {
   if (process.env.NODE_ENV === "development") {
-    console.log("Skipping permission check (development mode)...");
+    const username = user ? user.email : undefined;
+    console.debug("[auth] Skipping permission check (development mode)...");
+    console.info(`[auth] Currently logged in as ${username}`);
 
     return true;
   }
