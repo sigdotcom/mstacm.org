@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import { Tooltip } from "antd";
+import React, { useContext } from "react";
 import { Document, Page } from "react-pdf";
-import { ResumeCardsQuery } from "../../generated/graphql";
 import ReactSVG from "react-svg";
 
+import { FavoritesContext } from "../../context/FavoritesContext";
+import { ResumeCardsQuery } from "../../generated/graphql";
 import { timeSince, toSemester } from "../../utils/time";
-import { Tooltip } from "antd";
 
 type User = ResumeCardsQuery["users"][number];
 
 interface IResumeCardProps {
   user: User;
-  onFavorite?: () => void;
+  onFavorite?(): void;
 }
 
 const ResumeCard: React.FC<IResumeCardProps> = props => {
@@ -20,8 +21,8 @@ const ResumeCard: React.FC<IResumeCardProps> = props => {
     throw new Error("Passed invalid added time.");
   }
 
-  const [favorite, setFavorite] = useState<Boolean>(false);
-  const COLOR = favorite ? "text-red-500" : "text-black";
+  const { isFavorite, flipFavorite } = useContext(FavoritesContext);
+  const COLOR = isFavorite(user.id) ? "text-red-500" : "text-black";
   const PDF_WIDTH = 612;
 
   const PDF_URL = user.resume.url;
@@ -44,7 +45,7 @@ const ResumeCard: React.FC<IResumeCardProps> = props => {
   };
 
   const onClick = () => {
-    setFavorite(!favorite);
+    flipFavorite(user.id);
     if (props.onFavorite) {
       props.onFavorite();
     }

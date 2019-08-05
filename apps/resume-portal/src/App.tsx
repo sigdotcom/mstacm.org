@@ -16,7 +16,9 @@ const client = new ApolloClient({
 });
 
 const App: React.FC = () => {
-  const favorites: { [id: string]: boolean | undefined } = {};
+  const [favorites, setFavorites] = useState<{
+    [id: string]: boolean | undefined;
+  }>({});
   const [filterFavorites, setFilterFavorites] = useState<boolean>(false);
   const context: IFavoriteContextProps = {
     favorites,
@@ -26,7 +28,10 @@ const App: React.FC = () => {
       return favorites[id] || false;
     },
     flipFavorite: (id: string) => {
-      favorites[id] = !(favorites[id] || false);
+      setFavorites({
+        ...favorites,
+        [id]: !(favorites[id] || false)
+      });
     }
   };
 
