@@ -1,7 +1,6 @@
 import gql from "graphql-tag";
 import pdfjs from "pdfjs-dist";
 import React, { useContext } from "react";
-import { useResumeCardsQuery } from "../../generated/graphql";
 import { ResumeCard } from "../ResumeCard";
 
 import { FavoritesContext } from "../../context/FavoritesContext";
@@ -34,26 +33,23 @@ interface IResumeListProps {
 }
 
 const ResumeList: React.FC<IResumeListProps> = props => {
-  const { data } = useResumeCardsQuery();
   const filterString = props.filterString || "";
-  const { favorites } = useContext(FavoritesContext);
+  const { users, isFavorite } = useContext(FavoritesContext);
   // const filterFavorites = props.filterFavorites || false;
 
   const resumes = [];
 
-  if (data && data.users) {
-    for (const user of data.users) {
-      const lowerFirstName = user.firstName.toLowerCase();
-      const lowerLastName = user.lastName.toLowerCase();
-      const lowerFullName = `${lowerFirstName} ${lowerLastName}`;
-      const filterStrMatch = lowerFullName.includes(filterString.toLowerCase());
-      if (user.resume && filterStrMatch) {
-        if (
-          !props.filterFavorites ||
-          (props.filterFavorites && (favorites[user.id] || false))
-        ) {
-          resumes.push(user);
-        }
+  for (const user of users) {
+    const lowerFirstName = user.firstName.toLowerCase();
+    const lowerLastName = user.lastName.toLowerCase();
+    const lowerFullName = `${lowerFirstName} ${lowerLastName}`;
+    const filterStrMatch = lowerFullName.includes(filterString.toLowerCase());
+    if (user.resume && filterStrMatch) {
+      if (
+        !props.filterFavorites ||
+        (props.filterFavorites && isFavorite(user.id))
+      ) {
+        resumes.push(user);
       }
     }
   }
@@ -61,7 +57,7 @@ const ResumeList: React.FC<IResumeListProps> = props => {
   return (
     <div className="flex flex-wrap justify-center">
       {resumes.map(item => {
-        return <ResumeCard user={item} />;
+        return <ResumeCard user={item} key={item.id} />;
       })}
     </div>
   );

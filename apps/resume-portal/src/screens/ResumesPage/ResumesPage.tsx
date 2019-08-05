@@ -12,7 +12,10 @@ import { FavoritesContext } from "../../context/FavoritesContext";
 const ResumesPage: React.FC = () => {
   const [search, setSearch] = useState<string>("");
   const [visible, setVisible] = useState<boolean>(false);
-  const { filterFavorites, setFilterFavorites } = useContext(FavoritesContext);
+  const { users, isFavorite, filterFavorites, setFilterFavorites } = useContext(
+    FavoritesContext
+  );
+  const favorites = users.filter(user => isFavorite(user.id));
 
   const openDrawer = () => {
     setVisible(true);
@@ -69,8 +72,9 @@ const ResumesPage: React.FC = () => {
           </div>
         </div>
         <div className="flex flex-col p-8">
-          <FavoritesCard />
-          <FavoritesCard />
+          {favorites.map(item => {
+            return <FavoritesCard user={item} key={item.id} />;
+          })}
         </div>
       </Drawer>
     </div>

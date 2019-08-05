@@ -1,12 +1,20 @@
-import React from "react";
-
-import ReactSVG from "react-svg";
 import { Tooltip } from "antd";
+import React from "react";
+import ReactSVG from "react-svg";
 
-export const FavoritesCard: React.FC = () => {
-  const PROFILE_URL = "./static/Guillermo.jpeg";
-  const FULL_NAME = "Kevin Schoonover";
-  const GRADUATION_DATE = "Dec '19";
+import { toSemester } from "../../utils/time";
+import { User } from "../../utils/types";
+
+export interface IFavoritesCardProps {
+  user: User;
+}
+
+export const FavoritesCard: React.FC<IFavoritesCardProps> = props => {
+  const user = props.user;
+
+  const PROFILE_URL = user.profilePictureUrl;
+  const FULL_NAME = `${user.firstName} ${user.lastName}`;
+  const GRADUATION_DATE = toSemester(new Date(user.graduationDate));
 
   return (
     <div className="flex justify-between items-center rounded-full bg-gray-100 text-black m-4">

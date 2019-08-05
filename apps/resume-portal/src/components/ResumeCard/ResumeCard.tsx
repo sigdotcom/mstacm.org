@@ -4,10 +4,8 @@ import { Document, Page } from "react-pdf";
 import ReactSVG from "react-svg";
 
 import { FavoritesContext } from "../../context/FavoritesContext";
-import { ResumeCardsQuery } from "../../generated/graphql";
 import { timeSince, toSemester } from "../../utils/time";
-
-type User = ResumeCardsQuery["users"][number];
+import { User } from "../../utils/types";
 
 interface IResumeCardProps {
   user: User;

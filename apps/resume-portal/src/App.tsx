@@ -1,27 +1,30 @@
-import React, { useState } from "react";
 import "./App.css";
 
-import { ResumesPage } from "./screens/ResumesPage";
+import React, { useState } from "react";
 
-import { ApolloProvider } from "@apollo/react-hooks";
-import ApolloClient from "apollo-boost";
+import { useResumeCardsQuery } from "./generated/graphql";
+import { ResumesPage } from "./screens/ResumesPage";
+import { User } from "./utils/types";
 
 import {
   FavoritesContext,
   IFavoriteContextProps
 } from "./context/FavoritesContext";
 
-const client = new ApolloClient({
-  uri: "http://localhost/graphql"
-});
-
 const App: React.FC = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [filterFavorites, setFilterFavorites] = useState<boolean>(false);
   const [favorites, setFavorites] = useState<{
     [id: string]: boolean | undefined;
   }>({});
-  const [filterFavorites, setFilterFavorites] = useState<boolean>(false);
+
+  const { data, loading } = useResumeCardsQuery();
+  if (users.length === 0 && loading === false && data) {
+    console.log(data.users);
+    setUsers(data.users);
+  }
   const context: IFavoriteContextProps = {
-    favorites,
+    users,
     filterFavorites,
     setFilterFavorites,
     isFavorite: (id: string) => {
@@ -38,9 +41,7 @@ const App: React.FC = () => {
   return (
     <div style={{ backgroundColor: "#F4F5F8" }}>
       <FavoritesContext.Provider value={context}>
-        <ApolloProvider client={client}>
-          <ResumesPage />
-        </ApolloProvider>
+        <ResumesPage />
       </FavoritesContext.Provider>
     </div>
   );

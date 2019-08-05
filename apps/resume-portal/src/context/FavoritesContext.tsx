@@ -1,15 +1,16 @@
 import { createContext } from "react";
+import { User } from "../utils/types";
 
 export interface IFavoriteContextProps {
-  favorites: { [id: string]: boolean | undefined };
-  flipFavorite: (id: string) => void;
-  isFavorite: (id: string) => boolean;
+  users: User[];
   filterFavorites: boolean;
-  setFilterFavorites: (filter: boolean) => void;
+  flipFavorite(id: string): void;
+  isFavorite(id: string): boolean;
+  setFilterFavorites(filter: boolean): void;
 }
 
 export const FavoritesContext = createContext<IFavoriteContextProps>({
-  favorites: {},
+  users: [],
   flipFavorite: (id: string) => {},
   isFavorite: (id: string) => false,
   filterFavorites: false,
