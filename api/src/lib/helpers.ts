@@ -9,24 +9,27 @@ export async function seedDatabase() {
   const productRepository = getRepository(Product);
   const resumeRepository = getRepository(Resume);
 
-  const defaultUser = userRepository.create({
-    email: "test@mst.edu",
-    firstName: "Kevin",
-    googleSub: "123421",
-    lastName: "Schoonover",
-    profilePictureUrl: "./static/Guillermo.jpeg",
-    graduationDate: new Date()
-  });
-  await userRepository.save(defaultUser);
+  let defaultUser;
+  for (let i = 0; i < 10; i = i + 1) {
+    defaultUser = userRepository.create({
+      email: `test-${i}@mst.edu`,
+      firstName: "Kevin",
+      googleSub: `123421-${i}`,
+      lastName: "Schoonover",
+      profilePictureUrl: "./static/Guillermo.jpeg",
+      graduationDate: new Date()
+    });
+    await userRepository.save(defaultUser);
 
-  const resume = resumeRepository.create({
-    added: new Date(),
-    id: "test",
-    url:
-      "https://mstacm.blob.core.windows.net/resumes/7321f6d5-9051-4d16-85d8-9730b3e15d4b.pdf",
-    user: defaultUser
-  });
-  await resumeRepository.save(resume);
+    const resume = resumeRepository.create({
+      added: new Date(),
+      id: `test-${i}`,
+      url:
+        "https://mstacm.blob.core.windows.net/resumes/7321f6d5-9051-4d16-85d8-9730b3e15d4b.pdf",
+      user: defaultUser
+    });
+    await resumeRepository.save(resume);
+  }
 
   await productRepository
     .create({

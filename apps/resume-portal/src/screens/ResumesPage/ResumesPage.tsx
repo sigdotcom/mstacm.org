@@ -1,3 +1,4 @@
+import { Pagination } from "antd";
 import React, { useContext, useState } from "react";
 
 import { FavoritesButton } from "../../components/FavoritesButton";
@@ -6,6 +7,22 @@ import { ResumeList } from "../../components/ResumeList";
 import { SearchBar } from "../../components/SearchBar";
 
 import { FavoritesContext } from "../../context/FavoritesContext";
+
+const ResumePagination: React.FC = () => {
+  const { users } = useContext(FavoritesContext);
+
+  return (
+    <div className="flex content-center justify-center items-center">
+      <div className="p-3">
+        <Pagination
+          showSizeChanger={true}
+          defaultCurrent={3}
+          total={users.length}
+        />
+      </div>
+    </div>
+  );
+};
 
 const ResumesPage: React.FC = () => {
   const [search, setSearch] = useState<string>("");
@@ -47,8 +64,10 @@ const ResumesPage: React.FC = () => {
           <FavoritesButton onClick={openDrawerOnClick} />
         </div>
       </div>
+      <ResumePagination />
       <ResumeList filterString={search} filterFavorites={filterFavorites} />
       <FavoritesDrawer visible={visible} closeDrawer={closeDrawer} />
+      <ResumePagination />
     </div>
   );
 };

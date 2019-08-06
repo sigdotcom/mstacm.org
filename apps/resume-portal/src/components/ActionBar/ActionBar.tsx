@@ -19,7 +19,7 @@ export const ActionBar: React.FC<IActionBarProps> = props => {
     throw Error("User does not have resume");
   }
   const EMAIL = user.email;
-  const blue_icon_classes = `fill-current text-black focus:text-blue-500 focus:outline-none`;
+  const blue_icon_classes = `fill-current text-black focus:text-blue-500 focus:outline-none hover:text-blue-500`;
   const { flipFavorite } = useContext(FavoritesContext);
   const PDF_URL = user.resume.url;
 
