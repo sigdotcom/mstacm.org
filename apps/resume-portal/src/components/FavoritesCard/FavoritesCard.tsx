@@ -1,9 +1,8 @@
-import { Tooltip } from "antd";
 import React from "react";
-import ReactSVG from "react-svg";
 
 import { toSemester } from "../../utils/time";
 import { User } from "../../utils/types";
+import { ActionBar } from "../ActionBar";
 
 export interface IFavoritesCardProps {
   user: User;
@@ -31,25 +30,7 @@ export const FavoritesCard: React.FC<IFavoritesCardProps> = props => {
           <span className="font-bold">{GRADUATION_DATE}</span>
         </div>
       </div>
-      <div className="flex justify-between items-center w-3/12 pr-4">
-        <Tooltip title="Download Resume">
-          <a href="https://google.com">
-            <ReactSVG src="./static/download.svg" />
-          </a>
-        </Tooltip>
-        <Tooltip title="E-Mail">
-          <a href="https://google.com">
-            <ReactSVG src="./static/email.svg" />
-          </a>
-        </Tooltip>
-        <Tooltip title="Favorite">
-          <button
-            className={`fill-current hover:text-red-500 focus:outline-none`}
-          >
-            <ReactSVG src="./static/heart.svg" />
-          </button>
-        </Tooltip>
-      </div>
-    </div>
+      <ActionBar user={user} padding={"pr-4"} />
+    </div
   );
 };

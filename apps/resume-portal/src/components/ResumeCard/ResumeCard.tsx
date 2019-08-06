@@ -1,15 +1,12 @@
-import { Tooltip } from "antd";
-import React, { useContext } from "react";
+import React from "react";
 import { Document, Page } from "react-pdf";
-import ReactSVG from "react-svg";
 
-import { FavoritesContext } from "../../context/FavoritesContext";
 import { timeSince, toSemester } from "../../utils/time";
 import { User } from "../../utils/types";
+import { ActionBar } from "../ActionBar";
 
 interface IResumeCardProps {
   user: User;
-  onFavorite?(): void;
 }
 
 const ResumeCard: React.FC<IResumeCardProps> = props => {
@@ -19,15 +16,12 @@ const ResumeCard: React.FC<IResumeCardProps> = props => {
     throw new Error("Passed invalid added time.");
   }
 
-  const { isFavorite, flipFavorite } = useContext(FavoritesContext);
-  const COLOR = isFavorite(user.id) ? "text-red-500" : "text-black";
   const PDF_WIDTH = 612;
 
   const PDF_URL = user.resume.url;
   const PROFILE_URL = user.profilePictureUrl;
 
   const FULL_NAME = `${user.firstName} ${user.lastName}`;
-  const EMAIL = user.email;
 
   const GRADUATION_SEMESTER = user.graduationDate
     ? toSemester(new Date(user.graduationDate))
@@ -36,17 +30,8 @@ const ResumeCard: React.FC<IResumeCardProps> = props => {
   const ADDED_DATE = new Date(user.resume.added);
   const MODIFIED_DATE = user.resume ? timeSince(ADDED_DATE) : "NaN";
 
-  const blue_icon_classes = `fill-current text-black focus:text-blue-500 focus:outline-none`;
-
   const onSuccess = (pdf: any) => {
     console.log(pdf.numPages);
-  };
-
-  const onClick = () => {
-    flipFavorite(user.id);
-    if (props.onFavorite) {
-      props.onFavorite();
-    }
   };
 
   return (
@@ -76,26 +61,7 @@ const ResumeCard: React.FC<IResumeCardProps> = props => {
             <span className="text-gray-600">{`Updated ${MODIFIED_DATE} ago`}</span>
           </p>
         </div>
-        <div className="flex justify-between items-center w-3/12">
-          <Tooltip title="Download Resume">
-            <a href={PDF_URL} className={blue_icon_classes}>
-              <ReactSVG src="./static/download.svg" />
-            </a>
-          </Tooltip>
-          <Tooltip title="E-Mail">
-            <a href={`mailto:${EMAIL}`} className={blue_icon_classes}>
-              <ReactSVG src="./static/email.svg" />
-            </a>
-          </Tooltip>
-          <Tooltip title="Favorite">
-            <button
-              className={`fill-current ${COLOR} hover:text-red-500 focus:outline-none`}
-              onClick={onClick}
-            >
-              <ReactSVG src="./static/heart.svg" />
-            </button>
-          </Tooltip>
-        </div>
+        <ActionBar user={user} />
       </div>
     </div>
   );
