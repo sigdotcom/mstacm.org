@@ -31,7 +31,7 @@ export const FavoritesDrawer: React.FC<IFavoritesDrawerProps> = props => {
         }
         downloadFile(
           user.resume.url,
-          `Resume-${user.lastName}${user.firstName}`
+          `Resume-${user.lastName}${user.firstName}.pdf`
         );
       })
     );
