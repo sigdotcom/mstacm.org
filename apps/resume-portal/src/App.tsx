@@ -19,8 +19,7 @@ const App: React.FC = () => {
   }>({});
 
   const { data, loading } = useResumeCardsQuery();
-  if (users.length === 0 && loading === false && data) {
-    console.log(data.users);
+  if (loading === false && users.length === 0 && data) {
     setUsers(data.users);
   }
   const context: IFavoriteContextProps = {
