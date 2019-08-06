@@ -31,6 +31,6 @@ export const FavoritesCard: React.FC<IFavoritesCardProps> = props => {
         </div>
       </div>
       <ActionBar user={user} padding={"pr-4"} />
-    </div
+    </div>
   );
 };
