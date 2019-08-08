@@ -1,7 +1,7 @@
 version: '3'
 
-services:
-  db:
+services: 
+  phoenix_db: 
     image: "postgres"
     ports:
       - "5432:5432"
@@ -10,22 +10,22 @@ services:
     environment:
       - POSTGRES_USER=phoenix
       - POSTGRES_PASSWORD=phoenix
-  web:
+  phoenix_web: 
     build: .
     volumes:
       - .:/server
     networks:
       - db_nw
       - web_nw
-    depends_on:
-      - db
+    depends_on: 
+      - phoenix_db 
     env_file:
       - ./.docker/web.env
-    environment:
-      - DB_HOST=db
+    environment: 
+      - DB_HOST=phoenix_db
       - DB_USERNAME=phoenix
       - DB_PASSWORD=phoenix
-  nginx:
+  phoenix_nginx:
     image: "nginx"
     restart: always
     ports:
@@ -35,7 +35,7 @@ services:
     networks:
       - web_nw
     depends_on:
-      - web
+      - phoenix_web
 networks:
   db_nw:
     driver: bridge
