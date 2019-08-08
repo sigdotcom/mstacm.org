@@ -7,9 +7,13 @@ const DisplayWrapper: any = styled.div`
   display: flex;
   max-width: 900px;
   width: 100%;
-  padding: 15px;
   margin: auto;
+  flex-direction: column;
   justify-content: space-between;
+
+  @media only screen and (min-width: 768px) {
+    flex-direction: row;
+  }
 `;
 
 function SIGsDisplay(props: any): any {

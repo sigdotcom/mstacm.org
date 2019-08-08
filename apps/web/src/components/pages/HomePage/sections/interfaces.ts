@@ -1,4 +1,5 @@
 export interface ISIG {
+  color: string;
   name: string;
   desc: string;
   website?: string;
