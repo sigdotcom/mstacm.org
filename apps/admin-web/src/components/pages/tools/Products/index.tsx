@@ -1,8 +1,10 @@
-import * as React from "react"
+import * as React from "react";
 
 const Products: React.FC<{}> = () => {
   return (
-    <div>Products <strong>page</strong></div>
-  )
-}
-export { Products }
+    <div>
+      Products <strong>page</strong>
+    </div>
+  );
+};
+export { Products };

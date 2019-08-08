@@ -16,4 +16,3 @@ export interface IEvent {
   location: string;
   hostSigs: ISig;
 }
-
