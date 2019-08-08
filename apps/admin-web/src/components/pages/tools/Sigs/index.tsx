@@ -1,8 +1,10 @@
-import * as React from "react"
+import * as React from "react";
 
 const Sigs: React.FC<{}> = () => {
   return (
-    <div>Sigs <strong>page</strong></div>
-  )
-}
+    <div>
+      Sigs <strong>page</strong>
+    </div>
+  );
+};
 export { Sigs };
