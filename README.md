@@ -11,3 +11,6 @@ docker-compose up
 # Navigate to http://localhost on your favorite browser for the GraphQL
 # playground
 ```
+
+## Developing
+I recommend installing [altair](https://altair.sirmuel.design/).

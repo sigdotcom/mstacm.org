@@ -3,9 +3,11 @@ version: '3'
 services: 
   phoenix_db: 
     image: "postgres"
+    ports:
+      - "5432:5432"
     networks:
       - db_nw
-    environment: 
+    environment:
       - POSTGRES_USER=phoenix
       - POSTGRES_PASSWORD=phoenix
   phoenix_web: 
