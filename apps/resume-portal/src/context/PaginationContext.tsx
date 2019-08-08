@@ -7,9 +7,9 @@ export interface IPaginationContextProps {
   setDisplayPerPage(numPerPage: number): void;
 }
 
-export const FavoritesContext = createContext<IPaginationContextProps>({
+export const PaginationContext = createContext<IPaginationContextProps>({
   curPage: 1,
   displayPerPage: 10,
-  setCurPage: (page: number) => {},
-  setDisplayPerPage: (numPerPage: number) => {}
+  setCurPage: (page: number): void => {},
+  setDisplayPerPage: (numPerPage: number): void => {}
 });

@@ -1,8 +1,8 @@
 {
     "defaultSeverity": "error",
     "extends": [
+        "tslint:latest",
         "tslint-microsoft-contrib",
-        "tslint:recommended",
         "tslint-config-prettier",
         "tslint-react"
     ],

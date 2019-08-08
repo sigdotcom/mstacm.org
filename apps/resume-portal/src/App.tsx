@@ -11,9 +11,16 @@ import {
   IFavoriteContextProps
 } from "./context/FavoritesContext";
 
+import {
+  IPaginationContextProps,
+  PaginationContext
+} from "./context/PaginationContext";
+
 const App: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [filterFavorites, setFilterFavorites] = useState<boolean>(false);
+  const [curPage, setCurPage] = useState<number>(1);
+  const [displayPerPage, setDisplayPerPage] = useState<number>(10);
   const [favorites, setFavorites] = useState<{
     [id: string]: boolean | undefined;
   }>({});
@@ -22,7 +29,7 @@ const App: React.FC = () => {
   if (loading === false && users.length === 0 && data) {
     setUsers(data.users);
   }
-  const context: IFavoriteContextProps = {
+  const favoritesContext: IFavoriteContextProps = {
     users,
     filterFavorites,
     setFilterFavorites,
@@ -37,10 +44,19 @@ const App: React.FC = () => {
     }
   };
 
+  const paginationContext: IPaginationContextProps = {
+    curPage,
+    displayPerPage,
+    setCurPage,
+    setDisplayPerPage
+  };
+
   return (
     <div style={{ backgroundColor: "#F4F5F8" }}>
-      <FavoritesContext.Provider value={context}>
-        <ResumesPage />
+      <FavoritesContext.Provider value={favoritesContext}>
+        <PaginationContext.Provider value={paginationContext}>
+          <ResumesPage />
+        </PaginationContext.Provider>
       </FavoritesContext.Provider>
     </div>
   );
