@@ -12,7 +12,7 @@ const Wrapper = styled.div`
     background: white;
   }
 
-  @media all and (max-width: 1300px) {
+  @media all and (max-width: 1400px) {
     .sectionWrapper {
       padding: 65px 45px;
     }
@@ -21,24 +21,6 @@ const Wrapper = styled.div`
   @media all and (max-width: 1200px) {
     .sectionWrapper {
       padding: 57px 40px;
-    }
-  }
-
-  @media all and (max-width: 1100px) {
-    .sectionWrapper {
-      padding: 49px 35px;
-    }
-  }
-
-  @media all and (max-width: 1000px) {
-    .sectionWrapper {
-      padding: 39px 30px;
-    }
-  }
-
-  @media all and (max-width: 900px) {
-    h.sectionWrapper {
-      padding: 25px 35px;
     }
   }
 
@@ -53,6 +35,14 @@ const Wrapper = styled.div`
 const Section = styled.div`
   width: 22%;
 
+  @media all and (max-width: 1101px) {
+    width: 25%;
+  }
+
+  @media all and (max-width: 900px) {
+    width: 28%;
+  }
+
   @media all and (max-width: 800px) {
     width: 100%;
   }
@@ -65,7 +55,7 @@ const SectionHeader = styled.h1`
   font-weight: 500;
   margin: 0;
 
-  @media all and (max-width: 1300px) {
+  @media all and (max-width: 1400px) {
     font-size: 36px;
   }
 
@@ -73,16 +63,12 @@ const SectionHeader = styled.h1`
     font-size: 33px;
   }
 
-  @media all and (max-width: 1100px) {
+  @media all and (max-width: 1000px) {
     font-size: 30px;
   }
 
-  @media all and (max-width: 1000px) {
-    font-size: 26px;
-  }
-
   @media all and (max-width: 900px) {
-    font-size: 23px;
+    font-size: 29px;
   }
 
   @media all and (max-width: 800px) {
@@ -95,7 +81,7 @@ const SectionText = styled.p`
   font-size: 18px;
   font-weight: 600;
 
-  @media all and (max-width: 1300px) {
+  @media all and (max-width: 1400px) {
     font-size: 16px;
   }
 
@@ -103,20 +89,12 @@ const SectionText = styled.p`
     font-size: 15px;
   }
 
-  @media all and (max-width: 1100px) {
-    font-size: 13.5px;
-  }
-
   @media all and (max-width: 1000px) {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   @media all and (max-width: 900px) {
-    font-size: 10.5px;
-  }
-
-  @media all and (max-width: 800px) {
-    font-size: 14px;
+    font-size: 13.5px;
   }
 `
 

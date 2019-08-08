@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import windowSize from 'react-window-size';
 
 const Wrapper = styled.div`
-  height: 800px;
+  height: 100vh;
   background: #F4F5F8;
   margin-top: -20px;
   position: relative;
@@ -15,44 +15,8 @@ const Wrapper = styled.div`
     transition: opacity 600ms, visibility 600ms;
   }
 
-  @media all and (max-width: 1800px) {
-    height: 750px;
-  }
-
-  @media all and (max-width: 1700px) {
-    height: 710px;
-  }
-
-  @media all and (max-width: 1600px) {
-    height: 675px;
-  }
-
-  @media all and (max-width: 1500px) {
-    height: 625px;
-  }
-
-  @media all and (max-width: 1400px) {
-    height: 585px;
-  }
-
-  @media all and (max-width: 1300px) {
-    height: 495px;
-  }
-
-  @media all and (max-width: 1200px) {
-    height: 425px;
-  }
-
-  @media all and (max-width: 1100px) {
-    height: 355px;
-  }
-
-  @media all and (max-width: 1000px) {
-    height: 280px;
-  }
-
-  @media all and (max-width: 900px) {
-    height: 230px;
+  button:hover {
+    cursor: pointer;
   }
 
   @media all and (max-width: 800px) {
@@ -67,38 +31,34 @@ const Wrapper = styled.div`
 
 const HeroImage = styled.img`
   position: absolute;
-  width: 55%;
+  width: 1100px;
   margin-top: -1%;
   right: 5px;
 
-  @media all and (max-width: 1300px) {
-    width: 51%;
+  @media all and (max-width: 1600px) {
+    width: 885px;
+  }
+
+  @media all and (max-width: 1400px) {
+    width: 695px;
   }
 
   @media all and (max-width: 1200px) {
-    width: 47%;
-  }
-  
-  @media all and (max-width: 1100px) {
-    width: 43%;
+    width: 585px;
   }
 
   @media all and (max-width: 1000px) {
-    width: 39%;
+    width: 450px;
   }
-
-  @media all and (max-width: 900px) {
-    width: 36%;
-  }
-
+  
   @media all and (max-width: 800px) {
     display: none;
   }
 `
 
 const HeroText = styled.div`
-  padding-top: 10%;
-  margin-left: 120px;
+  padding-top: 250px;
+  margin-left: 7%;
   font-family: 'Roboto';
 
   button:hover {
@@ -107,29 +67,20 @@ const HeroText = styled.div`
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   }
 
-  @media all and (max-width: 1300px) {
-    padding-top: 9%;
-    margin-left: 108px;
+  @media all and (max-width: 1600px) {
+    padding-top: 200px;
+  }
+
+  @media all and (max-width: 1400px) {
+    padding-top: 125px;
   }
 
   @media all and (max-width: 1200px) {
-    padding-top: 8%;
-    margin-left: 100px;
-  }
-
-  @media all and (max-width: 1100px) {
-    padding-top: 7%;
-    margin-left: 93px;
+    padding-top: 100px;
   }
 
   @media all and (max-width: 1000px) {
-    padding-top: 6%;
-    margin-left: 81px;
-  }
-
-  @media all and (max-width: 900px) {
-    padding-top: 5%;
-    margin-left: 73px;
+    padding-top: 75px;
   }
 
   @media all and (max-width: 800px) {
@@ -145,33 +96,27 @@ const Name = styled.h1`
   font-weight: bold;
   margin-bottom: -24px;
 
-  @media all and (max-width: 1300px) {
+  @media all and (max-width: 1400px) {
     font-size: 54px;
+    margin-bottom: -22px;
   }
 
   @media all and (max-width: 1200px) {
     font-size: 48px;
-    margin-bottom: -20px;
-  }
-
-  @media all and (max-width: 1100px) {
-    font-size: 42px;
-    margin-bottom: -16px;
+    margin-bottom: -18px;
   }
 
   @media all and (max-width: 1000px) {
-    font-size: 36px;
-    margin-bottom: -14px;
-  }
-
-  @media all and (max-width: 900px) {
-    font-size: 30px;
-    margin-bottom: -12px;
+    font-size: 42px;
   }
 
   @media all and (max-width: 800px) {
     font-size: 44px;
     margin-bottom: 10px;
+  }
+
+  @media all and (max-width: 360px) {
+    font-size: 40px;
   }
 `
 
@@ -179,29 +124,25 @@ const CatchPhrase = styled.h1`
   color: #646566;
   font-size: 48px;
 
-  @media all and (max-width: 1300px) {
+  @media all and (max-width: 1400px) {
     font-size: 42px;
   }
 
   @media all and (max-width: 1200px) {
-    font-size: 38px;
-  }
-
-  @media all and (max-width: 1100px) {
-    font-size: 33px;
+    font-size: 37px;
   }
 
   @media all and (max-width: 1000px) {
-    font-size: 28px;
-  }
-
-  @media all and (max-width: 900px) {
-    font-size: 23px;
+    font-size: 32px;
   }
 
   @media all and (max-width: 800px) {
     margin-top: -27px;
     font-size: 27px;
+  }
+
+  @media all and (max-width: 360px) {
+    font-size: 22px;
   }
 `
 
@@ -213,33 +154,28 @@ const MailingText = styled.p`
   margin-top: -20px;
   margin-bottom: 0px;
 
-  @media all and (max-width: 1300px) {
+  @media all and (max-width: 1400px) {
     font-size: 19px;
+    padding-top: 10px;
   }
 
   @media all and (max-width: 1200px) {
     font-size: 17px;
-    margin-top: -18px;
-  }
-
-  @media all and (max-width: 1100px) {
-    font-size: 15px;
-    margin-top: -16px;
   }
 
   @media all and (max-width: 1000px) {
-    font-size: 13px;
-    margin-top: -14px;
-  }
-
-  @media all and (max-width: 900px) {
-    font-size: 11px;
-    margin-top: -12px;
+    font-size: 14.5px;
+    padding-top: 7px;
   }
 
   @media all and (max-width: 800px) {
     margin: 0;
     font-size: 13px;
+  }
+
+  @media all and (max-width: 360px) {
+    margin-top: -10px;
+    font-size: 11px;
   }
 `
 
@@ -255,41 +191,47 @@ const MailingInput = styled.input`
   background: #DCDFE9;
   border: none;
   border-radius: 30px;
-  width: 25%;
+  width: 325px;
   height: 50px;
   padding-left: 20px;
   padding-right: 60px;
+  font-size: 16px;
 
-  @media all and (max-width: 1300px) {
+  @media all and (max-width: 1400px) {
+    width: 290px;
     height: 45px;
-    font-size: 12px;
+    font-size: 14px;
+    padding-left: 18px;
   }
 
   @media all and (max-width: 1200px) {
+    width: 260px;
     height: 40px;
-    font-size: 10px;
-  }
-
-  @media all and (max-width: 1100px) {
-    height: 35px;
+    font-size: 13px;
+    padding-left: 16px;
   }
 
   @media all and (max-width: 1000px) {
-    height: 30px;
-    font-size: 8px;
-  }
-
-  @media all and (max-width: 900px) {
-    height: 25px;
+    width: 235px;
+    height: 35px;
+    font-size: 12px;
+    padding-left: 16px;
   }
 
   @media all and (max-width: 800px) {
     width: 100%;
-    height: 30px;
+    max-width: 300px;
+    padding-right: 80px;
+    font-size: 12px;
+    visibility: hidden;
+  }
+
+  @media all and (max-width: 480px) {
+    width: 100%;
     max-width: 300px;
     padding-right: 80px;
     margin-top: 5px;
-    font-size: 10px;
+    font-size: 12px;
     visibility: hidden;
   }
 `
@@ -298,7 +240,7 @@ const MailingJoin = styled.button`
   background: #42C0FC;
   border: none;
   border-radius: 30px;
-  width: 10%;
+  width: 150px;
   height: 50px;
   margin-left: -45px;
   color: #FFF;
@@ -308,40 +250,29 @@ const MailingJoin = styled.button`
   vertical-align: top;
   transition: 0.3s;
 
-  @media all and (max-width: 1300px) {
+  @media all and (max-width: 1400px) {
+    width: 125px;
     height: 45px;
     font-size: 16px;
   }
 
   @media all and (max-width: 1200px) {
+    width: 110px;
     height: 40px;
-    font-size: 14px;
-  }
-
-  @media all and (max-width: 1100px) {
-    height: 35px;
-    font-size: 12px;
+    font-size: 16px;
   }
 
   @media all and (max-width: 1000px) {
-    height: 30px;
-    font-size: 9px;
-  }
-
-  @media all and (max-width: 900px) {
-    height: 25px;
-  }
-
-  @media all and (max-width: 800px) {
-    height: 30px;
-    margin-top: 5px;
+    width: 95px;
+    height: 35px;
+    font-size: 14px;
   }
 
   @media all and (max-width: 480px) {
     width: 85px;
     margin: 10px 40px;
     padding: 0;
-    font-size: 10px;
+    font-size: 12px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   }
 `
