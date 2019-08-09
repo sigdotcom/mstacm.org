@@ -14,5 +14,4 @@ export interface IEvent {
   flierLink: string;
   id: number;
   location: string;
-  hostSigs: ISig;
 }

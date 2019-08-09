@@ -4,24 +4,7 @@ import styled from "styled-components";
 
 import { Button } from "antd";
 
-interface ISig {
-  dateFounded: Date;
-  description: string;
-  name: string;
-}
-
-interface IEvent {
-  dateCreated: Date;
-  dateExpire: Date;
-  dateHosted: Date;
-  description: string;
-  eventLink: string;
-  eventTitle: string;
-  flierLink: string;
-  id: number;
-  location: string;
-  hostSigs: ISig;
-}
+import { IEvent } from "./interfaces";
 
 interface IEventProps {
   event: IEvent;
@@ -69,27 +52,27 @@ class Event extends React.Component<IEventProps, {}> {
     super(props);
   }
 
-  formatDate = (date: Date) => {
+  public formatDate = (date: Date) => {
     return moment(date).format("MMMM Do h:mmA");
   };
 
-  handleEdit = () => {
+  public handleEdit = () => {
     this.props.editEvent(this.props.event);
   };
 
-  handleDelete = () => {
+  public handleDelete = () => {
     this.props.deleteEvent(this.props.event.id);
   };
 
-  handleAdvert = () => {
+  public handleAdvert = () => {
     this.props.advertiseEvent(this.props.event);
   };
 
-  handleQR = () => {
+  public handleQR = () => {
     this.props.createQR(this.props.event.id);
   };
 
-  render() {
+  public render() {
     const { event } = this.props;
     return (
       <EventWrapper>
@@ -97,9 +80,7 @@ class Event extends React.Component<IEventProps, {}> {
           <EventFlier src={event.flierLink} alt={"Flier"} />
           <EventDetails>
             <EventHighLevel>
-              <EventTitle>
-                ACM {event.hostSigs.name}: {event.eventTitle}
-              </EventTitle>
+              <EventTitle>ACM Bees: {event.eventTitle}</EventTitle>
               <EventDate>
                 {this.formatDate(event.dateHosted)}
                 {event.dateHosted !== event.dateExpire &&
