@@ -1,8 +1,10 @@
-import * as React from "react"
+import * as React from "react";
 
 const Membership: React.FC<{}> = () => {
   return (
-    <div>Membership <strong>page</strong></div>
-  )
-}
+    <div>
+      Membership <strong>page</strong>
+    </div>
+  );
+};
 export { Membership };
