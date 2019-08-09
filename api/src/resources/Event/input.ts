@@ -18,7 +18,7 @@ export class EventCreateInput implements Partial<Event> {
   @Field()
   public location: string;
 
-  @Field()
+  @Field({ nullable: true })
   public flierLink: string;
 
   @Field({ nullable: true })

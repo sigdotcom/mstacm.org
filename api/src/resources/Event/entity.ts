@@ -24,7 +24,9 @@ export class Event extends BaseEntity {
   public id: number;
 
   @Field()
-  @CreateDateColumn()
+  @CreateDateColumn({
+    readonly: true
+  })
   public dateCreated: Date;
 
   @Field()
@@ -79,12 +81,12 @@ export class Event extends BaseEntity {
     length: 100,
     nullable: true
   })
-  public flierLink: string;
+  public flierLink?: string;
 
   @Field({ nullable: true })
   @Column({
     length: 100,
     nullable: true
   })
-  public eventLink: string;
+  public eventLink?: string;
 }
