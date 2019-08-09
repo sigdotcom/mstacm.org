@@ -25,7 +25,7 @@ const Wrapper = styled.div`
 
   @media all and (max-width: 480px) {
     height: 100%;
-    padding-bottom: 25px;
+    padding: 25px 0 50px 0;
   }
 `
 
@@ -83,7 +83,7 @@ const HeroText = styled.div`
     padding-top: 75px;
   }
 
-  @media all and (max-width: 800px) {
+  @media all and (max-width: 480px) {
     margin: 0px 40px;
     padding: 0;
     text-align: center;
@@ -110,8 +110,8 @@ const Name = styled.h1`
     font-size: 42px;
   }
 
-  @media all and (max-width: 800px) {
-    font-size: 44px;
+  @media all and (max-width: 480px) {
+    font-size: 58px;
     margin-bottom: 10px;
   }
 
@@ -136,13 +136,9 @@ const CatchPhrase = styled.h1`
     font-size: 32px;
   }
 
-  @media all and (max-width: 800px) {
+  @media all and (max-width: 480px) {
     margin-top: -27px;
-    font-size: 27px;
-  }
-
-  @media all and (max-width: 360px) {
-    font-size: 22px;
+    font-size: 32px;
   }
 `
 
@@ -168,14 +164,9 @@ const MailingText = styled.p`
     padding-top: 7px;
   }
 
-  @media all and (max-width: 800px) {
+  @media all and (max-width: 480px) {
     margin: 0;
-    font-size: 13px;
-  }
-
-  @media all and (max-width: 360px) {
-    margin-top: -10px;
-    font-size: 11px;
+    font-size: 20px;
   }
 `
 
@@ -228,10 +219,10 @@ const MailingInput = styled.input`
 
   @media all and (max-width: 480px) {
     width: 100%;
-    max-width: 300px;
+    height: 45px;
     padding-right: 80px;
     margin-top: 5px;
-    font-size: 12px;
+    font-size: 13px;
     visibility: hidden;
   }
 `
@@ -269,10 +260,11 @@ const MailingJoin = styled.button`
   }
 
   @media all and (max-width: 480px) {
-    width: 85px;
+    width: 125px;
+    height: 45px;
     margin: 10px 40px;
     padding: 0;
-    font-size: 12px;
+    font-size: 17px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   }
 `

@@ -71,8 +71,8 @@ const SectionHeader = styled.h1`
     font-size: 29px;
   }
 
-  @media all and (max-width: 800px) {
-    font-size: 32px;
+  @media all and (max-width: 480px) {
+    font-size: 36px;
   }
 `
 
@@ -95,6 +95,10 @@ const SectionText = styled.p`
 
   @media all and (max-width: 900px) {
     font-size: 13.5px;
+  }
+
+  @media all and (max-width: 480px) {
+    font-size: 19px;
   }
 `
 

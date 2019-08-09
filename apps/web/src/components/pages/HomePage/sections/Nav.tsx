@@ -47,6 +47,10 @@ const Logo = styled.img`
   @media all and (max-width: 1000px) {
     width: 56px;
   }
+
+  @media all and (max-width: 480px) {
+    width: 72px;
+  }
 `
 
 const MenuItems = styled.div`
@@ -123,8 +127,13 @@ const SignIn = styled.button`
   }
 
   @media all and (max-width: 480px) {
-    width: 85px;
-    font-size: 12px;
+    width: 125px;
+    height: 45px;
+    font-size: 17px;
+    background: inherit;
+    color: #2D9CDB;
+    border: 3px solid #2D9CDB;
+    box-shadow: none;
   }
 `
 
