@@ -1,5 +1,4 @@
 import { Field, InputType, ObjectType } from "type-graphql";
-import { User } from "../User";
 import { Event } from "./entity";
 
 @InputType()
@@ -8,16 +7,10 @@ export class EventCreateInput implements Partial<Event> {
   public eventTitle: string;
 
   @Field()
-  public dateCreated: Date;
-
-  @Field()
   public dateHosted: Date;
 
   @Field()
   public dateExpire: Date;
-
-  @Field((returns: void) => User)
-  public creator: User;
 
   @Field()
   public description: string;
@@ -28,7 +21,7 @@ export class EventCreateInput implements Partial<Event> {
   @Field()
   public flierLink: string;
 
-  @Field()
+  @Field({ nullable: true })
   public eventLink: string;
 }
 
@@ -36,10 +29,28 @@ export class EventCreateInput implements Partial<Event> {
 export class EventUpdateInput implements Partial<Event> {
   @Field({ nullable: true })
   public eventTitle: string;
+
+  @Field({ nullable: true })
+  public dateHosted: Date;
+
+  @Field({ nullable: true })
+  public dateExpire: Date;
+
+  @Field({ nullable: true })
+  public description: string;
+
+  @Field({ nullable: true })
+  public location: string;
+
+  @Field({ nullable: true })
+  public flierLink: string;
+
+  @Field({ nullable: true })
+  public eventLink: string;
 }
 
 @ObjectType()
-export class EventDeleteInput implements Partial<Event> {
+export class EventDeletePayload implements Partial<Event> {
   @Field({ nullable: true })
-  public eventTitle: string;
+  public id: number;
 }
