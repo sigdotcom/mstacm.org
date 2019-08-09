@@ -10,25 +10,22 @@ const Wrapper = styled.div`
   background: #F4F5F8;
 
   button:hover {
-    background: #FFF;
-    color: #42C0FC;
+    background: #2D9CDB;
     cursor: pointer;
   }
 
-  @media all and (max-width: 1600px) {
-    margin-top: -5px;
+  @media all and (max-width: 1475px) {
+    margin-top: -10px;
   }
 
-  @media all and (max-width: 1400px) {
-    margin-top: -9px;
-  }
-
-  @media all and (max-width: 1200px) {
-    margin-top: -13px;
-  }
-
-  @media all and (max-width: 1000px) {
+  @media all and (max-width: 1100px) {
     margin-top: -18.5px;
+  }
+
+  @media all and (max-width: 680px) {
+    button:hover {
+      background: inherit;
+    }
   }
 `
 
@@ -36,19 +33,15 @@ const Logo = styled.img`
   width: 85px;
   margin-left: 5%;
 
-  @media all and (max-width: 1400px) {
+  @media all and (max-width: 1475px) {
     width: 77px;
   }
 
-  @media all and (max-width: 1200px) {
+  @media all and (max-width: 1100px) {
     width: 72px;
   }
 
-  @media all and (max-width: 1000px) {
-    width: 56px;
-  }
-
-  @media all and (max-width: 480px) {
+  @media all and (max-width: 680px) {
     width: 72px;
   }
 `
@@ -59,19 +52,15 @@ const MenuItems = styled.div`
   width: 375px;
   margin-left: 4%;
 
-  @media all and (max-width: 1400px) {
+  @media all and (max-width: 1475px) {
     width: 337px;
   }
 
-  @media all and (max-width: 1200px) {
+  @media all and (max-width: 1100px) {
     width: 311px;
   }
 
-  @media all and (max-width: 1000px) {
-    width: 275px;
-  }
-
-  @media all and (max-width: 800px) {
+  @media all and (max-width: 680px) {
     display: none;
   }
 `
@@ -81,16 +70,12 @@ const MenuItem = styled.a`
   font-weight: 600;
   font-size: 20px;
 
-  @media all and (max-width: 1400px) {
+  @media all and (max-width: 1475px) {
     font-size: 18px;
   }
 
-  @media all and (max-width: 1200px) {
+  @media all and (max-width: 1100px) {
     font-size: 16.5px;
-  }
-
-  @media all and (max-width: 1000px) {
-    font-size: 15px;
   }
 `
 
@@ -106,27 +91,21 @@ const SignIn = styled.button`
   font-size: 18px;
   font-weight: bold;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-  transition: 0.3s;
+  transition: 0.3s ease;
 
-  @media all and (max-width: 1400px) {
+  @media all and (max-width: 1475px) {
     width: 125px;
     height: 45px;
     font-size: 16px;
   }
 
-  @media all and (max-width: 1200px) {
+  @media all and (max-width: 1100px) {
     width: 110px;
     height: 40px;
     font-size: 16px;
   }
 
-  @media all and (max-width: 1000px) {
-    width: 95px;
-    height: 35px;
-    font-size: 14px;
-  }
-
-  @media all and (max-width: 480px) {
+  @media all and (max-width: 680px) {
     width: 125px;
     height: 45px;
     font-size: 17px;
