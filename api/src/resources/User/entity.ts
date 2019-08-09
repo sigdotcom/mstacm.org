@@ -14,6 +14,7 @@ import {
 } from "typeorm";
 import { Lazy } from "../../lib/helpers";
 import { Application } from "../Application";
+import { Event } from "../Event";
 import { Group } from "../Group";
 import { Permission } from "../Permission";
 import { Resume } from "../Resume";
@@ -114,4 +115,10 @@ export class User extends BaseEntity {
   })
   @JoinTable()
   public sigs: Lazy<Sig[]>;
+
+  @OneToMany((type: void) => Event, (event: Event) => event.creator, {
+    lazy: true
+  })
+  @JoinTable()
+  public createdEvents: Lazy<Event[]>;
 }
