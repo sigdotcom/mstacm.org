@@ -16,14 +16,30 @@ import {
   PaginationContext
 } from "./context/PaginationContext";
 
+type Favorites = {
+  [id: string]: boolean | undefined;
+};
+
+const useJSONLocalStorage = (
+  key: string
+): [Favorites, ((favorites: Favorites) => void)] => {
+  const [value, setValue] = React.useState(
+    JSON.parse(localStorage.getItem(key) || "{}")
+  );
+
+  React.useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
+
+  return [value, setValue];
+};
+
 const App: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [filterFavorites, setFilterFavorites] = useState<boolean>(false);
   const [curPage, setCurPage] = useState<number>(1);
   const [displayPerPage, setDisplayPerPage] = useState<number>(10);
-  const [favorites, setFavorites] = useState<{
-    [id: string]: boolean | undefined;
-  }>({});
+  const [favorites, setFavorites] = useJSONLocalStorage("favorites");
 
   const { data, loading } = useResumeCardsQuery();
   if (loading === false && users.length === 0 && data) {
@@ -33,10 +49,10 @@ const App: React.FC = () => {
     users,
     filterFavorites,
     setFilterFavorites,
-    isFavorite: (id: string) => {
+    isFavorite: (id: string): boolean => {
       return favorites[id] || false;
     },
-    flipFavorite: (id: string) => {
+    flipFavorite: (id: string): void => {
       setFavorites({
         ...favorites,
         [id]: !(favorites[id] || false)

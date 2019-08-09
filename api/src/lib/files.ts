@@ -28,10 +28,7 @@ const generatePipeline = (): Pipeline => {
 
 const generateContainerURL = (containerName: string): ContainerURL => {
   const pipeline = generatePipeline();
-  const serviceURL = new ServiceURL(
-    `https://${STORAGE_ACCOUNT}.blob.core.windows.net`,
-    pipeline
-  );
+  const serviceURL = new ServiceURL(config.AZURE_STORAGE_URL, pipeline);
 
   return ContainerURL.fromServiceURL(serviceURL, CONTAINER_NAME);
 };

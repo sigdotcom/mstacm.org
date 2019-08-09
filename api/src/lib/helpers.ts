@@ -10,7 +10,7 @@ export async function seedDatabase() {
   const resumeRepository = getRepository(Resume);
 
   let defaultUser;
-  for (let i = 0; i < 10; i = i + 1) {
+  for (let i = 0; i < 40; i = i + 1) {
     defaultUser = userRepository.create({
       email: `test-${i}@mst.edu`,
       firstName: "Kevin",
@@ -25,7 +25,7 @@ export async function seedDatabase() {
       added: new Date(),
       id: `test-${i}`,
       url:
-        "https://mstacm.blob.core.windows.net/resumes/7321f6d5-9051-4d16-85d8-9730b3e15d4b.pdf",
+        "https://mstacm.azureedge.net/resumes/7321f6d5-9051-4d16-85d8-9730b3e15d4b.pdf",
       user: defaultUser
     });
     await resumeRepository.save(resume);
