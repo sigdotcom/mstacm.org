@@ -36,7 +36,7 @@ const ResumesPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <div style={{ height: "100%" }}>
       <div className="flex content-center justify-center items-center pt-4 px-4">
         <div className="text-5xl w-1/4 flex justify-end">
           S&T <strong>ACM</strong>
@@ -50,8 +50,8 @@ const ResumesPage: React.FC = () => {
       </div>
       <ResumePagination />
       <ResumeList filterString={search} />
-      <FavoritesDrawer visible={visible} closeDrawer={closeDrawer} />
       <ResumePagination />
+      <FavoritesDrawer visible={visible} closeDrawer={closeDrawer} />
     </div>
   );
 };

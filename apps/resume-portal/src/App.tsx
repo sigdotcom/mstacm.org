@@ -68,7 +68,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div style={{ backgroundColor: "#F4F5F8" }}>
+    <div style={{ backgroundColor: "#F4F5F8", minHeight: "100vh" }}>
       <FavoritesContext.Provider value={favoritesContext}>
         <PaginationContext.Provider value={paginationContext}>
           <ResumesPage />
