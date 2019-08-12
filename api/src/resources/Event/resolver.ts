@@ -2,6 +2,7 @@ import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
 
 import { DeepPartial, getRepository, Repository } from "typeorm";
 import { IContext } from "../../lib/interfaces";
+import { Sig } from "../Sig";
 import { Event } from "./entity";
 import {
   EventCreateInput,
@@ -16,6 +17,7 @@ interface INumber {
 @Resolver((returns: void) => Event)
 export class EventResolver {
   public repository: Repository<Event> = getRepository(Event);
+  public sigRepository: Repository<Sig> = getRepository(Sig);
 
   @Authorized("SUPERADMIN")
   @Mutation((returns: void) => EventDeletePayload)
@@ -48,7 +50,11 @@ export class EventResolver {
     input: DeepPartial<Event>
   ): Promise<Event> {
     const creator = context.state.user;
-    const newResource = this.repository.create({ ...input, creator });
+    const hostSig = await this.sigRepository.findOneOrFail({
+      name: String(input.hostSig)
+    });
+    delete input.hostSig;
+    const newResource = this.repository.create({ ...input, creator, hostSig });
 
     return newResource.save();
   }

@@ -55,7 +55,7 @@ export async function seedDatabase() {
       eventLink: "https://acm.mst.edu",
       eventTitle: "Going outside with friends",
       flierLink: "https://source.unsplash.com/random",
-      hostSigs: [defaultSig],
+      hostSig: defaultSig,
       location: "outside"
     })
     .save();

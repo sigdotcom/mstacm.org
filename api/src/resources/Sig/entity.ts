@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   Entity,
   ManyToMany,
+  OneToMany,
   PrimaryColumn
 } from "typeorm";
 
@@ -34,7 +35,7 @@ export class Sig extends BaseEntity {
   public users: Lazy<User[]>;
 
   @Field((returns: void) => [Event])
-  @ManyToMany((type: void) => Event, (event: Event) => event.hostSigs, {
+  @OneToMany((type: void) => Event, (event: Event) => event.hostSig, {
     lazy: true
   })
   public hostedEvents: Lazy<Event[]>;

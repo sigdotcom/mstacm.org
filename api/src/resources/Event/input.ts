@@ -2,7 +2,7 @@ import { Field, InputType, ObjectType } from "type-graphql";
 import { Event } from "./entity";
 
 @InputType()
-export class EventCreateInput implements Partial<Event> {
+export class EventCreateInput /*implements Partial<Event>*/ {
   @Field()
   public eventTitle: string;
 
@@ -23,6 +23,9 @@ export class EventCreateInput implements Partial<Event> {
 
   @Field({ nullable: true })
   public eventLink: string;
+
+  @Field()
+  public hostSig: string;
 }
 
 @InputType()
