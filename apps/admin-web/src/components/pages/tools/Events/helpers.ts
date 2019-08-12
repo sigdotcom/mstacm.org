@@ -1,7 +1,4 @@
-import { useMutation, useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-
-import { IEvent } from "./interfaces";
 
 export const GET_EVENTS: any = gql`
   {
@@ -19,22 +16,26 @@ export const GET_EVENTS: any = gql`
       location
       flierLink
       eventLink
+      hostSig {
+        name
+      }
+    }
+  }
+`;
+
+export const CREATE_EVENT: any = gql`
+  mutation CreateEvent($data: EventCreateInput!) {
+    createEvent(data: $data) {
+      eventTitle
     }
   }
 `;
 // TODO ADD HOSTSIGS
 
-const getEvents: any = (): any => {
-  return useQuery(GET_EVENTS);
-};
-
-const updateEvent: any = (event: IEvent): void => {
-  const [updateEventMutation]: any = useMutation(gql`
-      mutation updateEvent(data: $event){
-          id
-      }
-  `);
-  updateEventMutation({ variables: { event } });
-};
-
-export { getEvents, updateEvent };
+export const DELETE_EVENT: any = gql`
+  mutation DeleteEvent($id: Float!) {
+    deleteEvent(id: $id) {
+      id
+    }
+  }
+`;
