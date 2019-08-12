@@ -1,6 +1,9 @@
+import { useMutation } from "@apollo/react-hooks";
 import moment from "moment";
-import * as React from "react";
+import React from "react";
 import styled from "styled-components";
+
+import { DELETE_EVENT } from "./helpers";
 
 import { Button } from "antd";
 
@@ -9,112 +12,105 @@ import { IEvent } from "./interfaces";
 interface IEventProps {
   event: IEvent;
   key: number;
-  editEvent: any;
-  deleteEvent: any;
-  advertiseEvent: any;
-  createQR: any;
 }
 
-const EventWrapper = styled.li`
+const EventWrapper: any = styled.li`
   display: flex;
   margin: 20px 0;
   justify-content: space-between;
 `;
-const EventContent = styled.div`
+const EventContent: any = styled.div`
   display: flex;
   align-items: center;
 `;
-const EventFlier = styled.img`
+const EventFlier: any = styled.img`
   height: 88px;
   width: 68px;
   margin-right: 20px;
 `;
-const EventDetails = styled.div``;
-const EventHighLevel = styled.div`
+const EventDetails: any = styled.div``;
+const EventHighLevel: any = styled.div`
   display: flex;
 `;
-const EventTitle = styled.h3`
+const EventTitle: any = styled.h3`
   margin: 0;
   line-height: 20px;
 `;
-const EventDate = styled.p`
+const EventDate: any = styled.p`
   padding: 0 6px;
   margin: 0 0 0 20px;
   border-radius: 20px;
   border: 2px solid blue;
 `;
-const EventMidLevel = styled.div``;
-const EventDescription = styled.div``;
-const EventLowLevel = styled.div``;
+const EventMidLevel: any = styled.div``;
+const EventDescription: any = styled.div``;
+const EventLowLevel: any = styled.div``;
 
-class Event extends React.Component<IEventProps, {}> {
-  public constructor(props: IEventProps) {
-    super(props);
-  }
+const Event: any = (props: IEventProps): any => {
+  const [deleteEvent]: any = useMutation(DELETE_EVENT, {
+    onError: (error: any) => {
+      console.log(error.toString());
+    }
+  });
 
-  public formatDate = (date: Date) => {
+  const formatDate: any = (date: Date): any => {
     return moment(date).format("MMMM Do h:mmA");
   };
 
-  public handleEdit = () => {
-    this.props.editEvent(this.props.event);
+  const handleEdit: any = (): any => {};
+
+  const handleDelete: any = (): any => {
+    deleteEvent({
+      variables: { id: props.event.id }
+    });
+    // TODO update the event list
   };
 
-  public handleDelete = () => {
-    this.props.deleteEvent(this.props.event.id);
-  };
+  const handleAdvert: any = (): any => {};
 
-  public handleAdvert = () => {
-    this.props.advertiseEvent(this.props.event);
-  };
+  const handleQR: any = (): any => {};
 
-  public handleQR = () => {
-    this.props.createQR(this.props.event.id);
-  };
-
-  public render() {
-    const { event } = this.props;
-    return (
-      <EventWrapper>
-        <EventContent>
-          <EventFlier src={event.flierLink} alt={"Flier"} />
-          <EventDetails>
-            <EventHighLevel>
-              <EventTitle>ACM Bees: {event.eventTitle}</EventTitle>
-              <EventDate>
-                {this.formatDate(event.dateHosted)}
-                {event.dateHosted !== event.dateExpire &&
-                  " - " + this.formatDate(event.dateExpire)}
-              </EventDate>
-            </EventHighLevel>
-            <EventMidLevel>
-              {event.location}
-              {event.eventLink && (
-                <span>
-                  {" "}
-                  - <a href={event.eventLink}>Link</a>
-                </span>
-              )}
-            </EventMidLevel>
-            <EventDescription>{event.description}</EventDescription>
-            <EventLowLevel>
-              Created {this.formatDate(event.dateCreated)}
-            </EventLowLevel>
-          </EventDetails>
-        </EventContent>
+  const { event }: any = props;
+  return (
+    <EventWrapper>
+      <EventContent>
+        <EventFlier src={event.flierLink} alt={"Flier"} />
+        <EventDetails>
+          <EventHighLevel>
+            <EventTitle>
+              ACM {event.hostSig.name}: {event.eventTitle}
+            </EventTitle>
+            <EventDate>
+              {formatDate(event.dateHosted)}
+              {event.dateHosted !== event.dateExpire &&
+                " - " + formatDate(event.dateExpire)}
+            </EventDate>
+          </EventHighLevel>
+          <EventMidLevel>
+            {event.location}
+            {event.eventLink && (
+              <span>
+                {" "}
+                - <a href={event.eventLink}>Link</a>
+              </span>
+            )}
+          </EventMidLevel>
+          <EventDescription>{event.description}</EventDescription>
+          <EventLowLevel>Created {formatDate(event.dateCreated)}</EventLowLevel>
+        </EventDetails>
+      </EventContent>
+      <div>
         <div>
-          <div>
-            <Button onClick={this.handleEdit}>Edit</Button>
-            <Button onClick={this.handleDelete}>Delete</Button>
-          </div>
-          <div>
-            <Button onClick={this.handleAdvert}>Advert</Button>
-            <Button onClick={this.handleQR}>QR</Button>
-          </div>
+          <Button onClick={handleEdit}>Edit</Button>
+          <Button onClick={handleDelete}>Delete</Button>
         </div>
-      </EventWrapper>
-    );
-  }
-}
+        <div>
+          <Button onClick={handleAdvert}>Advert</Button>
+          <Button onClick={handleQR}>QR</Button>
+        </div>
+      </div>
+    </EventWrapper>
+  );
+};
 
-export default Event;
+export { Event };
