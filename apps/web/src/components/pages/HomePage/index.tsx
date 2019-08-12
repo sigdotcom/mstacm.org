@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Hero from './sections/Hero';
 import About from './sections/About';
 import Nav from './sections/Nav';
+import { SIGs } from "./sections/SIGs";
 
 const NavHeroWrapper = styled.div`
   height: 100vh;
@@ -52,6 +53,7 @@ const HomePage: React.FC<{}> = () => {
         <Hero />
       </NavHeroWrapper>
       <About />
+      <SIGs />
     </div>
   );
 };
