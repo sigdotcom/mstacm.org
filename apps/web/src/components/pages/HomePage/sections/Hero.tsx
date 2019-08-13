@@ -15,10 +15,18 @@ const HeroImage = styled.img`
     display: block;
     opacity: 0.5;
     position: absolute;
-    right: 5px;
-    margin-top: -60px;
-    margin-right: -80px;
+    right: -85px;
+    bottom: -125px;
     pointer-events: none;
+  }
+
+  @media screen and (min-width: 1000px) {
+    width: 940px;
+  }
+
+  @media screen and (min-height: 1000px) {
+    width: 800px;
+    bottom: -250px;
   }
 `;
 
