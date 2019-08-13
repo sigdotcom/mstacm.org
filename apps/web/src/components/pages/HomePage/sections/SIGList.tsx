@@ -5,27 +5,42 @@ import { ISIG } from "./interfaces";
 const SIGListWrapper: any = styled.ul`
   list-style: none;
   margin: 0;
+  padding: 0;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  flex: 1;
+  min-width: 340px;
 `;
 
 const Item: any = styled.li`
-  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.4);
-  border-radius: 4px;
-  margin-bottom: 20px;
+  border-radius: 6px;
   transition: ease-in-out 0.1s all;
   cursor: pointer;
-  position: relative;
-  z-index: 4;
+  height: 50px;
+  min-width: 155px;
+  max-width: 200px;
+  width: calc(50% - 15px);
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.25);
+  margin-bottom: 15px;
+  margin-right: 15px;
 
   &:hover {
-    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.3);
   }
 
   h3 {
-    padding: 2px 12px;
-    width: 200px;
+    margin: 0;
   }
+`;
+
+const Logo: any = styled.img`
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  margin: 0 10px 0 10px;
 `;
 
 function SIGListItem(props: any): any {
@@ -36,12 +51,15 @@ function SIGListItem(props: any): any {
   let styles: any = {};
   if (selected === index) {
     styles = {
-      boxShadow: "0 6px 12px 0 rgba(0,0,0,0.5)"
+      background: sig.color,
+      boxShadow: "none"
     };
   }
+
   return (
     <Item style={styles} onClick={onClick}>
-      <h3>ACM {sig.name}</h3>
+      <Logo src={sig.logoLink} />
+      <h3>{sig.name}</h3>
     </Item>
   );
 }
