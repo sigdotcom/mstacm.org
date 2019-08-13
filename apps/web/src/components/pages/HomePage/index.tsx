@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 
 import About from "./sections/About";
-import { Events } from "./sections/Events";
+import Events from "./sections/Events";
 import { Footer } from "./sections/Footer";
 import Hero from "./sections/Hero";
 import { Nav } from "./sections/Nav";
