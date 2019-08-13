@@ -82,6 +82,7 @@ const SIGsData: ISIG[] = [
 
 const SIGsWrapper: any = styled.div`
   margin: auto;
+  margin-top: 100px;
   width: 100%;
   max-width: 1200px;
   padding: 0 5%;
