@@ -11,72 +11,72 @@ const SIGsData: ISIG[] = [
   {
     color: "skyblue",
     desc:
-      "We make websites and tools for ACM that are used administratively and for public use.",
-    discord: "https://www.google.com",
-    email: "google@google.com",
+      "Interested in software engineering, web development, or development operations? In ACM Web, we attempt to build production-grade websites using software engineering skills and development patterns with weekly development meetings.  Currently, ACM Web is developing the https://acm.mst.edu/ website. Moreover, we host workshops on various foundational skills such as Python, Git, HTML, CSS, and many others.",
+    discord: "https://discord.gg/eKtkR4k",
+    email: "acm@mst.edu",
     logoLink: "https://source.unsplash.com/random",
     name: "Web",
-    website: "https://www.google.com"
+    website: "https://mstacm.org"
   },
   {
     color: "#ff8888",
     desc:
-      "We make websites and tools for ACM that are used administratively and for public use.",
-    discord: "https://www.google.com",
-    email: "google@google.com",
+      "ACM Competition focuses primarily on competitive programming. With weekly lectures from Dr. Morales we tackle challenge problems from many online judge websites such as Kattis (https://open.kattis.com/) and UVA (https://uva.onlinejudge.org/).  We also hold our own programming contests on campus where people can win the admiration of their peers and some great prizes.",
+    discord: "https://discord.gg/4t954Ad",
+    email: "acm@mst.edu",
     logoLink: "https://source.unsplash.com/random",
     name: "Competition",
-    website: "https://www.google.com"
+    website: "https://acmcomp.mst.edu"
   },
   {
     color: "orange",
     desc:
-      "We make websites and tools for ACM that are used administratively and for public use.",
-    discord: "https://www.google.com",
-    email: "google@google.com",
+      "ACM Security helps develop the cybersecurity profession for the student body of Missouri University of Science and Technology by sponsoring high-quality workshops and lectures from both local and natinal industry professionals, as well as hosting on campus security events and competitions.",
+    discord: "https://discord.gg/BfPyeHw",
+    email: "sigsec@mst.edu",
     logoLink: "https://source.unsplash.com/random",
-    name: "Tutor",
-    website: "https://www.google.com"
+    name: "Security",
+    website: "https://acmsigsec.mst.edu"
   },
   {
     color: "pink",
     desc:
-      "It all happens automatically. We're not trying to teach you a thing to copy. We're just here to teach you a technique, then let you loose into the world. Mountains are so simple, they're hard. This is where you take out all your hostilities and frustrations.",
-    discord: "https://www.google.com",
-    email: "google@google.com",
+      "ACM Game develops and hosts artificial intelligence programming competitions on S&T's campus in Rolla, Missouri. We utilize many programming languages, tools and development strategies standard to the Computer Science Industry.  Our members gain valuable experience on one of our five development teams: Arena, Game, Public Relations, Visualizer, and Web. ACM Game offers experience working on a real team, with fellow students and mentors to learn and grow as a software developer. We accept new members of all skill levels and majors, so don't hesitate to contact us.",
+    discord: "https://discord.gg/xdXwxup",
+    email: "siggame@mst.edu",
     logoLink: "https://source.unsplash.com/random",
     name: "Game",
-    website: "https://www.google.com"
+    website: "http://siggame.io/"
   },
   {
     color: "lavender",
     desc:
-      "But we're not there yet, so we don't need to worry about it. Water's like me. It's laaazy ... Boy, it always looks for the easiest way to do things If you overwork it you become a cloud killer. There's nothing worse than a cloud killer. This is your world. We don't have to be concerned about it. We just have to let it fall where it will.",
-    discord: "https://www.google.com",
-    email: "google@google.com",
+      "ACM Data is a data focused org covering topics like Data Science, Data Mining, Data Analytics, and Data Engineering. Data Science, commonly seen as a combination of most data professions, is a new field with an infinite landscape. Our goal is to catalyze a new era of Data Science by using our curiosity to explore this landscape and push new standards. In ACM Data, we participate in competition sites such as Kaggle, tell stories using data, learn what’s new in Data Science, and whatever is necessary to be cutting edge.",
+    discord: "https://discord.gg/pm2KJtt",
+    email: "acm@mst.edu",
     logoLink: "https://source.unsplash.com/random",
     name: "Data",
-    website: "https://www.google.com"
+    website: "https://modata.blog"
   },
   {
     color: "wheat",
     desc:
-      "There we are. Nice little clouds playing around in the sky. If it's not what you want - stop and change it. Don't just keep going and expect it will get better. This painting comes right out of your heart. The only thing worse than yellow snow is green snow.",
-    discord: "https://www.google.com",
-    email: "google@google.com",
+      "ACM W aims to facilitate a thriving community of women in computing through the organizing of great activities, networking, and mentorship programs. We aim to address the issue of retention of women in computer science by creating a support system for academic and professional pursuits and empowering our members to pursue their goals through knowledge and education about women's contribution to technology. This group is open to all students (male or female) that wish to promote women in computing.",
+    discord: "https://discord.gg/hh2wkmq",
+    email: "acmw@mst.edu",
     logoLink: "https://source.unsplash.com/random",
     name: "Women",
-    website: "https://www.google.com"
+    website: "https://acmw.mst.edu"
   },
   {
     color: "aquamarine",
     desc:
-      "There we are. Nice little clouds playing around in the sky. If it's not what you want - stop and change it. Don't just keep going and expect it will get better. This painting comes right out of your heart. The only thing worse than yellow snow is green snow.",
-    discord: "https://www.google.com",
-    email: "google@google.com",
+      "ACM Hack introduces students to the world of hackathons: weekend long events where students come together to turn ideas into reality. We organize travel and attendance to these events, which take place across the Midwest and the country.  We also run PickHacks, the annual student-run hackathon held at S&T in March. Alongside hackathons, we also host events about various design thinking concepts, hackathon preparation, and much more. Skill level and major doesn’t matter here — as long as you like building new things and meeting awesome people, ACM Hack is right for you.",
+    discord: "https://discord.gg/zkwtu9p",
+    email: "pickhacks@mst.edu",
     logoLink: "https://source.unsplash.com/random",
     name: "Hack",
-    website: "https://www.google.com"
+    website: "https://pickhacks.io"
   }
 ];
 
