@@ -1,48 +1,27 @@
 import * as React from "react";
-import styled from 'styled-components';
-import Hero from './sections/Hero';
-import About from './sections/About';
-import Nav from './sections/Nav';
+import styled from "styled-components";
+
+// import About from "./sections/About";
+// import Events from "./sections/Events";
+// import { Footer } from "./sections/Footer";
+import Hero from "./sections/Hero";
+import { Nav } from "./sections/Nav";
+// import { SIGs } from "./sections/SIGs";
+// import { Sponsors } from "./sections/Sponsors";
 
 const NavHeroWrapper = styled.div`
   height: 100vh;
+  background: #f4f5f8;
+  display: flex;
+  flex-direction: column;
+  max-height: 1000px;
+  position: relative;
+  overflow: hidden;
 
-  @media all and (max-width: 1700px) {
-    height: 885px;
+  @media screen and (min-height: 1000px) {
+    height: 600px;
   }
-
-  @media all and (max-width: 1600px) {
-    height: 775px;
-  }
-
-  @media all and (max-width: 1475px) {
-    height: 700px;
-  }
-
-  @media all and (max-width: 1300px) {
-    height: 625px;
-  }
-
-  @media all and (max-width: 1150px) {
-    height: 550px;
-  }
-
-  @media all and (max-width: 1000px) {
-    height: 490px;
-  }
-
-  @media all and (max-width: 900px) {
-    height: 425px;
-  }
-
-  @media all and (max-width: 800px) {
-    height: 350px;
-  }
-
-  @media all and (max-width: 680px) {
-    height: 100%;
-  }
-`
+`;
 
 const HomePage: React.FC<{}> = () => {
   return (
@@ -51,7 +30,6 @@ const HomePage: React.FC<{}> = () => {
         <Nav />
         <Hero />
       </NavHeroWrapper>
-      <About />
     </div>
   );
 };

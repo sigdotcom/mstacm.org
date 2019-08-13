@@ -2,32 +2,31 @@ import React from "react";
 import { Element } from "react-scroll";
 import styled from "styled-components";
 
+import { PageConstraint } from "../../../common/PageConstraint";
+
+
 const Wrapper = styled.div`
   .sectionWrapper {
     position: relative;
     display: flex;
-    justify-content: space-around;
-    align-items: start;
-    padding: 75px 50px;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+    padding: 75px 5% 0 5%;
     background: white;
-  }
-
-  @media all and (max-width: 1400px) {
-    .sectionWrapper {
-      padding: 65px 45px;
-    }
   }
 
   @media all and (max-width: 1200px) {
     .sectionWrapper {
-      padding: 57px 40px;
+      padding: 65px 5% 0 5%;
     }
   }
 
   @media all and (max-width: 800px) {
     .sectionWrapper {  
       flex-direction: column;
-      padding 5%;
+      padding 30px 5% 0 5%;
     }
   }
 `;
@@ -50,88 +49,60 @@ const Section = styled.div`
 
 const SectionHeader = styled.h1`
   color: #ef9c6d;
-  font-family: Roboto;
-  font-size: 40px;
-  font-weight: 500;
-  margin: 0;
-
-  @media all and (max-width: 1400px) {
-    font-size: 36px;
-  }
-
-  @media all and (max-width: 1200px) {
-    font-size: 33px;
-  }
-
-  @media all and (max-width: 1000px) {
-    font-size: 30px;
-  }
-
-  @media all and (max-width: 900px) {
-    font-size: 29px;
-  }
-
-  @media all and (max-width: 480px) {
-    font-size: 36px;
-  }
+  font-family: "Roboto", sans-serif;
+  font-size: 26px;
+  margin: 30px 0 20px 0;
 `;
 
 const SectionText = styled.p`
-  color: #092b35;
-  font-size: 18px;
-  font-weight: 600;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 17px;
+`;
 
-  @media all and (max-width: 1400px) {
-    font-size: 16px;
-  }
-
-  @media all and (max-width: 1200px) {
-    font-size: 15px;
-  }
-
-  @media all and (max-width: 1000px) {
-    font-size: 14px;
-  }
-
-  @media all and (max-width: 900px) {
-    font-size: 13.5px;
-  }
-
-  @media all and (max-width: 480px) {
-    font-size: 19px;
-  }
+const Line = styled.hr`
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 100px 0;
 `;
 
 const About: React.FC<{}> = () => {
   return (
-    <Wrapper>
-      <Element className="sectionWrapper" name="about">
-        <Section>
-          <SectionHeader>WHO WE ARE</SectionHeader>
-          <SectionText>
-            S&T ACM is Missouri S&T's largest computing organization with 120+
-            members. ACM alumni have gone on to join companies such as Google,
-            Microsoft, Amazon, and many more.
-          </SectionText>
-        </Section>
-        <Section>
-          <SectionHeader>WHAT WE DO</SectionHeader>
-          <SectionText>
-            We consist of 7 committees that focus on different computing topics
-            for students and host some of Missouri S&T's most popular events
-            including PickHacks and MegaMiner AI.
-          </SectionText>
-        </Section>
-        <Section>
-          <SectionHeader>WHY WE DO IT</SectionHeader>
-          <SectionText>
-            S&T ACM hopes to build a community of like-minded individuals
-            interested in enriching their college experience and building
-            relationships with companies and other students.
-          </SectionText>
-        </Section>
-      </Element>
-    </Wrapper>
+    <PageConstraint>
+      <Wrapper>
+        <Element className="sectionWrapper" name="about">
+          <Section>
+            <SectionHeader>WHAT WE DO</SectionHeader>
+            <SectionText>
+              Mosquitofish sauger bigscale bigmouth buffalo freshwater eel, “red
+              snapper Pacific viperfish Black pickerel, deep sea bonefish.”
+              Squarehead catfish bramble shark, pencil catfish warbonnet
+              houndshark European minnow, whiting oceanic.
+            </SectionText>
+          </Section>
+          <Section>
+            <SectionHeader>WHY WE DO IT</SectionHeader>
+            <SectionText>
+              Mosquitofish sauger bigscale bigmouth buffalo freshwater eel, “red
+              snapper Pacific viperfish Black pickerel, deep sea bonefish.”
+              Squarehead catfish bramble shark, pencil catfish warbonnet
+              houndshark European minnow, whiting oceanic.
+            </SectionText>
+          </Section>
+          <Section>
+            <SectionHeader>HOW WE DO IT</SectionHeader>
+            <SectionText>
+              Mosquitofish sauger bigscale bigmouth buffalo freshwater eel, “red
+              snapper Pacific viperfish Black pickerel, deep sea bonefish.”
+              Squarehead catfish bramble shark, pencil catfish warbonnet
+              houndshark European minnow, whiting oceanic.
+            </SectionText>
+          </Section>
+        </Element>
+        <Line />
+      </Wrapper>
+    </PageConstraint>
   );
 };
 

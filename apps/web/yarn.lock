@@ -3997,6 +3997,11 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
+eva-icons@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/eva-icons/-/eva-icons-1.1.1.tgz#a5e7529ed4d04e913db9db33b749f0dac415186a"
+  integrity sha512-Uf7JQMA1lWQLLtHuk1lbMlwP4i3W0jjTy5SCYBGeR6DLPub5Ls2QiJlVT59llphVObXSVwaMuofevwgUZWf1CQ==
+
 eventemitter3@^3.0.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
@@ -9103,6 +9108,18 @@ react-error-overlay@^5.1.4:
   version "5.1.6"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.1.6.tgz#0cd73407c5d141f9638ae1e0c63e7b2bf7e9929d"
   integrity sha512-X1Y+0jR47ImDVr54Ab6V9eGk0Hnu7fVWGeHQSOXHf/C2pF9c6uy3gef8QUeuUiWlNb0i08InPSE5a/KJzNzw1Q==
+
+react-eva-icons@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/react-eva-icons/-/react-eva-icons-0.0.8.tgz#779e5f1def0e5336ca85847f5b7af79d3f71b890"
+  integrity sha512-zuumG1Ijld0tOrOiwJ01GownYKWDsgUgNDFu2ODTtjUBL9pYvIH5AGRIa4h2rek03wLOvyiQbgbSW6aoeZIvrQ==
+  dependencies:
+    eva-icons "^1.1.1"
+
+react-fullscreen-image@0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/react-fullscreen-image/-/react-fullscreen-image-0.0.3.tgz#c3986e1da0453616afa4d7ba50456b68fd6539c5"
+  integrity sha512-A4zXvDox4WConU/qUpOKUCoRmV2mGi2DPTXNhG9I1x+W8WWwpKQMmrbWjLAe/UudhtpJRlebkIC3sPU6IHR3Nw==
 
 react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.8.6"
