@@ -1,16 +1,18 @@
 import * as React from "react";
+import { Link } from "react-scroll";
 import styled from "styled-components";
-import {Link} from "react-scroll";
+
+import { PageConstraint } from "../../../common/PageConstraint";
 
 const HLine = styled.div`
   width: 85%;
   margin-left: 7.5%;
-  border-top: 3px solid #D1D6D8;
+  border-top: 3px solid #d1d6d8;
 
   @media all and (max-width: 680px) {
     margin-left: 0;
-  } 
-`
+  }
+`;
 
 const Foot = styled.div`
   height: 100%;
@@ -22,8 +24,8 @@ const Foot = styled.div`
     align-items: center;
     height: 100%;
     padding: 0;
-  } 
-`
+  }
+`;
 const Links = styled.div`
   display: flex;
   justify-content: space-between;
@@ -34,24 +36,24 @@ const Links = styled.div`
   a {
     margin-bottom: 10px;
     font-size: 20px;
-    color: #092B35;
+    color: #092b35;
   }
 
   a:hover {
-    color: #42C0FC;
+    color: #42c0fc;
   }
 
   @media all and (max-width: 1200px) {
     a {
       font-size: 18px;
     }
-  } 
+  }
 
   @media all and (max-width: 1000px) {
     a {
       font-size: 16px;
     }
-  } 
+  }
 
   @media all and (max-width: 800px) {
     width: 65%;
@@ -59,7 +61,7 @@ const Links = styled.div`
     a {
       font-size: 15px;
     }
-  } 
+  }
 
   @media all and (max-width: 680px) {
     width: 100%;
@@ -72,9 +74,8 @@ const Links = styled.div`
     a {
       font-size: 20px;
     }
-  } 
-
-`
+  }
+`;
 
 const Nav1 = styled.div`
   display: flex;
@@ -130,7 +131,7 @@ const Nav1 = styled.div`
       font-size: 16px;
     }
   } 
-`
+`;
 
 const Nav2 = styled.div`
   display: flex;
@@ -139,8 +140,8 @@ const Nav2 = styled.div`
 
   @media all and (max-width: 680px) {
     display: none;
-  } 
-`
+  }
+`;
 
 const Nav3 = styled.div`
   display: flex;
@@ -152,8 +153,8 @@ const Nav3 = styled.div`
     flex-direction: row;
     margin-left: 0;
     margin-bottom: 35px;
-  } 
-`
+  }
+`;
 
 const Nav3a = styled.div`
   display: flex;
@@ -161,8 +162,8 @@ const Nav3a = styled.div`
 
   @media all and (max-width: 680px) {
     width: 50%;
-  } 
-`
+  }
+`;
 
 const Nav3b = styled.div`
   display: flex;
@@ -170,8 +171,8 @@ const Nav3b = styled.div`
 
   @media all and (max-width: 680px) {
     width: 50%;
-  } 
-`
+  }
+`;
 
 const Nav4 = styled.div`
   display: flex;
@@ -181,61 +182,97 @@ const Nav4 = styled.div`
   @media all and (max-width: 680px) {
     width: 85%;
     flex-direction: row;
-  } 
-`
+  }
+`;
 
 const Nav4a = styled.div`
   display: flex;
   flex-direction: column;
   width: 50%;
-`
+`;
 
 const Nav4b = styled.div`
   display: flex;
   flex-direction: column;
   width: 50%;
-`
+`;
 
 const Footer: React.FC<{}> = () => {
   return (
-    <div style={{background: "#DFE6E9"}}>
-      <HLine></HLine>
-      <Foot>
-        <Links>
-          <Nav2>
-            <Link to="about" smooth={true}>About Us</Link>
-            <Link to="groups" smooth={true}>Groups</Link>
-            <Link to="events" smooth={true}>Events</Link>
-            <Link to="sponsors" smooth={true}>Sponsors</Link>
-          </Nav2> 
-          <Nav3>
-            <Nav3a>
-              <a href="https://github.com/sigdotcom/mstacm.org/blob/master/LICENSE" target="_blank">License</a>
-              <a href="https://github.com/sigdotcom/mstacm.org" target="_blank">Source Code</a>
-            </Nav3a>
-            <Nav3b>
-              <a href="https://www.acm.org/" target="_blank">About ACM</a>
-              <a href="https://women.acm.org/" target="_blank">About ACM-W</a>
-            </Nav3b>
-          </Nav3>
-          <Nav4>
-            <Nav4a>
-              <a href="https://discordapp.com/invite/4t954Ad" target="_blank">ACM Comp</a>
-              <a href="https://modata.blog/" target="_blank">ACM Data</a>
-              <a href="https://siggame.io/" target="_blank">ACM Game</a>
-            </Nav4a>
-            <Nav4b>
-              <a href="https://pickhacks.io/" target="_blank">ACM Hack</a>
-              <a href="https://acmsigsec.mst.edu/" target="_blank">ACM Sec</a>
-              <a href="https://mst.orgsync.com/org/acmw/home" target="_blank">ACM-W</a>
-            </Nav4b>
-          </Nav4>
-        </Links>
-        <Nav1>
-            <img src={require('../../../../static/img/web.png')}></img>
+    <div style={{ background: "#DFE6E9" }}>
+      <PageConstraint>
+        <HLine />
+        <Foot>
+          <Links>
+            <Nav2>
+              <Link to="about" smooth={true}>
+                About Us
+              </Link>
+              <Link to="groups" smooth={true}>
+                Groups
+              </Link>
+              <Link to="events" smooth={true}>
+                Events
+              </Link>
+              <Link to="sponsors" smooth={true}>
+                Sponsors
+              </Link>
+            </Nav2>
+            <Nav3>
+              <Nav3a>
+                <a
+                  href="https://github.com/sigdotcom/mstacm.org/blob/master/LICENSE"
+                  target="_blank"
+                >
+                  License
+                </a>
+                <a
+                  href="https://github.com/sigdotcom/mstacm.org"
+                  target="_blank"
+                >
+                  Source Code
+                </a>
+              </Nav3a>
+              <Nav3b>
+                <a href="https://www.acm.org/" target="_blank">
+                  About ACM
+                </a>
+                <a href="https://women.acm.org/" target="_blank">
+                  About ACM-W
+                </a>
+              </Nav3b>
+            </Nav3>
+            <Nav4>
+              <Nav4a>
+                <a href="https://discordapp.com/invite/4t954Ad" target="_blank">
+                  ACM Comp
+                </a>
+                <a href="https://modata.blog/" target="_blank">
+                  ACM Data
+                </a>
+                <a href="https://siggame.io/" target="_blank">
+                  ACM Game
+                </a>
+              </Nav4a>
+              <Nav4b>
+                <a href="https://pickhacks.io/" target="_blank">
+                  ACM Hack
+                </a>
+                <a href="https://acmsigsec.mst.edu/" target="_blank">
+                  ACM Sec
+                </a>
+                <a href="https://mst.orgsync.com/org/acmw/home" target="_blank">
+                  ACM-W
+                </a>
+              </Nav4b>
+            </Nav4>
+          </Links>
+          <Nav1>
+            <img src={require("../../../../static/img/web.png")} />
             <h2>Copyright © 2019 ACM Web.</h2>
-        </Nav1>
-      </Foot>
+          </Nav1>
+        </Foot>
+      </PageConstraint>
     </div>
   );
 };

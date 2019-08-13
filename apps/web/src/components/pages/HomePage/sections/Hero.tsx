@@ -30,6 +30,7 @@ const HeroTextWrapper = styled.div`
   top: 0;
   width: 100%;
   pointer-events: none;
+  margin-top: -120px;
 
   @media screen and (min-height: 1000px) {
     height: 600px;

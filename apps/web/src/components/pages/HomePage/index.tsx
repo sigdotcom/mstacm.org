@@ -16,6 +16,7 @@ const NavHeroWrapper = styled.div`
   flex-direction: column;
   max-height: 1000px;
   position: relative;
+  overflow: hidden;
 
   @media screen and (min-height: 1000px) {
     height: 600px;
