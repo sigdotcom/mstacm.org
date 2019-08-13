@@ -35,8 +35,8 @@ const Links = styled.div`
 
   a {
     margin-bottom: 10px;
-    font-size: 20px;
-    color: #092b35;
+    font-size: 15px;
+    color: #496b75;
   }
 
   a:hover {
@@ -45,13 +45,13 @@ const Links = styled.div`
 
   @media all and (max-width: 1200px) {
     a {
-      font-size: 18px;
+      font-size: 15px;
     }
   }
 
   @media all and (max-width: 1000px) {
     a {
-      font-size: 16px;
+      font-size: 15px;
     }
   }
 
@@ -72,7 +72,7 @@ const Links = styled.div`
     flex-direction: column;
 
     a {
-      font-size: 20px;
+      font-size: 15px;
     }
   }
 `;
@@ -86,7 +86,7 @@ const Nav1 = styled.div`
   width: 35%;
 
   h2 {
-    font-size: 20px;
+    font-size: 17px;
   }
 
   img {
@@ -97,7 +97,7 @@ const Nav1 = styled.div`
     margin-top: -23px
     
     h2 {
-      font-size: 18px;
+      font-size: 17px;
     }
   }
   
@@ -105,7 +105,7 @@ const Nav1 = styled.div`
     margin-top: -8px;
 
     h2 {
-      font-size: 16px;
+      font-size: 17px;
     }
 
     img {
@@ -117,7 +117,7 @@ const Nav1 = styled.div`
     margin-top: -10px;
 
     h2 {
-      font-size: 12px;
+      font-size: 17px;
     }
   }
 
@@ -128,7 +128,7 @@ const Nav1 = styled.div`
     width: 100%;
 
     h2 {
-      font-size: 16px;
+      font-size: 17px;
     }
   } 
 `;
