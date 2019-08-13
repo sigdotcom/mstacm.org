@@ -1,4 +1,5 @@
 import React from "react";
+import Icon from "react-eva-icons";
 import windowSize from "react-window-size";
 import styled from "styled-components";
 import { ISIG } from "./interfaces";
@@ -96,10 +97,6 @@ const SIGDiscord = styled.a`
   }
 `;
 
-const SIGEmail: any = styled.a`
-  padding: 10px 34px;
-  align-self: flex-end;
-`;
 const SIGLogo: any = styled.img`
   min-width: 70px;
   max-width: 70px;
@@ -109,9 +106,19 @@ const SIGLogo: any = styled.img`
   border-radius: 50%;
 `;
 
+const SIGEmail: any = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const ButtonRow: any = styled.div`
+  display: flex;
+`;
+
 const Row: any = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 100%;
   flex-wrap: wrap;
 `;
 
@@ -129,11 +136,15 @@ const SIGDetailPaneBase: React.FC<ISIGDetailPaneProps> = (props: any): any => {
       <Row>
         <SIGDesc>{sig.desc}</SIGDesc>
         <Row>
-          <Row>
+          <ButtonRow>
             <SIGWebsite href={sig.website}>Website</SIGWebsite>
             <SIGDiscord href={sig.discord}>Discord</SIGDiscord>
-          </Row>
-          <SIGEmail href={"mailto:" + sig.email}>Email</SIGEmail>
+          </ButtonRow>
+          <SIGEmail>
+            <a href={"mailto:" + sig.email}>
+              <Icon name="email" size="large" fill="#777" />
+            </a>
+          </SIGEmail>
         </Row>
       </Row>
     </PaneWrapper>

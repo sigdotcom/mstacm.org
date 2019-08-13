@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { ISIG } from "./interfaces";
 import { SIGsDisplay } from "./SIGsDisplay";
 
+import Icon from "react-eva-icons";
+
 import { PageConstraint } from "../../../common/PageConstraint";
 
 const SIGsData: ISIG[] = [
@@ -90,6 +92,9 @@ const Heading: any = styled.h1`
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   font-size: 23px;
+  & i {
+    margin-right: 10px;
+  }
 `;
 
 const Description: any = styled.p`
@@ -109,7 +114,9 @@ function SIGs(): any {
   return (
     <PageConstraint>
       <SIGsWrapper>
-        <Heading>Our Communities</Heading>
+        <Heading>
+          <Icon name="people" size="large" fill="#777" /> Our Communities
+        </Heading>
         <Description>
           Members of our communities (formerly known as SIGs) hone their
           computing skills in special topics, listed below, and work towards
