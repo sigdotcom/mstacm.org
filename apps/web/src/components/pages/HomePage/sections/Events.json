@@ -2,63 +2,75 @@
     "events": [
         {
             "img_path": "flier.jpg",
-            "day": "05",
-            "month": "Mar",
+            "day": "27",
+            "month": "AUG",
             "sig_logo": "icon.svg",
-            "title": "PickHacks",
-            "location": "Random Street, Rolla, MO, United States",
-            "time": "10:00am - 12:00pm",
-            "desc": "Squarehead catfish bramble shark, houndshark buffalo freshwater eel, “red snapper Pacific viperfish Black pickerel, deep sea bonefish. Squarehead catfish "
+            "title": "Recruitment Drive",
+            "location": "Toomey Hall Rm. 199",
+            "time": "5:00pm - 6:00pm",
+            "desc": "Interested in getting involved in an organization this semester? Check out ACM's Recruitment Drive! Learn about our six special interest groups and ACM-W focusing on a variety of computer science topics while building your resume.",
+            "shortDesc": "Interested in getting involved in an organization this semester?",
+            "group": "ACM General"
         },
         {
             "img_path": "flier.jpg",
-            "day": "10",
-            "month": "Dec",
+            "day": "24",
+            "month": "SEPT",
             "sig_logo": "icon.svg",
-            "title": "PickHacks",
-            "location": "Random Street, Rolla, MO, United States",
-            "time": "10:00am - 12:00pm",
-            "desc": "Squarehead catfish bramble shark, houndshark buffalo freshwater eel, “red snapper Pacific viperfish Black pickerel, deep sea bonefish. Squarehead catfish "
+            "title": "Career Fair Dinner",
+            "location": "Alex's Pizza",
+            "time": "6:00pm - 9:00pm",
+            "desc": "Talk to companies looking for Computer Science students for longer than a 2-minute career fair interaction, without the hassle of waiting in long lines. Join ACM at our fall Career Fair Dinner! Reminder: You must be an ACM member to participate in the dinner.",
+            "shortDesc": "Talk to companies looking for Computer Science students for longer than a 2-minute career fair interaction, without the hassle of waiting in long lines",
+            "group": "ACM General"
         },
         {
             "img_path": "flier.jpg",
-            "day": "02",
-            "month": "Nov",
+            "day": "19",
+            "month": "OCT",
             "sig_logo": "icon.svg",
-            "title": "PickHacks",
-            "location": "Random Street, Rolla, MO, United States",
-            "time": "10:00am - 12:00pm",
-            "desc": "Squarehead catfish bramble shark, houndshark buffalo freshwater eel, “red snapper Pacific viperfish Black pickerel, deep sea bonefish. Squarehead catfish "
+            "title": "Programming Cup",
+            "location": "TBD",
+            "time": "TBD",
+            "desc": "Come out and see who is the best programmer on campus! A number of programming languages are accepted including: C++, Java, Python 2 & 3, C, C#, Go, Javascript, Objective-C, PHP, Prolog, Ruby, and Scala.",
+            "shortDesc": "Come out and see who is the best programmer on campus!",
+            "group": "ACM Comp"
         },
         {
             "img_path": "flier.jpg",
-            "day": "05",
-            "month": "Mar",
+            "day": "26",
+            "month": "OCT",
             "sig_logo": "icon.svg",
-            "title": "PickHacks",
-            "location": "Random Street, Rolla, MO, United States",
-            "time": "10:00am - 12:00pm",
-            "desc": "Squarehead catfish bramble shark, houndshark buffalo freshwater eel, “red snapper Pacific viperfish Black pickerel, deep sea bonefish. Squarehead catfish "
+            "title": "WiFi Workshop",
+            "location": "TBD",
+            "time": "TBD",
+            "desc": "A practical workshop on common WiFi vulnerabilities.",
+            "shortDesc": "A practical workshop on common WiFi vulnerabilities.",
+            "group": "ACM Sec"
         },
         {
             "img_path": "flier.jpg",
-            "day": "05",
-            "month": "Mar",
+            "day": "31",
+            "month": "OCT",
             "sig_logo": "icon.svg",
-            "title": "PickHacks",
-            "location": "Random Street, Rolla, MO, United States",
-            "time": "10:00am - 12:00pm",
-            "desc": "Squarehead catfish bramble shark, houndshark buffalo freshwater eel, “red snapper Pacific viperfish Black pickerel, deep sea bonefish. Squarehead catfish "
+            "title": "Lockpicking Fundraiser",
+            "location": "TBD",
+            "time": "TBD",
+            "desc": "Come learn how to lockpick and compete to win a lockpicking set. Proceeds support ACM Security.",
+            "shortDesc": "Come learn how to lockpick and compete to win a lockpicking set. Proceeds support ACM Security.",
+            "group": "ACM Sec"
         },
         {
             "img_path": "flier.jpg",
-            "day": "05",
-            "month": "Mar",
+            "day": "06",
+            "month": "DEC",
             "sig_logo": "icon.svg",
-            "title": "PickHacks",
-            "location": "Random Street, Rolla, MO, United States",
-            "time": "10:00am - 12:00pm",
-            "desc": "Squarehead catfish bramble shark, houndshark buffalo freshwater eel, “red snapper Pacific viperfish Black pickerel, deep sea bonefish. Squarehead catfish "
+            "title": "MinerLAN",
+            "location": "BCH Atrium",
+            "time": "6:00pm - 12:00am",
+            "desc": "Come relax, eat food, and play games to win prizes with ACM before starting finals!",
+            "shortDesc": "Come relax, eat food, and play games to win prizes with ACM before starting finals!",
+            "group": "ACM General"
         }
     ]
 }
