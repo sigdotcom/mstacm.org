@@ -20,7 +20,7 @@ const HeroImage = styled.img`
     pointer-events: none;
   }
 
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: 1300px) and (min-height: 800px) {
     width: 940px;
   }
 
