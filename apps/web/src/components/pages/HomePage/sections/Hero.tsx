@@ -185,6 +185,9 @@ const Hero: React.FC<{}> = () => {
 
     if (re.test(email)) {
       // Valid email
+      window.location.href =
+        "https://docs.google.com/forms/d/e/1FAIpQLScGTAD8g2mhZWRl9DqYyrLyEw6FcXfiQo9hPlPxRME9Z0HmEg/viewform?entry.1329536951=" +
+        email;
     } else {
       // Invalid email
       alert("Invalid email.");
