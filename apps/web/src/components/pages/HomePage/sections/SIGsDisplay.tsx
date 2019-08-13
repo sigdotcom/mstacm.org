@@ -5,9 +5,6 @@ import { SIGList } from "./SIGList";
 
 const DisplayWrapper: any = styled.div`
   display: flex;
-  max-width: 900px;
-  width: 100%;
-  margin: auto;
   flex-direction: column;
   justify-content: space-between;
 

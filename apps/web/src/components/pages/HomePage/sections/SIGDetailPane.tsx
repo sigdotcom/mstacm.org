@@ -4,30 +4,30 @@ import styled from "styled-components";
 import { ISIG } from "./interfaces";
 
 const PaneWrapper: any = styled.div`
-  border: 2px solid lightgray;
-  border-radius: 0 0 10px 10px;
-  padding: 25px;
+  border-top: 2px solid #ddd;
+  padding: 35px 25px;
   flex: 1;
 
   @media only screen and (min-width: 768px) {
-    border: 2px solid lightgray;
-    border-left: 4px solid red;
-    border-radius: 0 0 10px 10px;
-    margin-left: 25px;
+    border-top: none;
+    border-left: 2px solid #ddd;
+    margin-left: 35px;
+    padding: 35px 25px 35px 45px;
   }
 `;
 
 const SIGName: any = styled.h1`
-  font-family: "Roboto";
+  font-family: "Roboto", sans-serif;
+  font-size: 21px;
+  display: inline;
+  margin-left: 20px;
 `;
 const SIGDesc: any = styled.p`
   margin-bottom: 20px;
+  font-size: 17px;
+  rgba(0, 0, 0, 0.65);
 `;
-const SIGButton: any = styled.a`
-  border-radius: 4px;
-  padding: 10px 34px;
-  transition: 0.1s ease-in-out all;
-`;
+/*
 const SIGWebsite: any = styled(SIGButton)`
   background: #11bb66;
   color: white;
@@ -37,6 +37,32 @@ const SIGWebsite: any = styled(SIGButton)`
     background: #00aa55;
   }
 `;
+*/
+
+const SIGWebsite = styled.a`
+  transition: 0.2s ease-in-out;
+  font-weight: bold;
+  font-family: "Nunito Sans", sans-serif;
+  border-radius: 30px;
+  width: 140px;
+  height: 50px;
+  line-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  color: #2d9cdb;
+  border: 3px solid #2d9cdb;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover {
+    background: #2d9cdb;
+    color: #fff;
+  }
+`;
+
+/*
 const SIGDiscord: any = styled(SIGButton)`
   background: #1166bb;
   color: white;
@@ -45,6 +71,31 @@ const SIGDiscord: any = styled(SIGButton)`
     background: #0055aa;
   }
 `;
+*/
+
+const SIGDiscord = styled.a`
+  background: #42c0fc;
+  border: none;
+  border-radius: 30px;
+  margin-left: 20px;
+  color: #fff;
+  font-size: 17px;
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: bold;
+  vertical-align: top;
+  transition: 0.2s ease-in-out all;
+  cursor: pointer;
+  width: 140px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+
+  &:hover {
+    background: #1290cc;
+    color: #fff;
+  }
+`;
+
 const SIGEmail: any = styled.a`
   padding: 10px 34px;
   align-self: flex-end;
@@ -71,31 +122,19 @@ interface ISIGDetailPaneProps {
 const SIGDetailPaneBase: React.FC<ISIGDetailPaneProps> = (props: any): any => {
   const { sig }: any = props;
 
-  const styles: any = {};
-
-  if (props.windowWidth < 768) {
-    styles.borderRadius = "0 0 10px 10px";
-    styles.borderTop = "4px solid " + sig.color;
-  } else {
-    styles.borderRadius = "0 10px 10px 0";
-    styles.borderLeft = "4px solid " + sig.color;
-  }
-
   return (
-    <PaneWrapper style={styles}>
+    <PaneWrapper>
       <SIGLogo src={sig.logoLink} />
+      <SIGName>ACM {sig.name}</SIGName>
       <Row>
-        <div>
-          <SIGName>ACM {sig.name}</SIGName>
-          <SIGDesc>{sig.desc}</SIGDesc>
+        <SIGDesc>{sig.desc}</SIGDesc>
+        <Row>
           <Row>
-            <Row>
-              <SIGWebsite href={sig.website}>Website</SIGWebsite>
-              <SIGDiscord href={sig.discord}>Discord</SIGDiscord>
-            </Row>
-            <SIGEmail href={"mailto:" + sig.email}>Email</SIGEmail>
+            <SIGWebsite href={sig.website}>Website</SIGWebsite>
+            <SIGDiscord href={sig.discord}>Discord</SIGDiscord>
           </Row>
-        </div>
+          <SIGEmail href={"mailto:" + sig.email}>Email</SIGEmail>
+        </Row>
       </Row>
     </PaneWrapper>
   );

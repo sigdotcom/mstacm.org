@@ -44,7 +44,7 @@ const HeroText = styled.div`
   position: relative;
   z-index: 3;
   padding: 16vh 0;
-  pointer-events: auto;
+  pointer-events: none;
 
   @media screen and (min-height: 1000px) {
     padding: 12vh 0;
@@ -135,6 +135,7 @@ const MailingText = styled.p`
 
 const InputWrapper = styled.form`
   margin-top: 30px;
+  pointer-events: auto;
 
   @media screen and (min-width: 768px) {
     margin: 0;

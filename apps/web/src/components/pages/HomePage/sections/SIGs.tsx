@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { ISIG } from "./interfaces";
 import { SIGsDisplay } from "./SIGsDisplay";
 
+import { PageConstraint } from "../../../common/PageConstraint";
+
 const SIGsData: ISIG[] = [
   {
     color: "skyblue",
@@ -79,25 +81,46 @@ const SIGsData: ISIG[] = [
 const SIGsWrapper: any = styled.div`
   margin: auto;
   width: 100%;
-  max-width: 900px;
-  padding: 25px;
+  max-width: 1200px;
+  padding: 0 5%;
+  font-family: "Nunito Sans", sans-serif;
+`;
+
+const Heading: any = styled.h1`
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-size: 23px;
 `;
 
 const Description: any = styled.p`
   margin-bottom: 20px;
+  font-size: 19px;
+`;
+
+const Line: any = styled.hr`
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 100px 0;
 `;
 
 function SIGs(): any {
   return (
-    <SIGsWrapper>
-      <h1>Special Interest Groups</h1>
-      <Description>
-        Members of our SIGs focus their skills in computing on special topics,
-        listed below, and work towards highly specialized goals in
-        career-making.
-      </Description>
-      <SIGsDisplay sigs={SIGsData} />
-    </SIGsWrapper>
+    <PageConstraint>
+      <SIGsWrapper>
+        <Heading>Our Communities</Heading>
+        <Description>
+          Members of our communities (formerly known as SIGs) hone their
+          computing skills in special topics, listed below, and work towards
+          highly specialized goals in development and career-making. Click on
+          the topic to learn more about the community and find out how to get
+          involved!
+        </Description>
+        <SIGsDisplay sigs={SIGsData} />
+      </SIGsWrapper>
+      <Line />
+    </PageConstraint>
   );
 }
 
