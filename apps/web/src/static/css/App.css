@@ -1,66 +1,62 @@
 @import "~antd/dist/antd.css";
-@import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&display=swap');
 
 @font-face {
-  font-family: 'Nunito';
-  src: url('../fonts/Nunito Sans/NunitoSans-Regular.ttf');
+  font-family: "Nunito Sans";
+  src: url("../fonts/Nunito Sans/NunitoSans-Regular.ttf");
 }
 
 @font-face {
-  font-family: 'Nunito';
-  src: url('../fonts/Nunito Sans/NunitoSans-SemiBold.ttf');
+  font-family: "Nunito Sans";
+  src: url("../fonts/Nunito Sans/NunitoSans-SemiBold.ttf");
   font-weight: 600;
 }
 
 @font-face {
-  font-family: 'Nunito';
-  src: url('../fonts/Nunito Sans/NunitoSans-Bold.ttf');
+  font-family: "Nunito Sans";
+  src: url("../fonts/Nunito Sans/NunitoSans-Bold.ttf");
   font-weight: 700;
 }
 
 @font-face {
-  font-family: 'Nunito';
-  src: url('../fonts/Nunito Sans/NunitoSans-ExtraBold.ttf');
+  font-family: "Nunito Sans";
+  src: url("../fonts/Nunito Sans/NunitoSans-ExtraBold.ttf");
   font-weight: 800;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('../fonts/Roboto/Roboto-Regular.ttf');
+  font-family: "Roboto";
+  src: url("../fonts/Roboto/Roboto-Regular.ttf");
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('../fonts/Roboto/Roboto-Medium.ttf');
+  font-family: "Roboto";
+  src: url("../fonts/Roboto/Roboto-Medium.ttf");
   font-weight: 500;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('../fonts/Roboto/Roboto-Bold.ttf');
+  font-family: "Roboto";
+  src: url("../fonts/Roboto/Roboto-Bold.ttf");
   font-weight: 700;
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
-body::-webkit-scrollbar-track
-{
-    border-radius: 10px;
-    background-color: #F5F5F5;
+body::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #f5f5f5;
 }
 
-body::-webkit-scrollbar
-{
-    width: 12px;
-    background-color: #F5F5F5;
+body::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
 }
 
-body::-webkit-scrollbar-thumb
-{
-    border-radius: 10px;
-    background-color: #BBBBBB;
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #bbbbbb;
 }

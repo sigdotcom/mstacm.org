@@ -1,138 +1,93 @@
 import React from "react";
-import styled from 'styled-components';
-import { Link } from 'react-scroll';
+import { Link } from "react-scroll";
+import styled from "styled-components";
+
+import { PageConstraint } from "../../../common/PageConstraint";
+
+const BG = styled.div`
+  height: 120px;
+  width: 100%;
+`;
 
 const Wrapper = styled.div`
-  position: relative;
+  padding: 20px 5%;
   display: flex;
   align-items: center;
-  height: 120px;
-  background: #F4F5F8;
-
-  button:hover {
-    background: #2D9CDB;
-    cursor: pointer;
-  }
-
-  @media all and (max-width: 1475px) {
-    margin-top: -10px;
-  }
-
-  @media all and (max-width: 1100px) {
-    margin-top: -18.5px;
-  }
-
-  @media all and (max-width: 680px) {
-    button:hover {
-      background: inherit;
-    }
-  }
-`
+  justify-content: space-between;
+`;
 
 const Logo = styled.img`
   width: 85px;
-  margin-left: 5%;
-
-  @media all and (max-width: 1475px) {
-    width: 77px;
-  }
-
-  @media all and (max-width: 1100px) {
-    width: 72px;
-  }
-
-  @media all and (max-width: 680px) {
-    width: 72px;
-  }
-`
+  height: 85px;
+`;
 
 const MenuItems = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 375px;
-  margin-left: 4%;
+  display: none;
 
-  @media all and (max-width: 1475px) {
-    width: 337px;
+  @media screen and (min-width: 700px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 340px;
+    margin-left: 30px;
   }
+`;
 
-  @media all and (max-width: 1100px) {
-    width: 311px;
-  }
-
-  @media all and (max-width: 680px) {
-    display: none;
-  }
-`
-
-const MenuItem = styled.a`
-  color: #376B83;
+const MenuItem = styled.div`
+  color: #376b83;
   font-weight: 600;
-  font-size: 20px;
-
-  @media all and (max-width: 1475px) {
-    font-size: 18px;
-  }
-
-  @media all and (max-width: 1100px) {
-    font-size: 16.5px;
-  }
-`
+  font-size: 18px;
+  padding: 5px 10px;
+`;
 
 const SignIn = styled.button`
-  position: absolute;
-  right: 5%;
-  background: #42C0FC;
-  border: none;
-  border-radius: 30px;
-  width: 150px;
-  height: 50px;
-  color: #FFF;
-  font-size: 18px;
+  transition: 0.2s ease-in-out;
   font-weight: bold;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-  transition: 0.3s ease;
-
-  @media all and (max-width: 1475px) {
-    width: 125px;
-    height: 45px;
-    font-size: 16px;
+  border-radius: 30px;
+  padding: 10px 40px
+  font-size: 17px;
+  color: #2d9cdb;
+  border: 3px solid #2d9cdb;
+  cursor: pointer;
+  &:hover {
+    background: #2d9cdb;
+    color: #fff;
   }
+`;
 
-  @media all and (max-width: 1100px) {
-    width: 110px;
-    height: 40px;
-    font-size: 16px;
-  }
-
-  @media all and (max-width: 680px) {
-    width: 125px;
-    height: 45px;
-    font-size: 17px;
-    background: inherit;
-    color: #2D9CDB;
-    border: 3px solid #2D9CDB;
-    box-shadow: none;
-  }
-`
+const NavRow: any = styled.nav`
+  display: flex;
+`;
 
 const Nav: React.FC<{}> = () => {
-  const handleSignIn = () => {
-  
-  }
-  
+  const handleSignIn = () => {};
+
   return (
-    <Wrapper>
-      <Logo src={require('../../../../static/img/acm-logo.png')}/>
-      <MenuItems>
-        <Link to='about' smooth={true}><MenuItem>About</MenuItem></Link>
-        <Link to='groups' smooth={true}><MenuItem>Groups</MenuItem></Link>
-        <Link to='events' smooth={true}><MenuItem>Events</MenuItem></Link>
-        <Link to='sponsors' smooth={true}><MenuItem>Sponsors</MenuItem></Link>
-      </MenuItems>
-      <SignIn onClick={handleSignIn}>SIGN IN</SignIn>
-    </Wrapper>
+    <BG>
+      <PageConstraint>
+        <Wrapper>
+          <NavRow>
+            <Logo src={require("../../../../static/img/acm-logo.png")} />
+            <MenuItems>
+              <Link to="about" smooth={true}>
+                <MenuItem>About</MenuItem>
+              </Link>
+              <Link to="groups" smooth={true}>
+                <MenuItem>Groups</MenuItem>
+              </Link>
+              <Link to="events" smooth={true}>
+                <MenuItem>Events</MenuItem>
+              </Link>
+              <Link to="sponsors" smooth={true}>
+                <MenuItem>Sponsors</MenuItem>
+              </Link>
+            </MenuItems>
+          </NavRow>
+          <SignIn onClick={handleSignIn}>SIGN IN</SignIn>
+        </Wrapper>
+      </PageConstraint>
+    </BG>
   );
 };
 
-export default Nav;
+export { Nav };
