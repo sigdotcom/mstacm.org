@@ -4,6 +4,7 @@ import { Checkbox } from "antd";
 import events from "./Events.json";
 import { Element } from "react-scroll";
 import windowSize from "react-window-size";
+import Icon from "react-eva-icons";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -518,9 +519,9 @@ const Events: React.FC<IProps> = props => {
               <img src={require("../../../../static/img/clock.png")} />
               <h2>{events.events[i].time}</h2>
             </Time>
-            <Time>
-              <img src={require("../../../../static/img/groups.png")} />
-              <h2>{events.events[i].group}</h2>
+            <Time style={{ marginLeft: '-1.5px' }}>
+              <Icon name="people" size="medium" fill="#000" />
+              <h2 style={{ margin: '-1px 0 0 3.5px' }}>{events.events[i].group}</h2>
             </Time>
           </Details>
           <Description onClick={() => toggleDesc(i)}>
