@@ -1,10 +1,10 @@
 {
     "events": [
         {
-            "img_path": "flier.jpg",
+            "img_path": "recruitment_drive.jpg",
             "day": "27",
             "month": "AUG",
-            "sig_logo": "icon.svg",
+            "sig_logo": "game.png",
             "title": "Recruitment Drive",
             "location": "Toomey Hall Rm. 199",
             "time": "5:00pm - 6:00pm",
@@ -13,10 +13,10 @@
             "group": "ACM General"
         },
         {
-            "img_path": "flier.jpg",
+            "img_path": "",
             "day": "24",
             "month": "SEPT",
-            "sig_logo": "icon.svg",
+            "sig_logo": "acm.png",
             "title": "Career Fair Dinner",
             "location": "Alex's Pizza",
             "time": "6:00pm - 9:00pm",
@@ -25,10 +25,10 @@
             "group": "ACM General"
         },
         {
-            "img_path": "flier.jpg",
+            "img_path": "",
             "day": "19",
             "month": "OCT",
-            "sig_logo": "icon.svg",
+            "sig_logo": "comp.png",
             "title": "Programming Cup",
             "location": "TBD",
             "time": "TBD",
@@ -37,10 +37,10 @@
             "group": "ACM Comp"
         },
         {
-            "img_path": "flier.jpg",
+            "img_path": "",
             "day": "26",
             "month": "OCT",
-            "sig_logo": "icon.svg",
+            "sig_logo": "sec.png",
             "title": "WiFi Workshop",
             "location": "TBD",
             "time": "TBD",
@@ -49,27 +49,27 @@
             "group": "ACM Sec"
         },
         {
-            "img_path": "flier.jpg",
+            "img_path": "",
             "day": "31",
             "month": "OCT",
-            "sig_logo": "icon.svg",
+            "sig_logo": "sec.png",
             "title": "Lockpicking Fundraiser",
             "location": "TBD",
             "time": "TBD",
-            "desc": "Come learn how to lockpick and compete to win a lockpicking set. Proceeds support ACM Security.",
-            "shortDesc": "Come learn how to lockpick and compete to win a lockpicking set. Proceeds support ACM Security.",
+            "desc": "Learn how to lockpick and compete to win a lockpicking set. Proceeds support ACM Security.",
+            "shortDesc": "Learn how to lockpick and compete to win a lockpicking set. Proceeds support ACM Security.",
             "group": "ACM Sec"
         },
         {
-            "img_path": "flier.jpg",
+            "img_path": "",
             "day": "06",
             "month": "DEC",
-            "sig_logo": "icon.svg",
+            "sig_logo": "acm.png",
             "title": "MinerLAN",
             "location": "BCH Atrium",
             "time": "6:00pm - 12:00am",
-            "desc": "Come relax, eat food, and play games to win prizes with ACM before starting finals!",
-            "shortDesc": "Come relax, eat food, and play games to win prizes with ACM before starting finals!",
+            "desc": "Relax, eat food, and play games to win prizes with ACM before starting finals!",
+            "shortDesc": "Come Relax, eat food, and play games to win prizes with ACM before starting finals!",
             "group": "ACM General"
         }
     ]

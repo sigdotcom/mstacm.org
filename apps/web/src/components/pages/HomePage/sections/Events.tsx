@@ -1,10 +1,9 @@
-import React, { useLayoutEffect, useState } from "react";
-import styled from "styled-components";
-import { Checkbox } from "antd";
-import events from "./Events.json";
-import { Element } from "react-scroll";
-import windowSize from "react-window-size";
-//import console = require('console');
+import React, { useLayoutEffect, useState } from 'react';
+import styled from 'styled-components';
+import { Checkbox } from 'antd';
+import events from './Events.json';
+import { Element } from 'react-scroll';
+import windowSize from 'react-window-size';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -18,24 +17,30 @@ const Wrapper = styled.div`
   @media all and (max-width: 1000px) {
     padding: 20px 0 100px 0;
     height: 100%;
+
+    button:focus {
+      outline: none;
+      color: #2d9cdb;
+      background: #fff;
+    }
   }
 
   button {
-    width: 225px;
-    height: 45px;
-    padding: 0;
-    font-size: 17px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    background: #42C0FC;
-    border: none;
-    border-radius: 30px;
-    color: #FFF;
-    font-family: "Nunito Sans";
+    transition: 0.2s ease-in-out;
     font-weight: bold;
-    vertical-align: top;
+    border-radius: 30px;
+    padding: 10px 40px
+    font-size: 17px;
+    color: #2d9cdb;
+    border: 3px solid #2d9cdb;
+    cursor: pointer;
+    background: #fff;
+    &:hover {
+      background: #2d9cdb;
+      color: #fff;
+    }
     margin: 0 auto;
     margin-bottom: 15px;
-    display: inline;
   }
 `
 
@@ -48,7 +53,7 @@ const FilterWrapper = styled.div`
   background: #f7f7f7;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border: 1px rgba(0, 0, 0, 0.25) solid;
-  margin-left: 5%;
+  margin-left: 50px;
 
   h3 {
     padding-top: 25px;
@@ -91,6 +96,7 @@ const ImgWrapper = styled.div`
 const ImgImg = styled.img`
   width: 25px;
   height: 25px;
+  border-radius: 50%;
 `
 
 const SigWrapper = styled.div`
@@ -210,6 +216,7 @@ const SmallInfo = styled.div`
     margin-top: -15px;
     width: 45px;
     height: 45px;
+    border-radius: 50%;
   }
 
   @media all and (max-width: 1000px){
@@ -385,19 +392,19 @@ const Events: React.FC<IProps> = (props) => {
       return filter === false;
     })) {
       return true;
-    } else if(group === "ACM Comp" && filters[0][0]) {
+    } else if(group === 'ACM Comp' && filters[0][0]) {
       return true;
-    } else if(group === "ACM Data" && filters[0][1]) {
+    } else if(group === 'ACM Data' && filters[0][1]) {
       return true;
-    } else if(group === "ACM Game" && filters[0][2]) {
+    } else if(group === 'ACM Game' && filters[0][2]) {
       return true;
-    } else if(group === "ACM General" && filters[0][3]) {
+    } else if(group === 'ACM General' && filters[0][3]) {
       return true;
-    } else if(group === "ACM Hack" && filters[0][4]) {
+    } else if(group === 'ACM Hack' && filters[0][4]) {
       return true;
-    } else if(group === "ACM Sec" && filters[0][5]) {
+    } else if(group === 'ACM Sec' && filters[0][5]) {
       return true;
-    } else if(group === "ACM-W" && filters[0][6]) {
+    } else if(group === 'ACM-W' && filters[0][6]) {
       return true;
     }
     return false;
@@ -417,22 +424,22 @@ const Events: React.FC<IProps> = (props) => {
   }
 
   return (
-    <Element name="events">
+    <Element name='events'>
       <Wrapper>
-      <div style={{ display: "flex"}}>
+      <div style={{ display: 'flex'}}>
         <FilterWrapper>    
           <h3>
             Filter
           </h3>
           <Sigs>
             <ImgWrapper>
-              <ImgImg src={require('../../../../static/img/trophy.png')}/>
-              <ImgImg src={require('../../../../static/img/controller.png')}/>
-              <ImgImg src={require('../../../../static/img/controller.png')}/>
-              <ImgImg src={require('../../../../static/img/lock.png')}/>
-              <ImgImg src={require('../../../../static/img/lock.png')}/>
-              <ImgImg src={require('../../../../static/img/cursor.png')}/>
-              <ImgImg src={require('../../../../static/img/$.png')}/>
+              <ImgImg src={require('../../../../static/img/comp-dark.png')}/>
+              <ImgImg src={require('../../../../static/img/data-dark.png')}/>
+              <ImgImg src={require('../../../../static/img/game-dark.png')}/>
+              <ImgImg src={require('../../../../static/img/acm-dark.png')}/>
+              <ImgImg src={require('../../../../static/img/hack-dark.png')}/>
+              <ImgImg src={require('../../../../static/img/sec-dark.png')}/>
+              <ImgImg src={require('../../../../static/img/acm-w-dark.png')}/>
             </ImgWrapper>
             <SigWrapper>
               <h4>
@@ -458,7 +465,7 @@ const Events: React.FC<IProps> = (props) => {
               </h4>
             </SigWrapper>
             <CheckBoxWrapper>
-              <Checkbox onChange={() => {toggleCheckbox(0)}} style={{marginLeft: "8px"}}/>
+              <Checkbox onChange={() => {toggleCheckbox(0)}} style={{marginLeft: '8px'}}/>
               <Checkbox onChange={() => {toggleCheckbox(1)}}/>
               <Checkbox onChange={() => {toggleCheckbox(2)}}/>
               <Checkbox onChange={() => {toggleCheckbox(3)}}/>
@@ -468,19 +475,26 @@ const Events: React.FC<IProps> = (props) => {
             </CheckBoxWrapper>
           </Sigs>
         </FilterWrapper>
-          <EventWrapper className="scroll" >
+          <EventWrapper className='scroll' >
             {
               events.events.slice(0, numEvents).map((event, i) => {
+                console.log(event);
                 return (
-                  <Event style={{display: (showEvent(i, event.group) ? "" : "none")}} key={i}>
+                  <Event style={{display: (showEvent(i, event.group) ? '' : 'none')}} key={i}>
                     <LeftWrapper>
-                      <a href={require("../../../../static/img/" + event.img_path)} target="_blank"><FlierImg src={require("../../../../static/img/" + event.img_path)}/></a>
+                      <a 
+                        style={{ visibility: (event.img_path === '' ? 'hidden' : 'visible')}} 
+                        href={require('../../../../static/img/' + (event.img_path === '' ? 'acm.png' : event.img_path))} 
+                        target='_blank'
+                      >
+                        <FlierImg src={require('../../../../static/img/' + (event.img_path === '' ? 'acm.png' : event.img_path))}/>
+                      </a>
                       <SmallInfo>
                         <Date>
                           <h3>{event.month}</h3>
                           <h2>{event.day}</h2>
                         </Date>
-                        <img src={require("../../../../static/img/" + event.sig_logo)}/>
+                        <img src={require('../../../../static/img/' + event.sig_logo)}/>
                       </SmallInfo>
                     </LeftWrapper>
                     <VerticalLine></VerticalLine>
@@ -501,8 +515,8 @@ const Events: React.FC<IProps> = (props) => {
                         </Time>
                       </Details>
                       <Description onClick={() => toggleDesc(i)}>{(showDesc(i) ? event.desc : event.shortDesc)}</Description>
-                      <FlierLink style={{display: (showDesc(i) ? "" : "none")}} href={require("../../../../static/img/" + event.img_path)} target="_blank">Click here to see the flier for this event.</FlierLink>
-                      <Show onClick={() => toggleDesc(i)}>{(showDesc(i) ? "See less..." : "See more...")}</Show>
+                      <FlierLink style={{display: (showDesc(i) && event.img_path !== '' ? '' : 'none')}} href={require('../../../../static/img/' + (event.img_path === '' ? 'acm.png' : event.img_path))} target='_blank'>Click here to see the flier for this event.</FlierLink>
+                      <Show onClick={() => toggleDesc(i)}>{(showDesc(i) ? 'See less...' : 'See more...')}</Show>
                     </div>
                   </Event>
                 )
@@ -510,7 +524,7 @@ const Events: React.FC<IProps> = (props) => {
             }
           </EventWrapper>
         </div>
-        <button style={{ display: (countEvents() <= 3 ? "none" : "") }} onClick={toggleNumEvents}>{(numEvents === 3 ? "SHOW ALL EVENTS" : "SHOW FEWER EVENTS")}</button>
+        <button style={{ display: (countEvents() <= 3 ? 'none' : '') }} onClick={toggleNumEvents}>{(numEvents === 3 ? 'SHOW ALL EVENTS' : 'SHOW FEWER EVENTS')}</button>
       </Wrapper>
     </Element>
   );

@@ -268,7 +268,7 @@ const Footer: React.FC<{}> = () => {
             </Nav4>
           </Links>
           <Nav1>
-            <img src={require("../../../../static/img/web.png")} />
+            <img src={require("../../../../static/img/web_footer.png")} />
             <h2>Copyright © 2019 ACM Web.</h2>
           </Nav1>
         </Foot>

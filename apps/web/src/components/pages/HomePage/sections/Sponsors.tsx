@@ -11,30 +11,6 @@ const SponsorWrap = styled.div`
   background: #DFE6E9;
 `
 
-const Title = styled.div`
-  position: relative;
-  text-align: center;
-  margin-top: -36px;
-  display: none;
-  
-  h1 {
-    text-transform: uppercase;
-    font-weight: bold;
-    color: white;
-    font-size: 34px;
-    margin-top: -65px;
-  }
-
-  img {
-    width: 260px;
-  }
-
-  @media all and (max-width: 680px) {
-    width: 90%;
-    margin-left: 5%;
-  }
-`
-
 const Sponsor = styled.div`
   width: 100%;
   text-align: center;
@@ -150,10 +126,6 @@ const Sponsors: React.FC<{}> = () => {
   return (
     <SponsorWrap>
       <Element name="sponsors">
-        <Title>
-          <img src={require('../../../../static/img/rectangle.svg')}/>
-          <h1>Sponsors</h1>
-        </Title>
         <Sponsor>
           <h2>Big thanks to our sponsors and partners!</h2>
         </Sponsor>

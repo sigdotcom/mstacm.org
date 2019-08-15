@@ -131,7 +131,7 @@ const SIGDetailPaneBase: React.FC<ISIGDetailPaneProps> = (props: any): any => {
 
   return (
     <PaneWrapper>
-      <SIGLogo src={sig.logoLink} />
+      <SIGLogo src={require('../../../../static/img/' + sig.logoLink)} />
       <SIGName>ACM {sig.name}</SIGName>
       <Row>
         <SIGDesc>{sig.desc}</SIGDesc>
