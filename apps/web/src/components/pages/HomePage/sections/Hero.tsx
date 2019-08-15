@@ -15,10 +15,18 @@ const HeroImage = styled.img`
     display: block;
     opacity: 0.5;
     position: absolute;
-    right: 5px;
-    margin-top: -60px;
-    margin-right: -80px;
+    right: -85px;
+    bottom: -125px;
     pointer-events: none;
+  }
+
+  @media screen and (min-width: 1300px) and (min-height: 800px) {
+    width: 940px;
+  }
+
+  @media screen and (min-height: 1000px) {
+    width: 800px;
+    bottom: -250px;
   }
 `;
 
@@ -177,6 +185,9 @@ const Hero: React.FC<{}> = () => {
 
     if (re.test(email)) {
       // Valid email
+      window.location.href =
+        "https://docs.google.com/forms/d/e/1FAIpQLScGTAD8g2mhZWRl9DqYyrLyEw6FcXfiQo9hPlPxRME9Z0HmEg/viewform?entry.1329536951=" +
+        email;
     } else {
       // Invalid email
       alert("Invalid email.");
