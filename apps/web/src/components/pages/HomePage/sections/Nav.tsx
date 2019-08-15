@@ -40,28 +40,29 @@ const MenuItem = styled.div`
   padding: 5px 10px;
 `;
 
-const SignIn = styled.button`
-  transition: 0.2s ease-in-out;
-  font-weight: bold;
-  border-radius: 30px;
-  padding: 10px 40px
-  font-size: 17px;
-  color: #2d9cdb;
-  border: 3px solid #2d9cdb;
-  cursor: pointer;
-  &:hover {
-    background: #2d9cdb;
-    color: #fff;
-  }
-`;
+// const SignIn = styled.button`
+//   transition: 0.2s ease-in-out;
+//   font-weight: bold;
+//   border-radius: 30px;
+//   padding: 10px 40px
+//   font-size: 17px;
+//   color: #2d9cdb;
+//   border: 3px solid #2d9cdb;
+//   cursor: pointer;
+//   &:hover {
+//     background: #2d9cdb;
+//     color: #fff;
+//   }
+// `;
 
-const NavRow: any = styled.nav`
+const NavRow = styled.nav`
   display: flex;
 `;
 
-const Nav: React.FC<{}> = () => {
-  const handleSignIn = () => {};
+const Nav: React.FC<{}> = (): JSX.Element => {
+  // const handleSignIn = () => {};
 
+  // <SignIn onClick={handleSignIn}>SIGN IN</SignIn>
   return (
     <BG>
       <PageConstraint>
@@ -80,7 +81,6 @@ const Nav: React.FC<{}> = () => {
               </Link>
             </MenuItems>
           </NavRow>
-          <SignIn onClick={handleSignIn}>SIGN IN</SignIn>
         </Wrapper>
       </PageConstraint>
     </BG>
