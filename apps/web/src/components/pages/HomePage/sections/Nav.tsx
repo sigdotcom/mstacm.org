@@ -69,11 +69,8 @@ const Nav: React.FC<{}> = () => {
           <NavRow>
             <Logo src={require("../../../../static/img/acm-logo.png")} />
             <MenuItems>
-              <Link to="about" smooth={true}>
-                <MenuItem>About</MenuItem>
-              </Link>
-              <Link to="groups" smooth={true}>
-                <MenuItem>Groups</MenuItem>
+              <Link to="communities" smooth={true}>
+                <MenuItem>Communities</MenuItem>
               </Link>
               <Link to="events" smooth={true}>
                 <MenuItem>Events</MenuItem>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Element } from "react-scroll";
 import styled from "styled-components";
 import { ISIG } from "./interfaces";
 import { SIGsDisplay } from "./SIGsDisplay";
@@ -118,25 +119,27 @@ const Line: any = styled.hr`
   margin: 100px 0;
 `;
 
-function SIGs(): any {
+const SIGs: React.FC = (): JSX.Element => {
   return (
-    <PageConstraint>
-      <SIGsWrapper>
-        <Heading>
-          <Icon name="people" size="large" fill="#777" /> Our Communities
-        </Heading>
-        <Description>
-          Members of our communities (formerly known as SIGs) hone their
-          computing skills in special topics, listed below, and work towards
-          highly specialized goals in development and career-making. Click on
-          the topic to learn more about the community and find out how to get
-          involved!
-        </Description>
-        <SIGsDisplay sigs={SIGsData} />
-      </SIGsWrapper>
-      <Line />
-    </PageConstraint>
+    <Element name="communities">
+      <PageConstraint>
+        <SIGsWrapper>
+          <Heading>
+            <Icon name="people" size="large" fill="#777" /> Our Communities
+          </Heading>
+          <Description>
+            Members of our communities (formerly known as SIGs) hone their
+            computing skills in special topics, listed below, and work towards
+            highly specialized goals in development and career-making. Click on
+            the topic to learn more about the community and find out how to get
+            involved!
+          </Description>
+          <SIGsDisplay sigs={SIGsData} />
+        </SIGsWrapper>
+        <Line />
+      </PageConstraint>
+    </Element>
   );
-}
+};
 
 export { SIGs };
