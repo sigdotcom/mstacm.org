@@ -21,7 +21,7 @@
             "location": "Alex's Pizza",
             "time": "6:00pm - 9:00pm",
             "desc": "Talk to companies looking for Computer Science students for longer than a 2-minute career fair interaction, without the hassle of waiting in long lines. Join ACM at our fall Career Fair Dinner! Reminder: You must be an ACM member to participate in the dinner.",
-            "shortDesc": "Talk to companies looking for Computer Science students for longer than a 2-minute career fair interaction, without the hassle of waiting in long lines",
+            "shortDesc": "Talk to companies looking for Computer Science students for longer than a 2-minute career fair interaction, without the hassle of waiting in long lines.",
             "group": "ACM General"
         },
         {
@@ -69,7 +69,7 @@
             "location": "BCH Atrium",
             "time": "6:00pm - 12:00am",
             "desc": "Relax, eat food, and play games to win prizes with ACM before starting finals!",
-            "shortDesc": "Come Relax, eat food, and play games to win prizes with ACM before starting finals!",
+            "shortDesc": "Relax, eat food, and play games to win prizes with ACM before starting finals!",
             "group": "ACM General"
         }
     ]
