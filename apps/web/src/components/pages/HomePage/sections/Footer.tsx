@@ -226,7 +226,7 @@ const Footer: React.FC<{}> = () => {
             <Info>
               <div>
                 <a href="https://www.acm.org/" target="_blank">
-                  About ACM
+                  ACM Global
                 </a>
                 <a
                   href="https://github.com/sigdotcom/mstacm.org"
