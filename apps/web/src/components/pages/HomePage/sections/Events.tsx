@@ -377,9 +377,7 @@ const Events: React.FC<IProps> = props => {
   // Toggle whether to show short or long description on event (mobile only)
   const toggleDesc = (i: number) => {
     if (isMobile) {
-      console.log(descArr + " " + i);
       descArr[i] = !descArr[i];
-      console.log(descArr);
       setShowLongDesc([descArr]);
     }
   };
