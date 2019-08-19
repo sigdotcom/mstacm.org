@@ -8,10 +8,6 @@ const HLine = styled.div`
   width: 85%;
   margin-left: 7.5%;
   border-top: 3px solid #d1d6d8;
-
-  @media all and (max-width: 680px) {
-    margin-left: 0;
-  }
 `;
 
 const Wrapper = styled.div`
