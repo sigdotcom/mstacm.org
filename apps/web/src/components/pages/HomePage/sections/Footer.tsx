@@ -14,7 +14,7 @@ const HLine = styled.div`
   }
 `;
 
-const Foot = styled.div`
+const Wrapper = styled.div`
   height: 100%;
   padding: 50px 0;
 
@@ -77,7 +77,7 @@ const Links = styled.div`
   }
 `;
 
-const Nav1 = styled.div`
+const Copyright = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -133,7 +133,7 @@ const Nav1 = styled.div`
   } 
 `;
 
-const Nav2 = styled.div`
+const PageLinks = styled.div`
   display: flex;
   flex-direction: column;
   width: 25%;
@@ -143,58 +143,42 @@ const Nav2 = styled.div`
   }
 `;
 
-const Nav3 = styled.div`
+const Info = styled.div`
   display: flex;
   flex-direction: column;
   width: 25%;
 
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+
   @media all and (max-width: 680px) {
     width: 85%;
     flex-direction: row;
-    margin-left: 0;
-    margin-bottom: 35px;
+
+    div {
+      width: 50%;
+    }
   }
 `;
 
-const Nav3a = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  @media all and (max-width: 680px) {
-    width: 50%;
-  }
-`;
-
-const Nav3b = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  @media all and (max-width: 680px) {
-    width: 50%;
-  }
-`;
-
-const Nav4 = styled.div`
+const Communities = styled.div`
   display: flex;
   flex-direction: row;
   width: 50%;
 
+  div {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  }
+
   @media all and (max-width: 680px) {
     width: 85%;
     flex-direction: row;
+    margin-bottom: 35px;
   }
-`;
-
-const Nav4a = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-`;
-
-const Nav4b = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
 `;
 
 const Footer: React.FC<{}> = () => {
@@ -202,14 +186,11 @@ const Footer: React.FC<{}> = () => {
     <div style={{ background: "#DFE6E9" }}>
       <PageConstraint>
         <HLine />
-        <Foot>
+        <Wrapper>
           <Links>
-            <Nav2>
-              <Link to="about" smooth={true}>
-                About Us
-              </Link>
+            <PageLinks>
               <Link to="groups" smooth={true}>
-                Groups
+                Communities
               </Link>
               <Link to="events" smooth={true}>
                 Events
@@ -217,35 +198,11 @@ const Footer: React.FC<{}> = () => {
               <Link to="sponsors" smooth={true}>
                 Sponsors
               </Link>
-            </Nav2>
-            <Nav3>
-              <Nav3a>
-                <a
-                  href="https://github.com/sigdotcom/mstacm.org/blob/master/LICENSE"
-                  target="_blank"
-                >
-                  License
-                </a>
-                <a
-                  href="https://github.com/sigdotcom/mstacm.org"
-                  target="_blank"
-                >
-                  Source Code
-                </a>
-              </Nav3a>
-              <Nav3b>
-                <a href="https://www.acm.org/" target="_blank">
-                  About ACM
-                </a>
-                <a href="https://women.acm.org/" target="_blank">
-                  About ACM-W
-                </a>
-              </Nav3b>
-            </Nav3>
-            <Nav4>
-              <Nav4a>
-                <a href="https://discordapp.com/invite/4t954Ad" target="_blank">
-                  ACM Comp
+            </PageLinks>
+            <Communities>
+              <div>
+                <a href="https://acmcomp.mst.edu" target="_blank">
+                  ACM Competition
                 </a>
                 <a href="https://modata.blog/" target="_blank">
                   ACM Data
@@ -253,25 +210,46 @@ const Footer: React.FC<{}> = () => {
                 <a href="https://siggame.io/" target="_blank">
                   ACM Game
                 </a>
-              </Nav4a>
-              <Nav4b>
+              </div>
+              <div>
                 <a href="https://pickhacks.io/" target="_blank">
                   ACM Hack
                 </a>
                 <a href="https://acmsigsec.mst.edu/" target="_blank">
-                  ACM Sec
+                  ACM Security
                 </a>
-                <a href="https://mst.orgsync.com/org/acmw/home" target="_blank">
+                <a href="http://mst.orgsync.com/org/acmw/home" target="_blank">
                   ACM-W
                 </a>
-              </Nav4b>
-            </Nav4>
+              </div>
+            </Communities>
+            <Info>
+              <div>
+                <a href="https://www.acm.org/" target="_blank">
+                  ACM Global
+                </a>
+                <a
+                  href="https://github.com/sigdotcom/mstacm.org"
+                  target="_blank"
+                >
+                  Source Code
+                </a>
+              </div>
+              <div>
+                <a
+                  href="https://github.com/sigdotcom/mstacm.org/blob/master/LICENSE"
+                  target="_blank"
+                >
+                  License
+                </a>
+              </div>
+            </Info>
           </Links>
-          <Nav1>
+          <Copyright>
             <img src={require("../../../../static/img/web_footer.png")} />
             <h2>Copyright © 2019 ACM Web.</h2>
-          </Nav1>
-        </Foot>
+          </Copyright>
+        </Wrapper>
       </PageConstraint>
     </div>
   );

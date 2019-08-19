@@ -509,7 +509,7 @@ const Events: React.FC<IProps> = props => {
           </SmallInfo>
         </LeftWrapper>
         <VerticalLine />
-        <div>
+        <div style={{ width: '95%' }}>
           <EventName>{events.events[i].title}</EventName>
           <Details>
             <Time>
