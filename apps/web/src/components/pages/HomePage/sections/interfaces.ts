@@ -6,4 +6,5 @@ export interface ISIG {
   discord?: string;
   email: string;
   logoLink: string;
+  logoLinkDark: string;
 }

@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 import { PageConstraint } from "../../../common/PageConstraint";
 
-
 const Wrapper = styled.div`
   .sectionWrapper {
     position: relative;

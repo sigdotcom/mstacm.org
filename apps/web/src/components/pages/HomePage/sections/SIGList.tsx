@@ -58,7 +58,7 @@ function SIGListItem(props: any): any {
 
   return (
     <Item style={styles} onClick={onClick}>
-      <Logo src={sig.logoLink} />
+      <Logo src={require('../../../../static/img/' + sig.logoLinkDark)} />
       <h3>{sig.name}</h3>
     </Item>
   );

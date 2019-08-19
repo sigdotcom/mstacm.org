@@ -1,13 +1,12 @@
 import * as React from "react";
 import styled from "styled-components";
 
-// import About from "./sections/About";
-// import Events from "./sections/Events";
-// import { Footer } from "./sections/Footer";
+import Events from "./sections/Events";
+import { Footer } from "./sections/Footer";
 import Hero from "./sections/Hero";
 import { Nav } from "./sections/Nav";
-// import { SIGs } from "./sections/SIGs";
-// import { Sponsors } from "./sections/Sponsors";
+import { SIGs } from "./sections/SIGs";
+import { Sponsors } from "./sections/Sponsors";
 
 const NavHeroWrapper = styled.div`
   height: 100vh;
@@ -30,6 +29,10 @@ const HomePage: React.FC<{}> = () => {
         <Nav />
         <Hero />
       </NavHeroWrapper>
+      <SIGs />
+      <Events />
+      <Sponsors />
+      <Footer />
     </div>
   );
 };
