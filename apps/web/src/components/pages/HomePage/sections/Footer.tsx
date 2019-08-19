@@ -189,7 +189,7 @@ const Footer: React.FC<{}> = () => {
         <Wrapper>
           <Links>
             <PageLinks>
-              <Link to="groups" smooth={true}>
+              <Link to="communities" smooth={true}>
                 Communities
               </Link>
               <Link to="events" smooth={true}>
