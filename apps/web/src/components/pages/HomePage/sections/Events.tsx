@@ -633,7 +633,10 @@ const Events: React.FC<IProps> = props => {
                 </CheckBoxWrapper>
               </Sigs>
             </FilterWrapper>
-            <EventsWrapper>{makeEvents()}</EventsWrapper>
+            <EventsWrapper>
+              {makeEvents()}
+              <h1 style={{ display: (countEvents() === 0 ? '' : 'none') }}>No events found with the given filter.</h1>
+            </EventsWrapper>
           </div>
           <button
             style={{ display: countEvents() <= 3 ? "none" : "" }}
