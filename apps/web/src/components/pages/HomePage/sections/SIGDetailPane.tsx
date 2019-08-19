@@ -9,7 +9,7 @@ const PaneWrapper: any = styled.div`
   padding: 35px 25px;
   flex: 1;
 
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: 810px) {
     border-top: none;
     border-left: 2px solid #ddd;
     margin-left: 35px;
@@ -20,8 +20,7 @@ const PaneWrapper: any = styled.div`
 const SIGName: any = styled.h1`
   font-family: "Roboto", sans-serif;
   font-size: 21px;
-  display: inline;
-  margin-left: 20px;
+  margin: 0 0 0 10px;
 `;
 const SIGDesc: any = styled.p`
   margin-bottom: 20px;
@@ -102,13 +101,16 @@ const SIGLogo: any = styled.img`
   max-width: 70px;
   min-height: 70px;
   max-height: 70px;
-  margin: 0 0 20px 0;
   border-radius: 50%;
 `;
 
-const SIGEmail: any = styled.div`
-  display: flex;
+const SIGEmail: any = styled.a`
+  display: inline-flex;
   align-items: center;
+
+  i {
+    display: inline-flex;
+  }
 `;
 
 const ButtonRow: any = styled.div`
@@ -122,6 +124,18 @@ const Row: any = styled.div`
   flex-wrap: wrap;
 `;
 
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 16px 0;
+`;
+
+const SIGDetails = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 interface ISIGDetailPaneProps {
   sig: ISIG;
 }
@@ -131,8 +145,15 @@ const SIGDetailPaneBase: React.FC<ISIGDetailPaneProps> = (props: any): any => {
 
   return (
     <PaneWrapper>
-      <SIGLogo src={require('../../../../static/img/' + sig.logoLink)} />
-      <SIGName>ACM {sig.name}</SIGName>
+      <Header>
+        <SIGDetails>
+          <SIGLogo src={require("../../../../static/img/" + sig.logoLink)} />
+          <SIGName>ACM {sig.name}</SIGName>
+        </SIGDetails>
+        <SIGEmail href={"mailto:" + sig.email}>
+          <Icon name="email" size="large" fill="#777" />
+        </SIGEmail>
+      </Header>
       <Row>
         <SIGDesc>{sig.desc}</SIGDesc>
         <Row>
@@ -140,11 +161,6 @@ const SIGDetailPaneBase: React.FC<ISIGDetailPaneProps> = (props: any): any => {
             <SIGWebsite href={sig.website}>Website</SIGWebsite>
             <SIGDiscord href={sig.discord}>Discord</SIGDiscord>
           </ButtonRow>
-          <SIGEmail>
-            <a href={"mailto:" + sig.email}>
-              <Icon name="email" size="large" fill="#777" />
-            </a>
-          </SIGEmail>
         </Row>
       </Row>
     </PaneWrapper>

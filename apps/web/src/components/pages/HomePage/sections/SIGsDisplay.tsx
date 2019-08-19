@@ -8,7 +8,7 @@ const DisplayWrapper: any = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: 810px) {
     flex-direction: row;
   }
 `;

@@ -1,10 +1,11 @@
-import React, { useLayoutEffect, useState } from "react";
-import styled from "styled-components";
 import { Checkbox } from "antd";
-import events from "./Events.json";
+import React, { useLayoutEffect, useState } from "react";
+import Icon from "react-eva-icons";
 import { Element } from "react-scroll";
 import windowSize from "react-window-size";
-import Icon from "react-eva-icons";
+import styled from "styled-components";
+import { PageConstraint } from "../../../common/PageConstraint";
+import events from "./Events.json";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -337,16 +338,16 @@ interface IProps {
 }
 
 // Initalize all events to show abbreviated description
-var descArr: Boolean[] = events.events.map(event => {
+let descArr: Boolean[] = events.events.map(event => {
   return false;
 });
 
 // Initalize no filters
-var filterArr: Boolean[] = events.events.map(event => {
+let filterArr: Boolean[] = events.events.map(event => {
   return false;
 });
 
-var eventCounter: number = 0;
+let eventCounter: number = 0;
 
 const Events: React.FC<IProps> = props => {
   const [isMobile, setIsMobile] = useState(true);
@@ -358,7 +359,7 @@ const Events: React.FC<IProps> = props => {
     if (props.windowWidth > 1000) {
       setIsMobile(false);
 
-      for (var i = 0; i < events.events.length; i++) {
+      for (let i = 0; i < events.events.length; i++) {
         toggleDesc(i);
       }
     }
@@ -427,10 +428,10 @@ const Events: React.FC<IProps> = props => {
   // Get the total number of events that should be shown with the given filter
   // to determine which button text should be shown
   const countEvents = () => {
-    var count = 0;
-    var showAll = false;
+    let count = 0;
+    let showAll = false;
 
-    for (var i = 0; i < events.events.length; i++) {
+    for (let i = 0; i < events.events.length; i++) {
       if (
         filters[0].every(filter => {
           return filter === false;
@@ -461,9 +462,9 @@ const Events: React.FC<IProps> = props => {
 
   // Create list of events
   const makeEvents = () => {
-    var eventList = [];
-    for (var i = 0; i < events.events.length; i++) {
-      var show = showEvent(i, events.events[i].group);
+    let eventList = [];
+    for (let i = 0; i < events.events.length; i++) {
+      let show = showEvent(i, events.events[i].group);
       if (show) {
         eventList.push(Event(i));
       }
@@ -517,9 +518,11 @@ const Events: React.FC<IProps> = props => {
               <img src={require("../../../../static/img/clock.png")} />
               <h2>{events.events[i].time}</h2>
             </Time>
-            <Time style={{ marginLeft: '-1.5px' }}>
+            <Time style={{ marginLeft: "-1.5px" }}>
               <Icon name="people" size="medium" fill="#000" />
-              <h2 style={{ margin: '-1px 0 0 3.5px' }}>{events.events[i].group}</h2>
+              <h2 style={{ margin: "-1px 0 0 3.5px" }}>
+                {events.events[i].group}
+              </h2>
             </Time>
           </Details>
           <Description onClick={() => toggleDesc(i)}>
@@ -552,82 +555,96 @@ const Events: React.FC<IProps> = props => {
 
   return (
     <Element name="events">
-      <Wrapper>
-        <div style={{ display: "flex" }}>
-          <FilterWrapper>
-            <h3>Filter</h3>
-            <Sigs>
-              <ImgWrapper>
-                <ImgImg src={require("../../../../static/img/comp-dark.png")} />
-                <ImgImg src={require("../../../../static/img/data-dark.png")} />
-                <ImgImg src={require("../../../../static/img/game-dark.png")} />
-                <ImgImg src={require("../../../../static/img/acm-dark.png")} />
-                <ImgImg src={require("../../../../static/img/hack-dark.png")} />
-                <ImgImg src={require("../../../../static/img/sec-dark.png")} />
-                <ImgImg
-                  src={require("../../../../static/img/acm-w-dark.png")}
-                />
-              </ImgWrapper>
-              <SigWrapper>
-                <h4>ACM Comp</h4>
-                <h4>ACM Data</h4>
-                <h4>ACM Game</h4>
-                <h4>ACM General</h4>
-                <h4>ACM Hack</h4>
-                <h4>ACM Sec</h4>
-                <h4>ACM-W</h4>
-              </SigWrapper>
-              <CheckBoxWrapper>
-                <Checkbox
-                  onChange={() => {
-                    toggleCheckbox(0);
-                  }}
-                  style={{ marginLeft: "8px" }}
-                />
-                <Checkbox
-                  onChange={() => {
-                    toggleCheckbox(1);
-                  }}
-                />
-                <Checkbox
-                  onChange={() => {
-                    toggleCheckbox(2);
-                  }}
-                />
-                <Checkbox
-                  onChange={() => {
-                    toggleCheckbox(3);
-                  }}
-                />
-                <Checkbox
-                  onChange={() => {
-                    toggleCheckbox(4);
-                  }}
-                />
-                <Checkbox
-                  onChange={() => {
-                    toggleCheckbox(5);
-                  }}
-                />
-                <Checkbox
-                  onChange={() => {
-                    toggleCheckbox(6);
-                  }}
-                />
-              </CheckBoxWrapper>
-            </Sigs>
-          </FilterWrapper>
-          <EventsWrapper>{makeEvents()}</EventsWrapper>
-        </div>
-        <button
-          style={{ display: countEvents() <= 3 ? "none" : "" }}
-          onClick={toggleNumEvents}
-        >
-          {countEvents() >= 3 && maxEvents !== events.events.length
-            ? "SHOW ALL EVENTS"
-            : "SHOW FEWER EVENTS"}
-        </button>
-      </Wrapper>
+      <PageConstraint>
+        <Wrapper>
+          <div style={{ display: "flex" }}>
+            <FilterWrapper>
+              <h3>Filter</h3>
+              <Sigs>
+                <ImgWrapper>
+                  <ImgImg
+                    src={require("../../../../static/img/comp-dark.png")}
+                  />
+                  <ImgImg
+                    src={require("../../../../static/img/data-dark.png")}
+                  />
+                  <ImgImg
+                    src={require("../../../../static/img/game-dark.png")}
+                  />
+                  <ImgImg
+                    src={require("../../../../static/img/acm-dark.png")}
+                  />
+                  <ImgImg
+                    src={require("../../../../static/img/hack-dark.png")}
+                  />
+                  <ImgImg
+                    src={require("../../../../static/img/sec-dark.png")}
+                  />
+                  <ImgImg
+                    src={require("../../../../static/img/acm-w-dark.png")}
+                  />
+                </ImgWrapper>
+                <SigWrapper>
+                  <h4>ACM Comp</h4>
+                  <h4>ACM Data</h4>
+                  <h4>ACM Game</h4>
+                  <h4>ACM General</h4>
+                  <h4>ACM Hack</h4>
+                  <h4>ACM Sec</h4>
+                  <h4>ACM-W</h4>
+                </SigWrapper>
+                <CheckBoxWrapper>
+                  <Checkbox
+                    onChange={() => {
+                      toggleCheckbox(0);
+                    }}
+                    style={{ marginLeft: "8px" }}
+                  />
+                  <Checkbox
+                    onChange={() => {
+                      toggleCheckbox(1);
+                    }}
+                  />
+                  <Checkbox
+                    onChange={() => {
+                      toggleCheckbox(2);
+                    }}
+                  />
+                  <Checkbox
+                    onChange={() => {
+                      toggleCheckbox(3);
+                    }}
+                  />
+                  <Checkbox
+                    onChange={() => {
+                      toggleCheckbox(4);
+                    }}
+                  />
+                  <Checkbox
+                    onChange={() => {
+                      toggleCheckbox(5);
+                    }}
+                  />
+                  <Checkbox
+                    onChange={() => {
+                      toggleCheckbox(6);
+                    }}
+                  />
+                </CheckBoxWrapper>
+              </Sigs>
+            </FilterWrapper>
+            <EventsWrapper>{makeEvents()}</EventsWrapper>
+          </div>
+          <button
+            style={{ display: countEvents() <= 3 ? "none" : "" }}
+            onClick={toggleNumEvents}
+          >
+            {countEvents() >= 3 && maxEvents !== events.events.length
+              ? "SHOW ALL EVENTS"
+              : "SHOW FEWER EVENTS"}
+          </button>
+        </Wrapper>
+      </PageConstraint>
     </Element>
   );
 };
