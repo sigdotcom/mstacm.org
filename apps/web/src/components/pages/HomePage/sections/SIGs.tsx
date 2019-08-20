@@ -67,7 +67,7 @@ const SIGsData: ISIG[] = [
   {
     color: "wheat",
     desc:
-      "ACM W aims to facilitate a thriving community of women in computing through the organizing of great activities, networking, and mentorship programs. We aim to address the issue of retention of women in computer science by creating a support system for academic and professional pursuits and empowering our members to pursue their goals through knowledge and education about women's contribution to technology. This group is open to all students (male or female) that wish to promote women in computing.",
+      "ACM-W aims to facilitate a thriving community of women in computing through the organizing of great activities, networking, and mentorship programs. We aim to address the issue of retention of women in computer science by creating a support system for academic and professional pursuits and empowering our members to pursue their goals through knowledge and education about women's contribution to technology. This group is open to all students (male or female) that wish to promote women in computing.",
     discord: "https://discord.gg/hh2wkmq",
     email: "acmw@mst.edu",
     logoLink: "acm-w.png",
