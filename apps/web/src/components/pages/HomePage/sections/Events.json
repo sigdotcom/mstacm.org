@@ -13,6 +13,19 @@
             "group": "ACM General"
         },
         {
+            "img_path": "acmw_ice_cream_meet_and_greet.png",
+            "day": "28",
+            "month": "AUG",
+            "sig_logo": "acm-w.png",
+            "title": "Ice Cream Social",
+            "location": "CS 202",
+            "time": "6:00pm - 7:00pm",
+            "desc": "ACM-W is starting off the semester with a meet and greet featuring a free ice cream bar! Join us not only to meet new people, but also to learn about ACM-W, the upcoming events, and how to get involved. ACM-W welcomes all students (male or female) that wish to promote women in computing from any major including Computer Science, Business and Information Technology, and Mathematics.",
+            "shortDesc": "ACM-W is starting off the semester with a meet and greet featuring a free ice cream bar!",
+            "group": "ACM-W"
+        },
+
+        {
             "img_path": "",
             "day": "24",
             "month": "SEPT",
