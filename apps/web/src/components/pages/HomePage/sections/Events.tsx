@@ -1,7 +1,7 @@
 import { Checkbox } from "antd";
 import React, { useLayoutEffect, useState } from "react";
 import Icon from "react-eva-icons";
-import { Element } from "react-scroll";
+import { Element, Link } from "react-scroll";
 import windowSize from "react-window-size";
 import styled from "styled-components";
 import { PageConstraint } from "../../../common/PageConstraint";
@@ -30,7 +30,6 @@ const Wrapper = styled.div`
       background: #2d9cdb;
       color: #fff;
     }
-    margin: 0 auto;
     margin-bottom: 15px;
   }
 
@@ -507,7 +506,7 @@ const Events: React.FC<IProps> = props => {
           </SmallInfo>
         </LeftWrapper>
         <VerticalLine />
-        <div style={{ width: '95%' }}>
+        <div style={{ width: "95%" }}>
           <EventName>{events.events[i].title}</EventName>
           <Details>
             <Time>
@@ -635,17 +634,28 @@ const Events: React.FC<IProps> = props => {
             </FilterWrapper>
             <EventsWrapper>
               {makeEvents()}
-              <h1 style={{ display: (countEvents() === 0 ? '' : 'none') }}>No events found with the given filter.</h1>
+              <h1 style={{ display: countEvents() === 0 ? "" : "none" }}>
+                No events found with the given filter.
+              </h1>
             </EventsWrapper>
           </div>
-          <button
-            style={{ display: countEvents() <= 3 ? "none" : "" }}
-            onClick={toggleNumEvents}
+          <Link
+            style={{ margin: "0 auto" }}
+            to={
+              countEvents() >= 3 && maxEvents !== events.events.length
+                ? ""
+                : "events"
+            }
           >
-            {countEvents() >= 3 && maxEvents !== events.events.length
-              ? "SHOW ALL EVENTS"
-              : "SHOW FEWER EVENTS"}
-          </button>
+            <button
+              style={{ display: countEvents() <= 3 ? "none" : "" }}
+              onClick={toggleNumEvents}
+            >
+              {countEvents() >= 3 && maxEvents !== events.events.length
+                ? "SHOW ALL EVENTS"
+                : "SHOW FEWER EVENTS"}
+            </button>
+          </Link>
         </Wrapper>
       </PageConstraint>
     </Element>
