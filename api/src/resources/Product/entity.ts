@@ -2,28 +2,17 @@ import {
   BaseEntity,
   Column,
   Entity,
-  Index,
   JoinTable,
   ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn
 } from "typeorm";
 
-import { Field, ID, ObjectType, registerEnumType } from "type-graphql";
+import { Field, ID, ObjectType } from "type-graphql";
 
 import { Lazy } from "../../lib/helpers";
 import { ProductCategory } from "../ProductCategory";
 import { Purchase } from "../Purchase";
-
-export enum ProductNames {
-  SEMESTER_MEMBERSHIP = "semester_membership",
-  YEAR_MEMBERSHIP = "year_membership"
-}
-
-registerEnumType(ProductNames, {
-  description: "All possible products.",
-  name: "ProductNames"
-});
 
 class ColumnNumericTransformer {
   public to(data: number): number {
@@ -41,20 +30,15 @@ export class Product extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   public id: string;
 
-  @Field((returns: void) => ProductNames)
-  @Index({ unique: true })
-  @Column({
-    enum: ProductNames,
-    type: "enum"
-  })
-  public name: ProductNames;
-
+  @Field()
   @Column()
-  public displayName: string;
+  public name: string;
 
+  @Field()
   @Column()
   public description: string;
 
+  @Field()
   @Column("numeric", {
     default: 0,
     scale: 2,

@@ -1,6 +1,6 @@
 import { getRepository } from "typeorm";
 
-import { Product, ProductNames } from "../resources/Product";
+import { Product } from "../resources/Product";
 import { User } from "../resources/User";
 
 export async function seedDatabase() {
@@ -18,8 +18,7 @@ export async function seedDatabase() {
   await productRepository
     .create({
       description: "Payment for ACM Yearly Membership",
-      displayName: "ACM Yearly Membership",
-      name: ProductNames.YEAR_MEMBERSHIP,
+      name: "ACM Yearly Membership",
       price: 20
     })
     .save();
@@ -27,8 +26,7 @@ export async function seedDatabase() {
   await productRepository
     .create({
       description: "Payment for ACM Semesterly Membership",
-      displayName: "ACM Semesterly Membership",
-      name: ProductNames.SEMESTER_MEMBERSHIP,
+      name: "ACM Semesterly Membership",
       price: 11
     })
     .save();
