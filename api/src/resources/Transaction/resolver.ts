@@ -47,7 +47,7 @@ export class ProductResolver {
       // Memoize the product lookup to prevent extra lookups in the database
       // This only matters in a client-side bug where the api receives two
       // products that arent in the same object. i.e. [{YEAR_MEMBERSHIP},
-      // {YEAR_MEMEBERSHIP}]
+      // {YEAR_MEMBERSHIP}]
       if (!products.hasOwnProperty(productId)) {
         products[productId] = await this.productRepo.findOneOrFail({
           id: productId
