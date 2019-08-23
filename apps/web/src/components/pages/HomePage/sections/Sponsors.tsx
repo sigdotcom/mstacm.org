@@ -52,72 +52,39 @@ const Sponsor = styled.div`
 
 const Logos = styled.div`
   display: flex;
-  justify-content: center;    
-  margin-top: 30px;
-  width: 85%
-  margin-left: 7.5%;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
   background: #DFE6E9;
 
+  a {
+    width: 50%;
+    margin-bottom: 20px;
+  }
+
   img {
-    margin: 30px 30px 100px 30px;
-    width: 180px;
+    background: #fff;
+    width: 100%;
+    padding: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   }
 
-  img:hover{
-    width: 190px;
-    margin: 25px 25px 95px 25px; 
-  }
+  @media all and (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;    
+    margin-top: 30px;
+    margin-bottom: 60px;
+    width: 85%
+    margin-left: 7.5%;
 
-  @media all and (max-width: 1200px) {
-    img {
-      margin: 20px 20px 80px 20px;
-      width: 150px;
+    a {
+      width: 17%;
+      margin: 0
     }
 
     img:hover {
-      width: 160px;
-      margin: 15px 15px 75px 15px; 
-    }
-  }
-
-  @media all and (max-width: 1000px) {
-    img {
-      margin: 20px 20px 70px 20px;
-      width: 125px;
-    }
-
-    img:hover{
-      width: 135px;
-      margin: 15px 15px 65px 15px; 
-    }
-  }
-
-  @media all and (max-width: 800px) {
-    img {
-      margin: 20px 20px 70px 20px;
-    }
-
-    img:hover{
-      width: 135px;
-      margin: 15px 15px 65px 15px; 
-    }
-  }
-
-  @media all and (max-width: 680px) {
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-    margin-bottom: 25px;
-
-    img {
-      width: 220px;
-      margin: 10px 10px 30px 10px;
-    }
-
-    img:hover{
-      width: 220px;
-      margin: 10px 10px 30px 10px; 
+      width: 110%;
+      margin: -5%;
     }
   }
 `
@@ -130,10 +97,11 @@ const Sponsors: React.FC<{}> = () => {
           <h2>Big thanks to our sponsors and partners!</h2>
         </Sponsor>
         <Logos>
-          <a href="https://www.att.com/" target="_blank"><img src={require('../../../../static/img/at&t.jpg')}/></a>
-          <a href="https://www.garmin.com/en-US/" target="_blank"><img src={require('../../../../static/img/garmin.jpg')}/></a>
-          <a href="https://www.netlify.com/" target="_blank"><img src={require('../../../../static/img/netlify.jpg')}/></a>
-          <a href="http://tradebot.com/" target="_blank"><img src={require('../../../../static/img/tradebot.jpg')}/></a>
+          <a href="https://www.auth0.com/" target="_blank"><img src={require('../../../../static/img/auth0.png')}/></a>
+          <a href="https://www.att.com/" target="_blank"><img src={require('../../../../static/img/at&t.png')}/></a>
+          <a href="https://www.garmin.com/en-US/" target="_blank"><img src={require('../../../../static/img/garmin.png')}/></a>
+          <a href="https://www.netlify.com/" target="_blank"><img src={require('../../../../static/img/netlify.png')}/></a>
+          <a href="http://tradebot.com/" target="_blank"><img src={require('../../../../static/img/tradebot.png')}/></a>
         </Logos>
       </Element>
     </SponsorWrap>
