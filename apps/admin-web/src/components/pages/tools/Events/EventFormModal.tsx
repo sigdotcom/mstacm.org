@@ -19,9 +19,11 @@ const EventFormModal: React.FC<IEventFormProps> = (
     props.setVisible(false);
   };
 
+  const action: string = event ? "Edit" : "Add";
+
   return (
     <Modal
-      title="Add Event"
+      title={action + " Event"}
       visible={props.visible}
       confirmLoading={confirmLoading}
       footer={null}

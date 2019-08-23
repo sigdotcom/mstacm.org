@@ -3,7 +3,7 @@ import moment from "moment";
 import React from "react";
 import styled from "styled-components";
 
-import { DELETE_EVENT } from "./helpers";
+import { DELETE_EVENT, GET_EVENTS } from "./helpers";
 
 import { Button } from "antd";
 
@@ -12,6 +12,8 @@ import { IEvent } from "./interfaces";
 interface IEventProps {
   event: IEvent;
   key: number;
+  setActiveEvent: any;
+  setVisible: any;
 }
 
 const EventWrapper: any = styled.li`
@@ -57,11 +59,15 @@ const Event: any = (props: IEventProps): any => {
     return moment(date).format("MMMM Do h:mmA");
   };
 
-  const handleEdit: any = (): any => {};
+  const handleEdit: any = (): any => {
+    props.setActiveEvent(event);
+    props.setVisible(true);
+  };
 
   const handleDelete: any = (): any => {
     deleteEvent({
-      variables: { id: props.event.id }
+      refetchQueries: [{ query: GET_EVENTS }],
+      variables: { id: Number(props.event.id) }
     });
     // TODO update the event list
   };

@@ -30,7 +30,14 @@ export const CREATE_EVENT: any = gql`
     }
   }
 `;
-// TODO ADD HOSTSIGS
+
+export const UPDATE_EVENT: any = gql`
+  mutation UpdateEvent($data: EventUpdateInput!, $id: Float!) {
+    updateEvent(data: $data, id: $id) {
+      eventTitle
+    }
+  }
+`;
 
 export const DELETE_EVENT: any = gql`
   mutation DeleteEvent($id: Float!) {

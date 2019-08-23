@@ -22,20 +22,20 @@ const List: any = styled.ul`
   margin: 0;
 `;
 
-const EventList: React.FC<{}> = (): any => {
+const EventList: React.FC<any> = (props: any): any => {
   const { loading, error, data }: any = useQuery(GET_EVENTS);
   log("Refreshed page");
 
   if (loading) {
     return (
       <PageWrapper>
-        <h3>Loading...</h3>;
+        <h3>Loading...</h3>
       </PageWrapper>
     );
   } else if (error) {
     return (
       <PageWrapper>
-        <h3>{error.toString()}</h3>;
+        <h3>{error.toString()}</h3>
       </PageWrapper>
     );
   } else {
@@ -44,7 +44,12 @@ const EventList: React.FC<{}> = (): any => {
       <PageWrapper>
         <List>
           {events.map((event: IEvent) => (
-            <Event event={event} key={event.id} />
+            <Event
+              event={event}
+              key={event.id}
+              setActiveEvent={props.setActiveEvent}
+              setVisible={props.setVisible}
+            />
           ))}
         </List>
       </PageWrapper>

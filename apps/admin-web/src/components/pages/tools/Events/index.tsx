@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import debug from "debug";
 
+import { EventFormModal } from "./EventFormModal";
 import { EventList } from "./EventList";
 import { Header } from "./Header";
 
@@ -16,10 +17,18 @@ const PageWrapper: any = styled.div`
 `;
 
 const Events: React.FC<{}> = (): any => {
+  const [visible, setVisible]: any = useState(false);
+  const [activeEvent, setActiveEvent]: any = useState(null);
+
   return (
     <PageWrapper>
-      <Header />
-      <EventList />
+      <Header setVisible={setVisible} setActiveEvent={setActiveEvent} />
+      <EventList setVisible={setVisible} setActiveEvent={setActiveEvent} />
+      <EventFormModal
+        visible={visible}
+        setVisible={setVisible}
+        event={activeEvent}
+      />
     </PageWrapper>
   );
 };
