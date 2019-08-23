@@ -29,7 +29,7 @@ export class EventCreateInput /*implements Partial<Event>*/ {
 }
 
 @InputType()
-export class EventUpdateInput implements Partial<Event> {
+export class EventUpdateInput /*implements Partial<Event> */ {
   @Field({ nullable: true })
   public eventTitle: string;
 
@@ -50,6 +50,9 @@ export class EventUpdateInput implements Partial<Event> {
 
   @Field({ nullable: true })
   public eventLink: string;
+
+  @Field()
+  public hostSig: string;
 }
 
 @ObjectType()

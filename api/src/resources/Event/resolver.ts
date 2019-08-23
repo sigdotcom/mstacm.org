@@ -33,13 +33,22 @@ export class EventResolver {
   @Mutation((returns: void) => Event)
   public async updateEvent(
     @Ctx() context: IContext,
+    @Arg("id", (argType: void) => Number) id: number,
     @Arg("data", (argType: void) => EventUpdateInput)
     input: DeepPartial<Event>
   ): Promise<Event> {
-    const creator = context.state.user;
-    const newResource = this.repository.create({ ...input, creator });
+    if (input.hostSig) {
+      const hostSig = await this.sigRepository.findOneOrFail({
+        name: String(input.hostSig)
+      });
+      delete input.hostSig;
+      input.hostSig = hostSig;
+    }
 
-    return newResource.save();
+    const resource = await this.repository.findOneOrFail(id);
+    const updatedResource = this.repository.merge(resource, { ...input });
+
+    return updatedResource.save();
   }
 
   @Authorized("SUPERADMIN")
@@ -54,7 +63,8 @@ export class EventResolver {
       name: String(input.hostSig)
     });
     delete input.hostSig;
-    const newResource = this.repository.create({ ...input, creator, hostSig });
+    input.hostSig = hostSig;
+    const newResource = this.repository.create({ ...input, creator });
 
     return newResource.save();
   }
