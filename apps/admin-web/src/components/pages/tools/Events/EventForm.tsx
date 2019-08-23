@@ -3,7 +3,7 @@ import { Button, DatePicker, Form, Input, InputNumber } from "antd";
 import moment from "moment";
 import React from "react";
 
-import { CREATE_EVENT } from "./helpers";
+import { CREATE_EVENT, GET_EVENTS, UPDATE_EVENT } from "./helpers";
 // import { IEvent } from "./interfaces";
 
 const { RangePicker }: any = DatePicker;
@@ -19,8 +19,12 @@ const EventFormBase: React.FC<any> = (props: any): any => {
 
   const [
     createEvent,
-    { loading: mutationLoading, error: mutationError, data: mutationData }
+    { loading: createLoading, error: createError, data: createData }
   ]: any = useMutation(CREATE_EVENT);
+  const [
+    updateEvent,
+    { loading: updateLoading, error: updateError, data: updateData }
+  ]: any = useMutation(UPDATE_EVENT);
 
   const convertTimes: any = (data: any): any => {
     if (data.hasOwnProperty("dateRange") && data.dateRange) {
@@ -36,11 +40,18 @@ const EventFormBase: React.FC<any> = (props: any): any => {
     props.form.validateFields((err: any, values: any) => {
       if (!err) {
         convertTimes(values);
-        console.log(values);
         if (editing) {
+          const id: number = Number(values.id);
+          delete values.id;
+          console.log(values, id);
+          updateEvent({
+            refetchQueries: [{ query: GET_EVENTS }],
+            variables: { data: values, id }
+          });
           // UPDATE THE NEW EVENT (values);
         } else {
           createEvent({
+            refetchQueries: [{ query: GET_EVENTS }],
             variables: { data: values }
           });
           // CREATE THE NEW EVENT (values);
@@ -51,11 +62,17 @@ const EventFormBase: React.FC<any> = (props: any): any => {
 
   const { getFieldDecorator }: any = props.form;
 
-  if (mutationLoading) {
+  if (createLoading || updateLoading) {
     return <h1>Loading...</h1>;
-  } else if (mutationError) {
-    return <h1>{mutationError.toString()}</h1>;
-  } else if (mutationData) {
+  } else if (createError || updateError) {
+    try {
+      console.log(createError);
+      return <h1>{createError.toString()}</h1>;
+    } catch {
+      console.log(updateError);
+      return <h1>{updateError.toString()}</h1>;
+    }
+  } else if (createData || updateData) {
     return <h1>Success</h1>;
   }
 
@@ -75,7 +92,7 @@ const EventFormBase: React.FC<any> = (props: any): any => {
       )}
       <Form.Item label="Host Community">
         {getFieldDecorator("hostSig", {
-          initialValue: newEvent.hostSig,
+          initialValue: editing ? newEvent.hostSig.name : "",
           rules: [
             {
               required: !editing,
