@@ -474,81 +474,83 @@ const Events: React.FC<IProps> = props => {
 
   const Event = (i: number) => {
     return (
-      <EventWrapper key={i}>
-        <LeftWrapper>
-          <a
-            style={{
-              visibility:
-                events.events[i].img_path === "" ? "hidden" : "visible"
-            }}
-            href={require("../../../../static/img/" +
-              (events.events[i].img_path === ""
-                ? "acm.png"
-                : events.events[i].img_path))}
-            target="_blank"
-          >
-            <FlierImg
-              src={require("../../../../static/img/" +
+      <Element name={'event' + i}>
+        <EventWrapper key={i}>
+          <LeftWrapper>
+            <a
+              style={{
+                visibility:
+                  events.events[i].img_path === "" ? "hidden" : "visible"
+              }}
+              href={require("../../../../static/img/" +
                 (events.events[i].img_path === ""
                   ? "acm.png"
                   : events.events[i].img_path))}
-            />
-          </a>
-          <SmallInfo>
-            <Date>
-              <h3>{events.events[i].month}</h3>
-              <h2>{events.events[i].day}</h2>
-            </Date>
-            <img
-              src={require("../../../../static/img/" +
-                events.events[i].sig_logo)}
-            />
-          </SmallInfo>
-        </LeftWrapper>
-        <VerticalLine />
-        <div style={{ width: "95%" }}>
-          <EventName>{events.events[i].title}</EventName>
-          <Details>
-            <Time>
-              <img src={require("../../../../static/img/location.png")} />
-              <h2>{events.events[i].location}</h2>
-            </Time>
-            <Time>
-              <img src={require("../../../../static/img/clock.png")} />
-              <h2>{events.events[i].time}</h2>
-            </Time>
-            <Time style={{ marginLeft: "-1.5px" }}>
-              <Icon name="people" size="medium" fill="#000" />
-              <h2 style={{ margin: "-1px 0 0 3.5px" }}>
-                {events.events[i].group}
-              </h2>
-            </Time>
-          </Details>
-          <Description onClick={() => toggleDesc(i)}>
-            {showLongDesc[0][i]
-              ? events.events[i].desc
-              : events.events[i].shortDesc}
-          </Description>
-          <FlierLink
-            style={{
-              display:
-                showLongDesc[0][i] && events.events[i].img_path !== ""
-                  ? ""
-                  : "none"
-            }}
-            href={require("../../../../static/img/" +
-              (events.events[i].img_path === ""
-                ? "acm.png"
-                : events.events[i].img_path))}
-            target="_blank"
-          >
-            Click here to see the flier for this event.
-          </FlierLink>
-          <Show onClick={() => toggleDesc(i)}>
-            {showLongDesc[0][i] ? "See less..." : "See more..."}
-          </Show>
-        </div>
-      </EventWrapper>
+              target="_blank"
+            >
+              <FlierImg
+                src={require("../../../../static/img/" +
+                  (events.events[i].img_path === ""
+                    ? "acm.png"
+                    : events.events[i].img_path))}
+              />
+            </a>
+            <SmallInfo>
+              <Date>
+                <h3>{events.events[i].month}</h3>
+                <h2>{events.events[i].day}</h2>
+              </Date>
+              <img
+                src={require("../../../../static/img/" +
+                  events.events[i].sig_logo)}
+              />
+            </SmallInfo>
+          </LeftWrapper>
+          <VerticalLine />
+          <div style={{ width: "95%" }}>
+            <EventName>{events.events[i].title}</EventName>
+            <Details>
+              <Time>
+                <img src={require("../../../../static/img/location.png")} />
+                <h2>{events.events[i].location}</h2>
+              </Time>
+              <Time>
+                <img src={require("../../../../static/img/clock.png")} />
+                <h2>{events.events[i].time}</h2>
+              </Time>
+              <Time style={{ marginLeft: "-1.5px" }}>
+                <Icon name="people" size="medium" fill="#000" />
+                <h2 style={{ margin: "-1px 0 0 3.5px" }}>
+                  {events.events[i].group}
+                </h2>
+              </Time>
+            </Details>
+            <Description onClick={() => toggleDesc(i)}>
+              {showLongDesc[0][i]
+                ? events.events[i].desc
+                : events.events[i].shortDesc}
+            </Description>
+            <FlierLink
+              style={{
+                display:
+                  showLongDesc[0][i] && events.events[i].img_path !== ""
+                    ? ""
+                    : "none"
+              }}
+              href={require("../../../../static/img/" +
+                (events.events[i].img_path === ""
+                  ? "acm.png"
+                  : events.events[i].img_path))}
+              target="_blank"
+            >
+              Click here to see the flier for this event.
+            </FlierLink>
+            <Show onClick={() => toggleDesc(i)}>
+              {showLongDesc[0][i] ? "See less..." : "See more..."}
+            </Show>
+          </div>
+        </EventWrapper>
+      </Element>
     );
   };
 
@@ -644,7 +646,7 @@ const Events: React.FC<IProps> = props => {
             to={
               countEvents() >= 3 && maxEvents !== events.events.length
                 ? ""
-                : "events"
+                : "event2"
             }
           >
             <button
