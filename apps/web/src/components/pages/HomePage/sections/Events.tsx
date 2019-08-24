@@ -354,6 +354,7 @@ let filterArr: Boolean[] = events.events.map(event => {
 });
 
 let eventCounter: number = 0;
+const CALENDAR_LINK = 'https://calendar.google.com/calendar/embed?src=mst.edu_7u3stm8bn7l2umuastep5fmbl0%40group.calendar.google.com&ctz=America%2FChicago'
 
 const Events: React.FC<IProps> = props => {
   const [isMobile, setIsMobile] = useState(true);
@@ -643,7 +644,7 @@ const Events: React.FC<IProps> = props => {
               {makeEvents()}
               <CalendarLink
                 style={{ display: countEvents() === 0 ? "" : "none" }}
-                href="https://calendar.google.com/calendar/embed?src=mst.edu_7u3stm8bn7l2umuastep5fmbl0%40group.calendar.google.com&ctz=America%2FChicago"
+                href={CALENDAR_LINK}
                 target="_blank"
               >
                 We have no events scheduled with this filter. Click here to take
@@ -666,7 +667,7 @@ const Events: React.FC<IProps> = props => {
               margin: "-10px auto 0 auto",
               fontSize: "15px"
             }}
-            href="https://calendar.google.com/calendar/embed?src=mst.edu_7u3stm8bn7l2umuastep5fmbl0%40group.calendar.google.com&ctz=America%2FChicago"
+            href={CALENDAR_LINK}
             target="_blank"
           >
             Or view the full ACM calendar
