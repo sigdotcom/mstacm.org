@@ -34,6 +34,10 @@ const Wrapper = styled.div`
     margin-bottom: 15px;
   }
 
+  a:hover {
+    color: #42C0FC;
+  }
+
   @media all and (max-width: 1000px) {
     padding: 20px 0 100px 0;
     height: 100%;
@@ -162,10 +166,6 @@ const EventWrapper = styled.div`
 
   a {
     font-weight: 600;
-  }
-
-  a:hover {
-    color: #42C0FC;
   }
 
   @media all and (max-width: 1000px) {
@@ -333,6 +333,12 @@ const FlierLink = styled.a`
   }
 `;
 
+const CalendarLink = styled.a`
+  margin: auto;
+  color: #ababab;
+  font-size: 20px;
+`;
+
 interface IProps {
   windowWidth?: any; // Used to check if user is on mobile for initially showing short description
 }
@@ -348,6 +354,7 @@ let filterArr: Boolean[] = events.events.map(event => {
 });
 
 let eventCounter: number = 0;
+const CALENDAR_LINK = 'https://calendar.google.com/calendar/embed?src=mst.edu_7u3stm8bn7l2umuastep5fmbl0%40group.calendar.google.com&ctz=America%2FChicago'
 
 const Events: React.FC<IProps> = props => {
   const [isMobile, setIsMobile] = useState(true);
@@ -507,7 +514,7 @@ const Events: React.FC<IProps> = props => {
           </SmallInfo>
         </LeftWrapper>
         <VerticalLine />
-        <div style={{ width: '95%' }}>
+        <div style={{ width: "95%" }}>
           <EventName>{events.events[i].title}</EventName>
           <Details>
             <Time>
@@ -635,7 +642,14 @@ const Events: React.FC<IProps> = props => {
             </FilterWrapper>
             <EventsWrapper>
               {makeEvents()}
-              <h1 style={{ display: (countEvents() === 0 ? '' : 'none') }}>No events found with the given filter.</h1>
+              <CalendarLink
+                style={{ display: countEvents() === 0 ? "" : "none" }}
+                href={CALENDAR_LINK}
+                target="_blank"
+              >
+                We have no events scheduled with this filter. Click here to take
+                a look at our full calendar for more details.
+              </CalendarLink>
             </EventsWrapper>
           </div>
           <button
@@ -646,6 +660,18 @@ const Events: React.FC<IProps> = props => {
               ? "SHOW ALL EVENTS"
               : "SHOW FEWER EVENTS"}
           </button>
+          <CalendarLink
+            style={{
+              display: countEvents() === 0 ? "none" : "",
+              paddingTop: countEvents() <= 3 ? "50px" : "",
+              margin: "-10px auto 0 auto",
+              fontSize: "15px"
+            }}
+            href={CALENDAR_LINK}
+            target="_blank"
+          >
+            Or view the full ACM calendar
+          </CalendarLink>
         </Wrapper>
       </PageConstraint>
     </Element>
