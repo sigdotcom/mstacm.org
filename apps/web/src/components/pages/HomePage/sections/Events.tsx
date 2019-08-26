@@ -1,20 +1,20 @@
-import { Checkbox } from "antd";
-import React, { useLayoutEffect, useState } from "react";
-import Icon from "react-eva-icons";
+import React, { useState } from "react";
 import { Element } from "react-scroll";
-import windowSize from "react-window-size";
 import styled from "styled-components";
 import { PageConstraint } from "../../../common/PageConstraint";
 import events from "./Events.json";
 
+import { Checkbox } from "./Checkbox";
+import { Event } from "./Event";
+
 const Wrapper = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  background: #FFFFFF;
-  padding: 50px 0;
+  width: 100%;
+  padding: 20px 0 100px 0;
+  background: #fff;
 
   button {
     transition: 0.2s ease-in-out;
@@ -30,32 +30,31 @@ const Wrapper = styled.div`
       background: #2d9cdb;
       color: #fff;
     }
-    margin: 0 auto;
-    margin-bottom: 15px;
+    margin: 15px auto 15px auto;
   }
 
-  @media all and (max-width: 1000px) {
-    padding: 20px 0 100px 0;
-    height: 100%;
+  button:focus {
+    outline: none;
+    color: #2d9cdb;
+    background: #fff;
+  }
 
-    button:focus {
-      outline: none;
-      color: #2d9cdb;
-      background: #fff;
+  a:hover {
+    color: #42C0FC;
+  }
+
+  @media all and (min-width: 1001px) {
+    padding: 50px 0;
+
+    button:focus:hover {
+      background: #2d9cdb;
+      color: #fff;
     }
   }
 `;
 
 const FilterWrapper = styled.div`
-  height: 400px;
-  min-width: 250px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #f7f7f7;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border: 1px rgba(0, 0, 0, 0.25) solid;
-  margin-left: 50px;
+  display: none;
 
   h3 {
     padding-top: 25px;
@@ -76,8 +75,17 @@ const FilterWrapper = styled.div`
     color: #092b35;
   }
 
-  @media all and (max-width: 1000px) {
-    display: none;
+  @media all and (min-width: 1001px) {
+    display: inline;
+    height: 400px;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f7f7f7;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: 1px rgba(0, 0, 0, 0.25) solid;
+    margin-left: 50px;
   }
 `;
 
@@ -113,444 +121,115 @@ const CheckBoxWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 295px;
-  margin-top: 10px;
-
-  .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: #ef9c6d;
-  }
-
-  .ant-checkbox-checked .ant-checkbox-inner,
-  .ant-checkbox-wrapper:hover .ant-checkbox-inner,
-  .ant-checkbox:hover .ant-checkbox-inner,
-  .ant-checkbox-input:focus + .ant-checkbox-inner,
-  .ant-checkbox-checked::after,
-  .ant-checkbox-inner {
-    border: 2px solid #092b35;
-    border-color: #092b35;
-  }
+  height: 291px;
+  margin-top: 12px;
+  margin-left: 10px;
 `;
 
 const EventsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 95%;
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
   overflow-x: hidden;
   overflow-y: hidden;
-
-  @media all and (max-width: 1000px) {
-    width: 90%;
-    margin-left: 5%;
-    max-height: 100%;
-    box-shadow: none;
-  }
 `;
 
-const EventWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  width: 100%
-  margin-bottom: 10px;
-  margin-left: 5px;
-
-  p {
-    font-size: 17px;
-  }
-
-  a {
-    font-weight: 600;
-  }
-
-  a:hover {
-    color: #42C0FC;
-  }
-
-  @media all and (max-width: 1000px) {
-    flex-direction: column;
-    margin: 0;
-    margin-bottom: 10px;
-    height: 100%;
-  }
+const CalendarLink = styled.a`
+  margin: auto;
+  color: #ababab;
+  font-size: 20px;
 `;
-
-const EventName = styled.h1`
-  width: 95%;
-  text-transform: uppercase;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 40px;
-  color: #42c0fc;
-  margin: 0;
-
-  @media all and (max-width: 1000px) {
-    font-size: 30px;
-  }
-`;
-
-const LeftWrapper = styled.div`
-  width: 225px;
-  display: flex;
-
-  a {
-    width: 150px;
-  }
-
-  @media all and (max-width: 1000px) {
-    a {
-      display: none;
-    }
-  }
-`;
-
-const FlierImg = styled.img`
-  width: 100%;
-`;
-
-const SmallInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 75px;
-
-  img {
-    margin-top: -15px;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-  }
-
-  @media all and (max-width: 1000px) {
-    width: auto;
-    align-items: flex-start;
-    justify-content: flex-start;
-
-    img {
-      display: none;
-    }
-  }
-`;
-
-const VerticalLine = styled.div`
-  margin-right: 25px;
-  margin-left: 18px;
-  margin-top: 4px;
-  height: 130px;
-  border-right: 2px solid #bdbdbd;
-
-  @media all and (max-width: 1000px) {
-    display: none;
-    height: 120px;
-    margin-left: 0;
-  }
-`;
-
-const Details = styled.div`
-  margin-bottom: 10px;
-`;
-
-const Time = styled.div`
-  display: flex;
-
-  img {
-    width: 15px;
-    height: 15px;
-    margin-top: 3px;
-    margin-right: 0;
-  }
-
-  h2 {
-    margin: 0;
-    margin-left: 5px;
-    color: #092b35;
-    font-size: 16px;
-  }
-`;
-
-const Date = styled.div`
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: center;
-
-  h2 {
-    margin: 0;
-    margin-bottom: -20px;
-    color: #ef9c6d;
-    font-size: 46px;
-  }
-
-  h3 {
-    color: #ef9c6d;
-    font-size: 28px;
-    text-transform: uppercase;
-  }
-
-  @media all and (max-width: 1000px) {
-    flex-direction: row;
-    width: 100%;
-    margin: 0;
-    margin-bottom: -10px;
-
-    h2,
-    h3 {
-      font-size: 30px;
-      font-weight: normal;
-      margin: 0;
-      margin-right: 10px;
-    }
-  }
-`;
-
-const Description = styled.p`
-  flierimgcolor: #777777;
-  margin-bottom: 10px;
-  width: 95%;
-
-  @media all and (max-width: 1000px) {
-    width: 100%;
-  }
-`;
-
-const Show = styled.p`
-  color: black;
-  font-weight: bold;
-  margin-top: 10px;
-
-  @media all and (min-width: 1001px) {
-    display: none;
-  }
-`;
-
-const FlierLink = styled.a`
-  color: #376b83;
-  font-size: 17px;
-  margin-bottom: 10px;
-
-  @media all and (min-width: 1001px) {
-    display: none;
-  }
-`;
-
-interface IProps {
-  windowWidth?: any; // Used to check if user is on mobile for initially showing short description
-}
-
-// Initalize all events to show abbreviated description
-let descArr: Boolean[] = events.events.map(event => {
-  return false;
-});
 
 // Initalize no filters
-let filterArr: Boolean[] = events.events.map(event => {
+let filterArr: boolean[] = events.events.map(event => {
   return false;
 });
 
-let eventCounter: number = 0;
+const DEFAULT_EVENTS_TO_DISPLAY = 3;
+const CALENDAR_LINK =
+  "https://calendar.google.com/calendar/embed?src=mst.edu_7u3stm8bn7l2umuastep5fmbl0%40group.calendar.google.com&ctz=America%2FChicago";
 
-const Events: React.FC<IProps> = props => {
-  const [isMobile, setIsMobile] = useState(true);
-  const [showLongDesc, setShowLongDesc] = useState([descArr]);
+const Events: React.FC<{}> = (): JSX.Element => {
   const [filters, setFilters] = useState([filterArr]);
-  const [maxEvents, setMaxEvents] = useState(3);
-
-  useLayoutEffect(() => {
-    if (props.windowWidth > 1000) {
-      setIsMobile(false);
-
-      for (let i = 0; i < events.events.length; i++) {
-        toggleDesc(i);
-      }
-    }
-  }, []);
+  const [maxEvents, setMaxEvents] = useState(DEFAULT_EVENTS_TO_DISPLAY);
+  const [scrollYPosition, setScrollYPosition] = useState(0);
 
   // Toggle total number of events to show (for button click)
-  const toggleNumEvents = () => {
-    eventCounter = 0;
-    if (maxEvents > 3) {
-      setMaxEvents(3);
+  const toggleNumEvents = (): void => {
+    if (maxEvents > DEFAULT_EVENTS_TO_DISPLAY) {
+      setMaxEvents(DEFAULT_EVENTS_TO_DISPLAY);
+      window.scrollTo(0,scrollYPosition);
     } else {
       setMaxEvents(events.events.length);
-    }
-  };
-
-  // Toggle whether to show short or long description on event (mobile only)
-  const toggleDesc = (i: number) => {
-    if (isMobile) {
-      descArr[i] = !descArr[i];
-      setShowLongDesc([descArr]);
+      setScrollYPosition(window.pageYOffset);
     }
   };
 
   // Add filter if checkbox is checked
-  const toggleCheckbox = (index: number) => {
+  const toggleCheckbox = (index: number): void => {
     filterArr[index] = !filterArr[index];
     setFilters([filterArr]);
   };
 
+  // Check if filter is applied to the given group
+  const filterOnGroup = (group: string): boolean => {
+    if (
+      (group === "ACM Comp" && filters[0][0]) ||
+      (group === "ACM Data" && filters[0][1]) ||
+      (group === "ACM Game" && filters[0][2]) ||
+      (group === "ACM General" && filters[0][3]) ||
+      (group === "ACM Hack" && filters[0][4]) ||
+      (group === "ACM Sec" && filters[0][5]) ||
+      (group === "ACM-W" && filters[0][6])
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  // Check if default number of events should be shown
+  const showDefault = (): boolean => {
+    return countEvents() <= DEFAULT_EVENTS_TO_DISPLAY;
+  };
+
+  // Check if there are no events shown with the given filter
+  const noFilteredEvents = (): boolean => {
+    return countEvents() === 0;
+  };
+
   // Determine if event should be shown
-  const showEvent = (i: number, group: string) => {
-    if (eventCounter < maxEvents) {
-      if (
-        filters[0].every(filter => {
-          return filter === false;
-        })
-      ) {
-        eventCounter += 1;
-        return true;
-      } else if (group === "ACM Comp" && filters[0][0]) {
-        eventCounter += 1;
-        return true;
-      } else if (group === "ACM Data" && filters[0][1]) {
-        eventCounter += 1;
-        return true;
-      } else if (group === "ACM Game" && filters[0][2]) {
-        eventCounter += 1;
-        return true;
-      } else if (group === "ACM General" && filters[0][3]) {
-        eventCounter += 1;
-        return true;
-      } else if (group === "ACM Hack" && filters[0][4]) {
-        eventCounter += 1;
-        return true;
-      } else if (group === "ACM Sec" && filters[0][5]) {
-        eventCounter += 1;
-        return true;
-      } else if (group === "ACM-W" && filters[0][6]) {
-        eventCounter += 1;
-        return true;
-      }
+  const showEvent = (group: string): boolean => {
+    if (
+      filters[0].every(filter => {
+        return filter === false;
+      }) ||
+      filterOnGroup(group)
+    ) {
+      return true;
     }
     return false;
   };
 
   // Get the total number of events that should be shown with the given filter
-  // to determine which button text should be shown
-  const countEvents = () => {
+  const countEvents = (): number => {
     let count = 0;
-    let showAll = false;
 
-    for (let i = 0; i < events.events.length; i++) {
-      if (
-        filters[0].every(filter => {
-          return filter === false;
-        })
-      ) {
-        showAll = true;
-      } else if (events.events[i].group === "ACM Comp" && filters[0][0]) {
-        count += 1;
-      } else if (events.events[i].group === "ACM Data" && filters[0][1]) {
-        count += 1;
-      } else if (events.events[i].group === "ACM Game" && filters[0][2]) {
-        count += 1;
-      } else if (events.events[i].group === "ACM General" && filters[0][3]) {
-        count += 1;
-      } else if (events.events[i].group === "ACM Hack" && filters[0][4]) {
-        count += 1;
-      } else if (events.events[i].group === "ACM Sec" && filters[0][5]) {
-        count += 1;
-      } else if (events.events[i].group === "ACM-W" && filters[0][6]) {
-        count += 1;
-      }
-    }
-    if (!count && showAll) {
+    if (
+      filters[0].every(filter => {
+        return filter === false;
+      })
+    ) {
       count = events.events.length;
+    } else {
+      for (let i = 0; i < events.events.length; i++) {
+        if (filterOnGroup(events.events[i].group)) {
+          count += 1;
+        }
+      }
     }
     return count;
-  };
-
-  // Create list of events
-  const makeEvents = () => {
-    let eventList = [];
-    for (let i = 0; i < events.events.length; i++) {
-      let show = showEvent(i, events.events[i].group);
-      if (show) {
-        eventList.push(Event(i));
-      }
-    }
-    eventCounter = 0;
-    return eventList;
-  };
-
-  const Event = (i: number) => {
-    return (
-      <EventWrapper key={i}>
-        <LeftWrapper>
-          <a
-            style={{
-              visibility:
-                events.events[i].img_path === "" ? "hidden" : "visible"
-            }}
-            href={require("../../../../static/img/" +
-              (events.events[i].img_path === ""
-                ? "acm.png"
-                : events.events[i].img_path))}
-            target="_blank"
-          >
-            <FlierImg
-              src={require("../../../../static/img/" +
-                (events.events[i].img_path === ""
-                  ? "acm.png"
-                  : events.events[i].img_path))}
-            />
-          </a>
-          <SmallInfo>
-            <Date>
-              <h3>{events.events[i].month}</h3>
-              <h2>{events.events[i].day}</h2>
-            </Date>
-            <img
-              src={require("../../../../static/img/" +
-                events.events[i].sig_logo)}
-            />
-          </SmallInfo>
-        </LeftWrapper>
-        <VerticalLine />
-        <div style={{ width: '95%' }}>
-          <EventName>{events.events[i].title}</EventName>
-          <Details>
-            <Time>
-              <img src={require("../../../../static/img/location.png")} />
-              <h2>{events.events[i].location}</h2>
-            </Time>
-            <Time>
-              <img src={require("../../../../static/img/clock.png")} />
-              <h2>{events.events[i].time}</h2>
-            </Time>
-            <Time style={{ marginLeft: "-1.5px" }}>
-              <Icon name="people" size="medium" fill="#000" />
-              <h2 style={{ margin: "-1px 0 0 3.5px" }}>
-                {events.events[i].group}
-              </h2>
-            </Time>
-          </Details>
-          <Description onClick={() => toggleDesc(i)}>
-            {showLongDesc[0][i]
-              ? events.events[i].desc
-              : events.events[i].shortDesc}
-          </Description>
-          <FlierLink
-            style={{
-              display:
-                showLongDesc[0][i] && events.events[i].img_path !== ""
-                  ? ""
-                  : "none"
-            }}
-            href={require("../../../../static/img/" +
-              (events.events[i].img_path === ""
-                ? "acm.png"
-                : events.events[i].img_path))}
-            target="_blank"
-          >
-            Click here to see the flier for this event.
-          </FlierLink>
-          <Show onClick={() => toggleDesc(i)}>
-            {showLongDesc[0][i] ? "See less..." : "See more..."}
-          </Show>
-        </div>
-      </EventWrapper>
-    );
   };
 
   return (
@@ -595,38 +274,44 @@ const Events: React.FC<IProps> = props => {
                 </SigWrapper>
                 <CheckBoxWrapper>
                   <Checkbox
-                    onChange={() => {
+                    checked={filters[0][0]}
+                    onClick={() => {
                       toggleCheckbox(0);
                     }}
-                    style={{ marginLeft: "8px" }}
                   />
                   <Checkbox
-                    onChange={() => {
+                    checked={filters[0][1]}
+                    onClick={() => {
                       toggleCheckbox(1);
                     }}
                   />
                   <Checkbox
-                    onChange={() => {
+                    checked={filters[0][2]}
+                    onClick={() => {
                       toggleCheckbox(2);
                     }}
                   />
                   <Checkbox
-                    onChange={() => {
+                    checked={filters[0][3]}
+                    onClick={() => {
                       toggleCheckbox(3);
                     }}
                   />
                   <Checkbox
-                    onChange={() => {
+                    checked={filters[0][4]}
+                    onClick={() => {
                       toggleCheckbox(4);
                     }}
                   />
                   <Checkbox
-                    onChange={() => {
+                    checked={filters[0][5]}
+                    onClick={() => {
                       toggleCheckbox(5);
                     }}
                   />
                   <Checkbox
-                    onChange={() => {
+                    checked={filters[0][6]}
+                    onClick={() => {
                       toggleCheckbox(6);
                     }}
                   />
@@ -634,22 +319,48 @@ const Events: React.FC<IProps> = props => {
               </Sigs>
             </FilterWrapper>
             <EventsWrapper>
-              {makeEvents()}
-              <h1 style={{ display: (countEvents() === 0 ? '' : 'none') }}>No events found with the given filter.</h1>
+              {events.events
+                .filter(event => {
+                  return showEvent(event.group);
+                })
+                .slice(0, maxEvents)
+                .map((event, i) => {
+                  return <Event event={event} key={i} />;
+                })}
+              <CalendarLink
+                style={{ display: noFilteredEvents() ? "" : "none" }}
+                href={CALENDAR_LINK}
+                target="_blank"
+              >
+                We have no events scheduled with this filter. Click here to take
+                a look at our full calendar for more details.
+              </CalendarLink>
             </EventsWrapper>
           </div>
           <button
-            style={{ display: countEvents() <= 3 ? "none" : "" }}
+            style={{ display: showDefault() ? "none" : "" }}
             onClick={toggleNumEvents}
           >
-            {countEvents() >= 3 && maxEvents !== events.events.length
+            {!showDefault() && maxEvents !== events.events.length
               ? "SHOW ALL EVENTS"
               : "SHOW FEWER EVENTS"}
           </button>
+          <CalendarLink
+            style={{
+              display: noFilteredEvents() ? "none" : "",
+              paddingTop: showDefault() ? "50px" : "",
+              margin: "-10px auto 0 auto",
+              fontSize: "15px"
+            }}
+            href={CALENDAR_LINK}
+            target="_blank"
+          >
+            Or view the full ACM calendar
+          </CalendarLink>
         </Wrapper>
       </PageConstraint>
     </Element>
   );
 };
 
-export default windowSize(Events);
+export { Events };
