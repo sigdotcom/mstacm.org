@@ -1,25 +1,25 @@
 {
-  "extends": [
-    "tslint:latest",
-    "tslint-react",
-    "tslint-config-prettier"
-  ],
-  "rules": {
-    "no-any": {
-      "severity": "warning"
-    },
-    "typedef": [
-      true,
-      "call-signature",
-      "arrow-call-signature",
-      "parameter",
-      "arrow-parameter",
-      "property-declaration",
-      "variable-declaration",
-      "member-variable-declaration",
-      "object-destructuring",
-      "array-destructuring"
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:latest",
+        "tslint-microsoft-contrib",
+        "tslint-config-prettier",
+        "tslint-react"
     ],
-    "no-default-export": true
-  }
+    "jsRules": {},
+    "rules": {
+        "missing-jsdoc": false,
+        "no-relative-imports": false,
+        "export-name": false,
+        "import-name": false,
+        "variable-name": {
+          "options": [
+            "ban-keywords",
+            "check-format",
+            "allow-pascal-case"
+          ]
+        },
+        "max-func-body-length": false
+    },
+    "rulesDirectory": []
 }

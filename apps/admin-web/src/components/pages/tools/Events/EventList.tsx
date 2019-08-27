@@ -1,30 +1,25 @@
-import React from "react";
+import React, { setGlobal } from "reactn";
 
 import { useQuery } from "@apollo/react-hooks";
-import debug from "debug";
 
-import styled from "styled-components";
+import styled, { AnyStyledComponent } from "styled-components";
 
 import { Event } from "./Event";
 import { GET_EVENTS } from "./helpers";
 import { IEvent } from "./interfaces";
 
-const log: any = debug("warden:events");
-log.log = console.log.bind(console);
-
-const PageWrapper: any = styled.div`
+const PageWrapper: AnyStyledComponent = styled.div`
   margin: 0 auto;
   padding: 15px;
   max-width: 800px;
 `;
-const List: any = styled.ul`
+const List: AnyStyledComponent = styled.ul`
   padding: 0;
   margin: 0;
 `;
 
-const EventList: React.FC<any> = (props: any): any => {
+const EventList: React.SFC<{}> = (): JSX.Element => {
   const { loading, error, data }: any = useQuery(GET_EVENTS);
-  log("Refreshed page");
 
   if (loading) {
     return (
@@ -39,19 +34,19 @@ const EventList: React.FC<any> = (props: any): any => {
       </PageWrapper>
     );
   } else {
+    setGlobal({
+      events: data.events
+    });
     const events: IEvent[] = data.events;
+    const listElements: JSX.Element[] = events.map(
+      (event: IEvent, index: number) => (
+        <Event event={event} index={index} key={event.id} />
+      )
+    );
+
     return (
       <PageWrapper>
-        <List>
-          {events.map((event: IEvent) => (
-            <Event
-              event={event}
-              key={event.id}
-              setActiveEvent={props.setActiveEvent}
-              setVisible={props.setVisible}
-            />
-          ))}
-        </List>
+        <List>{listElements}</List>
       </PageWrapper>
     );
   }

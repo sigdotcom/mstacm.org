@@ -1,4 +1,4 @@
-import React from "react";
+import React, { setGlobal } from "reactn";
 import styled from "styled-components";
 
 import { Button } from "antd";
@@ -8,10 +8,12 @@ const Wrapper: any = styled.div`
   justify-content: space-between;
 `;
 
-const Header: React.FC<any> = (props: any): any => {
-  const addEvent: any = (): any => {
-    props.setActiveEvent(null);
-    props.setVisible(true);
+const Header: React.SFC<{}> = (): JSX.Element => {
+  const addEvent: () => void = (): void => {
+    setGlobal({
+      activeEvent: undefined,
+      eventFormVisible: true
+    });
   };
 
   return (

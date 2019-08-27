@@ -1,39 +1,27 @@
 import { Modal } from "antd";
-import React, { useState } from "react";
+import React, { useGlobal, useState } from "reactn";
 
 import { EventForm } from "./EventForm";
-import { IEvent } from "./interfaces";
 
-interface IEventFormProps {
-  event?: IEvent;
-  visible: boolean;
-  setVisible: any;
-}
+const EventFormModal: React.FC<{}> = (): JSX.Element => {
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [eventFormVisible, setEventFormVisible] = useGlobal("eventFormVisible");
 
-const EventFormModal: React.FC<IEventFormProps> = (
-  props: IEventFormProps
-): any => {
-  const [confirmLoading, setConfirmLoading]: any = useState(false);
-
-  const handleCancel: any = (): void => {
-    props.setVisible(false);
+  const handleCancel: () => void = (): void => {
+    setEventFormVisible(false);
   };
 
-  const action: string = event ? "Edit" : "Add";
+  const action: string = `${event ? "Edit" : "Add"} Event`;
 
   return (
     <Modal
-      title={action + " Event"}
-      visible={props.visible}
+      title={action}
+      visible={eventFormVisible}
       confirmLoading={confirmLoading}
       footer={null}
       onCancel={handleCancel}
     >
-      <EventForm
-        key={props.visible}
-        setConfirmLoading={setConfirmLoading}
-        event={props.event}
-      />
+      <EventForm key={eventFormVisible} setConfirmLoading={setConfirmLoading} />
     </Modal>
   );
 };
