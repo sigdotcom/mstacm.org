@@ -1,4 +1,3 @@
-import { MailData } from "@sendgrid/helpers/classes/mail";
 import moment from "moment";
 
 import { IEvent } from "./interfaces";
@@ -18,7 +17,7 @@ export interface IFlierRequestInput {
 }
 
 // formerly createMessage
-const buildEventMessage: any = (data: IEventMessageInput): MailData => {
+const buildEventMessage: any = (data: IEventMessageInput): any => {
   return {
     from: {
       email: "acm@mst.edu"
@@ -46,12 +45,12 @@ const buildEventMessage: any = (data: IEventMessageInput): MailData => {
   };
 };
 
-const sendEmail: any = (body: MailData): any => {
+const sendEmail: any = (body: any): any => {
   console.log("Send mail, not yet implemented", JSON.stringify(body));
 };
 
 // formerly createFliers
-const buildFlierRequest: any = (data: IFlierRequestInput): MailData => {
+const buildFlierRequest: any = (data: IFlierRequestInput): any => {
   return {
     from: {
       email: "acm@mst.edu"

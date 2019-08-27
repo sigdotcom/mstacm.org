@@ -1,82 +1,79 @@
+import React, { setGlobal } from "reactn";
+
 import { useMutation } from "@apollo/react-hooks";
 import moment from "moment";
-import React from "react";
-import styled from "styled-components";
+import styled, { AnyStyledComponent } from "styled-components";
 
 import { DELETE_EVENT, GET_EVENTS } from "./helpers";
+import { IEvent } from "./interfaces";
 
 import { Button } from "antd";
 
-import { IEvent } from "./interfaces";
-
 interface IEventProps {
   event: IEvent;
+  index: number;
   key: number;
-  setActiveEvent: any;
-  setVisible: any;
 }
 
-const EventWrapper: any = styled.li`
+const EventWrapper: AnyStyledComponent = styled.li`
   display: flex;
   margin: 20px 0;
   justify-content: space-between;
 `;
-const EventContent: any = styled.div`
+const EventContent: AnyStyledComponent = styled.div`
   display: flex;
   align-items: center;
 `;
-const EventFlier: any = styled.img`
+const EventFlier: AnyStyledComponent = styled.img`
   height: 88px;
   width: 68px;
   margin-right: 20px;
 `;
-const EventDetails: any = styled.div``;
-const EventHighLevel: any = styled.div`
+const EventDetails: AnyStyledComponent = styled.div``;
+const EventHighLevel: AnyStyledComponent = styled.div`
   display: flex;
 `;
-const EventTitle: any = styled.h3`
+const EventTitle: AnyStyledComponent = styled.h3`
   margin: 0;
   line-height: 20px;
 `;
-const EventDate: any = styled.p`
+const EventDate: AnyStyledComponent = styled.p`
   padding: 0 6px;
   margin: 0 0 0 20px;
   border-radius: 20px;
   border: 2px solid blue;
 `;
-const EventMidLevel: any = styled.div``;
-const EventDescription: any = styled.div``;
-const EventLowLevel: any = styled.div``;
+const EventMidLevel: AnyStyledComponent = styled.div``;
+const EventDescription: AnyStyledComponent = styled.div``;
+const EventLowLevel: AnyStyledComponent = styled.div``;
 
-const Event: any = (props: IEventProps): any => {
-  const [deleteEvent]: any = useMutation(DELETE_EVENT, {
-    onError: (error: any) => {
-      console.log(error.toString());
-    }
-  });
+const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
+  const [deleteEvent] = useMutation(DELETE_EVENT);
 
-  const formatDate: any = (date: Date): any => {
+  const formatDate: (date: Date) => string = (date: Date): string => {
     return moment(date).format("MMMM Do h:mmA");
   };
 
-  const handleEdit: any = (): any => {
-    props.setActiveEvent(event);
-    props.setVisible(true);
+  const handleEdit: () => void = (): void => {
+    setGlobal({
+      activeEvent: props.index,
+      eventFormVisible: true
+    });
   };
 
-  const handleDelete: any = (): any => {
+  const handleDelete: () => void = (): void => {
     deleteEvent({
       refetchQueries: [{ query: GET_EVENTS }],
       variables: { id: Number(props.event.id) }
     });
-    // TODO update the event list
   };
 
-  const handleAdvert: any = (): any => {};
+  // const handleAdvert: any = (): any => {};
 
-  const handleQR: any = (): any => {};
+  // const handleQR: any = (): any => {};
 
   const { event }: any = props;
+
   return (
     <EventWrapper>
       <EventContent>
@@ -110,13 +107,17 @@ const Event: any = (props: IEventProps): any => {
           <Button onClick={handleEdit}>Edit</Button>
           <Button onClick={handleDelete}>Delete</Button>
         </div>
-        <div>
-          <Button onClick={handleAdvert}>Advert</Button>
-          <Button onClick={handleQR}>QR</Button>
-        </div>
       </div>
     </EventWrapper>
   );
 };
+
+/*
+ * Buttons to be added
+        <div>
+          <Button onClick={handleAdvert}>Advert</Button>
+          <Button onClick={handleQR}>QR</Button>
+        </div>
+*/
 
 export { Event };

@@ -1,13 +1,21 @@
+import React from "react";
+import ReactDOM from "react-dom";
+import { setGlobal } from "reactn";
+
 import { ApolloProvider } from "@apollo/react-hooks";
+import { InMemoryCache } from "apollo-cache-inmemory";
 import ApolloClient from "apollo-client";
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { setContext } from "apollo-link-context";
+import { createHttpLink } from "apollo-link-http";
+
 import { App } from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { setContext } from "apollo-link-context";
-import { createHttpLink } from "apollo-link-http";
+setGlobal({
+  events: [],
+  eventFormVisible: false,
+  activeEvent: undefined
+});
 
 const httpLink: any = createHttpLink({
   uri: "http://localhost/graphql"
@@ -17,6 +25,7 @@ const authLink: any = setContext((_: any, { headers }: any) => {
   // get the authentication token from local storage if it exists
   // const token: any = localStorage.getItem("token");
   const token: string = "";
+
   // return the headers to the context so httpLink can read them
   return {
     headers: {

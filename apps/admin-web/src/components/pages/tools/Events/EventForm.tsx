@@ -1,21 +1,24 @@
+import React, { useGlobal } from "reactn";
+
 import { useMutation } from "@apollo/react-hooks";
-import { Button, DatePicker, Form, Input, InputNumber } from "antd";
 import moment from "moment";
-import React from "react";
 
 import { CREATE_EVENT, GET_EVENTS, UPDATE_EVENT } from "./helpers";
-// import { IEvent } from "./interfaces";
+
+import { Button, DatePicker, Form, Input, InputNumber } from "antd";
+
+import { IEvent } from "./interfaces";
 
 const { RangePicker }: any = DatePicker;
 const { TextArea }: any = Input;
 
-/*interface IEventFormProps {
-  event?: IEvent;
-}*/
+const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
+  const [events]: [IEvent[], any] = useGlobal("events");
+  const [activeEvent]: [number, any] = useGlobal("activeEvent");
 
-const EventFormBase: React.FC<any> = (props: any): any => {
-  const editing: boolean = Boolean(props.event);
-  const newEvent: any = editing ? props.event : {};
+  const event: IEvent | undefined = events[activeEvent];
+  const editing: boolean = Boolean(event);
+  const newEvent: any = editing ? event : {};
 
   const [
     createEvent,
@@ -67,9 +70,11 @@ const EventFormBase: React.FC<any> = (props: any): any => {
   } else if (createError || updateError) {
     try {
       console.log(createError);
+
       return <h1>{createError.toString()}</h1>;
     } catch {
       console.log(updateError);
+
       return <h1>{updateError.toString()}</h1>;
     }
   } else if (createData || updateData) {

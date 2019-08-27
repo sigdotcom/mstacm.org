@@ -9,10 +9,10 @@ export interface IEvent {
   dateExpire: Date;
   dateHosted: Date;
   description: string;
-  eventLink: string;
+  eventLink: string | null;
   eventTitle: string;
-  flierLink: string;
+  flierLink: string | null;
   id: number;
   location: string;
-  hostSigs: ISig[];
+  hostSig: ISig;
 }

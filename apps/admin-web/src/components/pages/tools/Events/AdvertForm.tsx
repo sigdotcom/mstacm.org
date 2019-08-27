@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Button, Checkbox, Form, Input, InputNumber } from "antd";
 import { FormComponentProps } from "antd/lib/form/Form";
 
-import { MailData } from "@sendgrid/helpers/classes/mail";
 import { IEvent } from "./interfaces";
 
 import {
@@ -48,7 +47,7 @@ export const AdvertForm: React.FC<IAdvertProps & FormComponentProps> = (
       subject,
       to: emailGroups
     };
-    const body: MailData = buildEventMessage(data);
+    const body: any = buildEventMessage(data);
     sendEmail(body);
   };
 
@@ -67,7 +66,7 @@ export const AdvertForm: React.FC<IAdvertProps & FormComponentProps> = (
           subject,
           to
         };
-        const message: MailData = buildEventMessage(data);
+        const message: any = buildEventMessage(data);
         sendEmail(message);
         openConfirm();
       }
@@ -75,6 +74,7 @@ export const AdvertForm: React.FC<IAdvertProps & FormComponentProps> = (
   };
 
   const { getFieldDecorator }: any = props.form;
+
   return (
     <div>
       <Form onSubmit={handleSubmit}>
