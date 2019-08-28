@@ -36,7 +36,6 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "@types/graphql": "^14.2.1",
     "@types/jsonwebtoken": "^8.3.2",
     "@types/koa-logger": "^3.1.1",
     "@types/koa-passport": "^4.0.2",
@@ -47,17 +46,19 @@
     "jest": "^24.8.0",
     "prettier": "^1.18.2",
     "ts-jest": "^24.0.2",
+    "tsconfig-paths": "^3.8.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-microsoft-contrib": "^6.2.0",
-    "typescript": "^3.5.2"
+    "typescript": "3.3.4000"
   },
   "scripts": {
-    "start:dev": "NODE_ENV='development' nodemon --watch 'src/**/*' -e ts,tsx --exec \"ts-node\" --files ./src/index.ts",
+    "start:dev": "NODE_ENV='development' nodemon",
+    "start:prod": "NODE_ENV='production' node build/src/index.js",
     "build": "tsc -p tsconfig.release.json",
     "build:watch": "tsc -w -p tsconfig.release.json",
     "lint": "tslint -t stylish --project \"tsconfig.json\"",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "typeorm": "ts-node --files -r src/ ./node_modules/typeorm/cli.js"
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
   }
 }
