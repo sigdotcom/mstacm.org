@@ -1,7 +1,7 @@
 version: '3'
 
-services: 
-  phoenix_db: 
+services:
+  phoenix_db:
     image: "postgres"
     ports:
       - "5432:5432"
@@ -10,18 +10,18 @@ services:
     environment:
       - POSTGRES_USER=phoenix
       - POSTGRES_PASSWORD=phoenix
-  phoenix_web: 
+  phoenix_web:
     build: .
     volumes:
       - .:/server
     networks:
       - db_nw
       - web_nw
-    depends_on: 
-      - phoenix_db 
+    depends_on:
+      - phoenix_db
     env_file:
       - ./.docker/web.env
-    environment: 
+    environment:
       - DB_HOST=phoenix_db
       - DB_USERNAME=phoenix
       - DB_PASSWORD=phoenix
