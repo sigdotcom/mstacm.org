@@ -95,7 +95,7 @@ passport.use(
 
     try {
       let user = await User.findOne({
-        googleSub: sub
+        sub
       });
 
       if (!user) {
@@ -103,7 +103,7 @@ passport.use(
         user.firstName = given_name;
         user.lastName = family_name;
         user.email = email;
-        user.googleSub = sub;
+        user.sub = sub;
         user = await user.save();
       }
       done(undefined, user);
