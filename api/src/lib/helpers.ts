@@ -10,7 +10,7 @@ export async function seedDatabase() {
   const defaultUser = userRepository.create({
     email: "test@mst.edu",
     firstName: "Kevin",
-    googleSub: "123421",
+    sub: "123421",
     lastName: "Schoonover"
   });
   await userRepository.save(defaultUser);
@@ -18,7 +18,8 @@ export async function seedDatabase() {
   await productRepository
     .create({
       description: "Payment for ACM Yearly Membership",
-      name: "ACM Yearly Membership",
+      displayName: "ACM Yearly Membership",
+      tag: "yearly-membership",
       price: 20
     })
     .save();
@@ -26,7 +27,8 @@ export async function seedDatabase() {
   await productRepository
     .create({
       description: "Payment for ACM Semesterly Membership",
-      name: "ACM Semesterly Membership",
+      displayName: "ACM Semesterly Membership",
+      tag: "semesterly-membership",
       price: 11
     })
     .save();

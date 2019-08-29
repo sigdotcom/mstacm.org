@@ -5,7 +5,7 @@ import {
   JoinTable,
   ManyToMany,
   OneToMany,
-  PrimaryGeneratedColumn
+  PrimaryColumn
 } from "typeorm";
 
 import { Field, ID, ObjectType } from "type-graphql";
@@ -27,12 +27,12 @@ class ColumnNumericTransformer {
 @Entity()
 export class Product extends BaseEntity {
   @Field((returns: void) => ID)
-  @PrimaryGeneratedColumn("uuid")
-  public id: string;
+  @PrimaryColumn()
+  public tag: string;
 
   @Field()
   @Column()
-  public name: string;
+  public displayName: string;
 
   @Field()
   @Column()

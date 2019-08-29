@@ -7,5 +7,5 @@ export class PurchaseInput implements Partial<Purchase> {
   public quantity: number;
 
   @Field()
-  public id: string;
+  public tag: string;
 }
