@@ -41,19 +41,19 @@ export class ProductResolver {
     // For each purchase the user wants to make, create the product entity and
     // then rollup the total cost of the transaction.
     for (const purchase of purchasesInput) {
-      const productId = purchase.id;
+      const productTag = purchase.tag;
       const quantity = purchase.quantity;
 
       // Memoize the product lookup to prevent extra lookups in the database
       // This only matters in a client-side bug where the api receives two
       // products that arent in the same object. i.e. [{YEAR_MEMBERSHIP},
       // {YEAR_MEMBERSHIP}]
-      if (!products.hasOwnProperty(productId)) {
-        products[productId] = await this.productRepo.findOneOrFail({
-          id: productId
+      if (!products.hasOwnProperty(productTag)) {
+        products[productTag] = await this.productRepo.findOneOrFail({
+          tag: productTag
         });
       }
-      const curProduct: Product = products[productId];
+      const curProduct: Product = products[productTag];
       const curPrice = curProduct.price * Math.abs(quantity);
       const curPurchase = await this.purchaseRepo.create({
         product: curProduct,

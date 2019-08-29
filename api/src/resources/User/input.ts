@@ -13,7 +13,7 @@ export class UserCreateInput implements Partial<User> {
   public email: string;
 
   @Field()
-  public googleSub: string;
+  public sub: string;
 }
 
 @InputType()
