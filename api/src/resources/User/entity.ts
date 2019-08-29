@@ -30,7 +30,7 @@ export class User extends BaseEntity {
 
   @Index({ unique: true })
   @Column()
-  public googleSub: string;
+  public sub: string;
 
   @Field()
   @Column({

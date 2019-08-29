@@ -9,7 +9,6 @@ import "./lib/errors";
 import { authChecker } from "./lib/auth";
 
 import { ParameterizedContext as KoaContext } from "koa";
-import { seedDatabase } from "./lib/helpers";
 
 // register 3rd party IOC container
 useContainer(Container);
@@ -17,10 +16,13 @@ useContainer(Container);
 async function bootstrap() {
   try {
     // create TypeORM connection
-    await createConnection();
+    const connection = await createConnection();
 
-    // seed database with some data
-    await seedDatabase();
+    await connection.runMigrations();
+
+    if (process.env.NODE_ENV !== "production") {
+      await connection.synchronize();
+    }
 
     // build TypeGraphQL executable schema
     const schema = await TypeGraphQL.buildSchema({
