@@ -53,7 +53,7 @@
   },
   "scripts": {
     "start:dev": "NODE_ENV='development' nodemon",
-    "start:prod": "NODE_ENV='production' node build/src/index.js",
+    "start:prod": "NODE_ENV='production' node build/src/main.js",
     "build": "tsc -p tsconfig.release.json",
     "build:watch": "tsc -w -p tsconfig.release.json",
     "lint": "tslint -t stylish --project \"tsconfig.json\"",
