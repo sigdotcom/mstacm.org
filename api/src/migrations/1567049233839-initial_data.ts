@@ -2,6 +2,8 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { SEMESTERLY_MEMBERSHIP, YEARLY_MEMBERSHIP } from "../lib/products";
 
+const DEFAULT_SUB = "google-oauth2|115625753701019295484";
+
 /**
  * Adds the initial superadmin user "acm@mst.edu" and the initial
  * products "ACM Semester Membership" and "ACM Yearly Membership".
@@ -14,7 +16,7 @@ export class initialData1567049233839 implements MigrationInterface {
       .into("user")
       .values([
         {
-          sub: "test",
+          sub: DEFAULT_SUB,
           firstName: "MST",
           lastName: "ACM",
           email: "acm@mst.edu",
@@ -56,7 +58,7 @@ export class initialData1567049233839 implements MigrationInterface {
     await queryBuilder
       .delete()
       .from("user")
-      .where("sub = :sub", { sub: "test" })
+      .where("sub = :sub", { sub: DEFAULT_SUB })
       .execute();
 
     await queryBuilder
