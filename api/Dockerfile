@@ -4,7 +4,7 @@ WORKDIR /server
 
 COPY . /server
 ADD package.json /server/package.json
-RUN yarn install
+RUN yarn
 
 EXPOSE 4000
 RUN yarn build
