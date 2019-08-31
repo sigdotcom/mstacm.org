@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-scroll";
 import styled from "styled-components";
 
+import { useAuth0 } from "../../../../utils/react-auth0-wrapper";
 import { PageConstraint } from "../../../common/PageConstraint";
 
 const BG = styled.div`
@@ -40,29 +41,34 @@ const MenuItem = styled.div`
   padding: 5px 10px;
 `;
 
-// const SignIn = styled.button`
-//   transition: 0.2s ease-in-out;
-//   font-weight: bold;
-//   border-radius: 30px;
-//   padding: 10px 40px
-//   font-size: 17px;
-//   color: #2d9cdb;
-//   border: 3px solid #2d9cdb;
-//   cursor: pointer;
-//   &:hover {
-//     background: #2d9cdb;
-//     color: #fff;
-//   }
-// `;
+const SignIn = styled.button`
+  transition: 0.2s ease-in-out;
+  font-weight: bold;
+  border-radius: 30px;
+  padding: 10px 40px
+  font-size: 17px;
+  color: #2d9cdb;
+  border: 3px solid #2d9cdb;
+  cursor: pointer;
+  &:hover {
+    background: #2d9cdb;
+    color: #fff;
+  }
+`;
 
 const NavRow = styled.nav`
   display: flex;
 `;
 
 const Nav: React.FC<{}> = (): JSX.Element => {
-  // const handleSignIn = () => {};
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
-  // <SignIn onClick={handleSignIn}>SIGN IN</SignIn>
+  const onClick: () => void = isAuthenticated
+    ? (): void => logout({ returnTo: window.location.origin })
+    : async (): Promise<void> => loginWithRedirect({});
+
+  const signInPrompt: string = isAuthenticated ? "SIGN OUT" : "SIGN IN";
+
   return (
     <BG>
       <PageConstraint>
@@ -81,6 +87,7 @@ const Nav: React.FC<{}> = (): JSX.Element => {
               </Link>
             </MenuItems>
           </NavRow>
+          <SignIn onClick={onClick}>{signInPrompt}</SignIn>
         </Wrapper>
       </PageConstraint>
     </BG>
