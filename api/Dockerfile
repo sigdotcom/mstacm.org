@@ -8,4 +8,4 @@ RUN yarn
 
 EXPOSE 4000
 RUN yarn build
-CMD yarn start:dev
+CMD yarn start:prod
