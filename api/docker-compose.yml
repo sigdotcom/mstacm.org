@@ -11,9 +11,6 @@ services:
       - POSTGRES_USER=phoenix
       - POSTGRES_PASSWORD=phoenix
   phoenix_web:
-    build: .
-    volumes:
-      - .:/server
     networks:
       - db_nw
       - web_nw
