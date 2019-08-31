@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@auth0/auth0-spa-js": "^1.2.2",
     "@sendgrid/helpers": "^6.4.0",
     "@types/debug": "^4.1.4",
     "@types/react-modal": "^3.8.1",
