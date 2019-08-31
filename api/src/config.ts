@@ -1,14 +1,11 @@
 export interface IConfig {
   AZURE_STORAGE_ACCOUNT: string;
   AZURE_STORAGE_ACCOUNT_KEY: string;
-  GOOGLE_CERTS_DOMAIN: string;
-  GOOGLE_CLIENT_ID: string;
-  GOOGLE_CLIENT_SECRET: string;
-  GOOGLE_ISSUER: string;
-  GOOGLE_JWT_ALGORITHM: string;
-  GOOGLE_PROFILE_DOMAIN: string;
-  GOOGLE_PROVIDER_NAME: string;
-  HOSTED_DOMAIN: string;
+  JWT_ALGORITHM: string;
+  JWT_AUDIENCE: string;
+  JWT_ISSUER: string;
+  JWT_JWKS_URI: string;
+  JWT_USERINFO_URI: string;
   SECRET_APP_KEY: string;
   STRIPE_PRIVATE_TOKEN: string;
   STRIPE_PUBLIC_TOKEN: string;
@@ -18,20 +15,17 @@ export interface IConfig {
   port: number;
 }
 
+const AUTH0_DOMAIN = "mstacm.auth0.com";
 export const config: IConfig = {
   AZURE_STORAGE_ACCOUNT: process.env.AZURE_STORAGE_ACCOUNT || "mstacm",
   AZURE_STORAGE_ACCOUNT_KEY: process.env.AZURE_STORAGE_ACCOUNT_KEY || "",
-  GOOGLE_CERTS_DOMAIN: "https://www.googleapis.com/oauth2/v1/certs",
-  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || "TEST_CLIENT_ID",
-  GOOGLE_CLIENT_SECRET:
-    process.env.GOOGLE_CLIENT_SECRET || "TEST_CLIENT_SECRET",
-  GOOGLE_ISSUER: "accounts.google.com",
-  GOOGLE_JWT_ALGORITHM: "RS256",
-  GOOGLE_PROFILE_DOMAIN: "https://www.googleapis.com/oauth2/v3/userinfo",
-  GOOGLE_PROVIDER_NAME: "google",
-  HOSTED_DOMAIN: "umsystem.edu",
+  JWT_ALGORITHM: "RS256",
+  JWT_AUDIENCE: "graphql.mstacm.org",
+  JWT_ISSUER: `https://${AUTH0_DOMAIN}/`,
+  JWT_JWKS_URI: `https://${AUTH0_DOMAIN}/.well-known/jwks.json`,
+  JWT_USERINFO_URI: `https://${AUTH0_DOMAIN}/userinfo`,
   NODE_ENV: process.env.NODE_ENV || "development",
-  SECRET_APP_KEY: "change me",
+  SECRET_APP_KEY: process.env.SECRET_APP_KEY || "change me",
   STRIPE_PRIVATE_TOKEN: process.env.STRIPE_PRIVATE_TOKEN || "TEST",
   STRIPE_PUBLIC_TOKEN: process.env.STRIPE_PUBLIC_TOKEN || "TEST",
   ext: process.env.NODE_ENV !== "production" ? ".ts" : ".js",

@@ -9,6 +9,7 @@ export async function seedDatabase() {
 
   const defaultUser = userRepository.create({
     email: "test@mst.edu",
+    emailVerified: true,
     firstName: "Kevin",
     sub: "123421",
     lastName: "Schoonover"
