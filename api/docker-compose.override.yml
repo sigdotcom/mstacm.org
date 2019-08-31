@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  phoenix_web:
+    command: yarn start:dev
+    build: .
+    volumes:
+      - .:/server

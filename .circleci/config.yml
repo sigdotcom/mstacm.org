@@ -36,3 +36,26 @@ jobs:
 
       # run tests!
       - run: yarn test
+
+# TODO: when we have access to a production machine with SSH access
+#   deploy:
+#     machine:
+#       enabled: true
+# 	working_directory: ~/mstacm.org/apps/web
+#     steps:
+#       - run:
+#           name: Deploy Over SSH
+#           command: |
+#             ssh $SSH_USER@$SSH_HOST "cd /opt/mstacm.org/api && git pull && bash deploy.sh"
+#             workflows:
+#workflows:
+#  version: 2
+#  build-and-deploy:
+#    jobs:
+#      - build
+#      - deploy:
+#          requires:
+#            - build
+#          filters:
+#            branches:
+#              only: master
