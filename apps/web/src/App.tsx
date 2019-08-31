@@ -1,29 +1,35 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { HomePage, NotFoundPage } from "./components/pages";
 import { config } from "./config";
-import "./static/css/App.css";
-import { Auth0Provider, onRedirectCallback } from "./utils/react-auth0-wrapper";
+import { useAuth0 } from "./utils/react-auth0-wrapper";
 
-localStorage.debug = "oasis:*";
+import "./static/css/App.css";
 
 const App: React.FC<{}> = (): JSX.Element => {
+  const { loading, isAuthenticated, getTokenSilently } = useAuth0();
+
+  useEffect(() => {
+    if (loading || !isAuthenticated) {
+      return;
+    }
+
+    const setToken: () => void = async (): Promise<void> => {
+      const token: string = (await getTokenSilently()) || "";
+      localStorage.setItem(config.ACCESS_TOKEN_KEY, token);
+    };
+
+    setToken();
+  }, [loading, isAuthenticated, getTokenSilently]);
+
   return (
-    <Auth0Provider
-      domain={config.AUTH0_DOMAIN}
-      client_id={config.AUTH0_CLIENT_ID}
-      redirect_uri={window.location.origin}
-      audience={config.AUTH0_AUDIENCE}
-      onRedirectCallback={onRedirectCallback}
-    >
-      <BrowserRouter>
-        <Switch>
-          <Route exact={true} path="/" component={HomePage} />
-          <Route component={NotFoundPage} />
-        </Switch>
-      </BrowserRouter>
-    </Auth0Provider>
+    <BrowserRouter>
+      <Switch>
+        <Route exact={true} path="/" component={HomePage} />
+        <Route component={NotFoundPage} />
+      </Switch>
+    </BrowserRouter>
   );
 };
 
