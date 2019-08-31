@@ -50,6 +50,10 @@ export class User extends BaseEntity {
   })
   public email: string;
 
+  @Field()
+  @Column()
+  public emailVerified: boolean;
+
   @Field({ defaultValue: false })
   @Column({ default: false })
   public isSuperAdmin: boolean;
