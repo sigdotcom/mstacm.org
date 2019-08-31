@@ -1,0 +1,5 @@
+version: '3'
+
+services:
+  phoenix_web:
+    image: "acmweb/api"
