@@ -1,8 +1,9 @@
-import * as Koa from "koa";
 import * as passport from "koa-passport";
 
+import axios from "axios";
 import * as JWT from "jsonwebtoken";
 
+import { passportJwtSecret } from "jwks-rsa";
 import { Strategy as BearerStrategy } from "passport-http-bearer";
 import {
   ExtractJwt,
@@ -12,13 +13,13 @@ import {
 } from "passport-jwt";
 
 import { config } from "../config";
-import { http } from "../lib/http";
+import { IContext, IUserInfo } from "../lib/interfaces";
 
 import { Application } from "../resources/Application";
 import { User } from "../resources/User";
 
 export const authFromBearer = async (
-  ctx: Koa.ParameterizedContext,
+  ctx: IContext,
   next: (err?: any) => Promise<any>
 ) => {
   if (ctx.headers.authorization) {
@@ -49,68 +50,64 @@ export const authFromBearer = async (
   await next();
 };
 
-const keyProvider = async (
-  request: Koa.BaseRequest,
-  rawJwtToken: string,
-  done: VerifiedCallback
-) => {
-  const decodedJwt: any = JWT.decode(rawJwtToken, { complete: true });
-  const header = decodedJwt.header;
-
-  if (!header || !header.kid) {
-    done(new Error("Invalid header"), undefined);
-  }
-
-  try {
-    const response = await http.get(config.GOOGLE_CERTS_DOMAIN);
-    const cert = response.data[header.kid];
-
-    if (!cert) {
-      done(new Error("Invalid JWT certificate"), undefined);
-    }
-
-    done(undefined, cert);
-  } catch (err) {
-    done(err, undefined);
-  }
-};
-
 const JWT_OPTS: StrategyOptions = {
-  algorithms: [config.GOOGLE_JWT_ALGORITHM],
-  audience: config.GOOGLE_CLIENT_ID,
-  issuer: config.GOOGLE_ISSUER,
+  algorithms: [config.JWT_ALGORITHM],
+  audience: config.JWT_AUDIENCE,
+  issuer: config.JWT_ISSUER,
+  passReqToCallback: true,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKeyProvider: keyProvider
+  secretOrKeyProvider: passportJwtSecret({
+    cache: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: config.JWT_JWKS_URI,
+    rateLimit: true
+  })
 };
 passport.use(
-  new JwtStrategy(JWT_OPTS, async (payload: any, done: VerifiedCallback) => {
-    const { hd, given_name, family_name, email, sub } = payload;
+  new JwtStrategy(
+    JWT_OPTS,
+    async (req: { headers: any }, payload: any, done: VerifiedCallback) => {
+      const { sub } = payload;
 
-    if (hd !== config.HOSTED_DOMAIN) {
-      done(
-        new Error(`Email does not match hosted domain ${config.HOSTED_DOMAIN}`),
-        undefined
-      );
-    }
+      try {
+        let user = await User.findOne({
+          googleSub: sub
+        });
 
-    try {
-      let user = await User.findOne({
-        sub
-      });
+        // If we don't find the user, we need to create them in our database.
+        // This can late be replaced with something like
+        // https://auth0.com/docs/hooks/concepts/post-user-registration-extensibility-point
+        if (!user) {
+          // The user should be giving us their access token
+          // https://auth0.com/docs/api-auth/why-use-access-tokens-to-secure-apis
+          // ; therefore, we need to fetch their data from auth0 if they haven't
+          // been created yet.
+          const response = await axios.get(config.JWT_USERINFO_URI, {
+            headers: {
+              Authorization: req.headers.authorization
+            }
+          });
 
-      if (!user) {
-        user = new User();
-        user.firstName = given_name;
-        user.lastName = family_name;
-        user.email = email;
-        user.sub = sub;
-        user = await user.save();
+          const userInfo: IUserInfo | undefined = response.data;
+
+          if (!userInfo) {
+            throw new Error("User information not returned from request.");
+          }
+
+          user = new User();
+          user.firstName = userInfo.given_name;
+          user.lastName = userInfo.family_name;
+          user.email = userInfo.email;
+          user.emailVerified = userInfo.email_verified;
+          user.googleSub = userInfo.sub;
+          user = await user.save();
+        }
+        done(undefined, user);
+      } catch (err) {
+        done(err, undefined);
       }
-      done(undefined, user);
-    } catch (err) {
-      done(err, undefined);
     }
-  })
+  )
 );
 
 passport.use(

@@ -3,9 +3,9 @@ import "reflect-metadata";
 import * as TypeGraphQL from "type-graphql";
 import { Container } from "typedi";
 import { createConnection, useContainer } from "typeorm";
-import { app } from "./app";
 import "./lib/errors";
 
+import { app } from "./app";
 import { authChecker } from "./lib/auth";
 
 import { ParameterizedContext as KoaContext } from "koa";
