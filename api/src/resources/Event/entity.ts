@@ -5,8 +5,8 @@ import {
   Entity,
   JoinColumn,
   JoinTable,
+  ManyToMany,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn
 } from "typeorm";
 
@@ -45,8 +45,8 @@ export class Event extends BaseEntity {
   @JoinColumn()
   public creator: Lazy<User>;
 
-  // @Field((returns: void) => [Sig])
-  @OneToMany((type: void) => Sig, (sig: Sig) => sig.hostedEvents, {
+  @Field((returns: void) => [Sig])
+  @ManyToMany((type: void) => Sig, (sig: Sig) => sig.hostedEvents, {
     lazy: true
   })
   @JoinTable()
