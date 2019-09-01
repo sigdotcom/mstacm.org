@@ -1,7 +1,6 @@
 import React, { setGlobal } from "reactn";
 
 import { useMutation } from "@apollo/react-hooks";
-import moment from "moment";
 import styled, { AnyStyledComponent } from "styled-components";
 
 import { DELETE_EVENT, GET_EVENTS } from "./helpers";
@@ -50,8 +49,17 @@ const EventLowLevel: AnyStyledComponent = styled.div``;
 const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
   const [deleteEvent] = useMutation(DELETE_EVENT);
 
-  const formatDate: (date: Date) => string = (date: Date): string => {
-    return moment(date).format("MMMM Do h:mmA");
+  const formatDate: (date: string) => string = (date: string): string => {
+    const options: any = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric"
+    };
+    const d: Date = new Date(date);
+
+    return d.toLocaleDateString("en-US", options);
   };
 
   const handleEdit: () => void = (): void => {
