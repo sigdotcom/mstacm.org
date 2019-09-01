@@ -11,6 +11,8 @@ import { createHttpLink } from "apollo-link-http";
 import { App } from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 
+import { config } from "./config";
+
 setGlobal({
   events: [],
   eventFormVisible: false,
@@ -18,13 +20,12 @@ setGlobal({
 });
 
 const httpLink: any = createHttpLink({
-  uri: "http://localhost/graphql"
+  uri: config.GRAPHQL_URL
 });
 
 const authLink: any = setContext((_: any, { headers }: any) => {
   // get the authentication token from local storage if it exists
-  // const token: any = localStorage.getItem("token");
-  const token: string = "";
+  const token: string | null = localStorage.getItem(config.TOKEN_STORAGE_KEY);
 
   // return the headers to the context so httpLink can read them
   return {
