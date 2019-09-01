@@ -41,12 +41,11 @@ export class EventResolver {
       const hostSig = await this.sigRepository.findOneOrFail({
         name: String(input.hostSig)
       });
-      delete input.hostSig;
       input.hostSig = hostSig;
     }
 
-    const resource = await this.repository.findOneOrFail(id);
-    const updatedResource = this.repository.merge(resource, { ...input });
+    const event = await this.repository.findOneOrFail(id);
+    const updatedResource = this.repository.merge(event, { ...input });
 
     return updatedResource.save();
   }
@@ -62,7 +61,6 @@ export class EventResolver {
     const hostSig = await this.sigRepository.findOneOrFail({
       name: String(input.hostSig)
     });
-    delete input.hostSig;
     input.hostSig = hostSig;
     const newResource = this.repository.create({ ...input, creator });
 
