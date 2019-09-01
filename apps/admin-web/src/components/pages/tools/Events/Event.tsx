@@ -1,139 +1,131 @@
-import moment from "moment";
-import * as React from "react";
-import styled from "styled-components";
+import React, { setGlobal } from "reactn";
+
+import { useMutation } from "@apollo/react-hooks";
+import styled, { AnyStyledComponent } from "styled-components";
+
+import { DELETE_EVENT, GET_EVENTS } from "./helpers";
+import { IEvent } from "./interfaces";
 
 import { Button } from "antd";
 
-interface ISig {
-  dateFounded: Date;
-  description: string;
-  name: string;
-}
-
-interface IEvent {
-  dateCreated: Date;
-  dateExpire: Date;
-  dateHosted: Date;
-  description: string;
-  eventLink: string;
-  eventTitle: string;
-  flierLink: string;
-  id: number;
-  location: string;
-  hostSigs: ISig;
-}
-
 interface IEventProps {
   event: IEvent;
+  index: number;
   key: number;
-  editEvent: any;
-  deleteEvent: any;
-  advertiseEvent: any;
-  createQR: any;
 }
 
-const EventWrapper = styled.li`
+const EventWrapper: AnyStyledComponent = styled.li`
   display: flex;
   margin: 20px 0;
   justify-content: space-between;
 `;
-const EventContent = styled.div`
+const EventContent: AnyStyledComponent = styled.div`
   display: flex;
   align-items: center;
 `;
-const EventFlier = styled.img`
+const EventFlier: AnyStyledComponent = styled.img`
   height: 88px;
   width: 68px;
   margin-right: 20px;
 `;
-const EventDetails = styled.div``;
-const EventHighLevel = styled.div`
+const EventDetails: AnyStyledComponent = styled.div``;
+const EventHighLevel: AnyStyledComponent = styled.div`
   display: flex;
 `;
-const EventTitle = styled.h3`
+const EventTitle: AnyStyledComponent = styled.h3`
   margin: 0;
   line-height: 20px;
 `;
-const EventDate = styled.p`
+const EventDate: AnyStyledComponent = styled.p`
   padding: 0 6px;
   margin: 0 0 0 20px;
   border-radius: 20px;
   border: 2px solid blue;
 `;
-const EventMidLevel = styled.div``;
-const EventDescription = styled.div``;
-const EventLowLevel = styled.div``;
+const EventMidLevel: AnyStyledComponent = styled.div``;
+const EventDescription: AnyStyledComponent = styled.div``;
+const EventLowLevel: AnyStyledComponent = styled.div``;
 
-class Event extends React.Component<IEventProps, {}> {
-  public constructor(props: IEventProps) {
-    super(props);
-  }
+const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
+  const [deleteEvent] = useMutation(DELETE_EVENT);
 
-  formatDate = (date: Date) => {
-    return moment(date).format("MMMM Do h:mmA");
+  const formatDate: (date: string) => string = (date: string): string => {
+    const options: any = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric"
+    };
+    const d: Date = new Date(date);
+
+    return d.toLocaleDateString("en-US", options);
   };
 
-  handleEdit = () => {
-    this.props.editEvent(this.props.event);
+  const handleEdit: () => void = (): void => {
+    setGlobal({
+      activeEvent: props.index,
+      eventFormVisible: true
+    });
   };
 
-  handleDelete = () => {
-    this.props.deleteEvent(this.props.event.id);
+  const handleDelete: () => void = (): void => {
+    deleteEvent({
+      refetchQueries: [{ query: GET_EVENTS }],
+      variables: { id: Number(props.event.id) }
+    });
   };
 
-  handleAdvert = () => {
-    this.props.advertiseEvent(this.props.event);
-  };
+  // const handleAdvert: any = (): any => {};
 
-  handleQR = () => {
-    this.props.createQR(this.props.event.id);
-  };
+  // const handleQR: any = (): any => {};
 
-  render() {
-    const { event } = this.props;
-    return (
-      <EventWrapper>
-        <EventContent>
-          <EventFlier src={event.flierLink} alt={"Flier"} />
-          <EventDetails>
-            <EventHighLevel>
-              <EventTitle>
-                ACM {event.hostSigs.name}: {event.eventTitle}
-              </EventTitle>
-              <EventDate>
-                {this.formatDate(event.dateHosted)}
-                {event.dateHosted !== event.dateExpire &&
-                  " - " + this.formatDate(event.dateExpire)}
-              </EventDate>
-            </EventHighLevel>
-            <EventMidLevel>
-              {event.location}
-              {event.eventLink && (
-                <span>
-                  {" "}
-                  - <a href={event.eventLink}>Link</a>
-                </span>
-              )}
-            </EventMidLevel>
-            <EventDescription>{event.description}</EventDescription>
-            <EventLowLevel>
-              Created {this.formatDate(event.dateCreated)}
-            </EventLowLevel>
-          </EventDetails>
-        </EventContent>
+  const { event }: any = props;
+
+  return (
+    <EventWrapper>
+      <EventContent>
+        <EventFlier src={event.flierLink} alt={"Flier"} />
+        <EventDetails>
+          <EventHighLevel>
+            <EventTitle>
+              ACM {event.hostSig.name}: {event.eventTitle}
+            </EventTitle>
+            <EventDate>
+              {formatDate(event.dateHosted)}
+              {event.dateHosted !== event.dateExpire &&
+                " - " + formatDate(event.dateExpire)}
+            </EventDate>
+          </EventHighLevel>
+          <EventMidLevel>
+            {event.location}
+            {event.eventLink && (
+              <span>
+                {" "}
+                - <a href={event.eventLink}>Link</a>
+              </span>
+            )}
+          </EventMidLevel>
+          <EventDescription>{event.description}</EventDescription>
+          <EventLowLevel>Created {formatDate(event.dateCreated)}</EventLowLevel>
+        </EventDetails>
+      </EventContent>
+      <div>
         <div>
-          <div>
-            <Button onClick={this.handleEdit}>Edit</Button>
-            <Button onClick={this.handleDelete}>Delete</Button>
-          </div>
-          <div>
-            <Button onClick={this.handleAdvert}>Advert</Button>
-            <Button onClick={this.handleQR}>QR</Button>
-          </div>
+          <Button onClick={handleEdit}>Edit</Button>
+          <Button onClick={handleDelete}>Delete</Button>
         </div>
-      </EventWrapper>
-    );
-  }
-}
+      </div>
+    </EventWrapper>
+  );
+};
 
-export default Event;
+/*
+ * Buttons to be added
+        <div>
+          <Button onClick={handleAdvert}>Advert</Button>
+          <Button onClick={handleQR}>QR</Button>
+        </div>
+*/
+
+export { Event };
