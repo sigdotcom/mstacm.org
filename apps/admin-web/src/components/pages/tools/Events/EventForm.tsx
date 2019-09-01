@@ -46,7 +46,6 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
         if (editing) {
           const id: number = Number(values.id);
           delete values.id;
-          console.log(values, id);
           updateEvent({
             refetchQueries: [{ query: GET_EVENTS }],
             variables: { data: values, id }
