@@ -1,19 +1,91 @@
-import * as React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 
 import { ToolList } from "./components/pages";
 import { Events } from "./components/pages/tools";
+import { config } from "./config";
 import "./static/css/App.css";
 
-localStorage.debug = "warden:*";
+import { useAuth0 } from "./utils/react-auth0-wrapper";
+
+import { Layout, Menu, PageHeader, Spin } from "antd";
+
+const { Header, Content, Footer, Sider } = Layout;
+
+const MainContent: React.SFC<{}> = (): JSX.Element => {
+  return (
+    <Switch>
+      <Route exact={true} path="/" component={ToolList} />
+      <Route exact={true} path="/events" component={Events} />
+    </Switch>
+  );
+};
 
 const App: React.SFC<{}> = (): JSX.Element => {
+  const {
+    loading,
+    isAuthenticated,
+    getTokenSilently,
+    loginWithRedirect,
+    logout
+  } = useAuth0();
+
+  useEffect(() => {
+    if (loading) {
+      return;
+    } else if (!isAuthenticated) {
+      loginWithRedirect({});
+    }
+
+    const setToken: () => void = async (): Promise<void> => {
+      const token: string = (await getTokenSilently()) || "";
+      localStorage.setItem(config.ACCESS_TOKEN_KEY, token);
+    };
+
+    setToken();
+  }, [loading, isAuthenticated, getTokenSilently]);
+
+  const onClick: () => void = (): void => {
+    logout({});
+  };
+
+  if (loading || !isAuthenticated) {
+    return <Spin size="large" className="load-page" tip="Loading..." />;
+  }
+
+  const func: () => undefined = (): undefined => undefined;
+
   return (
     <BrowserRouter>
-      <Switch>
-        <Route exact={true} path="/" component={ToolList} />
-        <Route exact={true} path="/events" component={Events} />
-      </Switch>
+      <Layout>
+        <Sider
+          breakpoint="md"
+          collapsedWidth="0"
+          onBreakpoint={func}
+          onCollapse={func}
+        >
+          <div className="logo" />
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={["events"]}>
+            <Menu.Item key="events">
+              <Link to="/events">
+                <span className="nav-text">Events</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item onClick={onClick} key="signOut">
+              <span className="nav-text">Sign Out</span>
+            </Menu.Item>
+          </Menu>
+        </Sider>
+        <Layout>
+          <Header style={{ background: "#fff", padding: 0 }}>
+            <PageHeader backIcon={false} title="Admin Dashboard" />
+          </Header>
+          <Content style={{ margin: "24px 16px 0" }}>
+            <MainContent />
+          </Content>
+          <Footer style={{ textAlign: "center" }}>S&T ACM 2019</Footer>
+        </Layout>
+      </Layout>
     </BrowserRouter>
   );
 };

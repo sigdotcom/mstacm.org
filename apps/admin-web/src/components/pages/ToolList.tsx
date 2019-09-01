@@ -7,10 +7,17 @@ const ToolList: React.SFC<{}> = (): JSX.Element => {
       <h2>Tools:</h2>
       <ul>
         <li>
-          <Link to="/membership">Membership</Link>
-        </li>
-        <li>
           <Link to="/events">Events</Link>
+        </li>
+      </ul>
+    </div>
+  );
+};
+
+/*
+ * Future Routes
+        <li>
+          <Link to="/membership">Membership</Link>
         </li>
         <li>
           <Link to="/sigs">SIGs</Link>
@@ -21,9 +28,6 @@ const ToolList: React.SFC<{}> = (): JSX.Element => {
         <li>
           <Link to="/products">Products</Link>
         </li>
-      </ul>
-    </div>
-  );
-};
+*/
 
 export { ToolList };
