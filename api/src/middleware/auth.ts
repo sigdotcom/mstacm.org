@@ -71,7 +71,7 @@ passport.use(
 
       try {
         let user = await User.findOne({
-          googleSub: sub
+          sub
         });
 
         // If we don't find the user, we need to create them in our database.
@@ -99,7 +99,7 @@ passport.use(
           user.lastName = userInfo.family_name;
           user.email = userInfo.email;
           user.emailVerified = userInfo.email_verified;
-          user.googleSub = userInfo.sub;
+          user.sub = userInfo.sub;
           user = await user.save();
         }
         done(undefined, user);

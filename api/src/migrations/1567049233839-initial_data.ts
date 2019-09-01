@@ -20,6 +20,7 @@ export class initialData1567049233839 implements MigrationInterface {
           firstName: "MST",
           lastName: "ACM",
           email: "acm@mst.edu",
+          emailVerified: true,
           isSuperAdmin: true
         }
       ])
