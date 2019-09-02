@@ -2,12 +2,19 @@
 import * as Koa from "koa";
 import * as Router from "koa-router";
 
-import { events } from "stripe";
+import { events, paymentIntents } from "stripe";
 
 import { config } from "../config";
+import { MembershipTypes } from "../lib/products";
 import { stripe } from "../lib/stripe";
+import { User } from "../resources/User";
 
 const router = new Router();
+
+const addDates: any = {
+  [MembershipTypes.SEMESTERLY]: 6,
+  [MembershipTypes.YEARLY]: 12
+};
 
 /**
  * Stripe payment intent callback
@@ -30,7 +37,26 @@ router.post("callback", async (ctx: Koa.ParameterizedContext) => {
 
   switch (event.type) {
     case "payment_intent.succeeded":
-      // const paymentIntent = event.data.object;
+      const intent: paymentIntents.IPaymentIntent = event.data
+        .object as paymentIntents.IPaymentIntent;
+      const productTag: string = intent.metadata.productTag;
+      const userId: string = intent.metadata.userId;
+
+      // If the userId or productTag is not set, we don't to perform
+      // any backend processing on it.
+      if (!userId || !productTag) {
+        ctx.status = 200;
+
+        return;
+      }
+
+      const user: User = await User.findOneOrFail({ id: userId });
+      const curDate: Date = new Date();
+      user.membershipExpiration = new Date(
+        curDate.setMonth(curDate.getMonth() + addDates[productTag])
+      );
+      await user.save();
+
       break;
     default:
       // Unexpected event type
