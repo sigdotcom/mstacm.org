@@ -5,6 +5,7 @@ import { Purchase } from "../Purchase";
 import { PurchaseInput } from "../Purchase/input";
 import { User } from "../User";
 import { Transaction } from "./entity";
+import { TransactionPayload } from "./input";
 
 import { IContext } from "../../lib/interfaces";
 import { MembershipTypes } from "../../lib/products";
@@ -33,12 +34,12 @@ export class ProductResolver {
   }
 
   @Authorized()
-  @Mutation((returns: void) => Transaction)
+  @Mutation((returns: void) => TransactionPayload)
   public async startMembershipTransaction(
     @Ctx() context: IContext,
     @Arg("membershipType", (type: void) => MembershipTypes)
     membershipType: MembershipTypes
-  ): Promise<Transaction> {
+  ): Promise<TransactionPayload> {
     const tag: string = membershipType.toString();
     const user: User = context.state.user as User;
     const membershipProduct: Product = await this.productRepo.findOneOrFail({
@@ -66,13 +67,19 @@ export class ProductResolver {
       receipt_email: user.email
     });
 
-    const transaction = await this.transactionRepo.create({
+    const newTransaction: Transaction = await this.transactionRepo.create({
       charged: normalizedCost,
       intent: intent.id,
       purchase: [purchase]
     });
 
-    return transaction.save();
+    const transaction: Transaction = await newTransaction.save();
+
+    return {
+      charged: transaction.charged,
+      clientSecret: intent.client_secret,
+      id: transaction.id
+    };
   }
 
   @Authorized("SUPERADMIN")
