@@ -90,9 +90,13 @@ const ErrorContainer: AnyStyledComponent = styled.div`
   color: #f56565;
 `;
 
-type CheckoutProps = ReactStripeElements.InjectedStripeProps & {
+interface ICheckoutFormProps {
   tag: MembershipTypes;
-};
+  onSuccess?: () => void;
+}
+
+type CheckoutProps = ReactStripeElements.InjectedStripeProps &
+  ICheckoutFormProps;
 
 type setString = React.Dispatch<React.SetStateAction<string>>;
 type setBoolean = React.Dispatch<React.SetStateAction<boolean>>;
@@ -170,6 +174,10 @@ const CheckoutFormBase: React.FC<CheckoutProps> = (
   }
 
   if (success) {
+    if (props.onSuccess) {
+      props.onSuccess();
+    }
+
     return (
       <Result
         status="success"
@@ -215,10 +223,6 @@ const CheckoutFormBase: React.FC<CheckoutProps> = (
 const InjectedCheckoutForm: React.ComponentType<CheckoutProps> = injectStripe(
   CheckoutFormBase
 );
-
-interface ICheckoutFormProps {
-  tag: MembershipTypes;
-}
 
 export const CheckoutForm: React.FC<ICheckoutFormProps> = (
   props: ICheckoutFormProps
