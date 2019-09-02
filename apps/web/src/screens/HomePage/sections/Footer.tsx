@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-scroll";
 import styled from "styled-components";
 
-import { PageConstraint } from "../../../common/PageConstraint";
+import { PageConstraint } from "../../../components/PageConstraint";
 
 const HLine = styled.div`
   width: 85%;
@@ -177,7 +177,7 @@ const Communities = styled.div`
   }
 `;
 
-const Footer: React.FC<{}> = () => {
+const Footer: React.FC<{}> = (): JSX.Element => {
   return (
     <div style={{ background: "#DFE6E9" }}>
       <PageConstraint>
@@ -242,7 +242,7 @@ const Footer: React.FC<{}> = () => {
             </Info>
           </Links>
           <Copyright>
-            <img src={require("../../../../static/img/web_footer.png")} />
+            <img src={require("../../../static/img/web_footer.png")} />
             <h2>Copyright © 2019 ACM Web.</h2>
           </Copyright>
         </Wrapper>

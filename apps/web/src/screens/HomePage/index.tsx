@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Events from "./sections/Events";
 import { Footer } from "./sections/Footer";
 import Hero from "./sections/Hero";
+import { Membership } from "./sections/Membership";
 import { Nav } from "./sections/Nav";
 import { SIGs } from "./sections/SIGs";
 import { Sponsors } from "./sections/Sponsors";
@@ -31,6 +32,7 @@ const HomePage: React.FC<{}> = () => {
       </NavHeroWrapper>
       <SIGs />
       <Events />
+      <Membership />
       <Sponsors />
       <Footer />
     </div>

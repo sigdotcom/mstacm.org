@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import { HomePage, NotFoundPage } from "./components/pages";
 import { config } from "./config";
+import { HomePage, NotFoundPage } from "./screens";
 import { useAuth0 } from "./utils/react-auth0-wrapper";
 
 import "./static/css/App.css";

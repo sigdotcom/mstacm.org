@@ -4,7 +4,7 @@ import Icon from "react-eva-icons";
 import { Element } from "react-scroll";
 import windowSize from "react-window-size";
 import styled from "styled-components";
-import { PageConstraint } from "../../../common/PageConstraint";
+import { PageConstraint } from "../../../components/PageConstraint";
 import events from "./Events.json";
 
 const Wrapper = styled.div`
@@ -344,17 +344,18 @@ interface IProps {
 }
 
 // Initalize all events to show abbreviated description
-let descArr: Boolean[] = events.events.map(event => {
+const descArr: Boolean[] = events.events.map(event => {
   return false;
 });
 
 // Initalize no filters
-let filterArr: Boolean[] = events.events.map(event => {
+const filterArr: Boolean[] = events.events.map(event => {
   return false;
 });
 
 let eventCounter: number = 0;
-const CALENDAR_LINK = 'https://calendar.google.com/calendar/embed?src=mst.edu_7u3stm8bn7l2umuastep5fmbl0%40group.calendar.google.com&ctz=America%2FChicago'
+const CALENDAR_LINK =
+  "https://calendar.google.com/calendar/embed?src=mst.edu_7u3stm8bn7l2umuastep5fmbl0%40group.calendar.google.com&ctz=America%2FChicago";
 
 const Events: React.FC<IProps> = props => {
   const [isMobile, setIsMobile] = useState(true);
@@ -469,9 +470,9 @@ const Events: React.FC<IProps> = props => {
 
   // Create list of events
   const makeEvents = () => {
-    let eventList = [];
+    const eventList = [];
     for (let i = 0; i < events.events.length; i++) {
-      let show = showEvent(i, events.events[i].group);
+      const show = showEvent(i, events.events[i].group);
       if (show) {
         eventList.push(Event(i));
       }
@@ -489,14 +490,14 @@ const Events: React.FC<IProps> = props => {
               visibility:
                 events.events[i].img_path === "" ? "hidden" : "visible"
             }}
-            href={require("../../../../static/img/" +
+            href={require("../../../static/img/" +
               (events.events[i].img_path === ""
                 ? "acm.png"
                 : events.events[i].img_path))}
             target="_blank"
           >
             <FlierImg
-              src={require("../../../../static/img/" +
+              src={require("../../../static/img/" +
                 (events.events[i].img_path === ""
                   ? "acm.png"
                   : events.events[i].img_path))}
@@ -508,8 +509,7 @@ const Events: React.FC<IProps> = props => {
               <h2>{events.events[i].day}</h2>
             </Date>
             <img
-              src={require("../../../../static/img/" +
-                events.events[i].sig_logo)}
+              src={require("../../../static/img/" + events.events[i].sig_logo)}
             />
           </SmallInfo>
         </LeftWrapper>
@@ -518,11 +518,11 @@ const Events: React.FC<IProps> = props => {
           <EventName>{events.events[i].title}</EventName>
           <Details>
             <Time>
-              <img src={require("../../../../static/img/location.png")} />
+              <img src={require("../../../static/img/location.png")} />
               <h2>{events.events[i].location}</h2>
             </Time>
             <Time>
-              <img src={require("../../../../static/img/clock.png")} />
+              <img src={require("../../../static/img/clock.png")} />
               <h2>{events.events[i].time}</h2>
             </Time>
             <Time style={{ marginLeft: "-1.5px" }}>
@@ -544,7 +544,7 @@ const Events: React.FC<IProps> = props => {
                   ? ""
                   : "none"
             }}
-            href={require("../../../../static/img/" +
+            href={require("../../../static/img/" +
               (events.events[i].img_path === ""
                 ? "acm.png"
                 : events.events[i].img_path))}
@@ -569,27 +569,13 @@ const Events: React.FC<IProps> = props => {
               <h3>Filter</h3>
               <Sigs>
                 <ImgWrapper>
-                  <ImgImg
-                    src={require("../../../../static/img/comp-dark.png")}
-                  />
-                  <ImgImg
-                    src={require("../../../../static/img/data-dark.png")}
-                  />
-                  <ImgImg
-                    src={require("../../../../static/img/game-dark.png")}
-                  />
-                  <ImgImg
-                    src={require("../../../../static/img/acm-dark.png")}
-                  />
-                  <ImgImg
-                    src={require("../../../../static/img/hack-dark.png")}
-                  />
-                  <ImgImg
-                    src={require("../../../../static/img/sec-dark.png")}
-                  />
-                  <ImgImg
-                    src={require("../../../../static/img/acm-w-dark.png")}
-                  />
+                  <ImgImg src={require("../../../static/img/comp-dark.png")} />
+                  <ImgImg src={require("../../../static/img/data-dark.png")} />
+                  <ImgImg src={require("../../../static/img/game-dark.png")} />
+                  <ImgImg src={require("../../../static/img/acm-dark.png")} />
+                  <ImgImg src={require("../../../static/img/hack-dark.png")} />
+                  <ImgImg src={require("../../../static/img/sec-dark.png")} />
+                  <ImgImg src={require("../../../static/img/acm-w-dark.png")} />
                 </ImgWrapper>
                 <SigWrapper>
                   <h4>ACM Comp</h4>
