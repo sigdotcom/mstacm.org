@@ -3,9 +3,9 @@ import * as Koa from "koa";
 import * as koaBody from "koa-bodyparser";
 import * as logger from "koa-logger";
 
-import { authFromBearer, passport } from "./middleware/auth";
-
 import { config } from "./config";
+import { authFromBearer, passport } from "./middleware/auth";
+import { router } from "./routes";
 
 const app = new Koa();
 
@@ -17,5 +17,8 @@ app.use(logger());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(authFromBearer);
+
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 export { app };
