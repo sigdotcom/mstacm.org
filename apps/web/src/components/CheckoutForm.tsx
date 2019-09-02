@@ -1,4 +1,5 @@
 // CheckoutForm.js
+import { Result } from "antd";
 import gql from "graphql-tag";
 import React, { useState } from "react";
 import Icon from "react-eva-icons";
@@ -17,6 +18,7 @@ import {
   MembershipTypes,
   useGetMembershipMutation
 } from "../generated/graphql";
+import { IconContainer } from "./IconContainer";
 import { PrimaryButton } from "./PrimaryButton";
 
 export const GET_MEMBERSHIP: any = gql`
@@ -99,10 +101,12 @@ const CheckoutFormBase: React.FC<CheckoutProps> = (
   props: CheckoutProps
 ): JSX.Element => {
   const [cardElement, setCardElement] = useState<any>(undefined);
+  const [intent, setIntent]: [string, setString] = useState<string>("");
   const [clientSecret, setClientSecret]: [string, setString] = useState<string>(
     ""
   );
   const [error, setError]: [string, setString] = useState<string>("");
+  const [success, setSuccess]: [boolean, setBoolean] = useState<boolean>(false);
   const [loading, setLoading]: [boolean, setBoolean] = useState<boolean>(false);
 
   const [getMembership] = useGetMembershipMutation();
@@ -145,14 +149,34 @@ const CheckoutFormBase: React.FC<CheckoutProps> = (
     );
 
     if (response.error) {
-      setError(response.error.message!);
+      setError(response.error.message || "Unknown error occurred");
+
+      return;
     }
+
+    if (!response.paymentIntent) {
+      setError("Unknown error occurred");
+
+      return;
+    }
+
+    setIntent(response.paymentIntent.id);
     setLoading(false);
-    console.log(response);
+    setSuccess(true);
   };
 
   if (error && loading) {
     setLoading(false);
+  }
+
+  if (success) {
+    return (
+      <Result
+        status="success"
+        title="Membership Added!"
+        subTitle={`Your membership may take 1-5 minutes to show. ref: ${intent}`}
+      />
+    );
   }
 
   return (
@@ -166,15 +190,21 @@ const CheckoutFormBase: React.FC<CheckoutProps> = (
         </label>
         {error !== "" && (
           <ErrorContainer>
-            <Icon
-              name="alert-circle-outline"
-              size="medium"
-              fill="currentColor"
-            />
+            <IconContainer>
+              <Icon
+                name="alert-circle-outline"
+                size="medium"
+                fill="currentColor"
+              />
+            </IconContainer>
             <span style={{ marginLeft: ".5rem" }}>{error}</span>
           </ErrorContainer>
         )}
-        <PrimaryButton disabled={loading} style={{ margin: "2rem auto" }}>
+        <PrimaryButton
+          loading={loading}
+          disabled={loading}
+          style={{ margin: "2rem auto" }}
+        >
           Purchase
         </PrimaryButton>
       </FormContainer>

@@ -1,8 +1,16 @@
 import React from "react";
-
 import styled, { AnyStyledComponent } from "styled-components";
 
+import { Loader } from "./Loader";
+
 const Button: AnyStyledComponent = styled.button`
+  display: flex;
+  align-contents: center;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.2s ease-in-out;
+
   background: #42c0fc;
   color: #fff;
 
@@ -34,10 +42,19 @@ const Button: AnyStyledComponent = styled.button`
   }
 `;
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  loading?: boolean;
+};
 
+// Causes NotFoundError: Node was not found
 export const PrimaryButton: React.SFC<ButtonProps> = (
   props: ButtonProps
 ): JSX.Element => {
-  return <Button {...props}>{props.children}</Button>;
+  // Need span wrapped due to https://github.com/dimitrisraptis96/react-eva-icons/issues/2
+  return (
+    <Button {...props}>
+      {props.loading && <Loader />}
+      {props.children}
+    </Button>
+  );
 };
