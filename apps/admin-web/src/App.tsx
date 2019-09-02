@@ -27,7 +27,8 @@ const App: React.SFC<{}> = (): JSX.Element => {
     isAuthenticated,
     getTokenSilently,
     loginWithRedirect,
-    logout
+    logout,
+    user
   } = useAuth0();
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const App: React.SFC<{}> = (): JSX.Element => {
   }, [loading, isAuthenticated, getTokenSilently]);
 
   const onClick: () => void = (): void => {
-    logout({});
+    logout({ returnTo: config.PAGE_URI });
   };
 
   if (loading || !isAuthenticated) {
@@ -78,7 +79,10 @@ const App: React.SFC<{}> = (): JSX.Element => {
         </Sider>
         <Layout>
           <Header style={{ background: "#fff", padding: 0 }}>
-            <PageHeader backIcon={false} title="Admin Dashboard" />
+            <PageHeader
+              backIcon={false}
+              title={`Hello, ${user.name}. Welcome to your Admin Dashboard`}
+            />
           </Header>
           <Content style={{ margin: "24px 16px 0" }}>
             <MainContent />
