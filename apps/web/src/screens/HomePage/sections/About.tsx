@@ -2,7 +2,7 @@ import React from "react";
 import { Element } from "react-scroll";
 import styled from "styled-components";
 
-import { PageConstraint } from "../../../common/PageConstraint";
+import { PageConstraint } from "../../../components/PageConstraint";
 
 const Wrapper = styled.div`
   .sectionWrapper {

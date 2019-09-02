@@ -2,6 +2,7 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
+import { StripeProvider } from "react-stripe-elements";
 import { App } from "./App";
 import { config } from "./config";
 import registerServiceWorker from "./registerServiceWorker";
@@ -19,7 +20,9 @@ ReactDOM.render(
     onRedirectCallback={onRedirectCallback}
   >
     <ApolloProvider client={client}>
-      <App />
+      <StripeProvider apiKey={config.STRIPE_PUBLIC_KEY}>
+        <App />
+      </StripeProvider>
     </ApolloProvider>
   </Auth0Provider>,
   document.getElementById("root") as HTMLElement

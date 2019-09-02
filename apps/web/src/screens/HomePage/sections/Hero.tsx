@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { PageConstraint } from "../../../common/PageConstraint";
+import { PageConstraint } from "../../../components/PageConstraint";
 
 const BG = styled.div`
   flex: 1;
@@ -177,6 +177,8 @@ const MailingJoin = styled.button`
   }
 `;
 
+// const IMG_PATH: string = "../../../static/img";
+
 const Hero: React.FC<{}> = () => {
   const [email, setEmail] = useState("");
 
@@ -218,7 +220,7 @@ const Hero: React.FC<{}> = () => {
             </InputWrapper>
           </HeroText>
         </HeroTextWrapper>
-        <HeroImage src={require("../../../../static/img/acm-logo-large.svg")} />
+        <HeroImage src={require("../../../static/img/acm-logo-large.svg")} />
       </PageConstraint>
     </BG>
   );

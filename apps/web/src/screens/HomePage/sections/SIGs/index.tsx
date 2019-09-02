@@ -1,12 +1,12 @@
 import React from "react";
 import { Element } from "react-scroll";
-import styled from "styled-components";
+import styled, { AnyStyledComponent } from "styled-components";
 import { ISIG } from "./interfaces";
 import { SIGsDisplay } from "./SIGsDisplay";
 
 import Icon from "react-eva-icons";
 
-import { PageConstraint } from "../../../common/PageConstraint";
+import { PageConstraint } from "../../../../components/PageConstraint";
 
 const SIGsData: ISIG[] = [
   {
@@ -88,7 +88,7 @@ const SIGsData: ISIG[] = [
   }
 ];
 
-const SIGsWrapper: any = styled.div`
+const SIGsWrapper: AnyStyledComponent = styled.div`
   margin: auto;
   margin-top: 100px;
   width: 100%;
@@ -97,7 +97,7 @@ const SIGsWrapper: any = styled.div`
   font-family: "Nunito Sans", sans-serif;
 `;
 
-const Heading: any = styled.h1`
+const Heading: AnyStyledComponent = styled.h1`
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   font-size: 23px;
@@ -106,12 +106,12 @@ const Heading: any = styled.h1`
   }
 `;
 
-const Description: any = styled.p`
+const Description: AnyStyledComponent = styled.p`
   margin-bottom: 20px;
   font-size: 19px;
 `;
 
-const Line: any = styled.hr`
+const Line: AnyStyledComponent = styled.hr`
   border: 0;
   height: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);

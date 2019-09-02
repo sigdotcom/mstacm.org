@@ -1,15 +1,15 @@
 import * as React from "react";
-import styled from "styled-components";
 import { Element } from "react-scroll";
+import styled from "styled-components";
 
 const SponsorWrap = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; 
-  background: #DFE6E9;
-`
+  justify-content: center;
+  background: #dfe6e9;
+`;
 
 const Sponsor = styled.div`
   width: 100%;
@@ -48,7 +48,7 @@ const Sponsor = styled.div`
       font-size: 35px;
     }
   }
-`
+`;
 
 const Logos = styled.div`
   display: flex;
@@ -87,9 +87,9 @@ const Logos = styled.div`
       margin: -5%;
     }
   }
-`
+`;
 
-const Sponsors: React.FC<{}> = () => {
+const Sponsors: React.FC<{}> = (): JSX.Element => {
   return (
     <SponsorWrap>
       <Element name="sponsors">
@@ -97,15 +97,25 @@ const Sponsors: React.FC<{}> = () => {
           <h2>Big thanks to our sponsors and partners!</h2>
         </Sponsor>
         <Logos>
-          <a href="https://www.auth0.com/" target="_blank"><img src={require('../../../../static/img/auth0.png')}/></a>
-          <a href="https://www.att.com/" target="_blank"><img src={require('../../../../static/img/at&t.png')}/></a>
-          <a href="https://www.garmin.com/en-US/" target="_blank"><img src={require('../../../../static/img/garmin.png')}/></a>
-          <a href="https://www.netlify.com/" target="_blank"><img src={require('../../../../static/img/netlify.png')}/></a>
-          <a href="http://tradebot.com/" target="_blank"><img src={require('../../../../static/img/tradebot.png')}/></a>
+          <a href="https://www.auth0.com/" target="_blank">
+            <img src={require(`../../../static/img/auth0.png`)} />
+          </a>
+          <a href="https://www.att.com/" target="_blank">
+            <img src={require("../../../static/img/at&t.png")} />
+          </a>
+          <a href="https://www.garmin.com/en-US/" target="_blank">
+            <img src={require("../../../static/img/garmin.png")} />
+          </a>
+          <a href="https://www.netlify.com/" target="_blank">
+            <img src={require("../../../static/img/netlify.png")} />
+          </a>
+          <a href="http://tradebot.com/" target="_blank">
+            <img src={require("../../../static/img/tradebot.png")} />
+          </a>
         </Logos>
       </Element>
     </SponsorWrap>
   );
-}
+};
 
 export { Sponsors };

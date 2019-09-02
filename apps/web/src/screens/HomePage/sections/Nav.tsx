@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-scroll";
 import styled from "styled-components";
 
-import { useAuth0 } from "../../../../utils/react-auth0-wrapper";
-import { PageConstraint } from "../../../common/PageConstraint";
+import { PageConstraint } from "../../../components/PageConstraint";
+import { useAuth0 } from "../../../utils/react-auth0-wrapper";
 
 const BG = styled.div`
   height: 120px;
@@ -74,7 +74,7 @@ const Nav: React.FC<{}> = (): JSX.Element => {
       <PageConstraint>
         <Wrapper>
           <NavRow>
-            <Logo src={require("../../../../static/img/acm-logo.png")} />
+            <Logo src={require("../../../static/img/acm-logo.png")} />
             <MenuItems>
               <Link to="communities" smooth={true}>
                 <MenuItem>Communities</MenuItem>
@@ -84,6 +84,9 @@ const Nav: React.FC<{}> = (): JSX.Element => {
               </Link>
               <Link to="sponsors" smooth={true}>
                 <MenuItem>Sponsors</MenuItem>
+              </Link>
+              <Link to="membership" smooth={true}>
+                <MenuItem>Membership</MenuItem>
               </Link>
             </MenuItems>
           </NavRow>
