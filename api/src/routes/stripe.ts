@@ -20,13 +20,13 @@ const addDates: any = {
  * Stripe payment intent callback
  */
 router.post("callback", async (ctx: Koa.ParameterizedContext) => {
-  let event: events.IEvent;
-  const sig: string = ctx.request.headers["stripe-signature"] || "";
+  let stripeEvent: events.IEvent;
+  const signature: string = ctx.request.headers["stripe-signature"] || "";
 
   try {
-    event = stripe.webhooks.constructEvent(
+    stripeEvent = stripe.webhooks.constructEvent(
       ctx.request.rawBody,
-      sig,
+      signature,
       config.STRIPE_WEBHOOK_SECRET
     );
   } catch (err) {
@@ -35,9 +35,9 @@ router.post("callback", async (ctx: Koa.ParameterizedContext) => {
     return;
   }
 
-  switch (event.type) {
+  switch (stripeEvent.type) {
     case "payment_intent.succeeded":
-      const intent: paymentIntents.IPaymentIntent = event.data
+      const intent: paymentIntents.IPaymentIntent = stripeEvent.data
         .object as paymentIntents.IPaymentIntent;
       const productTag: string = intent.metadata.productTag;
       const userId: string = intent.metadata.userId;
@@ -60,7 +60,7 @@ router.post("callback", async (ctx: Koa.ParameterizedContext) => {
       break;
     default:
       // Unexpected event type
-      ctx.throw(400, `Webhook Error: Unexpected event ${event.type}`);
+      ctx.throw(400, `Webhook Error: Unexpected event ${stripeEvent.type}`);
   }
 
   ctx.status = 200;
