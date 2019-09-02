@@ -87,16 +87,19 @@ const Membership: React.FC = (): JSX.Element => {
     }
   };
 
+  // TODO: move to global state
   const result: MeExpirationQueryHookResult = useMeExpirationQuery();
   let expirationDate: string | undefined;
 
   if (result.data && result.data.me) {
     expirationDate = result.data.me.membershipExpiration;
-    result.data.me.membershipExpiration;
   }
 
   const removeTag: () => void = (): void => {
     setTag(undefined);
+  };
+  const refetchMe: () => void = (): void => {
+    result.refetch();
   };
 
   const setYearly: voidFunction = (): void => setTag(MembershipTypes.Yearly);
@@ -114,7 +117,7 @@ const Membership: React.FC = (): JSX.Element => {
           style={modalStyle}
         >
           <Header>{tag}</Header>
-          <CheckoutForm tag={tag!} />
+          <CheckoutForm tag={tag!} onSuccess={refetchMe} />
         </Modal>
         <PageConstraint>
           <Heading>
