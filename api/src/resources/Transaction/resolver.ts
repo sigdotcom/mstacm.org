@@ -1,9 +1,13 @@
-import { Arg, Authorized, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
+
 import { Product } from "../Product";
 import { Purchase } from "../Purchase";
 import { PurchaseInput } from "../Purchase/input";
+import { User } from "../User";
 import { Transaction } from "./entity";
 
+import { IContext } from "../../lib/interfaces";
+import { MembershipTypes } from "../../lib/products";
 import { stripe } from "../../lib/stripe";
 
 import { getConnection, Repository } from "typeorm";
@@ -28,9 +32,53 @@ export class ProductResolver {
     return this.transactionRepo.find();
   }
 
+  @Authorized()
+  @Mutation((returns: void) => Transaction)
+  public async startMembershipTransaction(
+    @Ctx() context: IContext,
+    @Arg("membershipType", (type: void) => MembershipTypes)
+    membershipType: MembershipTypes
+  ): Promise<Transaction> {
+    const tag: string = membershipType.toString();
+    const user: User = context.state.user as User;
+    const membershipProduct: Product = await this.productRepo.findOneOrFail({
+      tag
+    });
+
+    const purchase = await this.purchaseRepo.create({
+      product: membershipProduct,
+      quantity: 1
+    });
+    await purchase.save();
+
+    // Charge the customer from stripe (stripe only allows integers) and store
+    // the transaction in our database for lookup later.
+    const normalizedCost = membershipProduct.price * 100;
+    const intent = await stripe.paymentIntents.create({
+      amount: normalizedCost,
+      currency: "usd",
+      metadata: {
+        email: user.email,
+        productTag: tag,
+        userId: user.id
+      },
+      payment_method_types: ["card"],
+      receipt_email: user.email
+    });
+
+    const transaction = await this.transactionRepo.create({
+      charged: normalizedCost,
+      intent: intent.id,
+      purchase: [purchase]
+    });
+
+    return transaction.save();
+  }
+
   @Authorized("SUPERADMIN")
   @Mutation((returns: void) => Transaction)
   public async startTransaction(
+    @Ctx() context: IContext,
     @Arg("purchases", (type: void) => [PurchaseInput])
     purchasesInput: PurchaseInput[]
   ): Promise<Transaction> {
