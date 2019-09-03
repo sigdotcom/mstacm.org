@@ -52,9 +52,15 @@ router.post("callback", async (ctx: Koa.ParameterizedContext) => {
 
       const user: User = await User.findOneOrFail({ id: userId });
       const curDate: Date = new Date();
-      user.membershipExpiration = new Date(
-        curDate.setMonth(curDate.getMonth() + addDates[productTag])
-      );
+      let newMonth: number = curDate.getMonth() + addDates[productTag];
+
+      const normalizedMonth: number = (newMonth % 12) + 1;
+
+      if (normalizedMonth > 5 && normalizedMonth < 8) {
+        newMonth += 8 - normalizedMonth;
+      }
+
+      user.membershipExpiration = new Date(curDate.setMonth(newMonth));
       await user.save();
 
       break;
