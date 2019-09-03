@@ -115,15 +115,19 @@ const CheckoutFormBase: React.FC<CheckoutProps> = (
 
   const [getMembership] = useGetMembershipMutation();
 
+  const handleError: (message: string) => void = (message: string): void => {
+    setLoading(false);
+    setError(message);
+  };
+
   const handleSubmit: (ev: React.FormEvent) => void = async (
     ev: React.FormEvent
   ): Promise<void> => {
     // We don't want to let default form submission happen here, which would refresh the page.
     ev.preventDefault();
-    setError("");
     setLoading(true);
     if (!props.stripe) {
-      setError("Stripe.js hasn't loaded yet.");
+      handleError("Stripe.js hasn't loaded yet.");
       return;
     }
     let secret: string = clientSecret;
@@ -138,7 +142,7 @@ const CheckoutFormBase: React.FC<CheckoutProps> = (
 
       if (!data) {
         if (result.errors) {
-          setError(result.errors[0].message || "Unknown Error occurred.");
+          handleError(result.errors[0].message || "Unknown Error occurred.");
         }
 
         return;
@@ -153,13 +157,13 @@ const CheckoutFormBase: React.FC<CheckoutProps> = (
     );
 
     if (response.error) {
-      setError(response.error.message || "Unknown error occurred");
+      handleError(response.error.message || "Unknown error occurred");
 
       return;
     }
 
     if (!response.paymentIntent) {
-      setError("Unknown error occurred");
+      handleError("Unknown error occurred");
 
       return;
     }
@@ -168,10 +172,6 @@ const CheckoutFormBase: React.FC<CheckoutProps> = (
     setLoading(false);
     setSuccess(true);
   };
-
-  if (error && loading) {
-    setLoading(false);
-  }
 
   if (success) {
     if (props.onSuccess) {
