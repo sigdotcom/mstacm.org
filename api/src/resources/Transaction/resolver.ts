@@ -70,7 +70,7 @@ export class ProductResolver {
     const newTransaction: Transaction = await this.transactionRepo.create({
       charged: normalizedCost,
       intent: intent.id,
-      purchase: [purchase]
+      purchases: [purchase]
     });
 
     const transaction: Transaction = await newTransaction.save();
