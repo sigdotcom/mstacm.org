@@ -1,6 +1,19 @@
 {
     "events": [
         {
+            "img_path": "events/microsoft_resume_review.png",
+            "day": "5",
+            "month": "SEPT",
+            "sig_logo": "acm.png",
+            "title": "Microsoft Resume Review Forum",
+            "location": "Computer Science 207",
+            "time": "7:00pm - 8:00pm",
+            "desc": "Interested in having your resume reviewed live or learning resume tips from a Microsoft representative in time for the recruitment season? Send your resume to acm@mst.edu before the event if you are interested in personalized comments.",
+            "shortDesc": "Having your resume reviewed live and learn resume tips from a Microsoft representative!",
+            "group": "ACM General"
+        },
+
+        {
             "img_path": "events/acmw_soldering_workshop.png",
             "day": "10",
             "month": "SEPT",
