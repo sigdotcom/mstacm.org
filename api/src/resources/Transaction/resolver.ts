@@ -52,7 +52,7 @@ export class ProductResolver {
     });
     await purchase.save();
 
-    // Charge the customer from stripe (stripe only allows integers) and store
+    // Charge the customer from stripe (stripe only allows cents) and store
     // the transaction in our database for lookup later.
     const normalizedCost = membershipProduct.price * 100;
     const intent = await stripe.paymentIntents.create({
@@ -120,7 +120,7 @@ export class ProductResolver {
       cost += curPrice;
     }
 
-    // Charge the customer from stripe (stripe only allows integers) and store
+    // Charge the customer from stripe (stripe only allows cents) and store
     // the transaction in our database for lookup later.
     const normalizedCost = cost * 100;
     const intent = await stripe.paymentIntents.create({
