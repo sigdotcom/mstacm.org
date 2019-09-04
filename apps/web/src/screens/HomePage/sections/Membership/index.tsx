@@ -124,8 +124,8 @@ const Membership: React.FC = (): JSX.Element => {
             <Icon name="people" size="large" fill="#777" /> Become a Member
           </Heading>
           <Description>
-            Become a dues-paying member of S&T ACM an receive over $100 dollars
-            in benefits including:
+            Become a dues-paying member of S&T ACM and receive over $50 dollars
+            in benefits.
           </Description>
           {!expirationDate && (
             <TierList>
