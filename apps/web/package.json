@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@sendgrid/helpers": "^6.4.0",
-    "@types/antd": "^1.0.0",
     "@types/debug": "^4.1.4",
     "@types/react-modal": "^3.8.1",
     "@types/react-router-dom": "^4.3.1",
@@ -35,6 +34,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "@types/antd": "^1.0.0",
     "@types/jest": "^23.3.13",
     "@types/node": "^10.14.16",
     "@types/react": "^16.7.20",

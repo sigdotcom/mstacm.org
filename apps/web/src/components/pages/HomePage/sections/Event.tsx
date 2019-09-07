@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Icon from "react-eva-icons";
 import LinesEllipsis from "react-lines-ellipsis";
 
+const MOBILE_BREAKPOINT: string = "1001px";
+
 const EventWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -18,7 +20,7 @@ const EventWrapper = styled.div`
     font-weight: 600;
   }
 
-  @media all and (min-width: 1001px) {
+  @media all and (min-width: ${MOBILE_BREAKPOINT}) {
     flex-direction: row;
     margin-left: 5px;
   }
@@ -33,7 +35,7 @@ const EventName = styled.h1`
   color: #42c0fc;
   margin: 0;
 
-  @media all and (min-width: 1001px) {
+  @media all and (min-width: ${MOBILE_BREAKPOINT}) {
     font-size: 40px;
   }
 `;
@@ -41,7 +43,7 @@ const EventName = styled.h1`
 const FlierWrapper = styled.div`
   display: none;
 
-  @media all and (min-width: 1001px) {
+  @media all and (min-width: ${MOBILE_BREAKPOINT}) {
     display: inline;
     width: 150px;
 
@@ -61,7 +63,7 @@ const SmallInfo = styled.div`
     display: none;
   }
 
-  @media all and (min-width: 1001px) {
+  @media all and (min-width: ${MOBILE_BREAKPOINT}) {
     align-items: center;
     width: 75px;
 
@@ -77,7 +79,7 @@ const SmallInfo = styled.div`
 const VerticalLine = styled.div`
   display: none;
 
-  @media all and (min-width: 1001px) {
+  @media all and (min-width: ${MOBILE_BREAKPOINT}) {
     display: inline;
     margin-right: 25px;
     margin-left: 18px;
@@ -119,7 +121,7 @@ const Date = styled.div`
     color: #ef9c6d;
   }
 
-  @media all and (min-width: 1001px) {
+  @media all and (min-width: ${MOBILE_BREAKPOINT}) {
     flex-direction: column-reverse;
     margin: 0;
 
@@ -140,7 +142,7 @@ const Date = styled.div`
 const Show = styled.p`
   display: none;
 
-  @media all and (min-width: 1001px) {
+  @media all and (min-width: ${MOBILE_BREAKPOINT}) {
     display: inline;
     color: black;
     font-weight: bold;
@@ -153,7 +155,7 @@ const FlierLink = styled.a`
   font-size: 17px;
   margin-bottom: 10px;
 
-  @media all and (min-width: 1001px) {
+  @media all and (min-width: ${MOBILE_BREAKPOINT}) {
     display: none;
   }
 `;
@@ -170,12 +172,29 @@ const Description = styled.div`
 
 const NUM_DESC_LINES: number = 3;
 
-function Event(props: any): any {
-  const { event }: any = props;
-  const [showFullDesc, setShowFullDesc] = useState(false);
+interface IEventProps {
+  img_path: string;
+  day: string;
+  month: string;
+  sig_logo: string;
+  title: string;
+  location: string;
+  time: string;
+  desc: string;
+  shortDesc: string;
+  group: string;
+}
+
+const Event: React.SFC<{ event: IEventProps }> = props => {
+  const { event } = props;
+  const [showFullDesc, setShowFullDesc] = useState<boolean>(false);
 
   const handleClick = (): void => {
     setShowFullDesc(!showFullDesc);
+  };
+
+  const doesFlierExist = (img_path: string): boolean => {
+    return img_path != "";
   };
 
   return (
@@ -184,15 +203,17 @@ function Event(props: any): any {
         <FlierWrapper>
           <a
             style={{
-              visibility: event.img_path === "" ? "hidden" : "visible"
+              visibility: doesFlierExist(event.img_path) ? "visible" : "hidden"
             }}
             href={require("../../../../static/img/" +
-              (event.img_path === "" ? "blank.png" : event.img_path))}
+              (doesFlierExist(event.img_path) ? event.img_path : "blank.png"))}
             target="_blank"
           >
             <img
-              src={require("../../../../static/img/" + 
-                (event.img_path === "" ? "blank.png" : event.img_path))}
+              src={require("../../../../static/img/" +
+                (doesFlierExist(event.img_path)
+                  ? event.img_path
+                  : "blank.png"))}
               style={{ width: "100%" }}
             />
           </a>
@@ -225,17 +246,20 @@ function Event(props: any): any {
         <Description onClick={handleClick} style={{ marginRight: "5px" }}>
           <LinesEllipsis
             text={event.desc}
-            maxLine={showFullDesc ? "999" : NUM_DESC_LINES}
+            maxLine={showFullDesc ? Number.MAX_VALUE : NUM_DESC_LINES}
             ellipsis="... read more"
-            basedOn='words'
+            basedOn="words"
             style={{ fontSize: "16px" }}
           />
         </Description>
         <FlierLink
           href={require("../../../../static/img/" +
-            (event.img_path === "" ? "acm.png" : event.img_path))}
+            (doesFlierExist(event.img_path) ? event.img_path : "acm.png"))}
           target="_blank"
-          style={{ display: showFullDesc ? "" : "none" }}
+          style={{
+            display:
+              showFullDesc && doesFlierExist(event.img_path) ? "" : "none"
+          }}
         >
           Click here to see the flier for this event.
         </FlierLink>
@@ -243,6 +267,6 @@ function Event(props: any): any {
       </div>
     </EventWrapper>
   );
-}
+};
 
 export { Event };

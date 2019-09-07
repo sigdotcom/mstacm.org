@@ -25,8 +25,13 @@ const StyledCheckbox = styled.div`
   }
 `;
 
-function Checkbox(props: any): any {
-  const { checked, onClick }: any = props;
+interface ICheckboxProps {
+  checked: boolean;
+  onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+}
+
+const Checkbox: React.SFC<ICheckboxProps> = (props): JSX.Element => {
+  const { checked, onClick } = props;
 
   return (
     <CheckboxContainer>
@@ -40,6 +45,6 @@ function Checkbox(props: any): any {
       </StyledCheckbox>
     </CheckboxContainer>
   );
-}
+};
 
 export { Checkbox };

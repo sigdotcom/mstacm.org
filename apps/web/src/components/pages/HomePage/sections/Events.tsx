@@ -7,6 +7,8 @@ import events from "./Events.json";
 import { Checkbox } from "./Checkbox";
 import { Event } from "./Event";
 
+const MOBILE_BREAKPOINT: string = "1001px";
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -43,7 +45,7 @@ const Wrapper = styled.div`
     color: #42C0FC;
   }
 
-  @media all and (min-width: 1001px) {
+  @media all and (min-width: ${MOBILE_BREAKPOINT}) {
     padding: 50px 0;
 
     button:focus:hover {
@@ -75,7 +77,7 @@ const FilterWrapper = styled.div`
     color: #092b35;
   }
 
-  @media all and (min-width: 1001px) {
+  @media all and (min-width: ${MOBILE_BREAKPOINT}) {
     display: inline;
     height: 400px;
     min-width: 250px;
@@ -147,20 +149,29 @@ let filterArr: boolean[] = events.events.map(event => {
   return false;
 });
 
-const DEFAULT_EVENTS_TO_DISPLAY = 3;
-const CALENDAR_LINK =
+const FILTER_TYPES: string[] = [
+  "ACM Comp",
+  "ACM Data",
+  "ACM Game",
+  "ACM General",
+  "ACM Hack",
+  "ACM Sec",
+  "ACM-W"
+];
+const DEFAULT_EVENTS_TO_DISPLAY: number = 3;
+const CALENDAR_LINK: string =
   "https://calendar.google.com/calendar/embed?src=mst.edu_7u3stm8bn7l2umuastep5fmbl0%40group.calendar.google.com&ctz=America%2FChicago";
 
 const Events: React.FC<{}> = (): JSX.Element => {
-  const [filters, setFilters] = useState([filterArr]);
-  const [maxEvents, setMaxEvents] = useState(DEFAULT_EVENTS_TO_DISPLAY);
-  const [scrollYPosition, setScrollYPosition] = useState(0);
+  const [filters, setFilters] = useState<boolean[][]>([filterArr]);
+  const [maxEvents, setMaxEvents] = useState<number>(DEFAULT_EVENTS_TO_DISPLAY);
+  const [scrollYPosition, setScrollYPosition] = useState<number>(0);
 
   // Toggle total number of events to show (for button click)
   const toggleNumEvents = (): void => {
     if (maxEvents > DEFAULT_EVENTS_TO_DISPLAY) {
       setMaxEvents(DEFAULT_EVENTS_TO_DISPLAY);
-      window.scrollTo(0,scrollYPosition);
+      window.scrollTo(0, scrollYPosition);
     } else {
       setMaxEvents(events.events.length);
       setScrollYPosition(window.pageYOffset);
@@ -171,22 +182,6 @@ const Events: React.FC<{}> = (): JSX.Element => {
   const toggleCheckbox = (index: number): void => {
     filterArr[index] = !filterArr[index];
     setFilters([filterArr]);
-  };
-
-  // Check if filter is applied to the given group
-  const filterOnGroup = (group: string): boolean => {
-    if (
-      (group === "ACM Comp" && filters[0][0]) ||
-      (group === "ACM Data" && filters[0][1]) ||
-      (group === "ACM Game" && filters[0][2]) ||
-      (group === "ACM General" && filters[0][3]) ||
-      (group === "ACM Hack" && filters[0][4]) ||
-      (group === "ACM Sec" && filters[0][5]) ||
-      (group === "ACM-W" && filters[0][6])
-    ) {
-      return true;
-    }
-    return false;
   };
 
   // Check if default number of events should be shown
@@ -205,7 +200,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
       filters[0].every(filter => {
         return filter === false;
       }) ||
-      filterOnGroup(group)
+      filters[0][FILTER_TYPES.indexOf(group)]
     ) {
       return true;
     }
@@ -224,7 +219,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
       count = events.events.length;
     } else {
       for (let i = 0; i < events.events.length; i++) {
-        if (filterOnGroup(events.events[i].group)) {
+        if (filters[0][FILTER_TYPES.indexOf(events.events[i].group)]) {
           count += 1;
         }
       }
