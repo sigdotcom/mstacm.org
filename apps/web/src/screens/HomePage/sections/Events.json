@@ -1,28 +1,27 @@
 {
     "events": [
         {
-            "img_path": "events/microsoft_resume_review.png",
-            "day": "5",
-            "month": "SEPT",
-            "sig_logo": "acm.png",
-            "title": "Microsoft Resume Review Forum",
-            "location": "Computer Science 207",
-            "time": "7:00pm - 8:00pm",
-            "desc": "Interested in having your resume reviewed live or learning resume tips from a Microsoft representative in time for the recruitment season? Send your resume to acm@mst.edu before the event if you are interested in personalized comments.",
-            "shortDesc": "Having your resume reviewed live and learn resume tips from a Microsoft representative!",
-            "group": "ACM General"
-        },
-
-        {
             "img_path": "events/acmw_soldering_workshop.png",
             "day": "10",
             "month": "SEPT",
             "sig_logo": "acm-w.png",
             "title": "Soldering Workshop",
-            "location": "Toomey 256",
+            "location": "IDE 206",
             "time": "5:00pm - 7:00pm",
-            "desc": "ACM-W is hosting a free beginner friendly soldering workshop at 5 in Toomey 256. We will teach you how to solder safely and participants will be given the opportunity to solder their own project of their choosing. Snacks will be provided before soldering begins!",
-            "shortDesc": "ACM-W will teach you how to solder safely and participants will be given the opportunity to solder their own project of their choosing.",
+            "desc": "ACM-W is hosting a free beginner friendly soldering workshop at 5 in Interdisciplinary Engineering Building 206. We will teach you how to solder safely and participants will be given the opportunity to solder their own project of their choosing. Snacks will be provided before soldering begins!",
+            "shortDesc": "",
+            "group": "ACM-W"
+        },
+        {
+            "img_path": "events/acmw_linkedin_photo_session.png",
+            "day": "11",
+            "month": "SEPT",
+            "sig_logo": "acm-w.png",
+            "title": "LinkedIn Photo Session",
+            "location": "Between Norwood Hall & Parker Hall, East of The Puck",
+            "time": "4:00pm",
+            "desc": "Have you recently created your LinkedIn profile before the career fair and need a good photo? Are you in need of a more recent photo for your profile? ACM-W is providing you with this opportunity! Come and visit us between Norwood Hall and Parker Hall just East of The Puck. If you would like a photo taken for your profile, please dress appropriately. Snacks will be provided!",
+            "shortDesc": "",
             "group": "ACM-W"
         },
         {
