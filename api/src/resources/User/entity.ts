@@ -32,17 +32,19 @@ export class User extends BaseEntity {
   @Column()
   public sub: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column({
-    length: 50
+    length: 50,
+    nullable: true
   })
-  public firstName: string;
+  public firstName?: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column({
-    length: 50
+    length: 50,
+    nullable: true
   })
-  public lastName: string;
+  public lastName?: string;
 
   @Field()
   @Column({
