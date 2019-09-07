@@ -2,4 +2,31 @@ version: '3'
 
 services:
   phoenix_web:
-    image: "acmweb/api"
+    build: .
+    volumes:
+      - .:/server
+  phoenix_nginx:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+      - URL=api.mstacm.org
+      - SUBDOMAINS=,
+      - VALIDATION=http
+      - DNSPLUGIN=cloudflare #optional
+      # - DUCKDNSTOKEN=token #optional
+      - EMAIL=schoonoverkevinm@gmail.com #optional
+      - DHLEVEL=2048 #optional
+      - ONLY_SUBDOMAINS=false #optional
+      # - EXTRA_DOMAINS=extradomains #optional
+      - STAGING=false #optional
+    volumes:
+      - ./.docker/letsencrypt:/config
+    ports:
+      - 443:443
+      - 80:80
+    restart: unless-stopped
