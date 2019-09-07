@@ -231,8 +231,8 @@ export type TransactionPayload = {
 export type User = {
    __typename?: 'User',
   id: Scalars['ID'],
-  firstName: Scalars['String'],
-  lastName: Scalars['String'],
+  firstName?: Maybe<Scalars['String']>,
+  lastName?: Maybe<Scalars['String']>,
   email: Scalars['String'],
   emailVerified: Scalars['Boolean'],
   isSuperAdmin?: Maybe<Scalars['Boolean']>,
