@@ -13,6 +13,8 @@ import {
   MembershipTypes,
   useMeExpirationQuery
 } from "../../../../generated/graphql";
+import { BenefitBlock, IBenefitBlockProps } from "./BenefitBlock";
+import benefits from "./benefits.json";
 import { ConfirmationContainer } from "./ConfirmationContainer";
 import { Header, TierContainer } from "./TierContainer";
 
@@ -66,12 +68,26 @@ const TierList: AnyStyledComponent = styled.div`
   }
 `;
 
+const BenefitList: AnyStyledComponent = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  @media all and (min-width: 790px) {
+    flex-direction: row;
+  }
+`;
+
 type voidFunction = () => void;
 const Membership: React.FC = (): JSX.Element => {
   const [tag, setTag]: [
     MembershipTypes | undefined,
     React.Dispatch<React.SetStateAction<MembershipTypes | undefined>>
   ] = useState<MembershipTypes | undefined>(undefined);
+  const membershipBenefits: JSX.Element[] = (benefits as IBenefitBlockProps[]).map(
+    (benefit: IBenefitBlockProps, index: number): JSX.Element => {
+      return <BenefitBlock {...benefit} key={index} />;
+    }
+  );
   const modalStyle: any = {
     content: {
       padding: "0",
@@ -124,9 +140,10 @@ const Membership: React.FC = (): JSX.Element => {
             <Icon name="people" size="large" fill="#777" /> Become a Member
           </Heading>
           <Description>
-            Become a dues-paying member of S&T ACM and receive over $50 dollars
-            in benefits.
+            Become a dues-paying member of S&T ACM and receive many benefits
+            including:
           </Description>
+          <BenefitList>{membershipBenefits}</BenefitList>
           {!expirationDate && (
             <TierList>
               <TierContainer onClick={setYearly} title={"Yearly"} cost={"20"} />
