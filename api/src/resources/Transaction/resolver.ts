@@ -1,3 +1,4 @@
+import { ApolloError } from "apollo-server";
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
 
 import { Product } from "../Product";
@@ -7,6 +8,7 @@ import { User } from "../User";
 import { Transaction } from "./entity";
 import { TransactionPayload } from "./input";
 
+import { ErrorCodes } from "../../lib/errors";
 import { IContext } from "../../lib/interfaces";
 import { MembershipTypes } from "../../lib/products";
 import { stripe } from "../../lib/stripe";
@@ -42,6 +44,14 @@ export class ProductResolver {
   ): Promise<TransactionPayload> {
     const tag: string = membershipType.toString();
     const user: User = context.state.user as User;
+
+    if (!user) {
+      throw new ApolloError(
+        "You do not appear to be logged in. Contact acm@mst.edu.",
+        ErrorCodes.UNAUTHENTICATED
+      );
+    }
+
     const membershipProduct: Product = await this.productRepo.findOneOrFail({
       tag
     });
@@ -58,15 +68,16 @@ export class ProductResolver {
     const intent = await stripe.paymentIntents.create({
       amount: normalizedCost,
       currency: "usd",
+      description: `${membershipProduct.displayName} - ${user.email}`,
       metadata: {
         email: user.email,
         productTag: tag,
         userId: user.id
       },
       payment_method_types: ["card"],
-      receipt_email: user.email
+      receipt_email: user.email,
+      statement_descriptor: "MEMBERSHIP"
     });
-
     const newTransaction: Transaction = await this.transactionRepo.create({
       charged: normalizedCost,
       intent: intent.id,

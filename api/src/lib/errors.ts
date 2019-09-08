@@ -2,7 +2,7 @@ import { Field, ObjectType, registerEnumType } from "type-graphql";
 
 import { ApolloError } from "apollo-server";
 
-enum ErrorCodes {
+export enum ErrorCodes {
   INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR",
   RESOURCE_NOT_FOUND = "RESOURCE_NOT_FOUND",
   UNAUTHENTICATED = "UNATHENTICATED",
