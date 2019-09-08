@@ -133,11 +133,16 @@ const CheckoutFormBase: React.FC<CheckoutProps> = (
     let secret: string = clientSecret;
 
     if (!secret) {
-      const result: ExecutionResult<
-        GetMembershipMutation
-      > = await getMembership({
-        variables: { membership: props.tag }
-      });
+      let result: ExecutionResult<GetMembershipMutation>;
+      try {
+        result = await getMembership({
+          variables: { membership: props.tag }
+        });
+      } catch (e) {
+        handleError(e.message);
+        return;
+      }
+
       const data = result.data;
 
       if (!data) {
