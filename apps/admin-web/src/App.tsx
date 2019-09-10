@@ -32,11 +32,16 @@ const App: React.SFC<{}> = (): JSX.Element => {
   } = useAuth0();
 
   useEffect(() => {
-    if (loading) {
+    if (loading || isAuthenticated) {
       return;
-    } else if (!isAuthenticated) {
-      loginWithRedirect({});
     }
+    const fn: any = async (): Promise<void> => {
+      await loginWithRedirect({
+        appState: { targetUrl: window.location.origin }
+      });
+    };
+
+    fn();
 
     const setToken: () => void = async (): Promise<void> => {
       const token: string = (await getTokenSilently()) || "";
@@ -46,15 +51,13 @@ const App: React.SFC<{}> = (): JSX.Element => {
     setToken();
   }, [loading, isAuthenticated, getTokenSilently]);
 
-  const onClick: () => void = (): void => {
-    logout({ returnTo: config.PAGE_URI });
+  const onLogoutClick: () => void = (): void => {
+    logout({ returnTo: config.REDIRECT_PAGE_URI });
   };
 
   if (loading || !isAuthenticated) {
     return <Spin size="large" className="load-page" tip="Loading..." />;
   }
-
-  const func: () => undefined = (): undefined => undefined;
 
   return (
     <BrowserRouter>
@@ -62,8 +65,8 @@ const App: React.SFC<{}> = (): JSX.Element => {
         <Sider
           breakpoint="md"
           collapsedWidth="0"
-          onBreakpoint={func}
-          onCollapse={func}
+          onBreakpoint={undefined}
+          onCollapse={undefined}
         >
           <div className="logo" />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={["events"]}>
@@ -72,7 +75,7 @@ const App: React.SFC<{}> = (): JSX.Element => {
                 <span className="nav-text">Events</span>
               </Link>
             </Menu.Item>
-            <Menu.Item onClick={onClick} key="signOut">
+            <Menu.Item onClick={onLogoutClick} key="signOut">
               <span className="nav-text">Sign Out</span>
             </Menu.Item>
           </Menu>
