@@ -35,7 +35,8 @@ async function bootstrap() {
     // Create GraphQL server
     const server = new ApolloServer({
       context: ({ ctx }: { ctx: KoaContext }) => ctx,
-      schema
+      schema,
+      introspection: true,
     });
 
     server.applyMiddleware({ app });

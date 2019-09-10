@@ -1,5 +1,5 @@
 const IS_PROD = process.env.NODE_ENV === "production";
-const ROOT_DIR = IS_PROD ? "build/src" : "src";
+const ROOT_DIR = IS_PROD ? "build" : "src";
 
 module.exports = {
   type: "postgres",
