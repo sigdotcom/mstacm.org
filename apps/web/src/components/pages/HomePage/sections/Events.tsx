@@ -144,11 +144,6 @@ const CalendarLink = styled.a`
   font-size: 20px;
 `;
 
-// Initalize no filters
-let filterArr: boolean[] = events.events.map(event => {
-  return false;
-});
-
 const FILTER_TYPES: string[] = [
   "ACM Comp",
   "ACM Data",
@@ -158,12 +153,13 @@ const FILTER_TYPES: string[] = [
   "ACM Sec",
   "ACM-W"
 ];
+
 const DEFAULT_EVENTS_TO_DISPLAY: number = 3;
 const CALENDAR_LINK: string =
   "https://calendar.google.com/calendar/embed?src=mst.edu_7u3stm8bn7l2umuastep5fmbl0%40group.calendar.google.com&ctz=America%2FChicago";
 
 const Events: React.FC<{}> = (): JSX.Element => {
-  const [filters, setFilters] = useState<boolean[][]>([filterArr]);
+  const [filters, setFilters] = useState<boolean[]>([]);
   const [maxEvents, setMaxEvents] = useState<number>(DEFAULT_EVENTS_TO_DISPLAY);
   const [scrollYPosition, setScrollYPosition] = useState<number>(0);
 
@@ -180,8 +176,9 @@ const Events: React.FC<{}> = (): JSX.Element => {
 
   // Add filter if checkbox is checked
   const toggleCheckbox = (index: number): void => {
-    filterArr[index] = !filterArr[index];
-    setFilters([filterArr]);
+    var newFilters: boolean[] = [...filters];
+    newFilters[index] = !newFilters[index];
+    setFilters(newFilters);
   };
 
   // Check if default number of events should be shown
@@ -197,10 +194,10 @@ const Events: React.FC<{}> = (): JSX.Element => {
   // Determine if event should be shown
   const showEvent = (group: string): boolean => {
     if (
-      filters[0].every(filter => {
+      filters.every(filter => {
         return filter === false;
       }) ||
-      filters[0][FILTER_TYPES.indexOf(group)]
+      filters[FILTER_TYPES.indexOf(group)]
     ) {
       return true;
     }
@@ -212,14 +209,14 @@ const Events: React.FC<{}> = (): JSX.Element => {
     let count = 0;
 
     if (
-      filters[0].every(filter => {
+      filters.every(filter => {
         return filter === false;
       })
     ) {
       count = events.events.length;
     } else {
       for (let i = 0; i < events.events.length; i++) {
-        if (filters[0][FILTER_TYPES.indexOf(events.events[i].group)]) {
+        if (filters[FILTER_TYPES.indexOf(events.events[i].group)]) {
           count += 1;
         }
       }
@@ -269,43 +266,43 @@ const Events: React.FC<{}> = (): JSX.Element => {
                 </SigWrapper>
                 <CheckBoxWrapper>
                   <Checkbox
-                    checked={filters[0][0]}
+                    checked={filters[0]}
                     onClick={() => {
                       toggleCheckbox(0);
                     }}
                   />
                   <Checkbox
-                    checked={filters[0][1]}
+                    checked={filters[1]}
                     onClick={() => {
                       toggleCheckbox(1);
                     }}
                   />
                   <Checkbox
-                    checked={filters[0][2]}
+                    checked={filters[2]}
                     onClick={() => {
                       toggleCheckbox(2);
                     }}
                   />
                   <Checkbox
-                    checked={filters[0][3]}
+                    checked={filters[3]}
                     onClick={() => {
                       toggleCheckbox(3);
                     }}
                   />
                   <Checkbox
-                    checked={filters[0][4]}
+                    checked={filters[4]}
                     onClick={() => {
                       toggleCheckbox(4);
                     }}
                   />
                   <Checkbox
-                    checked={filters[0][5]}
+                    checked={filters[5]}
                     onClick={() => {
                       toggleCheckbox(5);
                     }}
                   />
                   <Checkbox
-                    checked={filters[0][6]}
+                    checked={filters[6]}
                     onClick={() => {
                       toggleCheckbox(6);
                     }}
