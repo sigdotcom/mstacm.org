@@ -36,7 +36,6 @@ async function bootstrap() {
     const server = new ApolloServer({
       context: ({ ctx }: { ctx: KoaContext }) => ctx,
       schema,
-      introspection: true,
     });
 
     server.applyMiddleware({ app });
