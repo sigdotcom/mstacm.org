@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 
-import { Events } from "./sections/Events/index";
+import { Events } from "./sections/Events";
 import { Footer } from "./sections/Footer";
 import Hero from "./sections/Hero";
 import { Membership } from "./sections/Membership";
