@@ -181,7 +181,6 @@ interface IEventProps {
   location: string;
   time: string;
   desc: string;
-  shortDesc: string;
   group: string;
 }
 

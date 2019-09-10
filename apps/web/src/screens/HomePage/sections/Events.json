@@ -9,7 +9,6 @@
             "location": "IDE 206",
             "time": "5:00pm - 7:00pm",
             "desc": "ACM-W is hosting a free beginner friendly soldering workshop at 5 in the Interdisciplinary Engineering Buillding Room 206. We will teach you how to solder safely and participants will be given the opportunity to solder their own project of their choosing. Snacks will be provided before soldering begins!",
-            "shortDesc": "",
             "group": "ACM-W"
         },
         {
@@ -21,7 +20,6 @@
             "location": "Between Norwood Hall & Parker Hall, East of The Puck",
             "time": "4:00pm",
             "desc": "Have you recently created your LinkedIn profile before the career fair and need a good photo? Are you in need of a more recent photo for your profile? ACM-W is providing you with this opportunity! Come and visit us between Norwood Hall and Parker Hall just East of The Puck. If you would like a photo taken for your profile, please dress appropriately. Snacks will be provided!",
-            "shortDesc": "",
             "group": "ACM-W"
         },
         {
@@ -33,7 +31,6 @@
             "location": "Alex's Pizza",
             "time": "6:00pm - 9:00pm",
             "desc": "Talk to companies looking for Computer Science students for longer than a 2-minute career fair interaction, without the hassle of waiting in long lines. Join ACM at our fall Career Fair Dinner! Reminder: You must be an ACM member to participate in the dinner.",
-            "shortDesc": "Talk to companies looking for Computer Science students for longer than a 2-minute career fair interaction, without the hassle of waiting in long lines.",
             "group": "ACM General"
         },
         {
@@ -45,7 +42,6 @@
             "location": "TBD",
             "time": "TBD",
             "desc": "Come out and see who is the best programmer on campus! A number of programming languages are accepted including: C++, Java, Python 2 & 3, C, C#, Go, Javascript, Objective-C, PHP, Prolog, Ruby, and Scala.",
-            "shortDesc": "Come out and see who is the best programmer on campus!",
             "group": "ACM Comp"
         },
         {
@@ -57,7 +53,6 @@
             "location": "TBD",
             "time": "TBD",
             "desc": "A practical workshop on common WiFi vulnerabilities.",
-            "shortDesc": "A practical workshop on common WiFi vulnerabilities.",
             "group": "ACM Sec"
         },
         {
@@ -69,7 +64,6 @@
             "location": "TBD",
             "time": "TBD",
             "desc": "Learn how to lockpick and compete to win a lockpicking set. Proceeds support ACM Security.",
-            "shortDesc": "Learn how to lockpick and compete to win a lockpicking set. Proceeds support ACM Security.",
             "group": "ACM Sec"
         },
         {
@@ -81,7 +75,6 @@
             "location": "BCH Atrium",
             "time": "6:00pm - 12:00am",
             "desc": "Relax, eat food, and play games to win prizes with ACM before starting finals!",
-            "shortDesc": "Relax, eat food, and play games to win prizes with ACM before starting finals!",
             "group": "ACM General"
         }
     ]
