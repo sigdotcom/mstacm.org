@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Element } from "react-scroll";
 import styled from "styled-components";
 import { PageConstraint } from "../../../../components/PageConstraint";
-import events from "./../Events.json";
+import eventsData from "./../EventsData.json";
 
 import { Checkbox } from "./Checkbox";
 import { Event } from "./Event";
@@ -169,7 +169,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
       setMaxEvents(DEFAULT_EVENTS_TO_DISPLAY);
       window.scrollTo(0, scrollYPosition);
     } else {
-      setMaxEvents(events.events.length);
+      setMaxEvents(eventsData.events.length);
       setScrollYPosition(window.pageYOffset);
     }
   };
@@ -213,10 +213,10 @@ const Events: React.FC<{}> = (): JSX.Element => {
         return filter === false;
       })
     ) {
-      count = events.events.length;
+      count = eventsData.events.length;
     } else {
-      for (let i = 0; i < events.events.length; i++) {
-        if (filters[FILTER_TYPES.indexOf(events.events[i].group)]) {
+      for (let i = 0; i < eventsData.events.length; i++) {
+        if (filters[FILTER_TYPES.indexOf(eventsData.events[i].group)]) {
           count += 1;
         }
       }
@@ -311,7 +311,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
               </Sigs>
             </FilterWrapper>
             <EventsWrapper>
-              {events.events
+              {eventsData.events
                 .filter(event => {
                   return showEvent(event.group);
                 })
@@ -333,7 +333,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
             style={{ display: showDefault() ? "none" : "" }}
             onClick={toggleNumEvents}
           >
-            {!showDefault() && maxEvents !== events.events.length
+            {!showDefault() && maxEvents !== eventsData.events.length
               ? "SHOW ALL EVENTS"
               : "SHOW FEWER EVENTS"}
           </button>
