@@ -34,9 +34,13 @@ export class Product extends BaseEntity {
   @Column()
   public displayName: string;
 
-  // Must be between 5 and 22 characters
   @Field()
-  @Column({ length: 22, nullable: true, default: "test" })
+  @Column()
+  public description: string;
+
+  // Must be between 5 and 22 characters
+  @Field({ nullable: true })
+  @Column({ nullable: true, length: 22 })
   public statementDescriptor?: string;
 
   @Field()
