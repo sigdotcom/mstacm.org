@@ -1,9 +1,11 @@
 import { ApolloServer } from "apollo-server-koa";
 import "reflect-metadata";
+
 import * as TypeGraphQL from "type-graphql";
 import { Container } from "typedi";
 import { createConnection, useContainer } from "typeorm";
 import "./lib/errors";
+import "./lib/products";
 
 import { app } from "./app";
 import { authChecker } from "./lib/auth";
@@ -35,7 +37,7 @@ async function bootstrap() {
     // Create GraphQL server
     const server = new ApolloServer({
       context: ({ ctx }: { ctx: KoaContext }) => ctx,
-      schema,
+      schema
     });
 
     server.applyMiddleware({ app });

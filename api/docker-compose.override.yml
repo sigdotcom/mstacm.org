@@ -2,7 +2,7 @@ version: '3'
 
 services:
   phoenix_web:
-    command: yarn start:dev
+    command: yarn start:prod
     build: .
     volumes:
       - .:/server
