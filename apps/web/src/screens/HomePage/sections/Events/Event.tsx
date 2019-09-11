@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import Icon from "react-eva-icons";
 import LinesEllipsis from "react-lines-ellipsis";
+import styled from "styled-components";
+
+import { Event as IEvent } from "../../../../generated/graphql";
 
 const MOBILE_BREAKPOINT: string = "1001px";
 
@@ -107,7 +109,7 @@ const Time = styled.div`
   }
 `;
 
-const Date = styled.div`
+const DateArea = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
@@ -173,28 +175,59 @@ const Description = styled.div`
 const NUM_DESC_LINES: number = 3;
 
 interface IEventProps {
-  img_path: string;
-  day: string;
-  month: string;
-  sig_logo: string;
-  title: string;
-  location: string;
-  time: string;
-  desc: string;
-  group: string;
+  event: IEvent;
 }
 
-const Event: React.SFC<{ event: IEventProps }> = props => {
-  const { event } = props;
+const Event: React.SFC<IEventProps> = ({ event }: IEventProps): JSX.Element => {
   const [showFullDesc, setShowFullDesc] = useState<boolean>(false);
 
   const handleClick = (): void => {
     setShowFullDesc(!showFullDesc);
   };
 
-  const doesFlierExist = (img_path: string): boolean => {
-    return img_path != "";
-  };
+  let logoLink: string;
+  switch (event.hostSig.name) {
+    case "Web":
+      logoLink = "web.png";
+      break;
+    case "Women":
+      logoLink = "acm-w.png";
+      break;
+    case "Competition":
+      logoLink = "comp.png";
+      break;
+    case "Data":
+      logoLink = "data.png";
+      break;
+    case "Game":
+      logoLink = "game.png";
+      break;
+    case "Security":
+      logoLink = "sec.png";
+      break;
+    case "Hack":
+      logoLink = "hack.png";
+      break;
+    default:
+      logoLink = "acm.png";
+      break;
+  }
+
+  const eventDate: any = new Date(event.dateHosted);
+  const eventEndDate: any = new Date(event.dateExpire);
+  const time: string =
+    event.dateHosted === event.dateExpire
+      ? eventDate.toLocaleString("default", {
+          hour: "numeric",
+          minute: "numeric"
+        })
+      : `${eventDate.toLocaleString("default", {
+          hour: "numeric",
+          minute: "numeric"
+        })} - ${eventEndDate.toLocaleString("default", {
+          hour: "numeric",
+          minute: "numeric"
+        })}`;
 
   return (
     <EventWrapper>
@@ -202,32 +235,30 @@ const Event: React.SFC<{ event: IEventProps }> = props => {
         <FlierWrapper>
           <a
             style={{
-              visibility: doesFlierExist(event.img_path) ? "visible" : "hidden"
+              visibility: event.flierLink ? "visible" : "hidden"
             }}
             href={require("../../../../static/img/" +
-              (doesFlierExist(event.img_path) ? event.img_path : "blank.png"))}
+              (event.flierLink ? event.flierLink : "blank.png"))}
             target="_blank"
           >
             <img
               src={require("../../../../static/img/" +
-                (doesFlierExist(event.img_path)
-                  ? event.img_path
-                  : "blank.png"))}
+                (event.flierLink ? event.flierLink : "blank.png"))}
               style={{ width: "100%" }}
             />
           </a>
         </FlierWrapper>
         <SmallInfo>
-          <Date>
-            <h3>{event.month}</h3>
-            <h2>{event.day}</h2>
-          </Date>
-          <img src={require("../../../../static/img/" + event.sig_logo)} />
+          <DateArea>
+            <h3>{eventDate.toLocaleString("default", { month: "short" })}</h3>
+            <h2>{eventDate.getDay()}</h2>
+          </DateArea>
+          <img src={require(`../../../../static/img/${logoLink}`)} />
         </SmallInfo>
       </div>
       <VerticalLine />
       <div>
-        <EventName>{event.title}</EventName>
+        <EventName>{event.eventTitle}</EventName>
         <div style={{ marginBottom: "10px" }}>
           <Time>
             <img src={require("../../../../static/img/location.png")} />
@@ -235,16 +266,18 @@ const Event: React.SFC<{ event: IEventProps }> = props => {
           </Time>
           <Time>
             <img src={require("../../../../static/img/clock.png")} />
-            <h2>{event.time}</h2>
+            <h2>{time}</h2>
           </Time>
           <Time style={{ marginLeft: "-1.5px" }}>
             <Icon name="people" size="medium" fill="#000" />
-            <h2 style={{ margin: "-1px 0 0 3.5px" }}>{event.group}</h2>
+            <h2
+              style={{ margin: "-1px 0 0 3.5px" }}
+            >{`ACM ${event.hostSig.name}`}</h2>
           </Time>
         </div>
         <Description onClick={handleClick} style={{ marginRight: "5px" }}>
           <LinesEllipsis
-            text={event.desc}
+            text={event.description}
             maxLine={showFullDesc ? Number.MAX_VALUE : NUM_DESC_LINES}
             ellipsis="... read more"
             basedOn="words"
@@ -253,11 +286,10 @@ const Event: React.SFC<{ event: IEventProps }> = props => {
         </Description>
         <FlierLink
           href={require("../../../../static/img/" +
-            (doesFlierExist(event.img_path) ? event.img_path : "acm.png"))}
+            (event.flierLink ? event.flierLink : "acm.png"))}
           target="_blank"
           style={{
-            display:
-              showFullDesc && doesFlierExist(event.img_path) ? "" : "none"
+            display: showFullDesc && event.flierLink ? "" : "none"
           }}
         >
           Click here to see the flier for this event.
