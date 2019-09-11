@@ -8,7 +8,7 @@ module.exports = {
   password: process.env.DB_PASSWORD || "phoenix",
   database: process.env.DB_TABLE || "phoenix",
   port: process.env.DB_PORT || 5432,
-  logging: "all",
+  logging: ["error", "warning"],
   logger: "advanced-console",
   cache: true,
   // See src/main.ts as to why these are all false
