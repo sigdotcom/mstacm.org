@@ -32,16 +32,19 @@ const App: React.SFC<{}> = (): JSX.Element => {
   } = useAuth0();
 
   useEffect(() => {
-    if (loading || isAuthenticated) {
+    if (loading) {
+      return;
+    } else if (!isAuthenticated) {
+      const fn: any = async (): Promise<void> => {
+        await loginWithRedirect({
+          appState: { targetUrl: window.location.origin }
+        });
+      };
+
+      fn();
+
       return;
     }
-    const fn: any = async (): Promise<void> => {
-      await loginWithRedirect({
-        appState: { targetUrl: window.location.origin }
-      });
-    };
-
-    fn();
 
     const setToken: () => void = async (): Promise<void> => {
       const token: string = (await getTokenSilently()) || "";
