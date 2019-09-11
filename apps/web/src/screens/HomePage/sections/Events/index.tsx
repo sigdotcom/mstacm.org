@@ -1,11 +1,35 @@
+import gql from "graphql-tag";
 import React, { useState } from "react";
 import { Element } from "react-scroll";
 import styled from "styled-components";
 import { PageConstraint } from "../../../../components/PageConstraint";
-import eventsData from "./../EventsData.json";
 
 import { Checkbox } from "./Checkbox";
 import { Event } from "./Event";
+
+import {
+  GetEventsQueryHookResult,
+  useGetEventsQuery
+} from "../../../../generated/graphql";
+
+export const GET_EVENTS_QUERY: any = gql`
+  query getEvents {
+    events {
+      id
+      dateCreated
+      dateHosted
+      dateExpire
+      hostSig {
+        name
+      }
+      eventTitle
+      description
+      location
+      flierLink
+      eventLink
+    }
+  }
+`;
 
 const MOBILE_BREAKPOINT: string = "1001px";
 
@@ -159,9 +183,20 @@ const CALENDAR_LINK: string =
   "https://calendar.google.com/calendar/embed?src=mst.edu_7u3stm8bn7l2umuastep5fmbl0%40group.calendar.google.com&ctz=America%2FChicago";
 
 const Events: React.FC<{}> = (): JSX.Element => {
+  const result: GetEventsQueryHookResult = useGetEventsQuery();
+  let events: any;
+  if (result.data && result.data.events) {
+    events = result.data.events;
+    console.log(events);
+  }
+
   const [filters, setFilters] = useState<boolean[]>([]);
   const [maxEvents, setMaxEvents] = useState<number>(DEFAULT_EVENTS_TO_DISPLAY);
   const [scrollYPosition, setScrollYPosition] = useState<number>(0);
+
+  if (result.loading) {
+    return <h1> Loading </h1>;
+  }
 
   // Toggle total number of events to show (for button click)
   const toggleNumEvents = (): void => {
@@ -169,14 +204,14 @@ const Events: React.FC<{}> = (): JSX.Element => {
       setMaxEvents(DEFAULT_EVENTS_TO_DISPLAY);
       window.scrollTo(0, scrollYPosition);
     } else {
-      setMaxEvents(eventsData.events.length);
+      setMaxEvents(events.length);
       setScrollYPosition(window.pageYOffset);
     }
   };
 
   // Add filter if checkbox is checked
   const toggleCheckbox = (index: number): void => {
-    var newFilters: boolean[] = [...filters];
+    const newFilters: boolean[] = [...filters];
     newFilters[index] = !newFilters[index];
     setFilters(newFilters);
   };
@@ -213,10 +248,10 @@ const Events: React.FC<{}> = (): JSX.Element => {
         return filter === false;
       })
     ) {
-      count = eventsData.events.length;
+      count = events.length;
     } else {
-      for (let i = 0; i < eventsData.events.length; i++) {
-        if (filters[FILTER_TYPES.indexOf(eventsData.events[i].group)]) {
+      for (const e of events) {
+        if (filters[FILTER_TYPES.indexOf(e.hostSig.name)]) {
           count += 1;
         }
       }
@@ -311,12 +346,12 @@ const Events: React.FC<{}> = (): JSX.Element => {
               </Sigs>
             </FilterWrapper>
             <EventsWrapper>
-              {eventsData.events
-                .filter(event => {
+              {events
+                .filter((event: any) => {
                   return showEvent(event.group);
                 })
                 .slice(0, maxEvents)
-                .map((event, i) => {
+                .map((event: any, i: number) => {
                   return <Event event={event} key={i} />;
                 })}
               <CalendarLink
@@ -333,7 +368,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
             style={{ display: showDefault() ? "none" : "" }}
             onClick={toggleNumEvents}
           >
-            {!showDefault() && maxEvents !== eventsData.events.length
+            {!showDefault() && maxEvents !== events.length
               ? "SHOW ALL EVENTS"
               : "SHOW FEWER EVENTS"}
           </button>
