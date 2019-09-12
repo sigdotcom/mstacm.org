@@ -38,9 +38,10 @@ export class Product extends BaseEntity {
   @Column()
   public description: string;
 
-  // Must be between 5 and 22 characters
+  // Only allow 17 characters as statementDescriptor is 22
+  // characters max and we artificially add 5 with 'ACM*'
   @Field({ nullable: true })
-  @Column({ nullable: true, length: 22 })
+  @Column({ nullable: true, length: 17 })
   public statementDescriptor?: string;
 
   @Field()
