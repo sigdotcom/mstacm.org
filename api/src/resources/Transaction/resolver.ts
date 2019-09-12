@@ -1,14 +1,17 @@
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
 
 import { Product } from "../Product";
-import { Purchase } from "../Purchase";
 import { PurchaseInput } from "../Purchase/input";
 import { User } from "../User";
 import { Transaction } from "./entity";
 import { TransactionPayload } from "./input";
 
 import { IContext } from "../../lib/interfaces";
-import { stripe } from "../../lib/stripe";
+import {
+  IPurchase,
+  MembershipTypes,
+  purchaseSingleProduct
+} from "../../lib/products";
 
 import { getConnection, Repository } from "typeorm";
 
@@ -22,10 +25,6 @@ export class ProductResolver {
     Product
   );
 
-  private purchaseRepo: Repository<Purchase> = getConnection().getRepository(
-    Purchase
-  );
-
   @Authorized("SUPERADMIN")
   @Query((returns: void) => [Transaction])
   public async transactions(): Promise<Transaction[]> {
@@ -34,54 +33,57 @@ export class ProductResolver {
 
   @Authorized()
   @Mutation((returns: void) => TransactionPayload)
-  public async startTransaction(
+  public async startMembershipTransaction(
     @Ctx() context: IContext,
-    @Arg("purchase", (type: void) => PurchaseInput)
-    reqPurchaseInput: PurchaseInput
+    @Arg("membershipType", (retuns: void) => MembershipTypes)
+    membershipType: MembershipTypes
   ): Promise<TransactionPayload> {
-    const tag: string = reqPurchaseInput.tag;
-    const quantity: number = reqPurchaseInput.quantity;
-    // const user: User = context.state.user as User;
-    const user: User = (await User.findOne({ email: "acm@mst.edu" }))!;
+    const tag: string = membershipType.toString();
+    const quantity: number = 1;
+    const user: User = context.state.user as User;
 
     const reqProduct: Product = await this.productRepo.findOneOrFail({
       tag
     });
 
-    const reqProductPurchase = await this.purchaseRepo.create({
-      product: reqProduct,
-      quantity
-    });
-    await reqProductPurchase.save();
-
-    // Charge the customer from stripe (stripe only allows cents) and store
-    // the transaction in our database for lookup later.
-    const normalizedCost = reqProduct.price * 100 * quantity;
-    const intent = await stripe.paymentIntents.create({
-      amount: normalizedCost,
-      currency: "usd",
-      description: reqProduct.displayName,
-      metadata: {
-        email: user.email,
-        productTag: tag,
-        userId: user.id
-      },
-      payment_method_types: ["card"],
-      receipt_email: user.email
-    });
-
-    const newTransaction: Transaction = await this.transactionRepo.create({
-      charged: normalizedCost,
-      intent: intent.id,
-      purchases: [reqProductPurchase]
-    });
-
-    const savedTransaction: Transaction = await newTransaction.save();
+    const purchase: IPurchase = await purchaseSingleProduct(
+      reqProduct,
+      quantity,
+      user
+    );
 
     return {
-      charged: savedTransaction.charged,
-      clientSecret: intent.client_secret,
-      id: savedTransaction.id
+      charged: purchase.transaction.charged,
+      clientSecret: purchase.intent.client_secret,
+      id: purchase.transaction.id
+    };
+  }
+
+  @Authorized()
+  @Mutation((returns: void) => TransactionPayload)
+  public async startProductTransaction(
+    @Ctx() context: IContext,
+    @Arg("purchase", (returns: void) => PurchaseInput)
+    reqPurchaseInput: PurchaseInput
+  ): Promise<TransactionPayload> {
+    const tag: string = reqPurchaseInput.tag;
+    const quantity: number = reqPurchaseInput.quantity;
+    const user: User = context.state.user as User;
+
+    const reqProduct: Product = await this.productRepo.findOneOrFail({
+      tag
+    });
+
+    const purchase: IPurchase = await purchaseSingleProduct(
+      reqProduct,
+      quantity,
+      user
+    );
+
+    return {
+      charged: purchase.transaction.charged,
+      clientSecret: purchase.intent.client_secret,
+      id: purchase.transaction.id
     };
   }
 }

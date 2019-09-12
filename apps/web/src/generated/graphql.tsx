@@ -71,6 +71,11 @@ export type Extension = {
   code: ErrorCodes,
 };
 
+export type MembershipProduct = {
+   __typename?: 'MembershipProduct',
+  tag: MembershipTypes,
+};
+
 /** Different types of ACM memberships one can have. */
 export enum MembershipTypes {
   Yearly = 'YEARLY',
@@ -92,7 +97,7 @@ export type Mutation = {
   deleteResume: User,
   uploadResume: Resume,
   startMembershipTransaction: TransactionPayload,
-  startTransaction: Transaction,
+  startProductTransaction: TransactionPayload,
 };
 
 
@@ -159,8 +164,8 @@ export type MutationStartMembershipTransactionArgs = {
 };
 
 
-export type MutationStartTransactionArgs = {
-  purchases: Array<PurchaseInput>
+export type MutationStartProductTransactionArgs = {
+  purchase: PurchaseInput
 };
 
 export type Permission = {
@@ -187,6 +192,7 @@ export type Product = {
   tag: Scalars['ID'],
   displayName: Scalars['String'],
   description: Scalars['String'],
+  statementDescriptor?: Maybe<Scalars['String']>,
   price: Scalars['Float'],
 };
 
@@ -199,7 +205,7 @@ export type Purchase = {
 };
 
 export type PurchaseInput = {
-  quantity: Scalars['Float'],
+  quantity?: Maybe<Scalars['Int']>,
   tag: Scalars['String'],
 };
 
@@ -315,7 +321,7 @@ export type UserUpdateInput = {
   email?: Maybe<Scalars['String']>,
 };
 export type GetMembershipMutationVariables = {
-  membership: MembershipTypes
+  membershipType: MembershipTypes
 };
 
 
@@ -339,8 +345,8 @@ export type MeExpirationQuery = (
 );
 
 export const GetMembershipDocument = gql`
-    mutation GetMembership($membership: MembershipTypes!) {
-  startMembershipTransaction(membershipType: $membership) {
+    mutation GetMembership($membershipType: MembershipTypes!) {
+  startMembershipTransaction(membershipType: $membershipType) {
     id
     charged
     clientSecret

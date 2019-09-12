@@ -22,8 +22,8 @@ import { IconContainer } from "./IconContainer";
 import { PrimaryButton } from "./PrimaryButton";
 
 export const GET_MEMBERSHIP: any = gql`
-  mutation GetMembership($membership: MembershipTypes!) {
-    startMembershipTransaction(membershipType: $membership) {
+  mutation GetMembership($membershipType: MembershipTypes!) {
+    startMembershipTransaction(membershipType: $membershipType) {
       id
       charged
       clientSecret
@@ -133,11 +133,16 @@ const CheckoutFormBase: React.FC<CheckoutProps> = (
     let secret: string = clientSecret;
 
     if (!secret) {
-      const result: ExecutionResult<
-        GetMembershipMutation
-      > = await getMembership({
-        variables: { membership: props.tag }
-      });
+      let result: ExecutionResult<GetMembershipMutation>;
+      try {
+        result = await getMembership({
+          variables: { membershipType: props.tag }
+        });
+      } catch (e) {
+        handleError(e.message);
+        return;
+      }
+
       const data = result.data;
 
       if (!data) {
