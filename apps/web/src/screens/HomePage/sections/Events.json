@@ -1,6 +1,18 @@
 {
     "events": [
         {
+            "img_path": "events/john_deere_fs19.jpg",
+            "day": "16",
+            "month": "SEPT",
+            "sig_logo": "acm.png",
+            "title": "John Deere Information Session",
+            "location": "Comp Sci 207",
+            "time": "6:00pm - 7:00pm",
+            "desc": "Learn about John Deere's opportunities and culture of software developers through a highlight of digital products and IoT devices customers use to manage farm operations. Food will be provided.",
+            "shortDesc": "",
+            "group": "ACM"
+        },
+        {
             "img_path": "events/acmw_resume_jam_session.png",
             "day": "19",
             "month": "SEPT",
