@@ -1,9 +1,9 @@
-import { Field, InputType } from "type-graphql";
+import { Field, InputType, Int } from "type-graphql";
 import { Purchase } from "./entity";
 
 @InputType()
 export class PurchaseInput implements Partial<Purchase> {
-  @Field()
+  @Field(type => Int, { defaultValue: 1 })
   public quantity: number;
 
   @Field()

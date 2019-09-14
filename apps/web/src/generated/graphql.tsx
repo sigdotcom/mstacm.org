@@ -31,6 +31,7 @@ export type Event = {
   dateHosted: Scalars['DateTime'],
   dateExpire: Scalars['DateTime'],
   creator: User,
+  hostSig: Sig,
   eventTitle: Scalars['String'],
   description: Scalars['String'],
   location: Scalars['String'],
@@ -46,6 +47,7 @@ export type EventCreateInput = {
   location: Scalars['String'],
   flierLink?: Maybe<Scalars['String']>,
   eventLink?: Maybe<Scalars['String']>,
+  hostSig: Scalars['String'],
 };
 
 export type EventDeletePayload = {
@@ -61,11 +63,17 @@ export type EventUpdateInput = {
   location?: Maybe<Scalars['String']>,
   flierLink?: Maybe<Scalars['String']>,
   eventLink?: Maybe<Scalars['String']>,
+  hostSig: Scalars['String'],
 };
 
 export type Extension = {
    __typename?: 'Extension',
   code: ErrorCodes,
+};
+
+export type MembershipProduct = {
+   __typename?: 'MembershipProduct',
+  tag: MembershipTypes,
 };
 
 /** Different types of ACM memberships one can have. */
@@ -79,6 +87,9 @@ export type Mutation = {
   createUser: User,
   updateUser: User,
   deleteUser: UserDeletePayload,
+  createSig: Sig,
+  updateSig: Sig,
+  deleteSig: SigDeletePayload,
   deleteEvent: EventDeletePayload,
   updateEvent: Event,
   createEvent: Event,
@@ -86,7 +97,7 @@ export type Mutation = {
   deleteResume: User,
   uploadResume: Resume,
   startMembershipTransaction: TransactionPayload,
-  startTransaction: Transaction,
+  startProductTransaction: TransactionPayload,
 };
 
 
@@ -106,13 +117,30 @@ export type MutationDeleteUserArgs = {
 };
 
 
+export type MutationCreateSigArgs = {
+  data: SigCreateInput
+};
+
+
+export type MutationUpdateSigArgs = {
+  data: SigUpdateInput,
+  id: Scalars['String']
+};
+
+
+export type MutationDeleteSigArgs = {
+  id: Scalars['String']
+};
+
+
 export type MutationDeleteEventArgs = {
   id: Scalars['Float']
 };
 
 
 export type MutationUpdateEventArgs = {
-  data: EventUpdateInput
+  data: EventUpdateInput,
+  id: Scalars['Float']
 };
 
 
@@ -136,8 +164,8 @@ export type MutationStartMembershipTransactionArgs = {
 };
 
 
-export type MutationStartTransactionArgs = {
-  purchases: Array<PurchaseInput>
+export type MutationStartProductTransactionArgs = {
+  purchase: PurchaseInput
 };
 
 export type Permission = {
@@ -164,6 +192,7 @@ export type Product = {
   tag: Scalars['ID'],
   displayName: Scalars['String'],
   description: Scalars['String'],
+  statementDescriptor?: Maybe<Scalars['String']>,
   price: Scalars['Float'],
 };
 
@@ -176,7 +205,7 @@ export type Purchase = {
 };
 
 export type PurchaseInput = {
-  quantity: Scalars['Float'],
+  quantity?: Maybe<Scalars['Int']>,
   tag: Scalars['String'],
 };
 
@@ -184,6 +213,8 @@ export type Query = {
    __typename?: 'Query',
   user: User,
   users: Array<User>,
+  sig: Sig,
+  sigs: Array<Sig>,
   events: Array<Event>,
   event: Event,
   permissions: Array<Permission>,
@@ -198,6 +229,11 @@ export type QueryUserArgs = {
 };
 
 
+export type QuerySigArgs = {
+  id: Scalars['String']
+};
+
+
 export type QueryEventArgs = {
   id: Scalars['Float']
 };
@@ -208,6 +244,30 @@ export type Resume = {
   url: Scalars['String'],
   added: Scalars['DateTime'],
   user?: Maybe<User>,
+};
+
+export type Sig = {
+   __typename?: 'Sig',
+  name: Scalars['String'],
+  dateFounded: Scalars['DateTime'],
+  description: Scalars['String'],
+  users: Array<User>,
+  hostedEvents: Array<Event>,
+};
+
+export type SigCreateInput = {
+  name: Scalars['String'],
+  description: Scalars['String'],
+};
+
+export type SigDeletePayload = {
+   __typename?: 'SigDeletePayload',
+  name?: Maybe<Scalars['String']>,
+};
+
+export type SigUpdateInput = {
+  name?: Maybe<Scalars['String']>,
+  description?: Maybe<Scalars['String']>,
 };
 
 export type Transaction = {
@@ -261,7 +321,7 @@ export type UserUpdateInput = {
   email?: Maybe<Scalars['String']>,
 };
 export type GetMembershipMutationVariables = {
-  membership: MembershipTypes
+  membershipType: MembershipTypes
 };
 
 
@@ -285,8 +345,8 @@ export type MeExpirationQuery = (
 );
 
 export const GetMembershipDocument = gql`
-    mutation GetMembership($membership: MembershipTypes!) {
-  startMembershipTransaction(membershipType: $membership) {
+    mutation GetMembership($membershipType: MembershipTypes!) {
+  startMembershipTransaction(membershipType: $membershipType) {
     id
     charged
     clientSecret

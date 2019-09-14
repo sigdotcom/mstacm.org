@@ -2,6 +2,8 @@ version: '3'
 
 services:
   phoenix_web:
+    # Testing migrations
+    # command: bash -c "yarn build && yarn start:prod"
     command: yarn start:dev
     build: .
     volumes:
