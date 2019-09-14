@@ -1,25 +1,26 @@
 {
     "events": [
         {
-            "img_path": "events/acmw_soldering_workshop.png",
-            "day": "10",
+            "img_path": "events/john_deere_fs19.jpg",
+            "day": "16",
             "month": "SEPT",
-            "sig_logo": "acm-w.png",
-            "title": "Soldering Workshop",
-            "location": "IDE 206",
-            "time": "5:00pm - 7:00pm",
-            "desc": "ACM-W is hosting a free beginner friendly soldering workshop at 5 in the Interdisciplinary Engineering Buillding Room 206. We will teach you how to solder safely and participants will be given the opportunity to solder their own project of their choosing. Snacks will be provided before soldering begins!",
-            "group": "ACM-W"
+            "sig_logo": "acm.png",
+            "title": "John Deere Information Session",
+            "location": "Comp Sci 207",
+            "time": "6:00pm - 7:00pm",
+            "desc": "Learn about John Deere's opportunities and culture of software developers through a highlight of digital products and IoT devices customers use to manage farm operations. Food will be provided.",
+            "group": "ACM"
         },
         {
-            "img_path": "events/acmw_linkedin_photo_session.png",
-            "day": "11",
+            "img_path": "events/acmw_resume_jam_session.png",
+            "day": "19",
             "month": "SEPT",
             "sig_logo": "acm-w.png",
-            "title": "LinkedIn Photo Session",
-            "location": "Between Norwood Hall & Parker Hall, East of The Puck",
-            "time": "4:00pm",
-            "desc": "Have you recently created your LinkedIn profile before the career fair and need a good photo? Are you in need of a more recent photo for your profile? ACM-W is providing you with this opportunity! Come and visit us between Norwood Hall and Parker Hall just East of The Puck. If you would like a photo taken for your profile, please dress appropriately. Snacks will be provided!",
+            "title": "Resume Jam Session",
+            "location": "Comp Sci 202",
+            "time": "4:30pm - 5:30pm",
+            "desc": "Calling all freshmen and sophomores! Want to go to the career fair but don't have a resume? Need help finishing (or starting) your resume? Want to get advice from experienced upperclassmen who have worked in the field? Already have a resume, but want free pizza? If any of these apply to you, join ACM-W in the Computer Science building room 202 from 4:30 to 5:30 on Thursday the 19th! If you have a laptop, we suggest you bring it. Upperclassmen are welcome to attend if you would like a peer's opinion.",
+            "shortDesc": "",
             "group": "ACM-W"
         },
         {
