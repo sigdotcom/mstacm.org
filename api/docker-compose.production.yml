@@ -3,8 +3,6 @@ version: '3'
 services:
   phoenix_web:
     build: .
-    volumes:
-      - .:/server
   phoenix_nginx:
     image: linuxserver/letsencrypt
     container_name: letsencrypt
