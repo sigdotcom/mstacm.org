@@ -2,6 +2,7 @@ import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
 
 import { DeepPartial, getRepository, Repository } from "typeorm";
 import { IContext } from "../../lib/interfaces";
+import { Sig } from "../Sig";
 import { Event } from "./entity";
 import {
   EventCreateInput,
@@ -16,6 +17,7 @@ interface INumber {
 @Resolver((returns: void) => Event)
 export class EventResolver {
   public repository: Repository<Event> = getRepository(Event);
+  public sigRepository: Repository<Sig> = getRepository(Sig);
 
   @Authorized("SUPERADMIN")
   @Mutation((returns: void) => EventDeletePayload)
@@ -31,13 +33,21 @@ export class EventResolver {
   @Mutation((returns: void) => Event)
   public async updateEvent(
     @Ctx() context: IContext,
+    @Arg("id", (argType: void) => Number) id: number,
     @Arg("data", (argType: void) => EventUpdateInput)
     input: DeepPartial<Event>
   ): Promise<Event> {
-    const creator = context.state.user;
-    const newResource = this.repository.create({ ...input, creator });
+    if (input.hostSig) {
+      const hostSig = await this.sigRepository.findOneOrFail({
+        name: String(input.hostSig)
+      });
+      input.hostSig = hostSig;
+    }
 
-    return newResource.save();
+    const event = await this.repository.findOneOrFail(id);
+    const updatedResource = this.repository.merge(event, { ...input });
+
+    return updatedResource.save();
   }
 
   @Authorized("SUPERADMIN")
@@ -48,6 +58,10 @@ export class EventResolver {
     input: DeepPartial<Event>
   ): Promise<Event> {
     const creator = context.state.user;
+    const hostSig = await this.sigRepository.findOneOrFail({
+      name: String(input.hostSig)
+    });
+    input.hostSig = hostSig;
     const newResource = this.repository.create({ ...input, creator });
 
     return newResource.save();

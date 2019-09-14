@@ -1,0 +1,17 @@
+[
+    {
+        "iconName": "briefcase-outline",
+        "title": "Access to the Career Fair Dinner",
+        "description": "Talk with companies looking for CS students the night of the Career Fair for longer than a 2-minute elevator pitch."
+    },
+    {
+        "iconName": "shopping-cart",
+        "title": "Exclusive Discounts",
+        "description": "Receive over $25 in discounts at some of ACM's most popular events including MegaMiner AI, Cyberboot Camp, and more!"
+    },
+    {
+        "iconName": "gift-outline",
+        "title": "Members T-Shirt",
+        "description": "Receive our members-only t-shirt designed every year by students in September."
+    }
+]

@@ -9,7 +9,6 @@
             "location": "Comp Sci 207",
             "time": "6:00pm - 7:00pm",
             "desc": "Learn about John Deere's opportunities and culture of software developers through a highlight of digital products and IoT devices customers use to manage farm operations. Food will be provided.",
-            "shortDesc": "",
             "group": "ACM"
         },
         {
@@ -33,7 +32,6 @@
             "location": "Alex's Pizza",
             "time": "6:00pm - 9:00pm",
             "desc": "Talk to companies looking for Computer Science students for longer than a 2-minute career fair interaction, without the hassle of waiting in long lines. Join ACM at our fall Career Fair Dinner! Reminder: You must be an ACM member to participate in the dinner.",
-            "shortDesc": "Talk to companies looking for Computer Science students for longer than a 2-minute career fair interaction, without the hassle of waiting in long lines.",
             "group": "ACM General"
         },
         {
@@ -45,7 +43,6 @@
             "location": "TBD",
             "time": "TBD",
             "desc": "Come out and see who is the best programmer on campus! A number of programming languages are accepted including: C++, Java, Python 2 & 3, C, C#, Go, Javascript, Objective-C, PHP, Prolog, Ruby, and Scala.",
-            "shortDesc": "Come out and see who is the best programmer on campus!",
             "group": "ACM Comp"
         },
         {
@@ -57,7 +54,6 @@
             "location": "TBD",
             "time": "TBD",
             "desc": "A practical workshop on common WiFi vulnerabilities.",
-            "shortDesc": "A practical workshop on common WiFi vulnerabilities.",
             "group": "ACM Sec"
         },
         {
@@ -69,7 +65,6 @@
             "location": "TBD",
             "time": "TBD",
             "desc": "Learn how to lockpick and compete to win a lockpicking set. Proceeds support ACM Security.",
-            "shortDesc": "Learn how to lockpick and compete to win a lockpicking set. Proceeds support ACM Security.",
             "group": "ACM Sec"
         },
         {
@@ -81,7 +76,6 @@
             "location": "BCH Atrium",
             "time": "6:00pm - 12:00am",
             "desc": "Relax, eat food, and play games to win prizes with ACM before starting finals!",
-            "shortDesc": "Relax, eat food, and play games to win prizes with ACM before starting finals!",
             "group": "ACM General"
         }
     ]

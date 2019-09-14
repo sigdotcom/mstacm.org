@@ -6,7 +6,6 @@ import {
   JoinColumn,
   JoinTable,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn
 } from "typeorm";
 
@@ -38,19 +37,20 @@ export class Event extends BaseEntity {
   public dateExpire: Date;
 
   @Field((returns: void) => User)
-  @ManyToOne((type: void) => User, (user: User) => user.createdEvents, {
+  @ManyToOne((returns: void) => User, (user: User) => user.createdEvents, {
     lazy: true,
     nullable: false
   })
   @JoinColumn()
   public creator: Lazy<User>;
 
-  // @Field((returns: void) => [Sig])
-  @OneToMany((type: void) => Sig, (sig: Sig) => sig.hostedEvents, {
-    lazy: true
+  @Field((returns: void) => Sig)
+  @ManyToOne((returns: void) => Sig, (sig: Sig) => sig.hostedEvents, {
+    lazy: true,
+    nullable: false
   })
   @JoinTable()
-  public hostSigs: Lazy<Sig[]>;
+  public hostSig: Lazy<Sig>;
 
   @Field()
   @Column({
