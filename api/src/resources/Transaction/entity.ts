@@ -5,6 +5,7 @@ import {
   Entity,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn
 } from "typeorm";
 
@@ -12,12 +13,18 @@ import { Field, ID, ObjectType } from "type-graphql";
 
 import { Lazy } from "../../lib/helpers";
 import { Purchase } from "../Purchase";
+import { RedemptionCode } from "../RedemptionCode";
 import { User } from "../User";
 
 export enum TransactionStatus {
   STARTED = "started",
   SUCCESS = "success",
   ERROR = "error"
+}
+
+export enum PaymentTypes {
+  STRIPE = "stripe",
+  REDEMPTION_CODE = "redemption-code"
 }
 
 @ObjectType()
@@ -30,13 +37,21 @@ export class Transaction extends BaseEntity {
   @CreateDateColumn()
   public dateCreated: Date;
 
-  @Field()
-  @Column()
-  public intent: string;
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  public intent?: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column({ nullable: true })
   public charged?: number;
+
+  @Field()
+  @Column({
+    default: PaymentTypes.STRIPE,
+    enum: PaymentTypes,
+    type: "enum"
+  })
+  public paymentType: PaymentTypes;
 
   @Field()
   @Column({
@@ -47,16 +62,24 @@ export class Transaction extends BaseEntity {
   public status: TransactionStatus;
 
   @Field((returns: void) => User)
-  @ManyToOne((type: void) => User, (user: User) => user.transactions, {
+  @ManyToOne((returns: void) => User, (user: User) => user.transactions, {
     lazy: true
   })
   public user: Lazy<User>;
 
   @Field((returns: void) => [Purchase])
   @OneToMany(
-    (type: void) => Purchase,
+    (returns: void) => Purchase,
     (purchase: Purchase) => purchase.transaction,
     { lazy: true }
   )
   public purchases: Lazy<Purchase[]>;
+
+  @Field((returns: void) => RedemptionCode)
+  @OneToOne(
+    (returns: void) => RedemptionCode,
+    (redemptionCode: RedemptionCode) => redemptionCode.transaction,
+    { lazy: true }
+  )
+  public redemptionCode: Lazy<RedemptionCode>;
 }
