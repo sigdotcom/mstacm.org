@@ -23,11 +23,15 @@ export class RedemptionCode extends BaseEntity {
   @CreateDateColumn()
   public dateCreated: Date;
 
+  @Field({ defaultValue: false })
+  @Column({ default: false })
+  public redeemed: boolean;
+
   @Field()
   @Column()
   public expirationDate: Date;
 
-  @Field((returns: void) => [Transaction])
+  @Field((returns: void) => Transaction)
   @OneToOne(
     (returns: void) => Transaction,
     (transaction: Transaction) => transaction.redemptionCode,
