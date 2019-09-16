@@ -42,7 +42,8 @@ const MenuItem = styled.div`
 `;
 
 const SignIn = styled.button`
-  background-color: rgba(255,255,255, 0);
+  background-color: #f4f5f8;
+  z-index: 1337;
   transition: 0.2s ease-in-out;
   font-weight: bold;
   border-radius: 30px;
