@@ -24,6 +24,17 @@
             "group": "ACM-W"
         },
         {
+            "img_path": "events/acmsec_security_networking_and_architecture.jpg",
+            "day": "20",
+            "month": "SEPT",
+            "sig_logo": "sec.png",
+            "title": "Network Security and Architecture",
+            "location": "Comp Sci 207",
+            "time": "4:00pm - 6:00pm",
+            "desc": "Enjoy free free while learning about the basics of network security and design from Sandia National Laboratories' Will Atkins.",
+            "group": "ACM Security"
+        },
+        {
             "img_path": "",
             "day": "24",
             "month": "SEPT",
