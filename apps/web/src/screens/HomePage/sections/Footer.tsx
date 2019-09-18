@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 import { PageConstraint } from "../../../components/PageConstraint";
 
+import { config } from "../../../config";
+
 const HLine = styled.div`
   width: 85%;
   margin-left: 7.5%;
@@ -242,7 +244,7 @@ const Footer: React.FC<{}> = (): JSX.Element => {
             </Info>
           </Links>
           <Copyright>
-            <img src={require("../../../static/img/web_footer.png")} />
+            <img src={`${config.CDN_URI}/static/web_footer.png`} />
             <h2>Copyright © 2019 ACM Web.</h2>
           </Copyright>
         </Wrapper>

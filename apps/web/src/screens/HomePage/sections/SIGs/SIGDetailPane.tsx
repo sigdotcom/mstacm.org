@@ -4,6 +4,8 @@ import windowSize from "react-window-size";
 import styled from "styled-components";
 import { ISIG } from "./interfaces";
 
+import { config } from "../../../../config";
+
 const PaneWrapper: any = styled.div`
   border-top: 2px solid #ddd;
   padding: 35px 25px;
@@ -147,7 +149,7 @@ const SIGDetailPaneBase: React.FC<ISIGDetailPaneProps> = (props: any): any => {
     <PaneWrapper>
       <Header>
         <SIGDetails>
-          <SIGLogo src={require("../../../../static/img/" + sig.logoLink)} />
+          <SIGLogo src={`${config.CDN_URI}/static/${sig.logoLink}`} />
           <SIGName>ACM {sig.name}</SIGName>
         </SIGDetails>
         <SIGEmail href={"mailto:" + sig.email}>

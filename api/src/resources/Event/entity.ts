@@ -53,21 +53,15 @@ export class Event extends BaseEntity {
   public hostSig: Lazy<Sig>;
 
   @Field()
-  @Column({
-    length: 100
-  })
+  @Column({})
   public eventTitle: string;
 
   @Field()
-  @Column({
-    length: 300
-  })
+  @Column({})
   public description: string;
 
   @Field()
-  @Column({
-    length: 100
-  })
+  @Column({})
   public location: string;
 
   /*@ManyToOne(type => Product, product => product.events)
@@ -78,14 +72,12 @@ export class Event extends BaseEntity {
 
   @Field({ nullable: true })
   @Column({
-    length: 100,
     nullable: true
   })
   public flierLink?: string;
 
   @Field({ nullable: true })
   @Column({
-    length: 100,
     nullable: true
   })
   public eventLink?: string;

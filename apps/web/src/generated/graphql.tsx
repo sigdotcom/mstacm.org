@@ -216,6 +216,7 @@ export type Query = {
   sig: Sig,
   sigs: Array<Sig>,
   events: Array<Event>,
+  currentEvents: Array<Event>,
   event: Event,
   permissions: Array<Permission>,
   products: Array<Product>,
@@ -333,12 +334,12 @@ export type GetMembershipMutation = (
   ) }
 );
 
-export type GetEventsQueryVariables = {};
+export type GetCurrentEventsQueryVariables = {};
 
 
-export type GetEventsQuery = (
+export type GetCurrentEventsQuery = (
   { __typename?: 'Query' }
-  & { events: Array<(
+  & { currentEvents: Array<(
     { __typename?: 'Event' }
     & Pick<Event, 'id' | 'dateCreated' | 'dateHosted' | 'dateExpire' | 'eventTitle' | 'description' | 'location' | 'flierLink' | 'eventLink'>
     & { hostSig: (
@@ -376,9 +377,9 @@ export type GetMembershipMutationFn = ApolloReactCommon.MutationFunction<GetMemb
 export type GetMembershipMutationHookResult = ReturnType<typeof useGetMembershipMutation>;
 export type GetMembershipMutationResult = ApolloReactCommon.MutationResult<GetMembershipMutation>;
 export type GetMembershipMutationOptions = ApolloReactCommon.BaseMutationOptions<GetMembershipMutation, GetMembershipMutationVariables>;
-export const GetEventsDocument = gql`
-    query getEvents {
-  events {
+export const GetCurrentEventsDocument = gql`
+    query getCurrentEvents {
+  currentEvents {
     id
     dateCreated
     dateHosted
@@ -395,15 +396,15 @@ export const GetEventsDocument = gql`
 }
     `;
 
-    export function useGetEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetEventsQuery, GetEventsQueryVariables>) {
-      return ApolloReactHooks.useQuery<GetEventsQuery, GetEventsQueryVariables>(GetEventsDocument, baseOptions);
+    export function useGetCurrentEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
+      return ApolloReactHooks.useQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
     }
-      export function useGetEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetEventsQuery, GetEventsQueryVariables>) {
-        return ApolloReactHooks.useLazyQuery<GetEventsQuery, GetEventsQueryVariables>(GetEventsDocument, baseOptions);
+      export function useGetCurrentEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
+        return ApolloReactHooks.useLazyQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
       }
       
-export type GetEventsQueryHookResult = ReturnType<typeof useGetEventsQuery>;
-export type GetEventsQueryResult = ApolloReactCommon.QueryResult<GetEventsQuery, GetEventsQueryVariables>;
+export type GetCurrentEventsQueryHookResult = ReturnType<typeof useGetCurrentEventsQuery>;
+export type GetCurrentEventsQueryResult = ApolloReactCommon.QueryResult<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>;
 export const MeExpirationDocument = gql`
     query MeExpiration {
   me {

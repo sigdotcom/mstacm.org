@@ -2,6 +2,8 @@ import * as React from "react";
 import { Element } from "react-scroll";
 import styled from "styled-components";
 
+import { config } from "../../../config";
+
 const SponsorWrap = styled.div`
   position: relative;
   display: flex;
@@ -98,19 +100,19 @@ const Sponsors: React.FC<{}> = (): JSX.Element => {
         </Sponsor>
         <Logos>
           <a href="https://www.auth0.com/" target="_blank">
-            <img src={require(`../../../static/img/auth0.png`)} />
+            <img src={`${config.CDN_URI}/static/auth0.png`} />
           </a>
           <a href="https://www.att.com/" target="_blank">
-            <img src={require("../../../static/img/at&t.png")} />
+            <img src={`${config.CDN_URI}/static/at&t.png`} />
           </a>
           <a href="https://www.garmin.com/en-US/" target="_blank">
-            <img src={require("../../../static/img/garmin.png")} />
+            <img src={`${config.CDN_URI}/static/garmin.png`} />
           </a>
           <a href="https://www.netlify.com/" target="_blank">
-            <img src={require("../../../static/img/netlify.png")} />
+            <img src={`${config.CDN_URI}/static/netlify.png`} />
           </a>
           <a href="http://tradebot.com/" target="_blank">
-            <img src={require("../../../static/img/tradebot.png")} />
+            <img src={`${config.CDN_URI}/static/tradebot.png`} />
           </a>
         </Logos>
       </Element>

@@ -92,8 +92,8 @@ const App: React.SFC<{}> = (): JSX.Element => {
           </Header>
           <Content style={{ margin: "24px 16px 0" }}>
             <MainContent />
+            <Footer style={{ textAlign: "center" }}>S&T ACM 2019</Footer>
           </Content>
-          <Footer style={{ textAlign: "center" }}>S&T ACM 2019</Footer>
         </Layout>
       </Layout>
     </BrowserRouter>
