@@ -3,6 +3,7 @@ import Icon from "react-eva-icons";
 import LinesEllipsis from "react-lines-ellipsis";
 import styled from "styled-components";
 
+import { config } from "../../../../config";
 import { Event as IEvent } from "../../../../generated/graphql";
 
 const MOBILE_BREAKPOINT: string = "1001px";
@@ -237,13 +238,19 @@ const Event: React.SFC<IEventProps> = ({ event }: IEventProps): JSX.Element => {
             style={{
               visibility: event.flierLink ? "visible" : "hidden"
             }}
-            href={require("../../../../static/img/" +
-              (event.flierLink ? event.flierLink : "blank.png"))}
+            href={
+              event.flierLink
+                ? event.flierLink
+                : `${config.CDN_URI}/static/blank.png`
+            }
             target="_blank"
           >
             <img
-              src={require("../../../../static/img/" +
-                (event.flierLink ? event.flierLink : "blank.png"))}
+              src={
+                event.flierLink
+                  ? event.flierLink
+                  : `${config.CDN_URI}/static/blank.png`
+              }
               style={{ width: "100%" }}
             />
           </a>
@@ -251,9 +258,9 @@ const Event: React.SFC<IEventProps> = ({ event }: IEventProps): JSX.Element => {
         <SmallInfo>
           <DateArea>
             <h3>{eventDate.toLocaleString("default", { month: "short" })}</h3>
-            <h2>{eventDate.getDay()}</h2>
+            <h2>{eventDate.getDate()}</h2>
           </DateArea>
-          <img src={require(`../../../../static/img/${logoLink}`)} />
+          <img src={`${config.CDN_URI}/static/${logoLink}`} />
         </SmallInfo>
       </div>
       <VerticalLine />
@@ -261,11 +268,11 @@ const Event: React.SFC<IEventProps> = ({ event }: IEventProps): JSX.Element => {
         <EventName>{event.eventTitle}</EventName>
         <div style={{ marginBottom: "10px" }}>
           <Time>
-            <img src={require("../../../../static/img/location.png")} />
+            <img src={`${config.CDN_URI}/static/location.png`} />
             <h2>{event.location}</h2>
           </Time>
           <Time>
-            <img src={require("../../../../static/img/clock.png")} />
+            <img src={`${config.CDN_URI}/static/clock.png`} />
             <h2>{time}</h2>
           </Time>
           <Time style={{ marginLeft: "-1.5px" }}>
@@ -285,8 +292,11 @@ const Event: React.SFC<IEventProps> = ({ event }: IEventProps): JSX.Element => {
           />
         </Description>
         <FlierLink
-          href={require("../../../../static/img/" +
-            (event.flierLink ? event.flierLink : "acm.png"))}
+          href={
+            event.flierLink
+              ? event.flierLink
+              : `${config.CDN_URI}/static/acm.png`
+          }
           target="_blank"
           style={{
             display: showFullDesc && event.flierLink ? "" : "none"

@@ -25,7 +25,7 @@ const EventContent: AnyStyledComponent = styled.div`
 `;
 const EventFlier: AnyStyledComponent = styled.img`
   height: 88px;
-  width: 68px;
+  min-width: 68px;
   margin-right: 20px;
 `;
 const EventDetails: AnyStyledComponent = styled.div``;

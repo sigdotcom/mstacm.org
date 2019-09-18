@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { ISIG } from "./interfaces";
 
+import { config } from "../../../../config";
+
 const SIGListWrapper: any = styled.ul`
   list-style: none;
   margin: 0;
@@ -58,7 +60,7 @@ function SIGListItem(props: any): any {
 
   return (
     <Item style={styles} onClick={onClick}>
-      <Logo src={require('../../../../static/img/' + sig.logoLinkDark)} />
+      <Logo src={`${config.CDN_URI}/static/${sig.logoLinkDark}`} />
       <h3>{sig.name}</h3>
     </Item>
   );
