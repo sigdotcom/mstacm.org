@@ -1,17 +1,6 @@
 {
     "events": [
         {
-            "img_path": "events/john_deere_fs19.jpg",
-            "day": "16",
-            "month": "SEPT",
-            "sig_logo": "acm.png",
-            "title": "John Deere Information Session",
-            "location": "Comp Sci 207",
-            "time": "6:00pm - 7:00pm",
-            "desc": "Learn about John Deere's opportunities and culture of software developers through a highlight of digital products and IoT devices customers use to manage farm operations. Food will be provided.",
-            "group": "ACM"
-        },
-        {
             "img_path": "events/acmw_resume_jam_session.png",
             "day": "19",
             "month": "SEPT",
@@ -24,6 +13,18 @@
             "group": "ACM-W"
         },
         {
+            "img_path": "events/acm_mock_interviews.jpg",
+            "day": "19",
+            "month": "SEPT",
+            "sig_logo": "acm.png",
+            "title": "Mock Interview Office Hours",
+            "location": "Comp Sci 205",
+            "time": "5:30pm - 7:00pm",
+            "desc": "Need technical interview practice before that big interview? Never had a technical interview before? Come practice technical whiteboard coding interviews with fellow students who interned at Microsoft, Google, and more to learn the tips and tricks of the trade.",
+            "group": "ACM General"
+        },
+
+        {
             "img_path": "events/acmsec_security_networking_and_architecture.jpg",
             "day": "20",
             "month": "SEPT",
@@ -35,14 +36,14 @@
             "group": "ACM Security"
         },
         {
-            "img_path": "",
+            "img_path": "events/acm_career_fair_dinner.jpg",
             "day": "24",
             "month": "SEPT",
             "sig_logo": "acm.png",
             "title": "Career Fair Dinner",
             "location": "Alex's Pizza",
             "time": "6:00pm - 9:00pm",
-            "desc": "Talk to companies looking for Computer Science students for longer than a 2-minute career fair interaction, without the hassle of waiting in long lines. Join ACM at our fall Career Fair Dinner! Reminder: You must be an ACM member to participate in the dinner.",
+            "desc": "Hate waiting in lines at the career fair only to only have time for a 2-minute elevator pitch? Join us at the Career Fair Dinner with top tech companies from the Career Fair where you can skip the lines and talk with recruiters for >10 minutes with free food provided. Dress code is business casual, but you are welcome to bring your suit from the career fair. You MUST be an ACM member to attend; acquire your membership below.",
             "group": "ACM General"
         },
         {
