@@ -4,6 +4,7 @@ export interface IConfig {
   AUTH0_AUDIENCE: string;
   AUTH0_CLIENT_ID: string;
   AUTH0_DOMAIN: string;
+  CDN_URI: string;
   STRIPE_PUBLIC_KEY: string;
 }
 
@@ -18,6 +19,7 @@ export const config: IConfig = {
   AUTH0_CLIENT_ID:
     process.env.REACT_APP_AUTH0_CLIENT_ID || "na6x6uijGdUE2zpiu9MqmSRQwGUdhNQl",
   AUTH0_DOMAIN: process.env.REACT_APP_AUTH0_DOMAIN || "mstacm-test.auth0.com",
+  CDN_URI: process.env.REACT_APP_CDN_URI || "https://cdn.mstacm.org",
   STRIPE_PUBLIC_KEY:
     process.env.REACT_APP_STRIPE_PUBLIC_KEY ||
     "pk_test_5K6vSoTGrPyY2cBw3nNSixV300Z8JOVkl7"

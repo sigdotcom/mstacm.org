@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import { PageConstraint } from "../../../components/PageConstraint";
 
+import { config } from "../../../config";
+
 const BG = styled.div`
   flex: 1;
 `;
@@ -220,7 +222,7 @@ const Hero: React.FC<{}> = () => {
             </InputWrapper>
           </HeroText>
         </HeroTextWrapper>
-        <HeroImage src={require("../../../static/img/acm-logo-large.svg")} />
+        <HeroImage src={`${config.CDN_URI}/static/acm-logo-large.svg`} />
       </PageConstraint>
     </BG>
   );

@@ -1,6 +1,11 @@
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
 
-import { DeepPartial, getRepository, Repository } from "typeorm";
+import {
+  DeepPartial,
+  getRepository,
+  MoreThanOrEqual,
+  Repository
+} from "typeorm";
 import { IContext } from "../../lib/interfaces";
 import { Sig } from "../Sig";
 import { Event } from "./entity";
@@ -71,6 +76,16 @@ export class EventResolver {
   @Query((returns: void) => [Event])
   protected async events(): Promise<Event[]> {
     return this.repository.find();
+  }
+
+  @Authorized("SUPERADMIN")
+  @Query((returns: void) => [Event])
+  protected async currentEvents(): Promise<Event[]> {
+    return this.repository.find({
+      where: {
+        dateExpire: MoreThanOrEqual("NOW()")
+      }
+    });
   }
 
   @Authorized("SUPERADMIN")

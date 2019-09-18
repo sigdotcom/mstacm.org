@@ -7,14 +7,16 @@ import { PageConstraint } from "../../../../components/PageConstraint";
 import { Checkbox } from "./Checkbox";
 import { Event } from "./Event";
 
+import { config } from "../../../../config";
+
 import {
-  GetEventsQueryHookResult,
-  useGetEventsQuery
+  GetCurrentEventsQueryHookResult,
+  useGetCurrentEventsQuery
 } from "../../../../generated/graphql";
 
-export const GET_EVENTS_QUERY: any = gql`
-  query getEvents {
-    events {
+export const GET_CURRENT_EVENTS_QUERY: any = gql`
+  query getCurrentEvents {
+    currentEvents {
       id
       dateCreated
       dateHosted
@@ -169,13 +171,13 @@ const CalendarLink = styled.a`
 `;
 
 const FILTER_TYPES: string[] = [
-  "ACM Comp",
-  "ACM Data",
-  "ACM Game",
-  "ACM General",
-  "ACM Hack",
-  "ACM Sec",
-  "ACM-W"
+  "Competition",
+  "Data",
+  "Game",
+  "General",
+  "Hack",
+  "Security",
+  "Women"
 ];
 
 const DEFAULT_EVENTS_TO_DISPLAY: number = 3;
@@ -183,14 +185,25 @@ const CALENDAR_LINK: string =
   "https://calendar.google.com/calendar/embed?src=mst.edu_7u3stm8bn7l2umuastep5fmbl0%40group.calendar.google.com&ctz=America%2FChicago";
 
 const Events: React.FC<{}> = (): JSX.Element => {
-  const result: GetEventsQueryHookResult = useGetEventsQuery();
+  const result: GetCurrentEventsQueryHookResult = useGetCurrentEventsQuery();
   let events: any;
-  if (result.data && result.data.events) {
-    events = result.data.events;
-    console.log(events);
+  if (result.data && result.data.currentEvents) {
+    events = result.data.currentEvents;
+    events.sort(
+      (a: any, b: any) =>
+        new Date(a.dateHosted).getTime() - new Date(b.dateHosted).getTime()
+    );
   }
 
-  const [filters, setFilters] = useState<boolean[]>([]);
+  const [filters, setFilters] = useState<boolean[]>([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ]);
   const [maxEvents, setMaxEvents] = useState<number>(DEFAULT_EVENTS_TO_DISPLAY);
   const [scrollYPosition, setScrollYPosition] = useState<number>(0);
 
@@ -268,27 +281,13 @@ const Events: React.FC<{}> = (): JSX.Element => {
               <h3>Filter</h3>
               <Sigs>
                 <ImgWrapper>
-                  <ImgImg
-                    src={require("../../../../static/img/comp-dark.png")}
-                  />
-                  <ImgImg
-                    src={require("../../../../static/img/data-dark.png")}
-                  />
-                  <ImgImg
-                    src={require("../../../../static/img/game-dark.png")}
-                  />
-                  <ImgImg
-                    src={require("../../../../static/img/acm-dark.png")}
-                  />
-                  <ImgImg
-                    src={require("../../../../static/img/hack-dark.png")}
-                  />
-                  <ImgImg
-                    src={require("../../../../static/img/sec-dark.png")}
-                  />
-                  <ImgImg
-                    src={require("../../../../static/img/acm-w-dark.png")}
-                  />
+                  <ImgImg src={`${config.CDN_URI}/static/comp-dark.png`} />
+                  <ImgImg src={`${config.CDN_URI}/static/data-dark.png`} />
+                  <ImgImg src={`${config.CDN_URI}/static/game-dark.png`} />
+                  <ImgImg src={`${config.CDN_URI}/static/acm-dark.png`} />
+                  <ImgImg src={`${config.CDN_URI}/static/hack-dark.png`} />
+                  <ImgImg src={`${config.CDN_URI}/static/sec-dark.png`} />
+                  <ImgImg src={`${config.CDN_URI}/static/acm-w-dark.png`} />
                 </ImgWrapper>
                 <SigWrapper>
                   <h4>ACM Comp</h4>
@@ -348,7 +347,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
             <EventsWrapper>
               {events
                 .filter((event: any) => {
-                  return showEvent(event.group);
+                  return showEvent(event.hostSig.name);
                 })
                 .slice(0, maxEvents)
                 .map((event: any, i: number) => {

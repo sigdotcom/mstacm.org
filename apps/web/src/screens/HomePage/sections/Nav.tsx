@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { PageConstraint } from "../../../components/PageConstraint";
 import { useAuth0 } from "../../../utils/react-auth0-wrapper";
 
+import { config } from "../../../config";
+
 const BG = styled.div`
   height: 120px;
   width: 100%;
@@ -76,7 +78,7 @@ const Nav: React.FC<{}> = (): JSX.Element => {
       <PageConstraint>
         <Wrapper>
           <NavRow>
-            <Logo src={require("../../../static/img/acm-logo.png")} />
+            <Logo src={`${config.CDN_URI}/static/acm-logo.png`} />
             <MenuItems>
               <Link to="communities" smooth={true}>
                 <MenuItem>Communities</MenuItem>
