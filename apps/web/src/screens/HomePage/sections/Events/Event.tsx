@@ -175,11 +175,7 @@ const Description = styled.div`
 
 const NUM_DESC_LINES: number = 3;
 
-interface IEventProps {
-  event: IEvent;
-}
-
-const Event: React.SFC<IEventProps> = ({ event }: IEventProps): JSX.Element => {
+const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
   const [showFullDesc, setShowFullDesc] = useState<boolean>(false);
 
   const handleClick = (): void => {
@@ -214,8 +210,8 @@ const Event: React.SFC<IEventProps> = ({ event }: IEventProps): JSX.Element => {
       break;
   }
 
-  const eventDate: any = new Date(event.dateHosted);
-  const eventEndDate: any = new Date(event.dateExpire);
+  const eventDate: Date = new Date(event.dateHosted);
+  const eventEndDate: Date = new Date(event.dateExpire);
   const time: string =
     event.dateHosted === event.dateExpire
       ? eventDate.toLocaleString("default", {
@@ -230,6 +226,10 @@ const Event: React.SFC<IEventProps> = ({ event }: IEventProps): JSX.Element => {
           minute: "numeric"
         })}`;
 
+  const flierLink: string = event.flierLink
+    ? event.flierLink
+    : `${config.CDN_URI}/static/blank.png`;
+
   return (
     <EventWrapper>
       <div style={{ display: "flex" }}>
@@ -238,21 +238,10 @@ const Event: React.SFC<IEventProps> = ({ event }: IEventProps): JSX.Element => {
             style={{
               visibility: event.flierLink ? "visible" : "hidden"
             }}
-            href={
-              event.flierLink
-                ? event.flierLink
-                : `${config.CDN_URI}/static/blank.png`
-            }
+            href={flierLink}
             target="_blank"
           >
-            <img
-              src={
-                event.flierLink
-                  ? event.flierLink
-                  : `${config.CDN_URI}/static/blank.png`
-              }
-              style={{ width: "100%" }}
-            />
+            <img src={flierLink} style={{ width: "100%" }} />
           </a>
         </FlierWrapper>
         <SmallInfo>
@@ -292,11 +281,7 @@ const Event: React.SFC<IEventProps> = ({ event }: IEventProps): JSX.Element => {
           />
         </Description>
         <FlierLink
-          href={
-            event.flierLink
-              ? event.flierLink
-              : `${config.CDN_URI}/static/acm.png`
-          }
+          href={flierLink}
           target="_blank"
           style={{
             display: showFullDesc && event.flierLink ? "" : "none"
