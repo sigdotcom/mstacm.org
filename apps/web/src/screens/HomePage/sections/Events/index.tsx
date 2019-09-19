@@ -207,10 +207,6 @@ const Events: React.FC<{}> = (): JSX.Element => {
     (x: number) => void
   ] = useState<number>(0);
 
-  if (result.loading) {
-    return <h1> Loading </h1>;
-  }
-
   // Toggle total number of events to show (for button click)
   const toggleNumEvents: () => void = (): void => {
     if (maxEvents > DEFAULT_EVENTS_TO_DISPLAY) {
@@ -358,7 +354,9 @@ const Events: React.FC<{}> = (): JSX.Element => {
                 href={CALENDAR_LINK}
                 target="_blank"
               >
-                We have no events scheduled with this filter. Click here to take
+                {result.loading
+                  ? "Loading events... Click here to take a look at our full calendar for more details."
+                  : "We have no events scheduled with this filter. Click here to take"}
                 a look at our full calendar for more details.
               </CalendarLink>
             </EventsWrapper>
