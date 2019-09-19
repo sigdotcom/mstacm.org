@@ -72,13 +72,11 @@ export class EventResolver {
     return newResource.save();
   }
 
-  @Authorized("SUPERADMIN")
   @Query((returns: void) => [Event])
   protected async events(): Promise<Event[]> {
     return this.repository.find();
   }
 
-  @Authorized("SUPERADMIN")
   @Query((returns: void) => [Event])
   protected async currentEvents(): Promise<Event[]> {
     return this.repository.find({
