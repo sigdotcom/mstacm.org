@@ -53,15 +53,15 @@ export class Event extends BaseEntity {
   public hostSig: Lazy<Sig>;
 
   @Field()
-  @Column({})
+  @Column()
   public eventTitle: string;
 
   @Field()
-  @Column({})
+  @Column()
   public description: string;
 
   @Field()
-  @Column({})
+  @Column()
   public location: string;
 
   /*@ManyToOne(type => Product, product => product.events)

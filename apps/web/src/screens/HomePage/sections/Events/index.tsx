@@ -10,6 +10,7 @@ import { Event } from "./Event";
 import { config } from "../../../../config";
 
 import {
+  Event as IEvent,
   GetCurrentEventsQueryHookResult,
   useGetCurrentEventsQuery
 } from "../../../../generated/graphql";
@@ -186,33 +187,32 @@ const CALENDAR_LINK: string =
 
 const Events: React.FC<{}> = (): JSX.Element => {
   const result: GetCurrentEventsQueryHookResult = useGetCurrentEventsQuery();
-  let events: any;
+  let events: IEvent[] = [];
   if (result.data && result.data.currentEvents) {
-    events = result.data.currentEvents;
+    events = result.data.currentEvents as IEvent[];
     events.sort(
-      (a: any, b: any) =>
+      (a: IEvent, b: IEvent) =>
         new Date(a.dateHosted).getTime() - new Date(b.dateHosted).getTime()
     );
   }
 
-  const [filters, setFilters] = useState<boolean[]>([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
-  ]);
-  const [maxEvents, setMaxEvents] = useState<number>(DEFAULT_EVENTS_TO_DISPLAY);
-  const [scrollYPosition, setScrollYPosition] = useState<number>(0);
+  const [filters, setFilters]: [boolean[], (x: boolean[]) => void] = useState<
+    boolean[]
+  >(new Array(FILTER_TYPES.length).fill(false));
+  const [maxEvents, setMaxEvents]: [number, (x: number) => void] = useState<
+    number
+  >(DEFAULT_EVENTS_TO_DISPLAY);
+  const [scrollYPosition, setScrollYPosition]: [
+    number,
+    (x: number) => void
+  ] = useState<number>(0);
 
   if (result.loading) {
     return <h1> Loading </h1>;
   }
 
   // Toggle total number of events to show (for button click)
-  const toggleNumEvents = (): void => {
+  const toggleNumEvents: () => void = (): void => {
     if (maxEvents > DEFAULT_EVENTS_TO_DISPLAY) {
       setMaxEvents(DEFAULT_EVENTS_TO_DISPLAY);
       window.scrollTo(0, scrollYPosition);
@@ -223,26 +223,26 @@ const Events: React.FC<{}> = (): JSX.Element => {
   };
 
   // Add filter if checkbox is checked
-  const toggleCheckbox = (index: number): void => {
+  const toggleCheckbox: (x: number) => void = (index: number): void => {
     const newFilters: boolean[] = [...filters];
     newFilters[index] = !newFilters[index];
     setFilters(newFilters);
   };
 
   // Check if default number of events should be shown
-  const showDefault = (): boolean => {
+  const showDefault: () => boolean = (): boolean => {
     return countEvents() <= DEFAULT_EVENTS_TO_DISPLAY;
   };
 
   // Check if there are no events shown with the given filter
-  const noFilteredEvents = (): boolean => {
+  const noFilteredEvents: () => boolean = (): boolean => {
     return countEvents() === 0;
   };
 
   // Determine if event should be shown
-  const showEvent = (group: string): boolean => {
+  const showEvent: (x: string) => boolean = (group: string): boolean => {
     if (
-      filters.every(filter => {
+      filters.every((filter: boolean) => {
         return filter === false;
       }) ||
       filters[FILTER_TYPES.indexOf(group)]
@@ -253,11 +253,11 @@ const Events: React.FC<{}> = (): JSX.Element => {
   };
 
   // Get the total number of events that should be shown with the given filter
-  const countEvents = (): number => {
-    let count = 0;
+  const countEvents: () => number = (): number => {
+    let count: number = 0;
 
     if (
-      filters.every(filter => {
+      filters.every((filter: boolean) => {
         return filter === false;
       })
     ) {
@@ -346,12 +346,12 @@ const Events: React.FC<{}> = (): JSX.Element => {
             </FilterWrapper>
             <EventsWrapper>
               {events
-                .filter((event: any) => {
+                .filter((event: IEvent) => {
                   return showEvent(event.hostSig.name);
                 })
                 .slice(0, maxEvents)
-                .map((event: any, i: number) => {
-                  return <Event event={event} key={i} />;
+                .map((event: IEvent, i: number) => {
+                  return <Event {...event} key={i} />;
                 })}
               <CalendarLink
                 style={{ display: noFilteredEvents() ? "" : "none" }}
@@ -374,9 +374,9 @@ const Events: React.FC<{}> = (): JSX.Element => {
           <CalendarLink
             style={{
               display: noFilteredEvents() ? "none" : "",
-              paddingTop: showDefault() ? "50px" : "",
+              fontSize: "15px",
               margin: "-10px auto 0 auto",
-              fontSize: "15px"
+              paddingTop: showDefault() ? "50px" : ""
             }}
             href={CALENDAR_LINK}
             target="_blank"
