@@ -1,6 +1,5 @@
 // import { Icon, Spin } from "antd";
 import React from "react";
-// import { Document, Page } from "react-pdf";
 
 import { timeSince, toSemester } from "../../utils/time";
 import { User } from "../../utils/types";
@@ -19,7 +18,7 @@ const ResumeCard: React.FC<IResumeCardProps> = props => {
     throw new Error("Passed invalid added time.");
   }
 
-  const PDF_WIDTH = 612;
+  const PDF_WIDTH = 716;
   const PDF_HEIGHT = 864;
 
   const PDF_URL = user.resume.url;

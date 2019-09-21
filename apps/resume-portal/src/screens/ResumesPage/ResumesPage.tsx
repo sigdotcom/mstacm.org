@@ -73,14 +73,14 @@ const ResumesPage: React.FC = () => {
 
   return (
     <div style={{ height: "100%" }}>
-      <div className="flex content-center justify-center items-center pt-4 px-4">
-        <div className="text-5xl w-1/4 flex justify-end">
+      <div className="flex content-center justify-between lg:justify-center items-center pt-4 px-4">
+        <div className="text-5xl w-1/4 flex justify-end ml-8 lg:ml-0">
           S&T <strong>ACM</strong>
         </div>
-        <div className="w-2/4 mx-16">
+        <div className="w-2/4 mx-16 hidden lg:block">
           <SearchBar onSearch={onSearch} onClick={onFilterFavorites} />
         </div>
-        <div className="w-1/4">
+        <div className="w-1/4 mr-8 lg:mr-0">
           <FavoritesButton onClick={openDrawerOnClick} />
         </div>
       </div>
