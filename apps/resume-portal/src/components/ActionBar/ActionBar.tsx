@@ -18,6 +18,8 @@ export const ActionBar: React.FC<IActionBarProps> = props => {
   if (!user.resume) {
     throw Error("User does not have resume");
   }
+  const firstName = user.firstName || "Unknown";
+  const lastName = user.lastName || "Unknown";
   const EMAIL = user.email;
   const blue_icon_classes = `fill-current text-black focus:text-blue-500 focus:outline-none hover:text-blue-500`;
   const { flipFavorite } = useContext(FavoritesContext);
@@ -28,7 +30,7 @@ export const ActionBar: React.FC<IActionBarProps> = props => {
   };
 
   const downloadResume = async () => {
-    await downloadFile(PDF_URL, `Resume-${user.lastName}${user.firstName}.pdf`);
+    await downloadFile(PDF_URL, `Resume-${lastName}${firstName}.pdf`);
   };
 
   return (

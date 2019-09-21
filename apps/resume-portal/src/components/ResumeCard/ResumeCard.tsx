@@ -1,6 +1,6 @@
-import { Icon, Spin } from "antd";
+// import { Icon, Spin } from "antd";
 import React from "react";
-import { Document, Page } from "react-pdf";
+// import { Document, Page } from "react-pdf";
 
 import { timeSince, toSemester } from "../../utils/time";
 import { User } from "../../utils/types";
@@ -12,6 +12,8 @@ interface IResumeCardProps {
 
 const ResumeCard: React.FC<IResumeCardProps> = props => {
   const user = props.user;
+  const firstName = user.firstName || "Unknown";
+  const lastName = user.lastName || "Unknown";
 
   if (!user.resume) {
     throw new Error("Passed invalid added time.");
@@ -23,7 +25,7 @@ const ResumeCard: React.FC<IResumeCardProps> = props => {
   const PDF_URL = user.resume.url;
   const PROFILE_URL = user.profilePictureUrl;
 
-  const FULL_NAME = `${user.firstName} ${user.lastName}`;
+  const FULL_NAME = `${firstName} ${lastName}`;
 
   const GRADUATION_SEMESTER = user.graduationDate
     ? toSemester(new Date(user.graduationDate))
@@ -32,26 +34,7 @@ const ResumeCard: React.FC<IResumeCardProps> = props => {
   const ADDED_DATE = new Date(user.resume.added);
   const MODIFIED_DATE = user.resume ? timeSince(ADDED_DATE) : "NaN";
 
-  const onSuccess = (pdf: any) => {
-    console.log(pdf.numPages);
-  };
-
-  const antIcon = <Icon type="loading" spin={true} />;
-
-  const onLoad = (
-    <div className="flex justify-center content-center items-center">
-      <Spin indicator={antIcon} /> <span className="pl-3">Loading</span>
-    </div>
-  );
-
-  const onFail = (
-    <div className="flex justify-center content-center items-center">
-      <span className="inline-flex text-red-500">
-        <Icon className="fill-current" type="close-circle" />
-      </span>
-      <span className="pl-3">Failed to load pdf</span>
-    </div>
-  );
+  // const antIcon = <Icon type="loading" spin={true} />;
 
   return (
     <div
@@ -62,15 +45,14 @@ const ResumeCard: React.FC<IResumeCardProps> = props => {
         className="flex items-center content-center justify-center"
         style={{ width: PDF_WIDTH, height: PDF_HEIGHT }}
       >
-        <Document
-          onLoadSuccess={onSuccess}
-          file={PDF_URL}
-          loading={onLoad}
-          noData="No Resume Found"
-          error={onFail}
+        <object
+          data={PDF_URL}
+          type="application/pdf"
+          width="100%"
+          height="100%"
         >
-          <Page pageNumber={1} width={PDF_WIDTH} />
-        </Document>
+          <a href={PDF_URL}>Resume URL</a>
+        </object>
       </div>
       <div className="px-6 py-1 flex">
         <div className="w-2/12 flex flex-col items-center z-50 -my-12">

@@ -1,15 +1,9 @@
 import gql from "graphql-tag";
-import pdfjs from "pdfjs-dist";
 import React, { useContext } from "react";
 import { ResumeCard } from "../ResumeCard";
 
 import { FavoritesContext } from "../../context/FavoritesContext";
 import { PaginationContext } from "../../context/PaginationContext";
-
-((pdfjs as any)
-  .GlobalWorkerOptions as any).workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${
-  (pdfjs as any).version
-}/pdf.worker.js`;
 
 export const GET_RESUME_CARDS = gql`
   query ResumeCards {
@@ -40,8 +34,8 @@ const ResumeList: React.FC<IResumeListProps> = props => {
   const resumes = [];
 
   for (const user of users) {
-    const lowerFirstName = user.firstName.toLowerCase();
-    const lowerLastName = user.lastName.toLowerCase();
+    const lowerFirstName = (user.firstName || "Unknown").toLowerCase();
+    const lowerLastName = (user.lastName || "Unknown").toLowerCase();
     const lowerFullName = `${lowerFirstName} ${lowerLastName}`;
     const filterStrMatch = lowerFullName.includes(filterString.toLowerCase());
     if (user.resume && filterStrMatch) {

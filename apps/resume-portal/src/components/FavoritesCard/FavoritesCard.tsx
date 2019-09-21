@@ -11,9 +11,9 @@ export interface IFavoritesCardProps {
 export const FavoritesCard: React.FC<IFavoritesCardProps> = props => {
   const user = props.user;
 
-  const PROFILE_URL = user.profilePictureUrl;
-  const FULL_NAME = `${user.firstName} ${user.lastName}`;
-  const GRADUATION_DATE = toSemester(new Date(user.graduationDate));
+  const PROFILE_URL: string = user.profilePictureUrl;
+  const FULL_NAME: string = `${user.firstName} ${user.lastName}`;
+  const GRADUATION_DATE: string = toSemester(new Date(user.graduationDate));
 
   return (
     <div className="flex justify-between items-center rounded-full bg-gray-100 text-black m-4">

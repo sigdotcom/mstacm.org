@@ -6,6 +6,7 @@ import { ResumeList } from "../../components/ResumeList";
 import { ResumePagination } from "../../components/ResumePagination";
 import { SearchBar } from "../../components/SearchBar";
 
+import { config } from "../../config";
 import { FavoritesContext } from "../../context/FavoritesContext";
 import { useAuth0 } from "../../utils/react-auth0-wrapper";
 
@@ -22,13 +23,18 @@ const ResumesPage: React.FC = () => {
   } = useAuth0();
   const path = "/";
 
-  if (isAuthenticated) {
-    const test = async () => {
-      const token = await getTokenSilently();
-      console.log(token);
+  useEffect(() => {
+    if (loading || !isAuthenticated) {
+      return;
+    }
+
+    const setToken: () => void = async (): Promise<void> => {
+      const token: string = (await getTokenSilently()) || "";
+      localStorage.setItem(config.ACCESS_TOKEN_KEY, token);
     };
-    test();
-  }
+
+    setToken();
+  }, [loading, isAuthenticated, getTokenSilently]);
 
   useEffect(() => {
     if (loading || isAuthenticated) {
