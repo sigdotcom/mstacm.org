@@ -67,7 +67,7 @@ passport.use(
   new JwtStrategy(
     JWT_OPTS,
     async (req: { headers: any }, payload: any, done: VerifiedCallback) => {
-      const { sub } = payload;
+      const { sub, picture } = payload;
 
       try {
         let user = await User.findOne({
@@ -99,6 +99,7 @@ passport.use(
           user.lastName = userInfo.family_name;
           user.email = userInfo.email;
           user.emailVerified = userInfo.email_verified;
+          user.profilePictureUrl = picture;
           user.sub = userInfo.sub;
           user = await user.save();
         }
