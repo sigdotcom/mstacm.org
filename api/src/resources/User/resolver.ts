@@ -34,7 +34,6 @@ export class UserResolver extends ResourceResolver<resourceType>(
     @Ctx() context: IContext
   ): boolean | undefined {
     const curUser = context.state.user;
-
     if (curUser && user.id === curUser.id) {
       return user.isSuperAdmin;
     }
@@ -61,7 +60,7 @@ export class UserResolver extends ResourceResolver<resourceType>(
 
   @Query((returns: void) => resource, { name: `me`, nullable: true })
   protected async me(@Ctx() context: IContext) {
-    const user: User = context.state.user;
+    const user: User | undefined = context.state.user;
     if (!user) {
       return undefined;
     }

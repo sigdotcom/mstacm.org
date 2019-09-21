@@ -1,4 +1,4 @@
-import { UserInputError } from "apollo-server";
+import { AuthenticationError, UserInputError } from "apollo-server";
 import * as fileType from "file-type";
 import { GraphQLUpload } from "graphql-upload";
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
@@ -27,16 +27,17 @@ export class ResumeResolver {
   @Mutation((returns: void) => User)
   public async deleteResume(@Ctx() context: IContext): Promise<Resume> {
     const user = context.state.user;
+
+    if (!user) {
+      throw new AuthenticationError("Please login to access this resource.");
+    }
+
     const oldResume = await user.resume;
     if (oldResume) {
       await deleteResumeHelper(oldResume);
     }
 
-    if (user.resume.id === undefined) {
-      user.resume = undefined;
-    }
-
-    return user;
+    return user.resume;
   }
 
   @Authorized()
@@ -49,6 +50,10 @@ export class ResumeResolver {
     @Arg("lastName", (returns: void) => String) lastName: string
   ): Promise<Resume> {
     const user = context.state.user;
+    if (!user) {
+      throw new AuthenticationError("Please login to access this resource.");
+    }
+
     const passthrough = await fileType.stream(resume.createReadStream());
     if (!passthrough.fileType || passthrough.fileType.ext !== "pdf") {
       throw new UserInputError("Error when parsing user input", {

@@ -25,7 +25,7 @@ export class RedemptionCodeResolver {
     return RedemptionCode.find();
   }
 
-  @Authorized("SUPERADMIN")
+  @Authorized("create:redemption_code")
   @Mutation((returns: void) => RedemptionCode)
   public async createMembershipRedemptionCode(
     @Ctx() context: IContext,
@@ -34,7 +34,6 @@ export class RedemptionCodeResolver {
   ): Promise<RedemptionCode> {
     const tag: string = membershipType.toString();
     const quantity: number = 1;
-    const user: User = context.state.user as User;
 
     const membershipProduct: Product = await Product.findOneOrFail({
       tag
@@ -49,8 +48,7 @@ export class RedemptionCodeResolver {
     const transaction: Transaction = await Transaction.create({
       charged: membershipProduct.price * 100,
       paymentType: PaymentTypes.REDEMPTION_CODE,
-      purchases: [membershipPurchase],
-      user
+      purchases: [membershipPurchase]
     });
     await transaction.save();
 
@@ -81,6 +79,8 @@ export class RedemptionCodeResolver {
     }
 
     const transaction: Transaction = await redemptionCode.transaction;
+    transaction.user = user;
+    await transaction.save();
     const purchases: Purchase[] = await transaction.purchases;
 
     if (purchases.length > 1) {
