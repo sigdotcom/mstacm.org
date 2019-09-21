@@ -61,7 +61,11 @@ export class ResumeResolver {
 
     const id = uuid();
     const filename = `${id}.pdf`;
-    const url = await uploadFile(resume.createReadStream(), filename);
+    const url = await uploadFile(resume.createReadStream(), filename, {
+      blobHTTPHeaders: {
+        blobContentType: "application/pdf"
+      }
+    });
 
     user.graduationDate = graduationDate;
     user.firstName = firstName;
