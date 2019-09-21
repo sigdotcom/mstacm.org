@@ -3,13 +3,20 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import { StripeProvider } from "react-stripe-elements";
+import { toast } from "react-toastify";
 import { App } from "./App";
 import { config } from "./config";
 import registerServiceWorker from "./registerServiceWorker";
 import { client } from "./utils/apollo";
 import { Auth0Provider, onRedirectCallback } from "./utils/react-auth0-wrapper";
 
+import "react-toastify/dist/ReactToastify.min.css";
 import "./static/css/App.css";
+
+toast.configure({
+  position: "top-center",
+  hideProgressBar: true
+});
 
 ReactDOM.render(
   <Auth0Provider

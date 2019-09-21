@@ -348,6 +348,19 @@ export type UserUpdateInput = {
   lastName?: Maybe<Scalars['String']>,
   email?: Maybe<Scalars['String']>,
 };
+export type RedeemRedemptionCodeMutationVariables = {
+  code: Scalars['String']
+};
+
+
+export type RedeemRedemptionCodeMutation = (
+  { __typename?: 'Mutation' }
+  & { redeemRedemptionCode: (
+    { __typename?: 'RedemptionCode' }
+    & Pick<RedemptionCode, 'id' | 'redeemed'>
+  ) }
+);
+
 export type GetMembershipMutationVariables = {
   membershipType: MembershipTypes
 };
@@ -387,6 +400,22 @@ export type MeExpirationQuery = (
   )> }
 );
 
+export const RedeemRedemptionCodeDocument = gql`
+    mutation RedeemRedemptionCode($code: String!) {
+  redeemRedemptionCode(redemptionCode: $code) {
+    id
+    redeemed
+  }
+}
+    `;
+export type RedeemRedemptionCodeMutationFn = ApolloReactCommon.MutationFunction<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>;
+
+    export function useRedeemRedemptionCodeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>) {
+      return ApolloReactHooks.useMutation<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>(RedeemRedemptionCodeDocument, baseOptions);
+    }
+export type RedeemRedemptionCodeMutationHookResult = ReturnType<typeof useRedeemRedemptionCodeMutation>;
+export type RedeemRedemptionCodeMutationResult = ApolloReactCommon.MutationResult<RedeemRedemptionCodeMutation>;
+export type RedeemRedemptionCodeMutationOptions = ApolloReactCommon.BaseMutationOptions<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>;
 export const GetMembershipDocument = gql`
     mutation GetMembership($membershipType: MembershipTypes!) {
   startMembershipTransaction(membershipType: $membershipType) {
