@@ -1,41 +1,6 @@
 {
     "events": [
         {
-            "img_path": "events/acmw_resume_jam_session.png",
-            "day": "19",
-            "month": "SEPT",
-            "sig_logo": "acm-w.png",
-            "title": "Resume Jam Session",
-            "location": "Comp Sci 202",
-            "time": "4:30pm - 5:30pm",
-            "desc": "Calling all freshmen and sophomores! Want to go to the career fair but don't have a resume? Need help finishing (or starting) your resume? Want to get advice from experienced upperclassmen who have worked in the field? Already have a resume, but want free pizza? If any of these apply to you, join ACM-W in the Computer Science building room 202 from 4:30 to 5:30 on Thursday the 19th! If you have a laptop, we suggest you bring it. Upperclassmen are welcome to attend if you would like a peer's opinion.",
-            "shortDesc": "",
-            "group": "ACM-W"
-        },
-        {
-            "img_path": "events/acm_mock_interviews.jpg",
-            "day": "19",
-            "month": "SEPT",
-            "sig_logo": "acm.png",
-            "title": "Mock Interview Office Hours",
-            "location": "Comp Sci 205",
-            "time": "5:30pm - 7:00pm",
-            "desc": "Need technical interview practice before that big interview? Never had a technical interview before? Come practice technical whiteboard coding interviews with fellow students who interned at Microsoft, Google, and more to learn the tips and tricks of the trade.",
-            "group": "ACM General"
-        },
-
-        {
-            "img_path": "events/acmsec_security_networking_and_architecture.jpg",
-            "day": "20",
-            "month": "SEPT",
-            "sig_logo": "sec.png",
-            "title": "Network Security and Architecture",
-            "location": "Comp Sci 207",
-            "time": "4:00pm - 6:00pm",
-            "desc": "Enjoy free free while learning about the basics of network security and design from Sandia National Laboratories' Will Atkins.",
-            "group": "ACM Security"
-        },
-        {
             "img_path": "events/acm_career_fair_dinner.jpg",
             "day": "24",
             "month": "SEPT",
