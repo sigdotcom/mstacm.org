@@ -1,6 +1,7 @@
 import "./App.css";
 
 import React, { useState } from "react";
+import { useLocalStorage } from "react-use";
 
 import { config } from "./config";
 import { useResumeCardsQuery } from "./generated/graphql";
@@ -22,26 +23,15 @@ type Favorites = {
   [id: string]: boolean | undefined;
 };
 
-const useJSONLocalStorage = (
-  key: string
-): [Favorites, ((favorites: Favorites) => void)] => {
-  const [value, setValue] = React.useState(
-    JSON.parse(localStorage.getItem(key) || "{}")
-  );
-
-  React.useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
-  }, [key, value]);
-
-  return [value, setValue];
-};
-
 const App: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [filterFavorites, setFilterFavorites] = useState<boolean>(false);
   const [curPage, setCurPage] = useState<number>(1);
   const [displayPerPage, setDisplayPerPage] = useState<number>(10);
-  const [favorites, setFavorites] = useJSONLocalStorage("favorites");
+  const [favorites, setFavorites]: [Favorites, any] = useLocalStorage(
+    "favorites",
+    {}
+  );
   const { data, loading } = useResumeCardsQuery();
 
   if (loading === false && users.length === 0 && data) {

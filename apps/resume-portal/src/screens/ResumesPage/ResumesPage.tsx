@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { FavoritesButton } from "../../components/FavoritesButton";
 import { FavoritesDrawer } from "../../components/FavoritesDrawer";
+import { Loader } from "../../components/Loader";
 import { ResumeList } from "../../components/ResumeList";
 import { ResumePagination } from "../../components/ResumePagination";
 import { SearchBar } from "../../components/SearchBar";
@@ -70,6 +71,15 @@ const ResumesPage: React.FC = () => {
   const openDrawerOnClick = (e: any) => {
     openDrawer();
   };
+
+  if (loading || !isAuthenticated) {
+    return (
+      <div className="h-screen w-full flex content-center justify-center items-center">
+        <Loader />
+        <div className="text-2xl">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ height: "100%" }}>
