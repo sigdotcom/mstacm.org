@@ -2,11 +2,11 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-client";
 import { ApolloLink } from "apollo-link";
 import { setContext } from "apollo-link-context";
-import { createHttpLink } from "apollo-link-http";
+import { createUploadLink } from "apollo-upload-client";
 
 import { config } from "../config";
 
-const httpLink: ApolloLink = createHttpLink({
+const uploadLink: ApolloLink = createUploadLink({
   uri: config.API_URI
 });
 
@@ -25,5 +25,5 @@ const authLink: ApolloLink = setContext(async (_: any, { headers }: any) => {
 
 export const client: ApolloClient<{}> = new ApolloClient({
   cache: new InMemoryCache(),
-  link: authLink.concat(httpLink)
+  link: authLink.concat(uploadLink)
 });

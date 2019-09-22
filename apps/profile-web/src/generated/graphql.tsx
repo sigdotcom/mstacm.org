@@ -155,6 +155,7 @@ export type MutationCreatePermissionArgs = {
 
 
 export type MutationUploadResumeArgs = {
+  graduationDate: Scalars['DateTime'],
   resume: Scalars['Upload']
 };
 
@@ -302,6 +303,7 @@ export type User = {
   isActive?: Maybe<Scalars['Boolean']>,
   resume?: Maybe<Resume>,
   permissions: Array<Permission>,
+  graduationDate?: Maybe<Scalars['DateTime']>,
 };
 
 export type UserCreateInput = {
@@ -322,7 +324,8 @@ export type UserUpdateInput = {
   email?: Maybe<Scalars['String']>,
 };
 export type UploadResumeMutationVariables = {
-  resume: Scalars['Upload']
+  resume: Scalars['Upload'],
+  grad: Scalars['DateTime']
 };
 
 
@@ -330,14 +333,14 @@ export type UploadResumeMutation = (
   { __typename?: 'Mutation' }
   & { uploadResume: (
     { __typename?: 'Resume' }
-    & Pick<Resume, 'id'>
+    & Pick<Resume, 'url'>
   ) }
 );
 
 export const UploadResumeDocument = gql`
-    mutation uploadResume($resume: Upload!) {
-  uploadResume(resume: $resume) {
-    id
+    mutation uploadResume($resume: Upload!, $grad: DateTime!) {
+  uploadResume(resume: $resume, graduationDate: $grad) {
+    url
   }
 }
     `;
