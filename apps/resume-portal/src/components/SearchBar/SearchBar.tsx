@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import ReactSVG from "react-svg";
 import { Tooltip } from "antd";
+import React, { useState } from "react";
+import { CenteredIcon } from "../CenteredIcon";
 
 interface ISearchBarProps {
-  onSearch?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onSearch?(e: React.ChangeEvent<HTMLInputElement>): void;
+  onClick?(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
 }
 
 export const SearchBar: React.FC<ISearchBarProps> = props => {
@@ -21,7 +21,7 @@ export const SearchBar: React.FC<ISearchBarProps> = props => {
 
   return (
     <div className="flex align-center items-center bg-white shadow rounded-full p-4 text-grey-400">
-      <ReactSVG className="fill-current" src="./static/search.svg" />
+      <CenteredIcon name="search-outline" fill="currentColor" size="large" />
       <input
         className="text-xl w-3/4 pl-4"
         type="text"
@@ -34,7 +34,11 @@ export const SearchBar: React.FC<ISearchBarProps> = props => {
       >
         <Tooltip placement="bottom" title="Filter Favorites">
           <button className="outline-none" onClick={onClick}>
-            <ReactSVG src="./static/heart.svg" />
+            <CenteredIcon
+              name="heart-outline"
+              size="large"
+              fill="currentColor"
+            />
           </button>
         </Tooltip>
       </div>

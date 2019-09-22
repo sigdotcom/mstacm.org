@@ -1,5 +1,6 @@
 import React from "react";
-import ReactSVG from "react-svg";
+
+import { CenteredIcon } from "../CenteredIcon";
 
 interface IFavoritesButtonProps {
   onClick?(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
@@ -12,7 +13,7 @@ export const FavoritesButton: React.FC<IFavoritesButtonProps> = props => {
       onClick={props.onClick}
     >
       <div className="outline-none fill-current">
-        <ReactSVG src="./static/heart.svg" />
+        <CenteredIcon name="heart-outline" size="large" fill="currentColor" />
       </div>
       <div className="mx-6">Favorites</div>
     </button>

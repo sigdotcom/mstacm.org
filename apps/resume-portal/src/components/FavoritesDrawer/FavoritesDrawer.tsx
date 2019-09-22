@@ -1,6 +1,6 @@
 import { Drawer } from "antd";
 import React, { useContext } from "react";
-import ReactSVG from "react-svg";
+import { CenteredIcon } from "../CenteredIcon";
 
 import { FavoritesContext } from "../../context/FavoritesContext";
 import { downloadFile } from "../../utils/files";
@@ -52,13 +52,23 @@ export const FavoritesDrawer: React.FC<IFavoritesDrawerProps> = props => {
             className="flex items-center font-bold px-1"
             onClick={downloadAll}
           >
-            DOWNLOAD ALL <ReactSVG src="./static/chevron_right.svg" />
+            DOWNLOAD ALL{" "}
+            <CenteredIcon
+              name="chevron-right-outline"
+              size="large"
+              fill="currentColor"
+            />
           </button>
           <a
             href={mailtoString}
             className="flex items-center font-bold px-1 no-underline text-red-200 hover:text-red-200"
           >
-            EMAIL ALL <ReactSVG src="./static/chevron_right.svg" />
+            EMAIL ALL{" "}
+            <CenteredIcon
+              name="chevron-right-outline"
+              size="large"
+              fill="currentColor"
+            />
           </a>
         </div>
       </div>

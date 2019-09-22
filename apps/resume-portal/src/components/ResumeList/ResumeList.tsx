@@ -1,9 +1,11 @@
 import gql from "graphql-tag";
 import React, { useContext } from "react";
-import { ResumeCard } from "../ResumeCard";
+import { useWindowSize } from "react-use";
 
 import { FavoritesContext } from "../../context/FavoritesContext";
 import { PaginationContext } from "../../context/PaginationContext";
+import { FavoritesCard } from "../FavoritesCard";
+import { ResumeCard } from "../ResumeCard";
 
 export const GET_RESUME_CARDS = gql`
   query ResumeCards {
@@ -27,6 +29,7 @@ interface IResumeListProps {
 }
 
 const ResumeList: React.FC<IResumeListProps> = props => {
+  const { width } = useWindowSize();
   const filterString = props.filterString || "";
   const { users, isFavorite, filterFavorites } = useContext(FavoritesContext);
   const { curPage, displayPerPage } = useContext(PaginationContext);
@@ -51,13 +54,23 @@ const ResumeList: React.FC<IResumeListProps> = props => {
     startingPage + displayPerPage
   );
 
-  return (
-    <div className="flex flex-wrap justify-center">
-      {filtered_resumes.map(item => {
-        return <ResumeCard user={item} key={item.id} />;
-      })}
-    </div>
-  );
+  if (width > 774) {
+    return (
+      <div className="flex flex-wrap justify-center">
+        {filtered_resumes.map(item => {
+          return <ResumeCard user={item} key={item.id} />;
+        })}
+      </div>
+    );
+  } else {
+    return (
+      <div className="flex flex-col p-2">
+        {filtered_resumes.map(item => {
+          return <FavoritesCard user={item} key={item.id} />;
+        })}
+      </div>
+    );
+  }
 };
 
 export { ResumeList };

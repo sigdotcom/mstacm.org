@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import ReactSVG from "react-svg";
 
 import { FavoritesContext } from "../../context/FavoritesContext";
+import { CenteredIcon } from "../CenteredIcon";
 
 export interface IFavoriteActionButtonProps {
   userId: string;
@@ -20,7 +20,7 @@ export const FavoriteActionButton: React.FC<
       {...props}
       className={`fill-current ${COLOR} hover:text-red-500 focus:outline-none`}
     >
-      <ReactSVG src="./static/heart.svg" />
+      <CenteredIcon name="heart-outline" size="large" fill="currentColor" />
     </button>
   );
 };

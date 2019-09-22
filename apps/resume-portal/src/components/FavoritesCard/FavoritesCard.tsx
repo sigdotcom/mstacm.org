@@ -21,11 +21,11 @@ export const FavoritesCard: React.FC<IFavoritesCardProps> = props => {
         <img
           width="96"
           height="96"
-          className="rounded-full"
+          className="rounded-full hidden sm:block"
           src={PROFILE_URL}
           alt="Avatar"
         />
-        <div className="flex flex-col text-2xl pl-6">
+        <div className="flex flex-col text-xl sm:text-2xl pl-6">
           <span>{FULL_NAME}</span>
           <span className="font-bold">{GRADUATION_DATE}</span>
         </div>

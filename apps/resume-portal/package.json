@@ -14,8 +14,11 @@
     "react": "^16.8.6",
     "react-apollo": "^3.1.1",
     "react-dom": "^16.8.6",
+    "react-eva-icons": "^0.0.8",
     "react-scripts": "^3.1.2",
     "react-svg": "^10.0.11",
+    "react-use": "^12.2.0",
+    "styled-components": "^4.3.2",
     "typescript": "^3.6.3"
   },
   "scripts": {
@@ -55,6 +58,7 @@
     "@types/pdfjs-dist": "^2.0.1",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.5",
+    "@types/styled-components": "^4.1.19",
     "autoprefixer": "^9.6.1",
     "npm-run-all": "^4.1.5",
     "postcss-cli": "^6.1.3",

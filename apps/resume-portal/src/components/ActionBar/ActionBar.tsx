@@ -1,10 +1,10 @@
 import { Tooltip } from "antd";
 import React, { useContext } from "react";
-import ReactSVG from "react-svg";
 
 import { FavoritesContext } from "../../context/FavoritesContext";
 import { downloadFile } from "../../utils/files";
 import { User } from "../../utils/types";
+import { CenteredIcon } from "../CenteredIcon";
 import { FavoriteActionButton } from "./FavoriteActionButton";
 
 export interface IActionBarProps {
@@ -35,16 +35,29 @@ export const ActionBar: React.FC<IActionBarProps> = props => {
 
   return (
     <div
-      className={`flex justify-between items-center w-3/12 ${props.padding}`}
+      className={`flex justify-between items-center w-5/12 sm:w-3/12 ${props.padding}`}
     >
+      <Tooltip title="Open Fullscreen (New Tab)">
+        <a href={PDF_URL} target="noreferrer" className={blue_icon_classes}>
+          <CenteredIcon
+            name="external-link-outline"
+            size="large"
+            fill="currentColor"
+          />
+        </a>
+      </Tooltip>
       <Tooltip title="Download Resume">
         <button onClick={downloadResume} className={blue_icon_classes}>
-          <ReactSVG src="./static/download.svg" />
+          <CenteredIcon
+            name="download-outline"
+            size="large"
+            fill="currentColor"
+          />
         </button>
       </Tooltip>
       <Tooltip title="E-Mail">
         <a href={`mailto:${EMAIL}`} className={blue_icon_classes}>
-          <ReactSVG src="./static/email.svg" />
+          <CenteredIcon name="email-outline" size="large" fill="currentColor" />
         </a>
       </Tooltip>
       <Tooltip title="Favorite">
