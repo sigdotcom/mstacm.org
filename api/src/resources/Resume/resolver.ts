@@ -39,7 +39,8 @@ export class ResumeResolver {
   @Mutation((returns: void) => Resume)
   public async uploadResume(
     @Ctx() context: IContext,
-    @Arg("resume", (returns: void) => GraphQLUpload) resume: File
+    @Arg("resume", (returns: void) => GraphQLUpload) resume: File,
+    @Arg("graduationDate", (returns: void) => Date) graduationDate: Date
   ): Promise<Resume> {
     const user = context.state.user;
     const passthrough = await fileType.stream(resume.createReadStream());
@@ -58,6 +59,10 @@ export class ResumeResolver {
     const id = uuid();
     const filename = `${id}.pdf`;
     const url = await uploadFile(resume.createReadStream(), filename);
+
+    user.graduationDate = graduationDate;
+    await user.save();
+
     const userResume = await this.resumeRepo.create({
       id,
       url,
