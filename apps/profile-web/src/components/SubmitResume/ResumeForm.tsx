@@ -2,8 +2,10 @@ import React, { useState } from "react";
 
 import {
   Button,
+  Col,
   Form,
   Icon,
+  Input,
   InputNumber,
   message,
   Radio,
@@ -13,12 +15,31 @@ import {
 
 import gql from "graphql-tag";
 
-import { useUploadResumeMutation } from "../../generated/graphql";
+import { useMeQuery, useUploadResumeMutation } from "../../generated/graphql";
 
 export const UPLOAD_RESUME: any = gql`
-  mutation uploadResume($resume: Upload!, $grad: DateTime!) {
-    uploadResume(resume: $resume, graduationDate: $grad) {
+  mutation uploadResume(
+    $resume: Upload!
+    $grad: DateTime!
+    $fname: String!
+    $lname: String!
+  ) {
+    uploadResume(
+      resume: $resume
+      graduationDate: $grad
+      firstName: $fname
+      lastName: $lname
+    ) {
       url
+    }
+  }
+`;
+
+export const GET_ME: any = gql`
+  query me {
+    me {
+      firstName
+      lastName
     }
   }
 `;
@@ -66,7 +87,12 @@ const ResumeFormBase: React.FC<any> = ({
           const grad: Date = new Date(values.gradYear, month);
           try {
             const result: any = await uploadResume({
-              variables: { resume: files[0], grad }
+              variables: {
+                resume: files[0],
+                grad,
+                fname: values.firstName,
+                lname: values.lastName
+              }
             });
             if (result.data && result.data.uploadResume.url) {
               setResumeUrl(result.data.uploadResume.url);
@@ -98,24 +124,52 @@ const ResumeFormBase: React.FC<any> = ({
     }
   };
 
+  const result: any = useMeQuery();
+
   return (
     <Form onSubmit={handleSubmit}>
       <Row gutter={8}>
-        <Form.Item label="Graduation Semester">
-          {getFieldDecorator("gradSemester")(
-            <Radio.Group>
-              <Radio.Button value="spring">Spring</Radio.Button>
-              <Radio.Button value="summer">Summer</Radio.Button>
-              <Radio.Button value="fall">Fall</Radio.Button>
-            </Radio.Group>
-          )}
-        </Form.Item>
-        <Form.Item label="Graduation Year">
-          {getFieldDecorator("gradYear", { initialValue: 2019 })(
-            <InputNumber min={2019} />
-          )}
-        </Form.Item>
+        <Col span={7}>
+          <Form.Item label="First Name">
+            {getFieldDecorator("firstName", {
+              initialValue:
+                result.data && result.data.me ? result.data.me.firstName : "",
+              rules: [{ required: true, message: "Full name is required!" }]
+            })(<Input placeholder="First" />)}
+          </Form.Item>
+        </Col>
+        <Col span={7}>
+          <Form.Item label="Last Name">
+            {getFieldDecorator("lastName", {
+              initialValue:
+                result.data && result.data.me ? result.data.me.lastName : "",
+              rules: [{ required: true, message: "Full name is required!" }]
+            })(<Input placeholder="Last" />)}
+          </Form.Item>
+        </Col>
       </Row>
+      <Form.Item label="Graduation Date">
+        <Row gutter={8}>
+          <Col span={8}>
+            <Form.Item label="Semester">
+              {getFieldDecorator("gradSemester", { initialValue: "spring" })(
+                <Radio.Group>
+                  <Radio.Button value="spring">Spring</Radio.Button>
+                  <Radio.Button value="summer">Summer</Radio.Button>
+                  <Radio.Button value="fall">Fall</Radio.Button>
+                </Radio.Group>
+              )}
+            </Form.Item>
+          </Col>
+          <Col span={5}>
+            <Form.Item label="Year">
+              {getFieldDecorator("gradYear", { initialValue: 2019 })(
+                <InputNumber min={2019} />
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form.Item>
       <Form.Item label="Resume File">
         {getFieldDecorator("resume", {
           valuePropName: "file"

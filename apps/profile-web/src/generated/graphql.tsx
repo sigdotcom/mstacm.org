@@ -155,6 +155,8 @@ export type MutationCreatePermissionArgs = {
 
 
 export type MutationUploadResumeArgs = {
+  lastName: Scalars['String'],
+  firstName: Scalars['String'],
   graduationDate: Scalars['DateTime'],
   resume: Scalars['Upload']
 };
@@ -325,7 +327,9 @@ export type UserUpdateInput = {
 };
 export type UploadResumeMutationVariables = {
   resume: Scalars['Upload'],
-  grad: Scalars['DateTime']
+  grad: Scalars['DateTime'],
+  fname: Scalars['String'],
+  lname: Scalars['String']
 };
 
 
@@ -337,9 +341,20 @@ export type UploadResumeMutation = (
   ) }
 );
 
+export type MeQueryVariables = {};
+
+
+export type MeQuery = (
+  { __typename?: 'Query' }
+  & { me: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'firstName' | 'lastName'>
+  )> }
+);
+
 export const UploadResumeDocument = gql`
-    mutation uploadResume($resume: Upload!, $grad: DateTime!) {
-  uploadResume(resume: $resume, graduationDate: $grad) {
+    mutation uploadResume($resume: Upload!, $grad: DateTime!, $fname: String!, $lname: String!) {
+  uploadResume(resume: $resume, graduationDate: $grad, firstName: $fname, lastName: $lname) {
     url
   }
 }
@@ -352,3 +367,21 @@ export type UploadResumeMutationFn = ApolloReactCommon.MutationFunction<UploadRe
 export type UploadResumeMutationHookResult = ReturnType<typeof useUploadResumeMutation>;
 export type UploadResumeMutationResult = ApolloReactCommon.MutationResult<UploadResumeMutation>;
 export type UploadResumeMutationOptions = ApolloReactCommon.BaseMutationOptions<UploadResumeMutation, UploadResumeMutationVariables>;
+export const MeDocument = gql`
+    query me {
+  me {
+    firstName
+    lastName
+  }
+}
+    `;
+
+    export function useMeQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeQuery, MeQueryVariables>) {
+      return ApolloReactHooks.useQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
+    }
+      export function useMeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
+        return ApolloReactHooks.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
+      }
+      
+export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
+export type MeQueryResult = ApolloReactCommon.QueryResult<MeQuery, MeQueryVariables>;
