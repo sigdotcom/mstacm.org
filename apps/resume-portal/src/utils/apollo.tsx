@@ -13,7 +13,6 @@ const httpLink: ApolloLink = createHttpLink({
 const authLink: ApolloLink = setContext(async (_, { headers }) => {
   // Get access token from local storage
   const token: string = localStorage.getItem(config.ACCESS_TOKEN_KEY) || "";
-  console.log(token);
 
   // return the headers to the context so httpLink can read them
   return {
