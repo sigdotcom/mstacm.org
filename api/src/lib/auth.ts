@@ -1,8 +1,10 @@
 import { AuthChecker } from "type-graphql";
+
+import { Permission } from "../resources/Permission";
 import { IContext } from "./interfaces";
 
 // create auth checker function
-export const authChecker: AuthChecker<IContext> = (
+export const authChecker: AuthChecker<IContext> = async (
   {
     context: {
       state: { user }
@@ -28,7 +30,12 @@ export const authChecker: AuthChecker<IContext> = (
     // and if no user, restrict access
     return false;
   }
-  if (user.roles.some((role: string) => roles.includes(role))) {
+
+  const permissions = await user.permissions;
+  const permMatchesRole = permissions.some((permission: Permission) =>
+    roles.includes(permissions.name)
+  );
+  if (permMatchesRole) {
     // grant access if the roles overlap
     return true;
   }
