@@ -18,8 +18,8 @@ const ResumeCard: React.FC<IResumeCardProps> = props => {
     throw new Error("Passed invalid added time.");
   }
 
-  const PDF_WIDTH = 716;
-  const PDF_HEIGHT = 864;
+  const PDF_WIDTH = 645;
+  const PDF_HEIGHT = 550;
 
   const PDF_URL = user.resume.url;
   const PROFILE_URL = user.profilePictureUrl;

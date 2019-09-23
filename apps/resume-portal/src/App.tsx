@@ -7,7 +7,7 @@ import { config } from "./config";
 import { useResumeCardsQuery } from "./generated/graphql";
 import { ResumesPage } from "./screens/ResumesPage";
 import { Auth0Provider, onRedirectCallback } from "./utils/react-auth0-wrapper";
-import { User } from "./utils/types";
+import { Resume, User } from "./utils/types";
 
 import {
   FavoritesContext,
@@ -23,20 +23,46 @@ type Favorites = {
   [id: string]: boolean | undefined;
 };
 
+const Forbidden: React.FC = () => {
+  return (
+    <div className="h-screen w-full flex content-center justify-center items-center flex-col">
+      <h1 className="text-5xl">403 Forbidden</h1>
+      <p style={{ textAlign: "center" }} className="text-xl">
+        It appears your permissions prevent me from letting you pass.
+        <br />
+        Please contact <a href="mailto:acm@mst.edu">acm@mst.edu</a> if you
+        believe this is a mistake.
+      </p>
+    </div>
+  );
+};
+
 const App: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [filterFavorites, setFilterFavorites] = useState<boolean>(false);
   const [curPage, setCurPage] = useState<number>(1);
   const [displayPerPage, setDisplayPerPage] = useState<number>(10);
+  const [forbidden, setForbidden] = useState<boolean>(false);
+
   const [favorites, setFavorites]: [Favorites, any] = useLocalStorage(
     "favorites",
     {}
   );
-  const { data, loading } = useResumeCardsQuery();
+  const { data, loading, error } = useResumeCardsQuery();
 
-  if (loading === false && users.length === 0 && data) {
-    setUsers(data.users);
+  if (error && !forbidden) {
+    setForbidden(error.graphQLErrors[0].message.includes("Access denied!"));
+  } else if (loading === false && users.length === 0 && data) {
+    setUsers(
+      data.resumes.map((resume: Resume) => {
+        const user = resume.user;
+        (user as User).resume = resume;
+
+        return user as User;
+      })
+    );
   }
+
   const favoritesContext: IFavoriteContextProps = {
     users,
     filterFavorites,
@@ -70,7 +96,7 @@ const App: React.FC = () => {
             audience={config.AUTH0_AUDIENCE}
             onRedirectCallback={onRedirectCallback}
           >
-            <ResumesPage />
+            {forbidden ? <Forbidden /> : <ResumesPage />}
           </Auth0Provider>
         </PaginationContext.Provider>
       </FavoritesContext.Provider>

@@ -15,7 +15,7 @@ export const FavoritesButton: React.FC<IFavoritesButtonProps> = props => {
       <div className="outline-none fill-current">
         <CenteredIcon name="heart-outline" size="large" fill="currentColor" />
       </div>
-      <div className="mx-6">Favorites</div>
+      <div className="mx-6 hidden lg:block">Favorites</div>
     </button>
   );
 };

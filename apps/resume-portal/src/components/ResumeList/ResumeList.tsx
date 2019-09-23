@@ -9,16 +9,16 @@ import { ResumeCard } from "../ResumeCard";
 
 export const GET_RESUME_CARDS = gql`
   query ResumeCards {
-    users {
-      id
-      firstName
-      lastName
-      email
-      profilePictureUrl
-      graduationDate
-      resume {
-        url
-        added
+    resumes {
+      url
+      added
+      user {
+        id
+        firstName
+        lastName
+        email
+        profilePictureUrl
+        graduationDate
       }
     }
   }
@@ -54,7 +54,7 @@ const ResumeList: React.FC<IResumeListProps> = props => {
     startingPage + displayPerPage
   );
 
-  if (width > 774) {
+  if (width > 698) {
     return (
       <div className="flex flex-wrap justify-center">
         {filtered_resumes.map(item => {

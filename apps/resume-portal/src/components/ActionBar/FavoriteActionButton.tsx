@@ -12,12 +12,13 @@ export const FavoriteActionButton: React.FC<
   IFavoriteActionButtonProps
 > = props => {
   const { isFavorite } = useContext(FavoritesContext);
+  const { userId, ...buttonProps } = props;
 
-  const COLOR = isFavorite(props.userId) ? "text-red-500" : "text-black";
+  const COLOR = isFavorite(userId) ? "text-red-500" : "text-black";
 
   return (
     <button
-      {...props}
+      {...buttonProps}
       className={`fill-current ${COLOR} hover:text-red-500 focus:outline-none`}
     >
       <CenteredIcon name="heart-outline" size="large" fill="currentColor" />
