@@ -89,7 +89,7 @@ export class User extends BaseEntity {
   @JoinColumn()
   public resume: Lazy<Resume>;
 
-  @Field((returns: void) => [Permission])
+  @Field((returns: void) => [Permission], { nullable: true })
   @JoinTable()
   @ManyToMany(
     (returns: void) => Permission,
