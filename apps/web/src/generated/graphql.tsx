@@ -155,6 +155,9 @@ export type MutationCreatePermissionArgs = {
 
 
 export type MutationUploadResumeArgs = {
+  lastName: Scalars['String'],
+  firstName: Scalars['String'],
+  graduationDate: Scalars['DateTime'],
   resume: Scalars['Upload']
 };
 
@@ -302,6 +305,7 @@ export type User = {
   isActive?: Maybe<Scalars['Boolean']>,
   resume?: Maybe<Resume>,
   permissions: Array<Permission>,
+  graduationDate?: Maybe<Scalars['DateTime']>,
 };
 
 export type UserCreateInput = {
