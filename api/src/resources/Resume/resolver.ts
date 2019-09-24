@@ -65,7 +65,6 @@ export class ResumeResolver {
     const oldResume = await user.resume;
     if (oldResume) {
       await deleteResumeHelper(oldResume);
-      user.resume = undefined;
     }
 
     const id = uuid();
@@ -82,9 +81,11 @@ export class ResumeResolver {
 
     const userResume = await this.resumeRepo.create({
       id,
-      url,
-      user: await user.save()
+      url
     });
+    user.resume = userResume;
+
+    await user.save();
 
     return userResume.save();
   }
