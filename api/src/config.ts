@@ -1,4 +1,5 @@
 export interface IConfig {
+  AZURE_CDN_URI: string;
   AZURE_STORAGE_ACCOUNT: string;
   AZURE_STORAGE_ACCOUNT_KEY: string;
   JWT_ALGORITHM: string;
@@ -18,6 +19,7 @@ export interface IConfig {
 
 const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN;
 export const config: IConfig = {
+  AZURE_CDN_URI: process.env.AZURE_CDN_URI || "https://cdn.mstacm.org",
   AZURE_STORAGE_ACCOUNT: process.env.AZURE_STORAGE_ACCOUNT || "mstacm",
   AZURE_STORAGE_ACCOUNT_KEY: process.env.AZURE_STORAGE_ACCOUNT_KEY || "DEV_KEY",
   JWT_ALGORITHM: "RS256",

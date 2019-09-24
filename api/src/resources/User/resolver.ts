@@ -33,7 +33,9 @@ export class UserResolver extends ResourceResolver<resourceType>(
     @Root() user: User,
     @Ctx() context: IContext
   ): boolean | undefined {
-    if (user.id === context.state.user.id) {
+    const curUser = context.state.user;
+
+    if (curUser && user.id === curUser.id) {
       return user.isSuperAdmin;
     }
 
@@ -48,7 +50,9 @@ export class UserResolver extends ResourceResolver<resourceType>(
     @Root() user: User,
     @Ctx() context: IContext
   ): Lazy<Permission[]> | undefined {
-    if (user.id === context.user.id) {
+    const curUser = context.state.user;
+
+    if (curUser && user.id === curUser.id) {
       return user.permissions;
     }
 
