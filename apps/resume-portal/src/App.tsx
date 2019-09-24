@@ -43,6 +43,7 @@ const App: React.FC = () => {
   const [curPage, setCurPage] = useState<number>(1);
   const [displayPerPage, setDisplayPerPage] = useState<number>(10);
   const [forbidden, setForbidden] = useState<boolean>(false);
+  const [fetched, setFetched] = useState<boolean>(false);
 
   const [favorites, setFavorites]: [Favorites, any] = useLocalStorage(
     "favorites",
@@ -52,7 +53,8 @@ const App: React.FC = () => {
 
   if (error && !forbidden) {
     setForbidden(error.graphQLErrors[0].message.includes("Access denied!"));
-  } else if (loading === false && users.length === 0 && data) {
+  } else if (loading === false && !fetched && data) {
+    setFetched(true);
     setUsers(
       data.resumes.map((resume: Resume) => {
         const user = resume.user;
