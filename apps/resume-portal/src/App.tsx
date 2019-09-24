@@ -1,12 +1,13 @@
 import "./App.css";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocalStorage } from "react-use";
 
+import { Loader } from "./components/Loader";
 import { config } from "./config";
 import { useResumeCardsQuery } from "./generated/graphql";
 import { ResumesPage } from "./screens/ResumesPage";
-import { Auth0Provider, onRedirectCallback } from "./utils/react-auth0-wrapper";
+import { useAuth0 } from "./utils/react-auth0-wrapper";
 import { Resume, User } from "./utils/types";
 
 import {
@@ -44,25 +45,62 @@ const App: React.FC = () => {
   const [displayPerPage, setDisplayPerPage] = useState<number>(10);
   const [forbidden, setForbidden] = useState<boolean>(false);
   const [fetched, setFetched] = useState<boolean>(false);
-
   const [favorites, setFavorites]: [Favorites, any] = useLocalStorage(
     "favorites",
     {}
   );
-  const { data, loading, error } = useResumeCardsQuery();
+  const {
+    loading,
+    isAuthenticated,
+    loginWithRedirect,
+    getTokenSilently
+  } = useAuth0();
+  const path = "/";
 
-  if (error && !forbidden) {
-    setForbidden(error.graphQLErrors[0].message.includes("Access denied!"));
-  } else if (loading === false && !fetched && data) {
-    setFetched(true);
-    setUsers(
-      data.resumes.map((resume: Resume) => {
-        const user = resume.user;
-        (user as User).resume = resume;
+  const { data, loading: gqlLoading, error, refetch } = useResumeCardsQuery();
 
-        return user as User;
-      })
-    );
+  useEffect(() => {
+    if (loading) {
+      return;
+    } else if (isAuthenticated) {
+      const setToken: () => void = async (): Promise<void> => {
+        const token: string = (await getTokenSilently()) || "";
+        localStorage.setItem(config.ACCESS_TOKEN_KEY, token);
+        await refetch();
+      };
+
+      setToken();
+    } else {
+      const fn = async () => {
+        await loginWithRedirect({
+          appState: { targetUrl: path }
+        });
+      };
+      fn();
+    }
+  }, [
+    loading,
+    isAuthenticated,
+    loginWithRedirect,
+    path,
+    getTokenSilently,
+    refetch
+  ]);
+
+  if (localStorage.getItem(config.ACCESS_TOKEN_KEY)) {
+    if (error && !forbidden) {
+      setForbidden(error.graphQLErrors[0].message.includes("Access denied!"));
+    } else if (gqlLoading === false && !fetched && data) {
+      setFetched(true);
+      setUsers(
+        data.resumes.map((resume: Resume) => {
+          const user = resume.user;
+          (user as User).resume = resume;
+
+          return user as User;
+        })
+      );
+    }
   }
 
   const favoritesContext: IFavoriteContextProps = {
@@ -87,19 +125,22 @@ const App: React.FC = () => {
     setDisplayPerPage
   };
 
+  if (loading || !isAuthenticated) {
+    return (
+      <div style={{ backgroundColor: "#F4F5F8", minHeight: "100vh" }}>
+        <div className="h-screen w-full flex content-center justify-center items-center">
+          <Loader />
+          <div className="text-2xl">Loading...</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{ backgroundColor: "#F4F5F8", minHeight: "100vh" }}>
       <FavoritesContext.Provider value={favoritesContext}>
         <PaginationContext.Provider value={paginationContext}>
-          <Auth0Provider
-            domain={config.AUTH0_DOMAIN}
-            client_id={config.AUTH0_CLIENT_ID}
-            redirect_uri={window.location.origin}
-            audience={config.AUTH0_AUDIENCE}
-            onRedirectCallback={onRedirectCallback}
-          >
-            {forbidden ? <Forbidden /> : <ResumesPage />}
-          </Auth0Provider>
+          {forbidden ? <Forbidden /> : <ResumesPage />}
         </PaginationContext.Provider>
       </FavoritesContext.Provider>
     </div>
