@@ -63,13 +63,13 @@ const ResumeCard: React.FC<IResumeCardProps> = props => {
             alt="Avatar"
           />
         </div>
-        <div className="w-8/12 text-2xl flex justify-center content-center leading-normal">
-          <p className="my-4">
+        <div className="w-8/12 text-xl flex justify-center content-center leading-normal">
+          <p style={{ textAlign: "center" }} className="my-2">
             <span className="text-black">
               {`${FULL_NAME}`} <strong>{`${GRADUATION_STR}`}</strong>
             </span>
             <br />
-            <span className="text-gray-600">{`Updated ${MODIFIED_DATE} ago`}</span>
+            <span className="text-gray-600 text-base">{`Updated ${MODIFIED_DATE} ago`}</span>
           </p>
         </div>
         <ActionBar user={user} />
