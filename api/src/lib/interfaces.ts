@@ -1,6 +1,12 @@
 import { ParameterizedContext } from "koa";
+import { User } from "../resources/User";
 
-export interface IContext extends ParameterizedContext {}
+export interface IContext extends ParameterizedContext {
+  state: {
+    user?: User;
+    scope?: string;
+  };
+}
 
 export interface IUserInfo {
   sub: string;

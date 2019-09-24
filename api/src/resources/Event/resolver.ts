@@ -1,3 +1,4 @@
+import { AuthenticationError } from "apollo-server";
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import {
   DeepPartial,
@@ -65,7 +66,12 @@ export class EventResolver {
     @Arg("data", (argType: void) => EventCreateInput)
     input: DeepPartial<Event>
   ): Promise<Event> {
-    const creator: User = context.state.user;
+    const creator: User | undefined = context.state.user;
+
+    if (!creator) {
+      throw new AuthenticationError("Please login to access this resource.");
+    }
+
     const hostSig: Sig = await this.sigRepository.findOneOrFail({
       name: String(input.hostSig)
     });

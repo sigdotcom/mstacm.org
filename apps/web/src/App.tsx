@@ -1,3 +1,4 @@
+import gql from "graphql-tag";
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
@@ -6,6 +7,15 @@ import { HomePage, NotFoundPage } from "./screens";
 import { useAuth0 } from "./utils/react-auth0-wrapper";
 
 import "./static/css/App.css";
+
+export const REDEEM_MEMBERSHIP: any = gql`
+  mutation RedeemRedemptionCode($code: String!) {
+    redeemRedemptionCode(redemptionCode: $code) {
+      id
+      redeemed
+    }
+  }
+`;
 
 const App: React.FC<{}> = (): JSX.Element => {
   const { loading, isAuthenticated, getTokenSilently } = useAuth0();

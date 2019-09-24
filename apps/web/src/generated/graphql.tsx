@@ -94,6 +94,8 @@ export type Mutation = {
   updateEvent: Event,
   createEvent: Event,
   createPermission: Permission,
+  createMembershipRedemptionCode: RedemptionCode,
+  redeemRedemptionCode: RedemptionCode,
   deleteResume: User,
   uploadResume: Resume,
   startMembershipTransaction: TransactionPayload,
@@ -151,6 +153,16 @@ export type MutationCreateEventArgs = {
 
 export type MutationCreatePermissionArgs = {
   data: PermissionCreateInput
+};
+
+
+export type MutationCreateMembershipRedemptionCodeArgs = {
+  membershipType: MembershipTypes
+};
+
+
+export type MutationRedeemRedemptionCodeArgs = {
+  redemptionCode: Scalars['String']
 };
 
 
@@ -223,6 +235,7 @@ export type Query = {
   event: Event,
   permissions: Array<Permission>,
   products: Array<Product>,
+  redemptionCodes: Array<RedemptionCode>,
   transactions: Array<Transaction>,
   me?: Maybe<User>,
 };
@@ -240,6 +253,14 @@ export type QuerySigArgs = {
 
 export type QueryEventArgs = {
   id: Scalars['Float']
+};
+
+export type RedemptionCode = {
+   __typename?: 'RedemptionCode',
+  id: Scalars['ID'],
+  redeemed?: Maybe<Scalars['Boolean']>,
+  expirationDate: Scalars['DateTime'],
+  transaction: Transaction,
 };
 
 export type Resume = {
@@ -277,11 +298,13 @@ export type SigUpdateInput = {
 export type Transaction = {
    __typename?: 'Transaction',
   id: Scalars['ID'],
-  intent: Scalars['String'],
-  charged: Scalars['Float'],
+  intent?: Maybe<Scalars['String']>,
+  charged?: Maybe<Scalars['Float']>,
+  paymentType: Scalars['String'],
   status: Scalars['String'],
   user: User,
   purchases: Array<Purchase>,
+  redemptionCode: RedemptionCode,
 };
 
 export type TransactionPayload = {
@@ -325,6 +348,19 @@ export type UserUpdateInput = {
   lastName?: Maybe<Scalars['String']>,
   email?: Maybe<Scalars['String']>,
 };
+export type RedeemRedemptionCodeMutationVariables = {
+  code: Scalars['String']
+};
+
+
+export type RedeemRedemptionCodeMutation = (
+  { __typename?: 'Mutation' }
+  & { redeemRedemptionCode: (
+    { __typename?: 'RedemptionCode' }
+    & Pick<RedemptionCode, 'id' | 'redeemed'>
+  ) }
+);
+
 export type GetMembershipMutationVariables = {
   membershipType: MembershipTypes
 };
@@ -364,6 +400,22 @@ export type MeExpirationQuery = (
   )> }
 );
 
+export const RedeemRedemptionCodeDocument = gql`
+    mutation RedeemRedemptionCode($code: String!) {
+  redeemRedemptionCode(redemptionCode: $code) {
+    id
+    redeemed
+  }
+}
+    `;
+export type RedeemRedemptionCodeMutationFn = ApolloReactCommon.MutationFunction<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>;
+
+    export function useRedeemRedemptionCodeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>) {
+      return ApolloReactHooks.useMutation<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>(RedeemRedemptionCodeDocument, baseOptions);
+    }
+export type RedeemRedemptionCodeMutationHookResult = ReturnType<typeof useRedeemRedemptionCodeMutation>;
+export type RedeemRedemptionCodeMutationResult = ApolloReactCommon.MutationResult<RedeemRedemptionCodeMutation>;
+export type RedeemRedemptionCodeMutationOptions = ApolloReactCommon.BaseMutationOptions<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>;
 export const GetMembershipDocument = gql`
     mutation GetMembership($membershipType: MembershipTypes!) {
   startMembershipTransaction(membershipType: $membershipType) {

@@ -18,6 +18,14 @@ import { IContext, IUserInfo } from "../lib/interfaces";
 import { Application } from "../resources/Application";
 import { User } from "../resources/User";
 
+interface IPassportCallback extends VerifiedCallback {
+  (error: any, user?: User, info?: IPassportInfo): void;
+}
+
+interface IPassportInfo {
+  scope?: string;
+}
+
 export const authFromBearer = async (
   ctx: IContext,
   next: (err?: any) => Promise<any>
@@ -39,9 +47,13 @@ export const authFromBearer = async (
     await passport.authenticate(
       authStrategy,
       { session: false },
-      async (err: any, user: User, info: any) => {
+      async (err: any, user?: User, info?: IPassportInfo) => {
         if (user) {
           await ctx.login(user);
+        }
+
+        if (info && info.scope) {
+          ctx.state.scope = info.scope;
         }
       }
     )(ctx, next);
@@ -66,8 +78,14 @@ const JWT_OPTS: StrategyOptions = {
 passport.use(
   new JwtStrategy(
     JWT_OPTS,
-    async (req: { headers: any }, payload: any, done: VerifiedCallback) => {
-      const { sub, picture } = payload;
+    async (req: { headers: any }, payload: any, done: IPassportCallback) => {
+      const { sub, picture, scope } = payload;
+
+      if (sub.includes("@clients")) {
+        done(undefined, undefined, { scope });
+
+        return;
+      }
 
       try {
         let user = await User.findOne({
@@ -103,8 +121,9 @@ passport.use(
           user.sub = userInfo.sub;
           user = await user.save();
         }
-        done(undefined, user);
+        done(undefined, user, { scope });
       } catch (err) {
+        console.log(err);
         done(err, undefined);
       }
     }
@@ -112,7 +131,7 @@ passport.use(
 );
 
 passport.use(
-  new BearerStrategy(async (token: string, done: any) => {
+  new BearerStrategy(async (token: string, done: IPassportCallback) => {
     try {
       if (token.length !== 36) {
         return done(new Error("Invalid UUID Length"), undefined);
@@ -132,11 +151,11 @@ passport.use(
   })
 );
 
-passport.serializeUser((user: User, done: any) => {
+passport.serializeUser((user: User, done: IPassportCallback) => {
   done(undefined, user.id);
 });
 
-passport.deserializeUser(async (userID: string, done: any) => {
+passport.deserializeUser(async (userID: string, done: IPassportCallback) => {
   const user = await User.findOne({ id: userID });
   if (user) {
     done(undefined, user);
