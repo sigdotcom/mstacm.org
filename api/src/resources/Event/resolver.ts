@@ -1,13 +1,14 @@
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
-
 import {
   DeepPartial,
   getRepository,
   MoreThanOrEqual,
   Repository
 } from "typeorm";
+
 import { IContext } from "../../lib/interfaces";
 import { Sig } from "../Sig";
+import { User } from "../User";
 import { Event } from "./entity";
 import {
   EventCreateInput,
@@ -19,6 +20,9 @@ interface INumber {
   id: number;
 }
 
+/**
+ * Resolvers for viewing and modifying the Event entity
+ */
 @Resolver((returns: void) => Event)
 export class EventResolver {
   public repository: Repository<Event> = getRepository(Event);
@@ -37,7 +41,6 @@ export class EventResolver {
   @Authorized("SUPERADMIN")
   @Mutation((returns: void) => Event)
   public async updateEvent(
-    @Ctx() context: IContext,
     @Arg("id", (argType: void) => Number) id: number,
     @Arg("data", (argType: void) => EventUpdateInput)
     input: DeepPartial<Event>
@@ -62,8 +65,8 @@ export class EventResolver {
     @Arg("data", (argType: void) => EventCreateInput)
     input: DeepPartial<Event>
   ): Promise<Event> {
-    const creator = context.state.user;
-    const hostSig = await this.sigRepository.findOneOrFail({
+    const creator: User = context.state.user;
+    const hostSig: Sig = await this.sigRepository.findOneOrFail({
       name: String(input.hostSig)
     });
     input.hostSig = hostSig;
@@ -86,7 +89,6 @@ export class EventResolver {
     });
   }
 
-  @Authorized("SUPERADMIN")
   @Query((returns: void) => Event)
   protected async event(
     @Arg("id", (argType: void) => Number) id: number

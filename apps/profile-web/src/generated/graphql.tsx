@@ -325,104 +325,63 @@ export type UserUpdateInput = {
   lastName?: Maybe<Scalars['String']>,
   email?: Maybe<Scalars['String']>,
 };
-export type GetMembershipMutationVariables = {
-  membershipType: MembershipTypes
+export type UploadResumeMutationVariables = {
+  resume: Scalars['Upload'],
+  grad: Scalars['DateTime'],
+  fname: Scalars['String'],
+  lname: Scalars['String']
 };
 
 
-export type GetMembershipMutation = (
+export type UploadResumeMutation = (
   { __typename?: 'Mutation' }
-  & { startMembershipTransaction: (
-    { __typename?: 'TransactionPayload' }
-    & Pick<TransactionPayload, 'id' | 'charged' | 'clientSecret'>
+  & { uploadResume: (
+    { __typename?: 'Resume' }
+    & Pick<Resume, 'url'>
   ) }
 );
 
-export type GetCurrentEventsQueryVariables = {};
+export type MeQueryVariables = {};
 
 
-export type GetCurrentEventsQuery = (
-  { __typename?: 'Query' }
-  & { currentEvents: Array<(
-    { __typename?: 'Event' }
-    & Pick<Event, 'id' | 'dateCreated' | 'dateHosted' | 'dateExpire' | 'eventTitle' | 'description' | 'location' | 'flierLink' | 'eventLink'>
-    & { hostSig: (
-      { __typename?: 'Sig' }
-      & Pick<Sig, 'name'>
-    ) }
-  )> }
-);
-
-export type MeExpirationQueryVariables = {};
-
-
-export type MeExpirationQuery = (
+export type MeQuery = (
   { __typename?: 'Query' }
   & { me: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'membershipExpiration'>
+    & Pick<User, 'firstName' | 'lastName'>
   )> }
 );
 
-export const GetMembershipDocument = gql`
-    mutation GetMembership($membershipType: MembershipTypes!) {
-  startMembershipTransaction(membershipType: $membershipType) {
-    id
-    charged
-    clientSecret
+export const UploadResumeDocument = gql`
+    mutation uploadResume($resume: Upload!, $grad: DateTime!, $fname: String!, $lname: String!) {
+  uploadResume(resume: $resume, graduationDate: $grad, firstName: $fname, lastName: $lname) {
+    url
   }
 }
     `;
-export type GetMembershipMutationFn = ApolloReactCommon.MutationFunction<GetMembershipMutation, GetMembershipMutationVariables>;
+export type UploadResumeMutationFn = ApolloReactCommon.MutationFunction<UploadResumeMutation, UploadResumeMutationVariables>;
 
-    export function useGetMembershipMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<GetMembershipMutation, GetMembershipMutationVariables>) {
-      return ApolloReactHooks.useMutation<GetMembershipMutation, GetMembershipMutationVariables>(GetMembershipDocument, baseOptions);
+    export function useUploadResumeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UploadResumeMutation, UploadResumeMutationVariables>) {
+      return ApolloReactHooks.useMutation<UploadResumeMutation, UploadResumeMutationVariables>(UploadResumeDocument, baseOptions);
     }
-export type GetMembershipMutationHookResult = ReturnType<typeof useGetMembershipMutation>;
-export type GetMembershipMutationResult = ApolloReactCommon.MutationResult<GetMembershipMutation>;
-export type GetMembershipMutationOptions = ApolloReactCommon.BaseMutationOptions<GetMembershipMutation, GetMembershipMutationVariables>;
-export const GetCurrentEventsDocument = gql`
-    query getCurrentEvents {
-  currentEvents {
-    id
-    dateCreated
-    dateHosted
-    dateExpire
-    hostSig {
-      name
-    }
-    eventTitle
-    description
-    location
-    flierLink
-    eventLink
-  }
-}
-    `;
-
-    export function useGetCurrentEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
-      return ApolloReactHooks.useQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
-    }
-      export function useGetCurrentEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
-        return ApolloReactHooks.useLazyQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
-      }
-      
-export type GetCurrentEventsQueryHookResult = ReturnType<typeof useGetCurrentEventsQuery>;
-export type GetCurrentEventsQueryResult = ApolloReactCommon.QueryResult<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>;
-export const MeExpirationDocument = gql`
-    query MeExpiration {
+export type UploadResumeMutationHookResult = ReturnType<typeof useUploadResumeMutation>;
+export type UploadResumeMutationResult = ApolloReactCommon.MutationResult<UploadResumeMutation>;
+export type UploadResumeMutationOptions = ApolloReactCommon.BaseMutationOptions<UploadResumeMutation, UploadResumeMutationVariables>;
+export const MeDocument = gql`
+    query me {
   me {
-    membershipExpiration
+    firstName
+    lastName
   }
 }
     `;
 
-    export function useMeExpirationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeExpirationQuery, MeExpirationQueryVariables>) {
-      return ApolloReactHooks.useQuery<MeExpirationQuery, MeExpirationQueryVariables>(MeExpirationDocument, baseOptions);
+    export function useMeQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeQuery, MeQueryVariables>) {
+      return ApolloReactHooks.useQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
     }
-      export function useMeExpirationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeExpirationQuery, MeExpirationQueryVariables>) {
-        return ApolloReactHooks.useLazyQuery<MeExpirationQuery, MeExpirationQueryVariables>(MeExpirationDocument, baseOptions);
+      export function useMeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
+        return ApolloReactHooks.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
       }
       
-export type MeExpirationQueryHookResult = ReturnType<typeof useMeExpirationQuery>;
-export type MeExpirationQueryResult = ApolloReactCommon.QueryResult<MeExpirationQuery, MeExpirationQueryVariables>;
+export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
+export type MeQueryResult = ApolloReactCommon.QueryResult<MeQuery, MeQueryVariables>;

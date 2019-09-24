@@ -155,9 +155,6 @@ export type MutationCreatePermissionArgs = {
 
 
 export type MutationUploadResumeArgs = {
-  lastName: Scalars['String'],
-  firstName: Scalars['String'],
-  graduationDate: Scalars['DateTime'],
   resume: Scalars['Upload']
 };
 
@@ -219,10 +216,10 @@ export type Query = {
   sig: Sig,
   sigs: Array<Sig>,
   events: Array<Event>,
-  currentEvents: Array<Event>,
   event: Event,
   permissions: Array<Permission>,
   products: Array<Product>,
+  resumes: Array<Resume>,
   transactions: Array<Transaction>,
   me?: Maybe<User>,
 };
@@ -247,7 +244,7 @@ export type Resume = {
   id: Scalars['ID'],
   url: Scalars['String'],
   added: Scalars['DateTime'],
-  user?: Maybe<User>,
+  user: User,
 };
 
 export type Sig = {
@@ -299,13 +296,14 @@ export type User = {
   lastName?: Maybe<Scalars['String']>,
   email: Scalars['String'],
   emailVerified: Scalars['Boolean'],
+  profilePictureUrl: Scalars['String'],
+  graduationDate?: Maybe<Scalars['DateTime']>,
   isSuperAdmin?: Maybe<Scalars['Boolean']>,
   dateJoined: Scalars['DateTime'],
   membershipExpiration?: Maybe<Scalars['DateTime']>,
   isActive?: Maybe<Scalars['Boolean']>,
   resume?: Maybe<Resume>,
-  permissions: Array<Permission>,
-  graduationDate?: Maybe<Scalars['DateTime']>,
+  permissions?: Maybe<Array<Permission>>,
 };
 
 export type UserCreateInput = {
@@ -325,104 +323,44 @@ export type UserUpdateInput = {
   lastName?: Maybe<Scalars['String']>,
   email?: Maybe<Scalars['String']>,
 };
-export type GetMembershipMutationVariables = {
-  membershipType: MembershipTypes
-};
+export type ResumeCardsQueryVariables = {};
 
 
-export type GetMembershipMutation = (
-  { __typename?: 'Mutation' }
-  & { startMembershipTransaction: (
-    { __typename?: 'TransactionPayload' }
-    & Pick<TransactionPayload, 'id' | 'charged' | 'clientSecret'>
-  ) }
-);
-
-export type GetCurrentEventsQueryVariables = {};
-
-
-export type GetCurrentEventsQuery = (
+export type ResumeCardsQuery = (
   { __typename?: 'Query' }
-  & { currentEvents: Array<(
-    { __typename?: 'Event' }
-    & Pick<Event, 'id' | 'dateCreated' | 'dateHosted' | 'dateExpire' | 'eventTitle' | 'description' | 'location' | 'flierLink' | 'eventLink'>
-    & { hostSig: (
-      { __typename?: 'Sig' }
-      & Pick<Sig, 'name'>
+  & { resumes: Array<(
+    { __typename?: 'Resume' }
+    & Pick<Resume, 'url' | 'added'>
+    & { user: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'firstName' | 'lastName' | 'email' | 'profilePictureUrl' | 'graduationDate'>
     ) }
   )> }
 );
 
-export type MeExpirationQueryVariables = {};
-
-
-export type MeExpirationQuery = (
-  { __typename?: 'Query' }
-  & { me: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'membershipExpiration'>
-  )> }
-);
-
-export const GetMembershipDocument = gql`
-    mutation GetMembership($membershipType: MembershipTypes!) {
-  startMembershipTransaction(membershipType: $membershipType) {
-    id
-    charged
-    clientSecret
-  }
-}
-    `;
-export type GetMembershipMutationFn = ApolloReactCommon.MutationFunction<GetMembershipMutation, GetMembershipMutationVariables>;
-
-    export function useGetMembershipMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<GetMembershipMutation, GetMembershipMutationVariables>) {
-      return ApolloReactHooks.useMutation<GetMembershipMutation, GetMembershipMutationVariables>(GetMembershipDocument, baseOptions);
+export const ResumeCardsDocument = gql`
+    query ResumeCards {
+  resumes {
+    url
+    added
+    user {
+      id
+      firstName
+      lastName
+      email
+      profilePictureUrl
+      graduationDate
     }
-export type GetMembershipMutationHookResult = ReturnType<typeof useGetMembershipMutation>;
-export type GetMembershipMutationResult = ApolloReactCommon.MutationResult<GetMembershipMutation>;
-export type GetMembershipMutationOptions = ApolloReactCommon.BaseMutationOptions<GetMembershipMutation, GetMembershipMutationVariables>;
-export const GetCurrentEventsDocument = gql`
-    query getCurrentEvents {
-  currentEvents {
-    id
-    dateCreated
-    dateHosted
-    dateExpire
-    hostSig {
-      name
-    }
-    eventTitle
-    description
-    location
-    flierLink
-    eventLink
   }
 }
     `;
 
-    export function useGetCurrentEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
-      return ApolloReactHooks.useQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
+    export function useResumeCardsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ResumeCardsQuery, ResumeCardsQueryVariables>) {
+      return ApolloReactHooks.useQuery<ResumeCardsQuery, ResumeCardsQueryVariables>(ResumeCardsDocument, baseOptions);
     }
-      export function useGetCurrentEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
-        return ApolloReactHooks.useLazyQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
+      export function useResumeCardsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ResumeCardsQuery, ResumeCardsQueryVariables>) {
+        return ApolloReactHooks.useLazyQuery<ResumeCardsQuery, ResumeCardsQueryVariables>(ResumeCardsDocument, baseOptions);
       }
       
-export type GetCurrentEventsQueryHookResult = ReturnType<typeof useGetCurrentEventsQuery>;
-export type GetCurrentEventsQueryResult = ApolloReactCommon.QueryResult<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>;
-export const MeExpirationDocument = gql`
-    query MeExpiration {
-  me {
-    membershipExpiration
-  }
-}
-    `;
-
-    export function useMeExpirationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeExpirationQuery, MeExpirationQueryVariables>) {
-      return ApolloReactHooks.useQuery<MeExpirationQuery, MeExpirationQueryVariables>(MeExpirationDocument, baseOptions);
-    }
-      export function useMeExpirationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeExpirationQuery, MeExpirationQueryVariables>) {
-        return ApolloReactHooks.useLazyQuery<MeExpirationQuery, MeExpirationQueryVariables>(MeExpirationDocument, baseOptions);
-      }
-      
-export type MeExpirationQueryHookResult = ReturnType<typeof useMeExpirationQuery>;
-export type MeExpirationQueryResult = ApolloReactCommon.QueryResult<MeExpirationQuery, MeExpirationQueryVariables>;
+export type ResumeCardsQueryHookResult = ReturnType<typeof useResumeCardsQuery>;
+export type ResumeCardsQueryResult = ApolloReactCommon.QueryResult<ResumeCardsQuery, ResumeCardsQueryVariables>;
