@@ -56,6 +56,14 @@ export class User extends BaseEntity {
   @Column()
   public emailVerified: boolean;
 
+  @Field()
+  @Column({ default: "https://www.gravatar.com/avatar/?d=identicon&s=140" })
+  public profilePictureUrl: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  public graduationDate?: Date;
+
   @Field({ defaultValue: false })
   @Column({ default: false })
   public isSuperAdmin: boolean;
@@ -81,7 +89,7 @@ export class User extends BaseEntity {
   @JoinColumn()
   public resume: Lazy<Resume>;
 
-  @Field((returns: void) => [Permission])
+  @Field((returns: void) => [Permission], { nullable: true })
   @JoinTable()
   @ManyToMany(
     (returns: void) => Permission,

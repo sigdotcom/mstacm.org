@@ -3,6 +3,7 @@ import {
   BlobURL,
   BlockBlobURL,
   ContainerURL,
+  IUploadStreamToBlockBlobOptions,
   Pipeline,
   ServiceURL,
   SharedKeyCredential,
@@ -28,10 +29,7 @@ const generatePipeline = (): Pipeline => {
 
 const generateContainerURL = (containerName: string): ContainerURL => {
   const pipeline = generatePipeline();
-  const serviceURL = new ServiceURL(
-    `https://${STORAGE_ACCOUNT}.blob.core.windows.net`,
-    pipeline
-  );
+  const serviceURL = new ServiceURL(`${config.AZURE_CDN_URI}`, pipeline);
 
   return ContainerURL.fromServiceURL(serviceURL, CONTAINER_NAME);
 };
@@ -53,7 +51,8 @@ export const deleteFile = async (url: string) => {
 
 export const uploadFile = async (
   stream: Readable,
-  filename: string
+  filename: string,
+  options?: IUploadStreamToBlockBlobOptions
 ): Promise<string> => {
   const containerURL = generateContainerURL(CONTAINER_NAME);
   try {
@@ -65,7 +64,8 @@ export const uploadFile = async (
     stream,
     blockBlobURL,
     EIGHT_MB,
-    16
+    16,
+    options
   );
 
   return Promise.resolve(blockBlobURL.url);

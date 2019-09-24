@@ -27,7 +27,7 @@ export class Resume extends BaseEntity {
   @CreateDateColumn()
   public readonly added: Date;
 
-  @Field((returns: void) => User, { nullable: true })
+  @Field((returns: void) => User)
   @OneToOne((type: void) => User, (user: User) => user.resume, {
     lazy: true,
     onDelete: "SET NULL"

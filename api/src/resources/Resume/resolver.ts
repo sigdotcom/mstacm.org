@@ -1,9 +1,10 @@
 import { UserInputError } from "apollo-server";
 import * as fileType from "file-type";
 import { GraphQLUpload } from "graphql-upload";
-import { Arg, Authorized, Ctx, Mutation, Resolver } from "type-graphql";
+import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import { getConnection, Repository } from "typeorm";
 import { v4 as uuid } from "uuid";
+
 import { deleteFile, uploadFile } from "../../lib/files";
 import { IContext } from "../../lib/interfaces";
 import { User } from "../User";
@@ -15,7 +16,10 @@ const deleteResumeHelper = async (resume: Resume) => {
   await resume.remove();
 };
 
-@Resolver((of: void) => Resume)
+/**
+ * Resolver for Resume Entity
+ */
+@Resolver((entity: void) => Resume)
 export class ResumeResolver {
   public resumeRepo: Repository<Resume> = getConnection().getRepository(Resume);
 
@@ -61,7 +65,11 @@ export class ResumeResolver {
 
     const id = uuid();
     const filename = `${id}.pdf`;
-    const url = await uploadFile(resume.createReadStream(), filename);
+    const url = await uploadFile(resume.createReadStream(), filename, {
+      blobHTTPHeaders: {
+        blobContentType: "application/pdf"
+      }
+    });
 
     user.graduationDate = graduationDate;
     user.firstName = firstName;
@@ -74,5 +82,11 @@ export class ResumeResolver {
     });
 
     return userResume.save();
+  }
+
+  @Authorized("view:resume")
+  @Query((returns: void) => [Resume])
+  public async resumes(): Promise<Resume[]> {
+    return this.resumeRepo.find();
   }
 }
