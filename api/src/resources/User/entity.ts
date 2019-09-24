@@ -130,5 +130,5 @@ export class User extends BaseEntity {
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  public graduationDate: Date;
+  public graduationDate?: Date;
 }

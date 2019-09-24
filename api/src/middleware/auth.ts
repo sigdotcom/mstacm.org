@@ -40,7 +40,6 @@ export const authFromBearer = async (
       authStrategy,
       { session: false },
       async (err: any, user: User, info: any) => {
-        console.log(err, user, info);
         if (user) {
           await ctx.login(user);
         }
