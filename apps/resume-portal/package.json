@@ -28,7 +28,7 @@
     "watch:types": "graphql-codegen --config codegen.yml -w",
     "run": "react-scripts start",
     "start": "npm-run-all -p watch:css watch:types run",
-    "build": "yarn build:css && yearn build:types && react-scripts build",
+    "build": "yarn build:css; yarn build:types; react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
