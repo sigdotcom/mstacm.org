@@ -74,6 +74,7 @@ export class User extends BaseEntity {
 
   @Field((returns: void) => Resume, { nullable: true })
   @OneToOne((returns: void) => Resume, (resume: Resume) => resume.user, {
+    cascade: true,
     lazy: true,
     onDelete: "SET NULL"
   })
