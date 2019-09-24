@@ -1,48 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { FavoritesButton } from "../../components/FavoritesButton";
 import { FavoritesDrawer } from "../../components/FavoritesDrawer";
-import { Loader } from "../../components/Loader";
 import { ResumeList } from "../../components/ResumeList";
 import { ResumePagination } from "../../components/ResumePagination";
 import { SearchBar } from "../../components/SearchBar";
 
-import { config } from "../../config";
 import { FavoritesContext } from "../../context/FavoritesContext";
-import { useAuth0 } from "../../utils/react-auth0-wrapper";
 
 const ResumesPage: React.FC = () => {
   const [search, setSearch] = useState<string>("");
   const [visible, setVisible] = useState<boolean>(false);
   const { filterFavorites, setFilterFavorites } = useContext(FavoritesContext);
-
-  const {
-    loading,
-    isAuthenticated,
-    loginWithRedirect,
-    getTokenSilently
-  } = useAuth0();
-  const path = "/";
-
-  useEffect(() => {
-    if (loading || isAuthenticated) {
-      return;
-    } else if (isAuthenticated) {
-      const setToken: () => void = async (): Promise<void> => {
-        const token: string = (await getTokenSilently()) || "";
-        localStorage.setItem(config.ACCESS_TOKEN_KEY, token);
-      };
-
-      setToken();
-    } else {
-      const fn = async () => {
-        await loginWithRedirect({
-          appState: { targetUrl: path }
-        });
-      };
-      fn();
-    }
-  }, [loading, isAuthenticated, loginWithRedirect, path, getTokenSilently]);
 
   const openDrawer = (): void => {
     setVisible(true);
@@ -65,15 +34,6 @@ const ResumesPage: React.FC = () => {
   const openDrawerOnClick = (e: any) => {
     openDrawer();
   };
-
-  if (loading || !isAuthenticated) {
-    return (
-      <div className="h-screen w-full flex content-center justify-center items-center">
-        <Loader />
-        <div className="text-2xl">Loading...</div>
-      </div>
-    );
-  }
 
   return (
     <div style={{ height: "100%" }}>
