@@ -42,16 +42,14 @@ const App: React.SFC<{}> = (): JSX.Element => {
       };
 
       fn();
+    } else {
+      const setToken: () => void = async (): Promise<void> => {
+        const token: string = (await getTokenSilently()) || "";
+        localStorage.setItem(config.ACCESS_TOKEN_KEY, token);
+      };
 
-      return;
+      setToken();
     }
-
-    const setToken: () => void = async (): Promise<void> => {
-      const token: string = (await getTokenSilently()) || "";
-      localStorage.setItem(config.ACCESS_TOKEN_KEY, token);
-    };
-
-    setToken();
   }, [loading, isAuthenticated, getTokenSilently]);
 
   const onLogoutClick: () => void = (): void => {

@@ -1,12 +1,12 @@
-import React from "reactn";
-import styled from "styled-components";
+import * as React from "reactn";
+import styled, { AnyStyledComponent } from "styled-components";
 
-const Wrapper: any = styled.div`
+const Wrapper: AnyStyledComponent = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-const Header: React.SFC<{}> = (): JSX.Element => {
+const Header: React.SFC = (): JSX.Element => {
   return (
     <Wrapper>
       <h1>Submit Resume</h1>

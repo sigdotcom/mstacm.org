@@ -44,12 +44,16 @@ export const GET_ME: any = gql`
   }
 `;
 
-const ResumeFormBase: React.FC<any> = ({
+interface IResumeFormProps {
+  form: any;
+  setResumeUrl(x: string): void;
+}
+
+const ResumeFormBase: React.FC<IResumeFormProps> = ({
   form,
-  setSubmitted,
   setResumeUrl
-}: any): JSX.Element => {
-  const [files, setFiles] = useState<any>([]);
+}: IResumeFormProps): JSX.Element => {
+  const [files, setFiles] = useState<File[]>([]);
 
   const [uploadResume] = useUploadResumeMutation();
   let errCount: number = 1;

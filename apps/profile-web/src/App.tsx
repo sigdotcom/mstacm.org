@@ -11,7 +11,7 @@ import { Layout, Menu, PageHeader, Spin } from "antd";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const MainContent: React.SFC<{}> = (): JSX.Element => {
+const MainContent: React.SFC = (): JSX.Element => {
   return (
     <Switch>
       <Route exact={true} path="/" component={SubmitResume} />
@@ -19,7 +19,7 @@ const MainContent: React.SFC<{}> = (): JSX.Element => {
   );
 };
 
-const App: React.SFC<{}> = (): JSX.Element => {
+const App: React.FC = (): JSX.Element => {
   const {
     loading,
     isAuthenticated,
@@ -40,7 +40,6 @@ const App: React.SFC<{}> = (): JSX.Element => {
       setToken();
     } else {
       const fn: any = async (): Promise<void> => {
-        console.log("HELP");
         await loginWithRedirect({
           appState: { targetUrl: window.location.origin }
         });
