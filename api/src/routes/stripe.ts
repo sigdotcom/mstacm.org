@@ -5,16 +5,11 @@ import * as Router from "koa-router";
 import { events, paymentIntents } from "stripe";
 
 import { config } from "../config";
-import { MembershipTypes } from "../lib/products";
+import { fulfillProduct } from "../lib/products";
 import { stripe } from "../lib/stripe";
 import { User } from "../resources/User";
 
 const router = new Router();
-
-const addDates: any = {
-  [MembershipTypes.SEMESTERLY]: 6,
-  [MembershipTypes.YEARLY]: 12
-};
 
 /**
  * Stripe payment intent callback
@@ -51,22 +46,18 @@ router.post("callback", async (ctx: Koa.ParameterizedContext) => {
       }
 
       const user: User = await User.findOneOrFail({ id: userId });
-      const curDate: Date = new Date();
-      let newMonth: number = curDate.getMonth() + addDates[productTag];
-
-      const normalizedMonth: number = (newMonth % 12) + 1;
-
-      if (normalizedMonth > 5 && normalizedMonth < 8) {
-        newMonth += 8 - normalizedMonth;
+      try {
+        await fulfillProduct(productTag, user);
+      } catch (e) {
+        ctx.throw(500, `Webhook Error: Unexpected error: ${e.message}`);
       }
-
-      user.membershipExpiration = new Date(curDate.setMonth(newMonth));
-      await user.save();
 
       break;
     default:
       // Unexpected event type
       ctx.throw(400, `Webhook Error: Unexpected event ${stripeEvent.type}`);
+
+      return;
   }
 
   ctx.status = 200;

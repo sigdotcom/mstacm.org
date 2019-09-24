@@ -5,6 +5,8 @@ export interface IConfig {
   AUTH0_CLIENT_ID: string;
   AUTH0_DOMAIN: string;
   CDN_URI: string;
+  REDEMPTION_CODE_KEY: string;
+  REDEMPTION_QUERY_PARAM_KEY: string;
   STRIPE_PUBLIC_KEY: string;
 }
 
@@ -20,6 +22,8 @@ export const config: IConfig = {
     process.env.REACT_APP_AUTH0_CLIENT_ID || "na6x6uijGdUE2zpiu9MqmSRQwGUdhNQl",
   AUTH0_DOMAIN: process.env.REACT_APP_AUTH0_DOMAIN || "mstacm-test.auth0.com",
   CDN_URI: process.env.REACT_APP_CDN_URI || "https://cdn.mstacm.org",
+  REDEMPTION_CODE_KEY: "redemption_code",
+  REDEMPTION_QUERY_PARAM_KEY: "redeem",
   STRIPE_PUBLIC_KEY:
     process.env.REACT_APP_STRIPE_PUBLIC_KEY ||
     "pk_test_5K6vSoTGrPyY2cBw3nNSixV300Z8JOVkl7"

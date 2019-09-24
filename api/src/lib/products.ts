@@ -1,3 +1,4 @@
+import { paymentIntents } from "stripe";
 import { Field, ObjectType, registerEnumType } from "type-graphql";
 
 import { Product } from "../resources/Product";
@@ -5,7 +6,7 @@ import { Purchase } from "../resources/Purchase";
 import { Transaction } from "../resources/Transaction";
 import { User } from "../resources/User";
 
-import { paymentIntents } from "stripe";
+import { BadUserInputError } from "./errors";
 import { stripe } from "./stripe";
 
 // WARNING: be very careful about editting this file
@@ -26,6 +27,11 @@ export enum MembershipTypes {
   YEARLY = "yearly-membership",
   SEMESTERLY = "semesterly-membership"
 }
+
+const addDates: any = {
+  [MembershipTypes.SEMESTERLY]: 6,
+  [MembershipTypes.YEARLY]: 12
+};
 
 registerEnumType(MembershipTypes, {
   name: "MembershipTypes", // this one is mandatory
@@ -74,10 +80,32 @@ export const purchaseSingleProduct = async (
   const newTransaction: Transaction = await Transaction.create({
     charged: normalizedCost,
     intent: intent.id,
-    purchases: [reqProductPurchase]
+    purchases: [reqProductPurchase],
+    user
   });
 
   const savedTransaction: Transaction = await newTransaction.save();
 
   return Promise.resolve({ transaction: savedTransaction, intent });
+};
+
+export const fulfillProduct = async (productTag: string, user: User) => {
+  const curDate: Date = new Date();
+
+  if (productTag in addDates) {
+    let newMonth: number = curDate.getMonth() + addDates[productTag];
+
+    const normalizedMonth: number = (newMonth % 12) + 1;
+
+    if (normalizedMonth > 5 && normalizedMonth < 8) {
+      newMonth += 8 - normalizedMonth;
+    }
+
+    user.membershipExpiration = new Date(curDate.setMonth(newMonth));
+    await user.save();
+  } else {
+    throw new BadUserInputError(
+      "We currently only support fulfilling ACM membership"
+    );
+  }
 };

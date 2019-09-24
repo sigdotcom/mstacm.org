@@ -94,6 +94,8 @@ export type Mutation = {
   updateEvent: Event,
   createEvent: Event,
   createPermission: Permission,
+  createMembershipRedemptionCode: RedemptionCode,
+  redeemRedemptionCode: RedemptionCode,
   deleteResume: User,
   uploadResume: Resume,
   startMembershipTransaction: TransactionPayload,
@@ -154,7 +156,20 @@ export type MutationCreatePermissionArgs = {
 };
 
 
+export type MutationCreateMembershipRedemptionCodeArgs = {
+  membershipType: MembershipTypes
+};
+
+
+export type MutationRedeemRedemptionCodeArgs = {
+  redemptionCode: Scalars['String']
+};
+
+
 export type MutationUploadResumeArgs = {
+  lastName: Scalars['String'],
+  firstName: Scalars['String'],
+  graduationDate: Scalars['DateTime'],
   resume: Scalars['Upload']
 };
 
@@ -216,9 +231,11 @@ export type Query = {
   sig: Sig,
   sigs: Array<Sig>,
   events: Array<Event>,
+  currentEvents: Array<Event>,
   event: Event,
   permissions: Array<Permission>,
   products: Array<Product>,
+  redemptionCodes: Array<RedemptionCode>,
   resumes: Array<Resume>,
   transactions: Array<Transaction>,
   me?: Maybe<User>,
@@ -237,6 +254,14 @@ export type QuerySigArgs = {
 
 export type QueryEventArgs = {
   id: Scalars['Float']
+};
+
+export type RedemptionCode = {
+   __typename?: 'RedemptionCode',
+  id: Scalars['ID'],
+  redeemed?: Maybe<Scalars['Boolean']>,
+  expirationDate: Scalars['DateTime'],
+  transaction: Transaction,
 };
 
 export type Resume = {
@@ -274,11 +299,13 @@ export type SigUpdateInput = {
 export type Transaction = {
    __typename?: 'Transaction',
   id: Scalars['ID'],
-  intent: Scalars['String'],
-  charged: Scalars['Float'],
+  intent?: Maybe<Scalars['String']>,
+  charged?: Maybe<Scalars['Float']>,
+  paymentType: Scalars['String'],
   status: Scalars['String'],
   user: User,
   purchases: Array<Purchase>,
+  redemptionCode: RedemptionCode,
 };
 
 export type TransactionPayload = {

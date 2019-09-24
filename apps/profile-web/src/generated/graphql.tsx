@@ -94,6 +94,8 @@ export type Mutation = {
   updateEvent: Event,
   createEvent: Event,
   createPermission: Permission,
+  createMembershipRedemptionCode: RedemptionCode,
+  redeemRedemptionCode: RedemptionCode,
   deleteResume: User,
   uploadResume: Resume,
   startMembershipTransaction: TransactionPayload,
@@ -151,6 +153,16 @@ export type MutationCreateEventArgs = {
 
 export type MutationCreatePermissionArgs = {
   data: PermissionCreateInput
+};
+
+
+export type MutationCreateMembershipRedemptionCodeArgs = {
+  membershipType: MembershipTypes
+};
+
+
+export type MutationRedeemRedemptionCodeArgs = {
+  redemptionCode: Scalars['String']
 };
 
 
@@ -223,6 +235,8 @@ export type Query = {
   event: Event,
   permissions: Array<Permission>,
   products: Array<Product>,
+  redemptionCodes: Array<RedemptionCode>,
+  resumes: Array<Resume>,
   transactions: Array<Transaction>,
   me?: Maybe<User>,
 };
@@ -242,12 +256,20 @@ export type QueryEventArgs = {
   id: Scalars['Float']
 };
 
+export type RedemptionCode = {
+   __typename?: 'RedemptionCode',
+  id: Scalars['ID'],
+  redeemed?: Maybe<Scalars['Boolean']>,
+  expirationDate: Scalars['DateTime'],
+  transaction: Transaction,
+};
+
 export type Resume = {
    __typename?: 'Resume',
   id: Scalars['ID'],
   url: Scalars['String'],
   added: Scalars['DateTime'],
-  user?: Maybe<User>,
+  user: User,
 };
 
 export type Sig = {
@@ -277,11 +299,13 @@ export type SigUpdateInput = {
 export type Transaction = {
    __typename?: 'Transaction',
   id: Scalars['ID'],
-  intent: Scalars['String'],
-  charged: Scalars['Float'],
+  intent?: Maybe<Scalars['String']>,
+  charged?: Maybe<Scalars['Float']>,
+  paymentType: Scalars['String'],
   status: Scalars['String'],
   user: User,
   purchases: Array<Purchase>,
+  redemptionCode: RedemptionCode,
 };
 
 export type TransactionPayload = {
@@ -299,13 +323,14 @@ export type User = {
   lastName?: Maybe<Scalars['String']>,
   email: Scalars['String'],
   emailVerified: Scalars['Boolean'],
+  profilePictureUrl: Scalars['String'],
+  graduationDate?: Maybe<Scalars['DateTime']>,
   isSuperAdmin?: Maybe<Scalars['Boolean']>,
   dateJoined: Scalars['DateTime'],
   membershipExpiration?: Maybe<Scalars['DateTime']>,
   isActive?: Maybe<Scalars['Boolean']>,
   resume?: Maybe<Resume>,
-  permissions: Array<Permission>,
-  graduationDate?: Maybe<Scalars['DateTime']>,
+  permissions?: Maybe<Array<Permission>>,
 };
 
 export type UserCreateInput = {

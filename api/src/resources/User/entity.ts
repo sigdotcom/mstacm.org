@@ -136,8 +136,4 @@ export class User extends BaseEntity {
   })
   @JoinTable()
   public createdEvents: Lazy<Event[]>;
-
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  public graduationDate?: Date;
 }
