@@ -24,7 +24,7 @@ import { Transaction } from "../Transaction";
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  @Field((type: void) => ID)
+  @Field((returns: void) => ID)
   @PrimaryGeneratedColumn("uuid")
   public readonly id: string;
 
@@ -73,7 +73,8 @@ export class User extends BaseEntity {
   public isActive: boolean;
 
   @Field((returns: void) => Resume, { nullable: true })
-  @OneToOne((type: void) => Resume, (resume: Resume) => resume.user, {
+  @OneToOne((returns: void) => Resume, (resume: Resume) => resume.user, {
+    cascade: true,
     lazy: true,
     onDelete: "SET NULL"
   })
@@ -83,20 +84,20 @@ export class User extends BaseEntity {
   @Field((returns: void) => [Permission])
   @JoinTable()
   @ManyToMany(
-    (type: void) => Permission,
+    (returns: void) => Permission,
     (permission: Permission) => permission.users,
     { lazy: true }
   )
   public permissions: Lazy<Permission[]>;
 
-  @OneToMany((type: void) => Group, (group: Group) => group.users, {
+  @OneToMany((returns: void) => Group, (group: Group) => group.users, {
     lazy: true
   })
   @JoinTable()
   public groups: Lazy<Group[]>;
 
   @OneToMany(
-    (type: void) => Application,
+    (returns: void) => Application,
     (application: Application) => application.user,
     {
       lazy: true
@@ -106,7 +107,7 @@ export class User extends BaseEntity {
   public applications: Lazy<Application[]>;
 
   @OneToMany(
-    (type: void) => Transaction,
+    (returns: void) => Transaction,
     (transaction: Transaction) => transaction.user,
     {
       lazy: true
@@ -115,16 +116,20 @@ export class User extends BaseEntity {
   @JoinTable()
   public transactions: Lazy<Transaction[]>;
 
-  @ManyToMany((type: void) => Sig, (sig: Sig) => sig.users, {
+  @ManyToMany((returns: void) => Sig, (sig: Sig) => sig.users, {
     lazy: true,
     nullable: true
   })
   @JoinTable()
   public sigs: Lazy<Sig[]>;
 
-  @OneToMany((type: void) => Event, (event: Event) => event.creator, {
+  @OneToMany((returns: void) => Event, (event: Event) => event.creator, {
     lazy: true
   })
   @JoinTable()
   public createdEvents: Lazy<Event[]>;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  public graduationDate?: Date;
 }

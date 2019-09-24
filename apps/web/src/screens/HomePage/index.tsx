@@ -6,6 +6,7 @@ import { Footer } from "./sections/Footer";
 import Hero from "./sections/Hero";
 import { Membership } from "./sections/Membership";
 import { Nav } from "./sections/Nav";
+import { ResumeBanner } from "./sections/ResumeBanner";
 import { SIGs } from "./sections/SIGs";
 import { Sponsors } from "./sections/Sponsors";
 
@@ -26,6 +27,7 @@ const NavHeroWrapper = styled.div`
 const HomePage: React.FC<{}> = () => {
   return (
     <div>
+      <ResumeBanner />
       <NavHeroWrapper>
         <Nav />
         <Hero />

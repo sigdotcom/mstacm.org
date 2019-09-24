@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 
-import { ToolList } from "./components/pages";
-import { Events } from "./components/pages/tools";
+import { SubmitResume } from "./components/SubmitResume";
 import { config } from "./config";
 import "./static/css/App.css";
 
@@ -12,16 +11,15 @@ import { Layout, Menu, PageHeader, Spin } from "antd";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const MainContent: React.SFC<{}> = (): JSX.Element => {
+const MainContent: React.SFC = (): JSX.Element => {
   return (
     <Switch>
-      <Route exact={true} path="/" component={ToolList} />
-      <Route exact={true} path="/events" component={Events} />
+      <Route exact={true} path="/" component={SubmitResume} />
     </Switch>
   );
 };
 
-const App: React.SFC<{}> = (): JSX.Element => {
+const App: React.FC = (): JSX.Element => {
   const {
     loading,
     isAuthenticated,
@@ -34,23 +32,21 @@ const App: React.SFC<{}> = (): JSX.Element => {
   useEffect(() => {
     if (loading) {
       return;
-    } else if (!isAuthenticated) {
+    } else if (isAuthenticated) {
+      const setToken: () => void = async (): Promise<void> => {
+        const token: string = (await getTokenSilently()) || "";
+        localStorage.setItem(config.ACCESS_TOKEN_KEY, token);
+      };
+      setToken();
+    } else {
       const fn: any = async (): Promise<void> => {
         await loginWithRedirect({
           appState: { targetUrl: window.location.origin }
         });
       };
-
       fn();
-    } else {
-      const setToken: () => void = async (): Promise<void> => {
-        const token: string = (await getTokenSilently()) || "";
-        localStorage.setItem(config.ACCESS_TOKEN_KEY, token);
-      };
-
-      setToken();
     }
-  }, [loading, isAuthenticated, getTokenSilently]);
+  }, [loading, isAuthenticated, loginWithRedirect, getTokenSilently]);
 
   const onLogoutClick: () => void = (): void => {
     logout({ returnTo: config.REDIRECT_PAGE_URI });
@@ -70,10 +66,10 @@ const App: React.SFC<{}> = (): JSX.Element => {
           onCollapse={undefined}
         >
           <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={["events"]}>
-            <Menu.Item key="events">
-              <Link to="/events">
-                <span className="nav-text">Events</span>
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={["resume"]}>
+            <Menu.Item key="resume">
+              <Link to="/">
+                <span className="nav-text">Submit Resume</span>
               </Link>
             </Menu.Item>
             <Menu.Item onClick={onLogoutClick} key="signOut">
@@ -85,13 +81,13 @@ const App: React.SFC<{}> = (): JSX.Element => {
           <Header style={{ background: "#fff", padding: 0 }}>
             <PageHeader
               backIcon={false}
-              title={`Hello, ${user.name}. Welcome to your Admin Dashboard`}
+              title={`Hello, ${user.name}. Welcome to your Dashboard`}
             />
           </Header>
           <Content style={{ margin: "24px 16px 0" }}>
             <MainContent />
-            <Footer style={{ textAlign: "center" }}>S&T ACM 2019</Footer>
           </Content>
+          <Footer style={{ textAlign: "center" }}>S&T ACM 2019</Footer>
         </Layout>
       </Layout>
     </BrowserRouter>
