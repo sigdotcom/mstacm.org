@@ -12,6 +12,7 @@ import {
   Row,
   Upload
 } from "antd";
+import { UploadFile } from "antd/lib/upload/interface";
 
 import gql from "graphql-tag";
 
@@ -53,7 +54,7 @@ const ResumeFormBase: React.FC<IResumeFormProps> = ({
   form,
   setResumeUrl
 }: IResumeFormProps): JSX.Element => {
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<UploadFile[]>([]);
 
   const [uploadResume] = useUploadResumeMutation();
   let errCount: number = 1;
