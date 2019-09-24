@@ -34,6 +34,10 @@ export const authChecker: AuthChecker<IContext> = async (
   if (context.state.scope) {
     const scopes: string[] = context.state.scope.split(" ");
 
+    if (scopes.includes("all")) {
+      return true;
+    }
+
     if (scopes.some((scope: string) => roles.includes(scope))) {
       // grant access if the roles overlap
       return true;
