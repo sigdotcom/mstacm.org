@@ -356,8 +356,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
               >
                 {result.loading
                   ? "Loading events... Click here to take a look at our full calendar for more details."
-                  : "We have no events scheduled with this filter. Click here to take"}
-                a look at our full calendar for more details.
+                  : "We have no events scheduled with this filter. Click here to take a look at our full calendar for more details."}
               </CalendarLink>
             </EventsWrapper>
           </div>
