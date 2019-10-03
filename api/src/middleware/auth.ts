@@ -123,6 +123,7 @@ passport.use(
         }
         done(undefined, user, { scope });
       } catch (err) {
+        console.error("Login error", err);
         done(err, undefined);
       }
     }
