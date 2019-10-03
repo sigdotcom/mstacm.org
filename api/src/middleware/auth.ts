@@ -79,7 +79,7 @@ passport.use(
   new JwtStrategy(
     JWT_OPTS,
     async (req: { headers: any }, payload: any, done: IPassportCallback) => {
-      const { sub, picture, scope } = payload;
+      const { sub, scope } = payload;
 
       if (sub.includes("@clients")) {
         done(undefined, undefined, { scope });
@@ -117,13 +117,12 @@ passport.use(
           user.lastName = userInfo.family_name;
           user.email = userInfo.email;
           user.emailVerified = userInfo.email_verified;
-          user.profilePictureUrl = picture;
+          user.profilePictureUrl = userInfo.picture;
           user.sub = userInfo.sub;
           user = await user.save();
         }
         done(undefined, user, { scope });
       } catch (err) {
-        console.log(err);
         done(err, undefined);
       }
     }
