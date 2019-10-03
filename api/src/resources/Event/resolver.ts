@@ -29,7 +29,7 @@ export class EventResolver {
   public repository: Repository<Event> = getRepository(Event);
   public sigRepository: Repository<Sig> = getRepository(Sig);
 
-  @Authorized("SUPERADMIN")
+  @Authorized("delete:events")
   @Mutation((returns: void) => EventDeletePayload)
   public async deleteEvent(
     @Arg("id", (argType: void) => Number) id: number
@@ -39,7 +39,7 @@ export class EventResolver {
     return { id };
   }
 
-  @Authorized("SUPERADMIN")
+  @Authorized("update:events")
   @Mutation((returns: void) => Event)
   public async updateEvent(
     @Arg("id", (argType: void) => Number) id: number,
@@ -59,7 +59,7 @@ export class EventResolver {
     return updatedResource.save();
   }
 
-  @Authorized("SUPERADMIN")
+  @Authorized("create:events")
   @Mutation((returns: void) => Event)
   public async createEvent(
     @Ctx() context: IContext,
