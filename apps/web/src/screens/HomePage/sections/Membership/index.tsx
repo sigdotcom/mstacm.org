@@ -123,7 +123,7 @@ const Membership: React.FC = (): JSX.Element => {
     setTag(MembershipTypes.Semesterly);
 
   return (
-    <Element name="membership">
+    <Element name="membership" id="membership">
       <MembershipWrapper>
         <Line />
         <Modal

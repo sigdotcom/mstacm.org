@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { config } from "./config";
-import { HomePage, NotFoundPage } from "./screens";
+import { HomePage, NotFoundPage, PrivacyPolicyPage } from "./screens";
 import { useAuth0 } from "./utils/react-auth0-wrapper";
 
 import "./static/css/App.css";
@@ -37,6 +37,7 @@ const App: React.FC<{}> = (): JSX.Element => {
     <BrowserRouter>
       <Switch>
         <Route exact={true} path="/" component={HomePage} />
+        <Route exact={true} path="/privacy" component={PrivacyPolicyPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </BrowserRouter>

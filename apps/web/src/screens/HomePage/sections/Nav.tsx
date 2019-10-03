@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-scroll";
+import { HashLink as Link } from "react-router-hash-link";
 import styled from "styled-components";
 
 import { PageConstraint } from "../../../components/PageConstraint";
@@ -78,18 +78,24 @@ const Nav: React.FC<{}> = (): JSX.Element => {
       <PageConstraint>
         <Wrapper>
           <NavRow>
+<<<<<<< HEAD
             <Logo src={`${config.CDN_URI}/static/acm-logo.png`} />
+=======
+            <Link to="/">
+              <Logo src={require("../../../static/img/acm-logo.png")} />
+            </Link>
+>>>>>>> added privacy page
             <MenuItems>
-              <Link to="communities" smooth={true}>
+              <Link to="/#communities" smooth>
                 <MenuItem>Communities</MenuItem>
               </Link>
-              <Link to="events" smooth={true}>
+              <Link to="/#events" smooth>
                 <MenuItem>Events</MenuItem>
               </Link>
-              <Link to="sponsors" smooth={true}>
+              <Link to="/#sponsors" smooth>
                 <MenuItem>Sponsors</MenuItem>
               </Link>
-              <Link to="membership" smooth={true}>
+              <Link to="/#membership" smooth>
                 <MenuItem>Membership</MenuItem>
               </Link>
             </MenuItems>

@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Link } from "react-scroll";
+import { HashLink as Link } from "react-router-hash-link";
+
 import styled from "styled-components";
 
 import { PageConstraint } from "../../../components/PageConstraint";
@@ -187,13 +188,13 @@ const Footer: React.FC<{}> = (): JSX.Element => {
         <Wrapper>
           <Links>
             <PageLinks>
-              <Link to="communities" smooth={true}>
+              <Link to="/#communities" smooth={true}>
                 Communities
               </Link>
-              <Link to="events" smooth={true}>
+              <Link to="/#events" smooth={true}>
                 Events
               </Link>
-              <Link to="sponsors" smooth={true}>
+              <Link to="/#sponsors" smooth={true}>
                 Sponsors
               </Link>
             </PageLinks>
@@ -242,6 +243,11 @@ const Footer: React.FC<{}> = (): JSX.Element => {
                 >
                   License
                 </a>
+              </div>
+              <div>
+                <Link to="/privacy/#top">
+                  Privacy Policy
+                </Link> 
               </div>
             </Info>
           </Links>

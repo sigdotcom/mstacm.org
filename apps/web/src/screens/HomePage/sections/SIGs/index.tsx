@@ -121,7 +121,7 @@ const Line: AnyStyledComponent = styled.hr`
 
 const SIGs: React.FC = (): JSX.Element => {
   return (
-    <Element name="communities">
+    <Element name="communities" id="communities">
       <PageConstraint>
         <SIGsWrapper>
           <Heading>

@@ -94,7 +94,7 @@ const Logos = styled.div`
 const Sponsors: React.FC<{}> = (): JSX.Element => {
   return (
     <SponsorWrap>
-      <Element name="sponsors">
+      <Element name="sponsors" id="sponsors">
         <Sponsor>
           <h2>Big thanks to our sponsors and partners!</h2>
         </Sponsor>

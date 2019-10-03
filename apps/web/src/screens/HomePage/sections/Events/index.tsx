@@ -269,7 +269,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
   };
 
   return (
-    <Element name="events">
+    <Element name="events" id="events">
       <PageConstraint>
         <Wrapper>
           <div style={{ display: "flex" }}>
