@@ -1,6 +1,5 @@
 import React from "react";
 import Icon from "react-eva-icons";
-import windowSize from "react-window-size";
 import styled from "styled-components";
 import { ISIG } from "./interfaces";
 
@@ -142,7 +141,7 @@ interface ISIGDetailPaneProps {
   sig: ISIG;
 }
 
-const SIGDetailPaneBase: React.FC<ISIGDetailPaneProps> = (props: any): any => {
+const SIGDetailPane: React.FC<ISIGDetailPaneProps> = (props: any): any => {
   const { sig }: any = props;
 
   return (
@@ -169,5 +168,4 @@ const SIGDetailPaneBase: React.FC<ISIGDetailPaneProps> = (props: any): any => {
   );
 };
 
-const SIGDetailPane: any = windowSize(SIGDetailPaneBase);
 export { SIGDetailPane };
