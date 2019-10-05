@@ -12,7 +12,7 @@
 
 [![resumes.mstacm.org][product-screenshot]](https://resumes.mstacm.org)
 
-[admin.mstacm.org](https://admin.mstacm.org) is a company-facing page that
+[resumes.mstacm.org](https://resumes.mstacm.org) is a company-facing page that
 allows recruiters to view the S&T ACM resume database. The primary features include:
 + **Resume Previews** - Recruiters can preview resumes straight from the portal
   to save them time reading through resumes
