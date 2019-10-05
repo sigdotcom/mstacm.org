@@ -31,7 +31,6 @@ Future work hopes to expand upon these primary principles to make how
 companies, ACM members, and students interact with ACM as an organization more
 enjoyable and efficient.
 
--------
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
