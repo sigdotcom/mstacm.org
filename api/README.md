@@ -56,20 +56,26 @@ To get a local copy up and running follow these simple steps.
 # https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account
 git clone https:://github.com/sigdotcom/mstacm.org.git
 ```
-2. Nagivate to the `api` directory:
+2. Navigate to the `api` directory:
 ```sh
 cd api
 ```
-3. Copy the docker environment variables template into the docker environment
+
+3. Install necessary dependencies:
+```sh
+yarn install
+```
+
+4. Copy the docker environment variables template into the docker environment
    file:
 ```sh
 cd .docker/web.env.default .docker/web.env
 ```
-4. Start the docker containers using `docker-compose`:
+5. Start the docker containers using `docker-compose`:
 ```sh
 docker-compose up
 ```
-5. If everything goes well, it should look like:
+6. If everything goes well, it should look like:
 ```bash
 >>> docker-compose up
 Starting api_phoenix_db_1 ... done
@@ -91,7 +97,7 @@ phoenix_web_1    | Server is running, GraphQL Playground available at:
 phoenix_web_1    |
 phoenix_web_1    |       http://localhost/graphql || http://localhost:4000/graphql
 ```
-6. Navigate to [http://localhost/graphql](http://localhost/graphql). **NOTE**:
+7. Navigate to [http://localhost/graphql](http://localhost/graphql). **NOTE**:
    if you are using Docker on Windows 10 Home, you need to put the IP of your
    docker-machine instead of `localhost`. This is usually something like
    `192.168.99.100`. You should see something like:
