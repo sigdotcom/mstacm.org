@@ -1,4 +1,4 @@
-# mstacm.org
+# \*.mstacm.org
 [View Live](https://mstacm.org) |
 [Report Bug](https://github.com/sigdotcom/mstacm.org/issues) |
 [Request Feature](https://github.com/sigdotcom/mstacm.org/issues)
@@ -10,14 +10,12 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
-[![mstacm.org][product-screenshot]](https://mstacm.org)
-
 Monorepo containing all services running under the \*.mstacm.org domains built
 with [TypeScript](https://www.typescriptlang.org/), [Apollo
 GraphQL](https://www.apollographql.com/), and
 [Docker](https://www.apollographql.com/).
 
-[mstacm.org](https://mstacm.org) hopes to automate all of the manual task's ACM
+[\*.mstacm.org](https://mstacm.org) hopes to automate all of the manual task's ACM
 has performed primarily by hand include:
 + **Events** - Automatically advertise events via email, text, or app
   notifications; allow users to check-in to events; and pay for event
@@ -134,4 +132,3 @@ Project Link: [https://github.com/sigdotcom/mstacm.org](https://github.com/sigdo
 [issues-url]: https://github.com/sigdotcom/mstacm.org/issues
 [license-shield]: https://img.shields.io/github/license/sigdotcom/mstacm.org?style=flat-square
 [license-url]: https://github.com/sigdotcom/mstacm.org/blob/master/LICENSE.txt
-[product-screenshot]: images/homepage-hero.png
