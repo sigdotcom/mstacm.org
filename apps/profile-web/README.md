@@ -42,7 +42,7 @@ To get a local copy up and running follow these simple steps.
 
 ### Installation
  
-1. Clone the mstacm.org using Git Bash
+1. Clone the mstacm.org repository using Git Bash:
 ```sh
 # Make sure to setup ssh keys on your github account
 # https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account

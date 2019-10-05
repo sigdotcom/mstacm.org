@@ -1,5 +1,5 @@
 # resumes.mstacm.org
-[View Live](https://mstacm.org) |
+[View Live](https://resumes.mstacm.org) |
 [Report Bug](https://github.com/sigdotcom/mstacm.org/issues) |
 [Request Feature](https://github.com/sigdotcom/mstacm.org/issues)
 
@@ -14,14 +14,14 @@
 
 [resumes.mstacm.org](https://resumes.mstacm.org) is a company-facing page that
 allows recruiters to view the S&T ACM resume database. The primary features include:
-+ **Resume Previews** - Recruiters can preview resumes straight from the portal
-  to save them time reading through resumes
-+ **Persistent Favoriting** - Recruiters can favorite resumes they like that
-  will be persistent in future page loads
++ **Resume Previews** - Recruiters can preview resumes straight from the portal,
+  saving them time reading through resumes
++ **Persistent Favoriting** - Recruiters can persistently favorite resumes they
+  like 
 + **Filtering** - Resumes can be search by student's name. Future work will add
   more filtering options
-+ **Bulk Actions on Favorites** - All favorite resumes can be downloaded or
-  emailed at once in the `favorites` menu.
++ **Bulk Actions on Favorites** - All favorited resumes can be downloaded or
+  emailed at once in the `favorites` menu
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
@@ -48,7 +48,7 @@ To get a local copy up and running follow these simple steps.
 
 ### Installation
  
-1. Clone the mstacm.org using Git Bash
+1. Clone the mstacm.org repository using Git Bash:
 ```sh
 # Make sure to setup ssh keys on your github account
 # https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account

@@ -1,5 +1,5 @@
 # admin.mstacm.org
-[View Live](https://mstacm.org) |
+[View Live](https://admin.mstacm.org) |
 [Report Bug](https://github.com/sigdotcom/mstacm.org/issues) |
 [Request Feature](https://github.com/sigdotcom/mstacm.org/issues)
 
@@ -14,8 +14,7 @@
 
 [admin.mstacm.org](https://admin.mstacm.org) is the administrative interface for
 accessing backend functionality in a user friendly way. The primary features include:
-+ **Event Management** - Add, update, or remove events from the database that
-  will be automatically displayed on [mstacm.org](https://mstacm.org).
++ **Event Management** - Add, update, or remove events from the database.
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
@@ -42,7 +41,7 @@ To get a local copy up and running follow these simple steps.
 
 ### Installation
  
-1. Clone the mstacm.org using Git Bash
+1. Clone the mstacm.org repository using Git Bash:
 ```sh
 # Make sure to setup ssh keys on your github account
 # https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account

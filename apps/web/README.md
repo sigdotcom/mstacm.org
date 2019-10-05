@@ -20,8 +20,8 @@ branding page for S&T ACM. The primary features include:
   [auth0-spa-js](https://github.com/auth0/auth0-spa-js/)
 + **Dues Payment** - Ability to pay for dues using [Stripe](https://stripe.com)
   in the 'Membership' section
-+ **Marketing / Branding** - Various sections which help promotes ACM and our
-  various activities
++ **Marketing / Branding** - Various sections to promote ACM and our various
+  activities
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
@@ -48,7 +48,7 @@ To get a local copy up and running follow these simple steps.
 
 ### Installation
  
-1. Clone the mstacm.org using Git Bash
+1. Clone the mstacm.org repository using Git Bash:
 ```sh
 # Make sure to setup ssh keys on your github account
 # https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account

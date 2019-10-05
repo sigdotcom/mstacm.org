@@ -15,12 +15,12 @@
 [api.mstacm.org](https://api.mstacm.org) is the primary [Apollo GraphQL
 API](https://www.apollographql.com/) that drives all database interactions from
 all frontend clients. Primary features include but are not limited to:
-+ **Payment Processing** - The ability to process arbitrary payments using
++ **Payment Processing** - Process arbitrary payments using
   [Stripe](https://stripe.com)
-+ **Event Management** - Creating, modifying, and deleting ACM events
-+ **Permission** - Scope-based permissions systems that allow for groups of
++ **Event Management** - Create, modify, and delete ACM events
++ **Permission** - Scope-based permission system that allow for groups of
   permissions
-+ **JWT Authentication** - Authenticates users with [Auth0](https://auth0.com)
++ **JWT Authentication** - Authenticate users with [Auth0](https://auth0.com)
   JWT tokens
 
 <!-- TABLE OF CONTENTS -->
@@ -50,7 +50,7 @@ To get a local copy up and running follow these simple steps.
 
 ### Installation
  
-1. Clone the mstacm.org using Git Bash
+1. Clone the mstacm.org repository using Git Bash:
 ```sh
 # Make sure to setup ssh keys on your github account
 # https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account
@@ -69,7 +69,7 @@ yarn install
 4. Copy the docker environment variables template into the docker environment
    file:
 ```sh
-cd .docker/web.env.default .docker/web.env
+cp .docker/web.env.default .docker/web.env
 ```
 5. Start the docker containers using `docker-compose`:
 ```sh
@@ -108,11 +108,12 @@ phoenix_web_1    |       http://localhost/graphql || http://localhost:4000/graph
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-To interact with api.mstacm.org, we recommend installing
-[altair](https://altair.sirmuel.design/) or [insomnia](https://insomnia.rest/).
-[Altair](https://altair.sirmuel.design/) by itself is a much better GraphQL
-client, but [insomnia](https://insomnia.rest/) is quickly catching up in terms
-of GraphQL-specific features and is has more features in-general.
+To interact with [api.mstacm.org](https://api.mstacm.org), we recommend
+installing [altair](https://altair.sirmuel.design/) or
+[insomnia](https://insomnia.rest/).  [Altair](https://altair.sirmuel.design/) by
+itself is a much better GraphQL client, but [insomnia](https://insomnia.rest/)
+is quickly catching up in terms of GraphQL-specific features and has more
+features in-general.
 
 We will use [insomnia](https://insomnia.rest/) to show off basic usage,
 but the lessons apply to both clients.

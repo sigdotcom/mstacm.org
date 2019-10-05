@@ -16,12 +16,12 @@ GraphQL](https://www.apollographql.com/), and
 [Docker](https://www.apollographql.com/).
 
 [\*.mstacm.org](https://mstacm.org) hopes to automate all of the manual task's ACM
-has performed primarily by hand include:
+has performed primarily by hand including:
 + **Events** - Automatically advertise events via email, text, or app
   notifications; allow users to check-in to events; and pay for event
-  registration using electronic payments such as credit cards.
-+ **Dues** - Collect club dues and provide advanced metrics on who has payed dues and
-  when.
+  registration electronically.
++ **Dues** - Collect club dues and provide advanced metrics on who has payed
+  dues when.
 
 Future work hopes to expand upon these primary principles to make how
 companies, ACM members, and students interact with ACM as an organization more
@@ -62,7 +62,7 @@ git clone https:://github.com/sigdotcom/mstacm.org.git
 ## Usage
 
 Since this repository is a monorepo, the best way to use its various
-functionality is by exploring the directories contain each project. These
+functionality is by exploring the directories containing each project. These
 include:
 + ``api`` - The GraphQL backend that powers all of our database interactions.
 + ``apps`` - All of the frontend react applications that users (companies, ACM
