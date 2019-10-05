@@ -1,5 +1,3 @@
-
-
 # mstacm.org
 [View Live](https://mstacm.org) |
 [Report Bug](https://github.com/sigdotcom/mstacm.org/issues) |
