@@ -78,13 +78,9 @@ const Nav: React.FC<{}> = (): JSX.Element => {
       <PageConstraint>
         <Wrapper>
           <NavRow>
-<<<<<<< HEAD
-            <Logo src={`${config.CDN_URI}/static/acm-logo.png`} />
-=======
             <Link to="/">
-              <Logo src={require("../../../static/img/acm-logo.png")} />
+              <Logo src={`${config.CDN_URI}/static/acm-logo.png`} />
             </Link>
->>>>>>> added privacy page
             <MenuItems>
               <Link to="/#communities" smooth>
                 <MenuItem>Communities</MenuItem>
