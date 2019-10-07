@@ -98,7 +98,8 @@ export class User extends BaseEntity {
   )
   public permissions: Lazy<Permission[]>;
 
-  @OneToMany((returns: void) => Group, (group: Group) => group.users, {
+  @Field((_: void) => [Group])
+  @ManyToMany((returns: void) => Group, (group: Group) => group.users, {
     lazy: true
   })
   @JoinTable()
