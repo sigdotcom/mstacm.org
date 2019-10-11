@@ -122,7 +122,7 @@ const HomePage: React.FC<{}> = () => {
     // Because of the !code && !storedCode, we know at least one must
     // be valid
     runRedeemCode(redemptionCode || (storedCode as string));
-  }, [loading, isAuthenticated, loginWithRedirect, redeemCode]);
+  }, [loading, isAuthenticated, loginWithRedirect, redeemCode, history]);
 
   return (
     <div>

@@ -73,7 +73,7 @@ const Logos = styled.div`
 
   @media all and (min-width: 768px) {
     flex-direction: row;
-    justify-content: space-between;    
+    justify-content: space-between;
     margin-top: 30px;
     margin-bottom: 60px;
     width: 85%
@@ -99,20 +99,20 @@ const Sponsors: React.FC<{}> = (): JSX.Element => {
           <h2>Big thanks to our sponsors and partners!</h2>
         </Sponsor>
         <Logos>
-          <a href="https://www.auth0.com/" target="_blank">
-            <img src={`${config.CDN_URI}/static/auth0.png`} />
+          <a href="https://www.auth0.com/" target="_blank" rel="noopener noreferrer">
+            <img alt="Auth0 Logo" src={`${config.CDN_URI}/static/auth0.png`} />
           </a>
-          <a href="https://www.att.com/" target="_blank">
-            <img src={`${config.CDN_URI}/static/at&t.png`} />
+          <a href="https://www.att.com/" target="_blank" rel="noopener noreferrer">
+            <img alt="ATT Logo" src={`${config.CDN_URI}/static/at&t.png`} />
           </a>
-          <a href="https://www.garmin.com/en-US/" target="_blank">
-            <img src={`${config.CDN_URI}/static/garmin.png`} />
+          <a href="https://www.garmin.com/en-US/" target="_blank" rel="noopener noreferrer">
+            <img alt="Garmin Logo" src={`${config.CDN_URI}/static/garmin.png`} />
           </a>
-          <a href="https://www.netlify.com/" target="_blank">
-            <img src={`${config.CDN_URI}/static/netlify.png`} />
+          <a href="https://www.netlify.com/" target="_blank" rel="noopener noreferrer">
+            <img alt="Netlify Logo" src={`${config.CDN_URI}/static/netlify.png`} />
           </a>
-          <a href="http://tradebot.com/" target="_blank">
-            <img src={`${config.CDN_URI}/static/tradebot.png`} />
+          <a href="http://tradebot.com/" target="_blank" rel="noopener noreferrer">
+            <img alt="Tradebot Logo" src={`${config.CDN_URI}/static/tradebot.png`} />
           </a>
         </Logos>
       </Element>
