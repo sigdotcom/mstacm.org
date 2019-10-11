@@ -240,8 +240,9 @@ const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
             }}
             href={flierLink}
             target="_blank"
+            rel="noopener noreferrer"
           >
-            <img src={flierLink} style={{ width: "100%" }} />
+            <img alt="Flier" src={flierLink} style={{ width: "100%" }} />
           </a>
         </FlierWrapper>
         <SmallInfo>
@@ -249,7 +250,7 @@ const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
             <h3>{eventDate.toLocaleString("default", { month: "short" })}</h3>
             <h2>{eventDate.getDate()}</h2>
           </DateArea>
-          <img src={`${config.CDN_URI}/static/${logoLink}`} />
+          <img alt="Committee Logo" src={`${config.CDN_URI}/static/${logoLink}`} />
         </SmallInfo>
       </div>
       <VerticalLine />
@@ -257,11 +258,11 @@ const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
         <EventName>{event.eventTitle}</EventName>
         <div style={{ marginBottom: "10px" }}>
           <Time>
-            <img src={`${config.CDN_URI}/static/location.png`} />
+            <img alt="Location Icon" src={`${config.CDN_URI}/static/location.png`} />
             <h2>{event.location}</h2>
           </Time>
           <Time>
-            <img src={`${config.CDN_URI}/static/clock.png`} />
+            <img alt="Time Icon" src={`${config.CDN_URI}/static/clock.png`} />
             <h2>{time}</h2>
           </Time>
           <Time style={{ marginLeft: "-1.5px" }}>
