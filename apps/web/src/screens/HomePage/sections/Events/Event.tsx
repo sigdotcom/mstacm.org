@@ -250,7 +250,7 @@ const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
             <h3>{eventDate.toLocaleString("default", { month: "short" })}</h3>
             <h2>{eventDate.getDate()}</h2>
           </DateArea>
-          <img alt="Committee Logo" src={`${config.CDN_URI}/static/${logoLink}`} />
+          <img alt="Community Logo" src={`${config.CDN_URI}/static/${logoLink}`} />
         </SmallInfo>
       </div>
       <VerticalLine />
