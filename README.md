@@ -87,7 +87,7 @@ appreciated**.
 
 If you **are** apart of ACM Web:
 1. Ask the Chair of ACM Web to add you to the [sigdotcom
-   organization](https://git-scm.com/download/windows)
+   organization][sigdotcom-organization]
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
@@ -120,6 +120,7 @@ Project Link: [https://github.com/sigdotcom/mstacm.org](https://github.com/sigdo
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[sigdotcom-organization]: https://github.com/sigdotcom/
 [contributors-shield]: https://img.shields.io/github/contributors/sigdotcom/mstacm.org.svg?style=flat-square
 [contributors-url]: https://github.com/sigdotcom/mstacm.org/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/sigdotcom/mstacm.org.svg?style=flat-square
