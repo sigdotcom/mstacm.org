@@ -90,7 +90,7 @@ export class ResumeResolver {
     return userResume.save();
   }
 
-  @Authorized("view:resume")
+  @Authorized("view:resumes")
   @Query((returns: void) => [Resume])
   public async resumes(): Promise<Resume[]> {
     return this.resumeRepo.find();
