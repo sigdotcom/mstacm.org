@@ -7,13 +7,13 @@ import { PermissionCreateInput } from "./input";
 export class PermissionResolver {
   public repository: Repository<Permission> = getRepository(Permission);
 
-  @Authorized("SUPERADMIN")
+  @Authorized("view:permissions")
   @Query((returns: void) => [Permission])
   public async permissions(): Promise<Permission[]> {
     return this.repository.find();
   }
 
-  @Authorized("SUPERADMIN")
+  @Authorized("create:permissions")
   @Mutation((returns: void) => Permission)
   public async createPermission(
     @Arg("data", (argType: void) => PermissionCreateInput)
