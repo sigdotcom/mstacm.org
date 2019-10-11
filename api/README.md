@@ -46,7 +46,7 @@ To get a local copy up and running follow these simple steps.
 + [Docker](https://docs.docker.com/install/)
 + [Docker Compose](https://docs.docker.com/compose/install/)
 + [NodeJS](https://nodejs.org/en/)
-+ [yarn](https://yarnpkg.com/)
++ [Yarn](https://yarnpkg.com/)
 
 ### Installation
  
@@ -54,7 +54,7 @@ To get a local copy up and running follow these simple steps.
 ```sh
 # Make sure to setup ssh keys on your github account
 # https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account
-git clone https:://github.com/sigdotcom/mstacm.org.git
+git clone git@github.com:sigdotcom/mstacm.org.git
 ```
 2. Navigate to the `api` directory:
 ```sh
@@ -75,24 +75,10 @@ cp .docker/web.env.default .docker/web.env
 ```sh
 docker-compose up
 ```
-6. If everything goes well, it should look like:
+6. If everything goes well, the last lines of output should look like:
 ```bash
 >>> docker-compose up
-Starting api_phoenix_db_1 ... done
-Starting api_phoenix_web_1 ... done
-Starting api_phoenix_nginx_1 ... done
-Attaching to api_phoenix_db_1, api_phoenix_web_1, api_phoenix_nginx_1
-phoenix_db_1     | 2019-10-05 04:23:12.809 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
-phoenix_db_1     | 2019-10-05 04:23:12.809 UTC [1] LOG:  listening on IPv6 address "::", port 5432
-phoenix_web_1    | yarn run v1.17.3
-phoenix_web_1    | $ NODE_ENV='development' nodemon
-phoenix_db_1     | 2019-10-05 04:23:12.819 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
-phoenix_db_1     | 2019-10-05 04:23:12.844 UTC [24] LOG:  database system was shut down at 2019-10-03 20:15:56 UTC
-phoenix_db_1     | 2019-10-05 04:23:12.860 UTC [1] LOG:  database system is ready to accept connections
-phoenix_web_1    | [nodemon] 1.19.2
-phoenix_web_1    | [nodemon] to restart at any time, enter `rs`
-phoenix_web_1    | [nodemon] watching dir(s): src/**/*
-phoenix_web_1    | [nodemon] starting `ts-node -r tsconfig-paths/register src/main.ts`
+# ... meaningless output ...
 phoenix_web_1    | Server is running, GraphQL Playground available at:
 phoenix_web_1    |
 phoenix_web_1    |       http://localhost/graphql || http://localhost:4000/graphql
@@ -100,7 +86,14 @@ phoenix_web_1    |       http://localhost/graphql || http://localhost:4000/graph
 7. Navigate to [http://localhost/graphql](http://localhost/graphql). **NOTE**:
    if you are using Docker on Windows 10 Home, you need to put the IP of your
    docker-machine instead of `localhost`. This is usually something like
-   `192.168.99.100`. You should see something like:
+   `192.168.99.100`. The IP can be found by launching the `Docker Quickstart
+   Terminal` and looking at the top of the terminal or by running:
+    ```
+    docker-machine inspect --format='{{.Driver.IPAddress}}' default
+    ```
+    
+
+   If the IP is correct, You should see something like:
 
 ![GraphQL Playground](images/graphql-localhost-playground.png)
 
@@ -109,17 +102,17 @@ phoenix_web_1    |       http://localhost/graphql || http://localhost:4000/graph
 ## Usage
 
 To interact with [api.mstacm.org](https://api.mstacm.org), we recommend
-installing [altair](https://altair.sirmuel.design/) or
-[insomnia](https://insomnia.rest/).  [Altair](https://altair.sirmuel.design/) by
-itself is a much better GraphQL client, but [insomnia](https://insomnia.rest/)
+installing [Altair](https://altair.sirmuel.design/) or
+[Insomnia][insomnia].  [Altair](https://altair.sirmuel.design/) by
+itself is a much better GraphQL client, but [Insomnia][insomnia]
 is quickly catching up in terms of GraphQL-specific features and has more
 features in-general.
 
-We will use [insomnia](https://insomnia.rest/) to show off basic usage,
+We will use [Insomnia][insomnia] to show off basic usage,
 but the lessons apply to both clients.
 
 ### Your First Query
-1. Open the [insomnia](https://insomnia.rest) client:
+1. Open the [Insomnia][insomnia] client:
 [![Insomnia Initial Page](images/insomnia-initial-page.png)](images/insomnia-initial-page.png)
 
 2. Click the `New Request` button or use the keyboard shortcut on the primary
@@ -148,7 +141,7 @@ but the lessons apply to both clients.
 
 9. Look through the documentation to see all of the features the api has.
 
-10. Play around with the insomnia schema-based auto-completion by typing in some
+10. Play around with the [Insomnia][insomnia] schema-based auto-completion by typing in some
     sample commands and hitting 'send':
 [![Insomnia First Query](images/insomnia-first-query.png)](images/insomnia-first-query.png)
 [![Insomnia Autocomplete](images/insomnia-autocomplete.png)](images/graphql-localhost-playground.png)
@@ -170,7 +163,7 @@ appreciated**.
 
 If you **are** apart of ACM Web:
 1. Ask the Chair of ACM Web to add you to the [sigdotcom
-   organization](https://git-scm.com/download/windows)
+   organization][sigdotcom-organization]
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
@@ -203,6 +196,8 @@ Project Link: [https://github.com/sigdotcom/mstacm.org](https://github.com/sigdo
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[insomnia]: https://insomnia.rest
+[sigdotcom-organization]: https://github.com/sigdotcom/
 [contributors-shield]: https://img.shields.io/github/contributors/sigdotcom/mstacm.org.svg?style=flat-square
 [contributors-url]: https://github.com/sigdotcom/mstacm.org/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/sigdotcom/mstacm.org.svg?style=flat-square

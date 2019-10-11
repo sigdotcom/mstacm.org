@@ -13,15 +13,14 @@
 Monorepo containing all services running under the \*.mstacm.org domains built
 with [TypeScript](https://www.typescriptlang.org/), [Apollo
 GraphQL](https://www.apollographql.com/), and
-[Docker](https://www.apollographql.com/).
+[Docker](https://www.docker.com/).
 
 [\*.mstacm.org](https://mstacm.org) hopes to automate all of the manual task's ACM
 has performed primarily by hand including:
 + **Events** - Automatically advertise events via email, text, or app
   notifications; allow users to check-in to events; and pay for event
   registration electronically.
-+ **Dues** - Collect club dues and provide advanced metrics on who has payed
-  dues when.
++ **Dues** - Collect dues and provide advanced metrics on when dues were payed.
 
 Future work hopes to expand upon these primary principles to make how
 companies, ACM members, and students interact with ACM as an organization more
@@ -51,11 +50,11 @@ To get a local copy up and running follow these simple steps.
 
 ### Installation
  
-1. Clone the mstacm.org
+1. Clone the mstacm.org repository using Git Bash:
 ```sh
 # Make sure to setup ssh keys on your github account
 # https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account
-git clone https:://github.com/sigdotcom/mstacm.org.git
+git clone git@github.com:sigdotcom/mstacm.org.git
 ```
 
 <!-- USAGE EXAMPLES -->
@@ -69,14 +68,13 @@ include:
   Executives, etc.) interact with.
 
 Each project will contain its own installation / setup instructions to follow.
-Bare minimum functionality requires you to run ``api`` and ``apps/web`` at the
-same time. 
 
 
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/sigdotcom/mstacm.org/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/sigdotcom/mstacm.org/issues) for a list
+of proposed features (and known issues).
 
 
 

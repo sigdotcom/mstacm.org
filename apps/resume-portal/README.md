@@ -18,7 +18,7 @@ allows recruiters to view the S&T ACM resume database. The primary features incl
   saving them time reading through resumes
 + **Persistent Favoriting** - Recruiters can persistently favorite resumes they
   like 
-+ **Filtering** - Resumes can be search by student's name. Future work will add
++ **Filtering** - Resumes can be searched by student's name. Future work will add
   more filtering options
 + **Bulk Actions on Favorites** - All favorited resumes can be downloaded or
   emailed at once in the `favorites` menu
@@ -44,7 +44,7 @@ To get a local copy up and running follow these simple steps.
 ### Prerequisites
 + [Git](https://git-scm.com/download/)
 + [NodeJS](https://nodejs.org/)
-+ [yarn](https://yarnpkg.com/)
++ [Yarn](https://yarnpkg.com/)
 
 ### Installation
  
@@ -52,7 +52,7 @@ To get a local copy up and running follow these simple steps.
 ```sh
 # Make sure to setup ssh keys on your github account
 # https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account
-git clone https:://github.com/sigdotcom/mstacm.org.git
+git clone git@github.com:sigdotcom/mstacm.org.git
 ```
 
 2. Navigate to the `apps/resume-portal` directory:
@@ -85,7 +85,7 @@ in the console.
 
 Launches the test runner in the interactive watch mode.<br /> See the section
 about [running
-tests](https://facebook.github.io/create-react-app/docs/running-tests) for more
+tests](https://create-react-app.dev/docs/running-tests) for more
 information.
 
 ### `yarn build`
@@ -97,7 +97,7 @@ The build is minified and the filenames include the hashes.<br /> Your app is
 ready to be deployed!
 
 See the section about
-[deployment](https://facebook.github.io/create-react-app/docs/deployment) for
+[deployment](https://create-react-app.dev/docs/deployment) for
 more information.
 
 ### `yarn eject`
@@ -136,7 +136,7 @@ appreciated**.
 
 If you **are** apart of ACM Web:
 1. Ask the Chair of ACM Web to add you to the [sigdotcom
-   organization](https://git-scm.com/download/windows)
+   organization][sigdotcom-organization]
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
@@ -169,6 +169,7 @@ Project Link: [https://github.com/sigdotcom/mstacm.org](https://github.com/sigdo
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[sigdotcom-organization]: https://github.com/sigdotcom/
 [contributors-shield]: https://img.shields.io/github/contributors/sigdotcom/mstacm.org.svg?style=flat-square
 [contributors-url]: https://github.com/sigdotcom/mstacm.org/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/sigdotcom/mstacm.org.svg?style=flat-square
