@@ -33,8 +33,8 @@
     "types:generate": "graphql-codegen --config codegen.yml",
     "types:watch": "graphql-codegen --config codegen.yml -w",
     "run": "react-scripts start",
-    "start": "npm-run-all -p watch:types run",
-    "build": "yarn build:types; react-scripts build",
+    "start": "npm-run-all -p types:watch run",
+    "build": "yarn types:generate; react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
