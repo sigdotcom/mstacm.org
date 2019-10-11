@@ -93,12 +93,12 @@ const Copyright = styled.div`
 
   @media all and (max-width: 1200px) {
     margin-top: -23px
-    
+
     h2 {
       font-size: 17px;
     }
   }
-  
+
   @media all and (max-width: 1000px) {
     margin-top: -8px;
 
@@ -128,7 +128,7 @@ const Copyright = styled.div`
     h2 {
       font-size: 17px;
     }
-  } 
+  }
 `;
 
 const PageLinks = styled.div`
@@ -199,36 +199,37 @@ const Footer: React.FC<{}> = (): JSX.Element => {
             </PageLinks>
             <Communities>
               <div>
-                <a href="https://acmcomp.mst.edu" target="_blank">
+                <a href="https://acmcomp.mst.edu" target="_blank" rel="noopener noreferrer">
                   ACM Competition
                 </a>
-                <a href="https://modata.blog/" target="_blank">
+                <a href="https://modata.blog/" target="_blank" rel="noopener noreferrer">
                   ACM Data
                 </a>
-                <a href="https://siggame.io/" target="_blank">
+                <a href="https://siggame.io/" target="_blank" rel="noopener noreferrer">
                   ACM Game
                 </a>
               </div>
               <div>
-                <a href="https://pickhacks.io/" target="_blank">
+                <a href="https://pickhacks.io/" target="_blank" rel="noopener noreferrer">
                   ACM Hack
                 </a>
-                <a href="https://acmsigsec.mst.edu/" target="_blank">
+                <a href="https://acmsigsec.mst.edu/" target="_blank" rel="noopener noreferrer">
                   ACM Security
                 </a>
-                <a href="http://mst.orgsync.com/org/acmw/home" target="_blank">
+                <a href="http://mst.orgsync.com/org/acmw/home" target="_blank" rel="noopener noreferrer">
                   ACM-W
                 </a>
               </div>
             </Communities>
             <Info>
               <div>
-                <a href="https://www.acm.org/" target="_blank">
+                <a href="https://www.acm.org/" target="_blank" rel="noopener noreferrer">
                   ACM Global
                 </a>
                 <a
                   href="https://github.com/sigdotcom/mstacm.org"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Source Code
                 </a>
@@ -237,6 +238,7 @@ const Footer: React.FC<{}> = (): JSX.Element => {
                 <a
                   href="https://github.com/sigdotcom/mstacm.org/blob/master/LICENSE"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   License
                 </a>
@@ -244,7 +246,7 @@ const Footer: React.FC<{}> = (): JSX.Element => {
             </Info>
           </Links>
           <Copyright>
-            <img src={`${config.CDN_URI}/static/web_footer.png`} />
+            <img alt="ACM Web Logo" src={`${config.CDN_URI}/static/web_footer.png`} />
             <h2>Copyright © 2019 ACM Web.</h2>
           </Copyright>
         </Wrapper>
