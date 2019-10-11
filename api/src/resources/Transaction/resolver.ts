@@ -25,7 +25,7 @@ export class ProductResolver {
     Product
   );
 
-  @Authorized("SUPERADMIN")
+  @Authorized("view:transactions")
   @Query((returns: void) => [Transaction])
   public async transactions(): Promise<Transaction[]> {
     return this.transactionRepo.find();

@@ -19,13 +19,13 @@ const FOURTEEN_DAYS_IN_MILLISECONDS: number = 12096e5;
  */
 @Resolver((resolverType: void) => RedemptionCode)
 export class RedemptionCodeResolver {
-  @Authorized("SUPERADMIN")
+  @Authorized("view:redemption_codes")
   @Query((returns: void) => [RedemptionCode])
   public async redemptionCodes(): Promise<RedemptionCode[]> {
     return RedemptionCode.find();
   }
 
-  @Authorized("create:redemption_code")
+  @Authorized("create:redemption_codes")
   @Mutation((returns: void) => RedemptionCode)
   public async createMembershipRedemptionCode(
     @Ctx() context: IContext,
