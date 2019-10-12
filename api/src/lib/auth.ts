@@ -1,8 +1,26 @@
 import { AuthChecker } from "type-graphql";
 
-import { Permission } from "../resources/Permission";
-import { User } from "../resources/User";
 import { IContext } from "./interfaces";
+
+import { Permission } from "../resources/Permission";
+import { mergeEntityLists } from "./entity";
+import { User } from "../resources/User";
+import { Group } from "../resources/Group";
+
+const flattenGroupPermissions = async (
+  groups: Group[]
+): Promise<Permission[]> => {
+  let permissions: Permission[] = [];
+
+  for (const group of groups) {
+    permissions = mergeEntityLists<Permission>(
+      await group.permissions,
+      permissions
+    );
+  }
+
+  return permissions;
+};
 
 // create auth checker function
 // You can extract root, args, and info later.
@@ -53,7 +71,10 @@ export const authChecker: AuthChecker<IContext> = async (
     return true;
   }
 
-  const permissions = await user.permissions;
+  const permissions = mergeEntityLists<Permission>(
+    await flattenGroupPermissions(await user.groups),
+    await user.permissions
+  );
   const permMatchesRole = permissions.some((permission: Permission) =>
     roles.includes(permission.name)
   );
