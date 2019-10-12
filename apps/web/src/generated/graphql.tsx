@@ -76,6 +76,7 @@ export type Group = {
   name: Scalars['String'],
   users: Array<User>,
   permissions: Array<Permission>,
+  redemptionCodes: Array<RedemptionCode>,
 };
 
 export type MembershipProduct = {
@@ -101,7 +102,7 @@ export type Mutation = {
   updateEvent: Event,
   createEvent: Event,
   createPermission: Permission,
-  createMembershipRedemptionCode: RedemptionCode,
+  createRedemptionCode: RedemptionCode,
   redeemRedemptionCode: RedemptionCode,
   deleteResume: User,
   uploadResume: Resume,
@@ -165,8 +166,10 @@ export type MutationCreatePermissionArgs = {
 };
 
 
-export type MutationCreateMembershipRedemptionCodeArgs = {
-  membershipType: MembershipTypes
+export type MutationCreateRedemptionCodeArgs = {
+  groupIds?: Maybe<Array<Scalars['String']>>,
+  permissionIds?: Maybe<Array<Scalars['String']>>,
+  productTags?: Maybe<Array<Scalars['String']>>
 };
 
 
@@ -208,6 +211,7 @@ export type Permission = {
    __typename?: 'Permission',
   name: Scalars['ID'],
   users: Array<User>,
+  redemptionCodes: Array<RedemptionCode>,
 };
 
 export type PermissionCreateInput = {
@@ -283,6 +287,8 @@ export type RedemptionCode = {
   redeemed?: Maybe<Scalars['Boolean']>,
   expirationDate: Scalars['DateTime'],
   transaction: Transaction,
+  permissions: Array<Permission>,
+  groups: Array<Group>,
 };
 
 export type Resume = {
