@@ -63,7 +63,7 @@ export class RedemptionCodeResolver {
 
       if (permissions.length !== permissionIds.length) {
         throw new BadUserInputError(
-          "Specified Permission ids are duplicated and/or do not exist in the database."
+          "Specified permission ids are duplicated and/or do not exist in the database."
         );
       }
       resolvedPermissions = permissions;
@@ -75,7 +75,7 @@ export class RedemptionCodeResolver {
 
       if (groups.length !== groupIds.length) {
         throw new BadUserInputError(
-          "Specified Group ids are duplicated and/or do not exist in the database."
+          "Specified group ids are duplicated and/or do not exist in the database."
         );
       }
       resolvedGroups = groups;
