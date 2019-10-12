@@ -1,6 +1,9 @@
 import { Field, ID, ObjectType } from "type-graphql";
 import { BaseEntity, Entity, ManyToMany, PrimaryColumn } from "typeorm";
+
 import { Lazy } from "../../lib/helpers";
+
+import { RedemptionCode } from "../RedemptionCode";
 import { Group } from "../Group";
 import { User } from "../User";
 
@@ -21,4 +24,14 @@ export class Permission extends BaseEntity {
     lazy: true
   })
   public users: Lazy<User[]>;
+
+  @Field((returns: void) => [RedemptionCode])
+  @ManyToMany(
+    (type: void) => RedemptionCode,
+    (redemptionCode: RedemptionCode) => redemptionCode.permissions,
+    {
+      lazy: true
+    }
+  )
+  public redemptionCodes: Lazy<RedemptionCode[]>;
 }

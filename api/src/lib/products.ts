@@ -118,7 +118,7 @@ export const createTransactionFromTags = async (
 
   if (products.length !== productTags.length) {
     throw new BadUserInputError(
-      "Products could not be found or you have requested duplicate products."
+      "The specified Products could not be found or you have requested duplicate products."
     );
   }
 
