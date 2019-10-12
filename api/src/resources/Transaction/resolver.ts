@@ -8,7 +8,7 @@ import { TransactionPayload } from "./input";
 
 import { IContext } from "../../lib/interfaces";
 import {
-  IPurchase,
+  ITransactionIntent,
   MembershipTypes,
   purchaseSingleProduct
 } from "../../lib/products";
@@ -46,7 +46,7 @@ export class ProductResolver {
       tag
     });
 
-    const purchase: IPurchase = await purchaseSingleProduct(
+    const purchase: ITransactionIntent = await purchaseSingleProduct(
       reqProduct,
       quantity,
       user
@@ -76,7 +76,7 @@ export class ProductResolver {
       tag
     });
 
-    const purchase: IPurchase = await purchaseSingleProduct(
+    const purchase: ITransactionIntent = await purchaseSingleProduct(
       reqProduct,
       quantity,
       user
