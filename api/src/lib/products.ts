@@ -3,7 +3,7 @@ import { Field, ObjectType, registerEnumType } from "type-graphql";
 
 import { Product } from "../resources/Product";
 import { Purchase } from "../resources/Purchase";
-import { Transaction } from "../resources/Transaction";
+import { Transaction, PaymentTypes } from "../resources/Transaction";
 import { User } from "../resources/User";
 
 import { BadUserInputError } from "./errors";
@@ -44,7 +44,7 @@ export class MembershipProduct {
   public tag: MembershipTypes;
 }
 
-export interface IPurchase {
+export interface ITransactionIntent {
   transaction: Transaction;
   intent: paymentIntents.IPaymentIntent;
 }
@@ -53,7 +53,7 @@ export const purchaseSingleProduct = async (
   product: Product,
   quantity: number,
   user: User
-): Promise<IPurchase> => {
+): Promise<ITransactionIntent> => {
   const reqProductPurchase = Purchase.create({
     product,
     quantity
@@ -108,4 +108,39 @@ export const fulfillProduct = async (productTag: string, user: User) => {
       "We currently only support fulfilling ACM membership"
     );
   }
+};
+
+export const createTransactionFromTags = async (
+  productTags: string[],
+  isRedeemed?: boolean
+): Promise<Transaction> => {
+  const products: Product[] = await Product.findByIds(productTags);
+
+  if (products.length !== productTags.length) {
+    throw new BadUserInputError(
+      "Products could not be found or you have requested duplicate products."
+    );
+  }
+
+  const purchases: Purchase[] = [];
+  const quantity = 1;
+  let cost = 0;
+  for (const product of products) {
+    const purchase: Purchase = Purchase.create({
+      product,
+      quantity: 1
+    });
+    cost += product.price * 100 * quantity;
+
+    purchases.push(await purchase.save());
+  }
+
+  // TODO add paymentIntent if isRedeemed is false
+  return await Transaction.create({
+    charged: cost,
+    paymentType: isRedeemed
+      ? PaymentTypes.REDEMPTION_CODE
+      : PaymentTypes.STRIPE,
+    purchases
+  }).save();
 };
