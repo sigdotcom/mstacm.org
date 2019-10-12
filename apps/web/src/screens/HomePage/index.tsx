@@ -84,7 +84,7 @@ const HomePage: React.FC<{}> = () => {
           toast(
             <Toast
               iconName={"alert-circle-outline"}
-              message={"Success! Membership applied. Refresh to apply changes."}
+              message={"Success! Redemption code applied to your account. Please refresh to see changes."}
               fill={"green"}
             />
           );
