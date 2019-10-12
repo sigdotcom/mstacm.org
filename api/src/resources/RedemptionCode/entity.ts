@@ -3,6 +3,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   JoinColumn,
   OneToOne,
   PrimaryColumn
@@ -11,6 +13,8 @@ import {
 import { Field, ID, ObjectType } from "type-graphql";
 
 import { Lazy } from "../../lib/helpers";
+import { Permission } from "../Permission";
+import { Group } from "../Group";
 import { Transaction } from "../Transaction";
 
 @ObjectType()
@@ -39,4 +43,20 @@ export class RedemptionCode extends BaseEntity {
   )
   @JoinColumn()
   public transaction: Lazy<Transaction>;
+
+  @Field((_: void) => [Permission])
+  @ManyToMany(
+    (_: void) => Permission,
+    (permission: Permission) => permission.redemptionCodes,
+    { lazy: true }
+  )
+  @JoinTable()
+  public permissions: Lazy<Permission[]>;
+
+  @Field((_: void) => [Group])
+  @ManyToMany((_: void) => Group, (group: Group) => group.redemptionCodes, {
+    lazy: true
+  })
+  @JoinTable()
+  public groups: Lazy<Group[]>;
 }
