@@ -2,11 +2,15 @@ import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
 
 import { BadUserInputError } from "../../lib/errors";
 import { IContext } from "../../lib/interfaces";
-import { fulfillProduct, MembershipTypes } from "../../lib/products";
+import {
+  fulfillProduct,
+  MembershipTypes,
+  createTransactionFromTags
+} from "../../lib/products";
 
 import { Product } from "../Product";
 import { Purchase } from "../Purchase";
-import { PaymentTypes, Transaction } from "../Transaction";
+import { Transaction } from "../Transaction";
 import { User } from "../User";
 import { RedemptionCode } from "./entity";
 
@@ -31,30 +35,18 @@ export class RedemptionCodeResolver {
     @Arg("membershipType", () => MembershipTypes)
     membershipType: MembershipTypes
   ): Promise<RedemptionCode> {
-    const tag: string = membershipType.toString();
-    const quantity: number = 1;
+    const transaction: Promise<Transaction> = createTransactionFromTags(
+      [membershipType.toString()],
+      true
+    );
 
-    const membershipProduct: Product = await Product.findOneOrFail({
-      tag
-    });
-
-    const membershipPurchase: Purchase = await Purchase.create({
-      product: membershipProduct,
-      quantity
-    });
-    await membershipPurchase.save();
-
-    const transaction: Transaction = await Transaction.create({
-      charged: membershipProduct.price * 100,
-      paymentType: PaymentTypes.REDEMPTION_CODE,
-      purchases: [membershipPurchase]
-    });
-    await transaction.save();
-
-    const redemptionCode = await RedemptionCode.create({
+    // Redemption code is not tied to a user therefore anyone could technically
+    // redeem this code. It my be wise in the future to allow a user to be
+    // attached to a redemption code.
+    const redemptionCode = RedemptionCode.create({
       expirationDate: new Date(Date.now() + FOURTEEN_DAYS_IN_MILLISECONDS),
       id: nanoid(12),
-      transaction
+      transaction: await transaction
     });
 
     return redemptionCode.save();
