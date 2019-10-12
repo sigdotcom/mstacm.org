@@ -6,9 +6,12 @@ import {
   PrimaryColumn
 } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
+
 import { Lazy } from "../../lib/helpers";
+
 import { Permission } from "../Permission";
 import { User } from "../User";
+import { RedemptionCode } from "../RedemptionCode";
 
 @ObjectType()
 @Entity()
@@ -31,4 +34,14 @@ export class Group extends BaseEntity {
   )
   @JoinTable()
   public permissions: Lazy<Permission[]>;
+
+  @Field((returns: void) => [RedemptionCode])
+  @ManyToMany(
+    (type: void) => RedemptionCode,
+    (redemptionCode: RedemptionCode) => redemptionCode.groups,
+    {
+      lazy: true
+    }
+  )
+  public redemptionCodes: Lazy<RedemptionCode[]>;
 }

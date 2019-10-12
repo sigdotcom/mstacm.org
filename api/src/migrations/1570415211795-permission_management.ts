@@ -48,15 +48,15 @@ export class permissionManagement1570415211795 implements MigrationInterface {
     );
 
     await queryRunner.query(
-      `INSERT INTO "group" ("name") VALUES ('Committee Chair')`,
+      `INSERT INTO "group" ("name") VALUES ('Community Chair')`,
       undefined
     );
 
     await queryRunner.query(
       `INSERT INTO "group_permissions_permission" ("groupName", "permissionName") VALUES
-                                                  ('Committee Chair', 'create:events'),
-                                                  ('Committee Chair', 'delete:events'),
-                                                  ('Committee Chair', 'update:events')`,
+                                                  ('Community Chair', 'create:events'),
+                                                  ('Community Chair', 'delete:events'),
+                                                  ('Community Chair', 'update:events')`,
 
       undefined
     );
@@ -90,7 +90,7 @@ export class permissionManagement1570415211795 implements MigrationInterface {
     );
 
     await queryRunner.query(
-      `DELETE FROM "group_permissions_permission" WHERE "groupName"='Committee Chair';`,
+      `DELETE FROM "group_permissions_permission" WHERE "groupName"='Community Chair';`,
       undefined
     );
 
@@ -111,7 +111,7 @@ export class permissionManagement1570415211795 implements MigrationInterface {
     );
 
     await queryRunner.query(
-      `DELETE FROM "group" WHERE "name"='Committee Chair';`,
+      `DELETE FROM "group" WHERE "name"='Community Chair';`,
       undefined
     );
   }
