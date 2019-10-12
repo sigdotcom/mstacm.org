@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import { ExecutionResult } from "@apollo/react-common";
-import { createBrowserHistory } from "history";
 import { toast } from "react-toastify";
 
 import { config } from "../../config";
@@ -39,7 +38,6 @@ const NavHeroWrapper = styled.div`
 const HomePage: React.FC<{}> = () => {
   const { loading, isAuthenticated, loginWithRedirect } = useAuth0();
   const [redeemCode] = useRedeemRedemptionCodeMutation();
-  const history = createBrowserHistory();
 
   useEffect(() => {
     if (loading) {
@@ -92,8 +90,6 @@ const HomePage: React.FC<{}> = () => {
           );
 
           localStorage.removeItem(config.REDEMPTION_CODE_KEY);
-          queryParams.delete(config.REDEMPTION_QUERY_PARAM_KEY);
-          history.push("/?" + queryParams.toString());
         } else {
           toast(
             <Toast
@@ -122,7 +118,7 @@ const HomePage: React.FC<{}> = () => {
     // Because of the !code && !storedCode, we know at least one must
     // be valid
     runRedeemCode(redemptionCode || (storedCode as string));
-  }, [loading, isAuthenticated, loginWithRedirect, redeemCode, history]);
+  }, [loading, isAuthenticated, loginWithRedirect, redeemCode]);
 
   return (
     <div>
