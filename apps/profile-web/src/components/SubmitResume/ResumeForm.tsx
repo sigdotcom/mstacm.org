@@ -119,7 +119,7 @@ const ResumeFormBase: React.FC<IResumeFormProps> = ({
     name: "resume.pdf",
     multiple: false,
     fileList: files,
-    onRemove: (newFile: any): void => {
+    onRemove: (): void => {
       setFiles([]);
     },
     beforeUpload: (newFile: any): boolean => {

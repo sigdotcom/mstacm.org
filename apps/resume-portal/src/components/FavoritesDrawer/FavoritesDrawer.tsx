@@ -21,9 +21,7 @@ export const FavoritesDrawer: React.FC<IFavoritesDrawerProps> = props => {
     return <FavoritesCard user={item} key={item.id} />;
   });
 
-  const downloadAll = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const downloadAll = async () => {
     Promise.all(
       favorites.map(async user => {
         if (!user.resume) {

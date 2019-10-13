@@ -2,15 +2,16 @@ import React from "react";
 
 import { Button, Result } from "antd";
 
-interface ISuccessProps {
-  resumeUrl: string;
-  refresh(): void;
-}
+// interface ISuccessProps {
+//   resumeUrl: string;
+//   refresh(): void;
+// }
 
-const Success: React.SFC<ISuccessProps> = ({
-  resumeUrl,
-  refresh
-}: ISuccessProps): JSX.Element => {
+// const Success: React.SFC<ISuccessProps> = (
+//   resumeUrl,
+//   refresh
+// }: ISuccessProps): JSX.Element => {
+const Success: React.SFC<{}> = (): JSX.Element => {
   return (
     <Result
       status="success"
