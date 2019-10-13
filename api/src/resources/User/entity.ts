@@ -24,7 +24,7 @@ import { Transaction } from "../Transaction";
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  @Field((returns: void) => ID)
+  @Field(() => ID)
   @PrimaryGeneratedColumn("uuid")
   public readonly id: string;
 
@@ -80,8 +80,8 @@ export class User extends BaseEntity {
   @Column({ default: true })
   public isActive: boolean;
 
-  @Field((returns: void) => Resume, { nullable: true })
-  @OneToOne((returns: void) => Resume, (resume: Resume) => resume.user, {
+  @Field(() => Resume, { nullable: true })
+  @OneToOne(() => Resume, (resume: Resume) => resume.user, {
     cascade: true,
     lazy: true,
     onDelete: "SET NULL"
@@ -89,24 +89,22 @@ export class User extends BaseEntity {
   @JoinColumn()
   public resume: Lazy<Resume>;
 
-  @Field((returns: void) => [Permission], { nullable: true })
+  @Field(() => [Permission], { nullable: true })
   @JoinTable()
-  @ManyToMany(
-    (returns: void) => Permission,
-    (permission: Permission) => permission.users,
-    { lazy: true }
-  )
+  @ManyToMany(() => Permission, (permission: Permission) => permission.users, {
+    lazy: true
+  })
   public permissions: Lazy<Permission[]>;
 
   @Field((_: void) => [Group])
-  @ManyToMany((returns: void) => Group, (group: Group) => group.users, {
+  @ManyToMany(() => Group, (group: Group) => group.users, {
     lazy: true
   })
   @JoinTable()
   public groups: Lazy<Group[]>;
 
   @OneToMany(
-    (returns: void) => Application,
+    () => Application,
     (application: Application) => application.user,
     {
       lazy: true
@@ -116,7 +114,7 @@ export class User extends BaseEntity {
   public applications: Lazy<Application[]>;
 
   @OneToMany(
-    (returns: void) => Transaction,
+    () => Transaction,
     (transaction: Transaction) => transaction.user,
     {
       lazy: true
@@ -125,14 +123,14 @@ export class User extends BaseEntity {
   @JoinTable()
   public transactions: Lazy<Transaction[]>;
 
-  @ManyToMany((returns: void) => Sig, (sig: Sig) => sig.users, {
+  @ManyToMany(() => Sig, (sig: Sig) => sig.users, {
     lazy: true,
     nullable: true
   })
   @JoinTable()
   public sigs: Lazy<Sig[]>;
 
-  @OneToMany((returns: void) => Event, (event: Event) => event.creator, {
+  @OneToMany(() => Event, (event: Event) => event.creator, {
     lazy: true
   })
   @JoinTable()

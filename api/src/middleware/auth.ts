@@ -1,10 +1,12 @@
-import * as passport from "koa-passport";
-
+import passport from "koa-passport";
 import axios from "axios";
-import * as JWT from "jsonwebtoken";
+import JWT from "jsonwebtoken";
 
 import { passportJwtSecret } from "jwks-rsa";
-import { Strategy as BearerStrategy } from "passport-http-bearer";
+import {
+  Strategy as BearerStrategy,
+  IVerifyOptions
+} from "passport-http-bearer";
 import {
   ExtractJwt,
   Strategy as JwtStrategy,
@@ -19,11 +21,7 @@ import { Application } from "../resources/Application";
 import { User } from "../resources/User";
 
 interface IPassportCallback extends VerifiedCallback {
-  (error: any, user?: User, info?: IPassportInfo): void;
-}
-
-interface IPassportInfo {
-  scope?: string;
+  (error: any, user?: User, options?: IVerifyOptions): void;
 }
 
 export const authFromBearer = async (
@@ -47,13 +45,17 @@ export const authFromBearer = async (
     await passport.authenticate(
       authStrategy,
       { session: false },
-      async (err: any, user?: User, info?: IPassportInfo) => {
+      async (_: any, user?: User, info?: IVerifyOptions) => {
         if (user) {
           await ctx.login(user);
         }
 
         if (info && info.scope) {
-          ctx.state.scope = info.scope;
+          if (info.scope.length) {
+            ctx.state.scope = (info.scope as string[]).join(" ");
+          } else {
+            ctx.state.scope = info.scope as string;
+          }
         }
       }
     )(ctx, next);
@@ -75,6 +77,7 @@ const JWT_OPTS: StrategyOptions = {
     rateLimit: true
   })
 };
+
 passport.use(
   new JwtStrategy(
     JWT_OPTS,
@@ -142,9 +145,7 @@ passport.use(
         return done(new Error("Application was not found"), undefined);
       }
 
-      const user = await application.user;
-
-      return done(undefined, user, { scope: "all" });
+      return done(undefined, application.user, { scope: "all" });
     } catch (err) {
       return done(err);
     }

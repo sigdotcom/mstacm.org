@@ -17,19 +17,18 @@ const FOURTEEN_DAYS_IN_MILLISECONDS: number = 12096e5;
 /**
  * GraphQL Resolver for RedemptionCodes
  */
-@Resolver((resolverType: void) => RedemptionCode)
+@Resolver(() => RedemptionCode)
 export class RedemptionCodeResolver {
   @Authorized("view:redemption_codes")
-  @Query((returns: void) => [RedemptionCode])
+  @Query(() => [RedemptionCode])
   public async redemptionCodes(): Promise<RedemptionCode[]> {
     return RedemptionCode.find();
   }
 
   @Authorized("create:redemption_codes")
-  @Mutation((returns: void) => RedemptionCode)
+  @Mutation(() => RedemptionCode)
   public async createMembershipRedemptionCode(
-    @Ctx() context: IContext,
-    @Arg("membershipType", (retuns: void) => MembershipTypes)
+    @Arg("membershipType", () => MembershipTypes)
     membershipType: MembershipTypes
   ): Promise<RedemptionCode> {
     const tag: string = membershipType.toString();
@@ -62,7 +61,7 @@ export class RedemptionCodeResolver {
   }
 
   @Authorized()
-  @Mutation((returns: void) => RedemptionCode)
+  @Mutation(() => RedemptionCode)
   public async redeemRedemptionCode(
     @Ctx() context: IContext,
     @Arg("redemptionCode") code: string

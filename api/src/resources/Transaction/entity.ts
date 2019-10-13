@@ -30,7 +30,7 @@ export enum PaymentTypes {
 @ObjectType()
 @Entity()
 export class Transaction extends BaseEntity {
-  @Field((returns: void) => ID)
+  @Field(() => ID)
   @PrimaryGeneratedColumn("uuid")
   public id: string;
 
@@ -61,23 +61,21 @@ export class Transaction extends BaseEntity {
   })
   public status: TransactionStatus;
 
-  @Field((returns: void) => User)
-  @ManyToOne((returns: void) => User, (user: User) => user.transactions, {
+  @Field(() => User)
+  @ManyToOne(() => User, (user: User) => user.transactions, {
     lazy: true
   })
   public user: Lazy<User>;
 
-  @Field((returns: void) => [Purchase])
-  @OneToMany(
-    (returns: void) => Purchase,
-    (purchase: Purchase) => purchase.transaction,
-    { lazy: true }
-  )
+  @Field(() => [Purchase])
+  @OneToMany(() => Purchase, (purchase: Purchase) => purchase.transaction, {
+    lazy: true
+  })
   public purchases: Lazy<Purchase[]>;
 
-  @Field((returns: void) => RedemptionCode)
+  @Field(() => RedemptionCode)
   @OneToOne(
-    (returns: void) => RedemptionCode,
+    () => RedemptionCode,
     (redemptionCode: RedemptionCode) => redemptionCode.transaction,
     { lazy: true }
   )

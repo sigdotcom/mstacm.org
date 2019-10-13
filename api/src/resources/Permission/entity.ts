@@ -7,17 +7,17 @@ import { User } from "../User";
 @ObjectType()
 @Entity()
 export class Permission extends BaseEntity {
-  @Field((type: void) => ID)
+  @Field(() => ID)
   @PrimaryColumn()
   public name: string;
 
-  @ManyToMany((type: void) => Group, (group: Group) => group.permissions, {
+  @ManyToMany(() => Group, (group: Group) => group.permissions, {
     lazy: true
   })
   public groups: Lazy<Group[]>;
 
-  @Field((returns: void) => [User])
-  @ManyToMany((type: void) => User, (user: User) => user.permissions, {
+  @Field(() => [User])
+  @ManyToMany(() => User, (user: User) => user.permissions, {
     lazy: true
   })
   public users: Lazy<User[]>;
