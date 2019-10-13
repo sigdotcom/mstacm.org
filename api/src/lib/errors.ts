@@ -16,7 +16,7 @@ registerEnumType(ErrorCodes, {
 
 @ObjectType()
 export class Extension {
-  @Field((returns: void) => ErrorCodes)
+  @Field(() => ErrorCodes)
   public code: ErrorCodes;
 }
 

@@ -40,7 +40,7 @@ registerEnumType(MembershipTypes, {
 
 @ObjectType()
 export class MembershipProduct {
-  @Field((returns: void) => MembershipTypes)
+  @Field(() => MembershipTypes)
   public tag: MembershipTypes;
 }
 
@@ -54,7 +54,7 @@ export const purchaseSingleProduct = async (
   quantity: number,
   user: User
 ): Promise<IPurchase> => {
-  const reqProductPurchase = await Purchase.create({
+  const reqProductPurchase = Purchase.create({
     product,
     quantity
   });
@@ -77,7 +77,7 @@ export const purchaseSingleProduct = async (
     statement_descriptor: `ACM* ${product.statementDescriptor}`
   });
 
-  const newTransaction: Transaction = await Transaction.create({
+  const newTransaction: Transaction = Transaction.create({
     charged: normalizedCost,
     intent: intent.id,
     purchases: [reqProductPurchase],

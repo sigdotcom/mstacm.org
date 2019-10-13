@@ -7,7 +7,7 @@ import { SigCreateInput, SigDeletePayload, SigUpdateInput } from "./input";
 const resource = Sig;
 type resourceType = Sig;
 
-@Resolver((returns: void) => Sig)
+@Resolver(() => Sig)
 export class SigResolver extends ResourceResolver<resourceType>(
   resource,
   SigCreateInput,

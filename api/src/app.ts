@@ -1,7 +1,7 @@
-import * as cors from "@koa/cors";
-import * as Koa from "koa";
-import * as koaBody from "koa-bodyparser";
-import * as logger from "koa-logger";
+import cors from "@koa/cors";
+import Koa from "koa";
+import koaBody from "koa-bodyparser";
+import logger from "koa-logger";
 
 import { config } from "./config";
 import { authFromBearer, passport } from "./middleware/auth";

@@ -31,7 +31,7 @@ const generateContainerURL = (containerName: string): ContainerURL => {
   const pipeline = generatePipeline();
   const serviceURL = new ServiceURL(`${config.AZURE_CDN_URI}`, pipeline);
 
-  return ContainerURL.fromServiceURL(serviceURL, CONTAINER_NAME);
+  return ContainerURL.fromServiceURL(serviceURL, containerName);
 };
 
 const generateBlockBlobURL = (

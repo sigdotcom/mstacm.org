@@ -19,12 +19,12 @@ const deleteResumeHelper = async (resume: Resume) => {
 /**
  * Resolver for Resume Entity
  */
-@Resolver((entity: void) => Resume)
+@Resolver(() => Resume)
 export class ResumeResolver {
   public resumeRepo: Repository<Resume> = getConnection().getRepository(Resume);
 
   @Authorized()
-  @Mutation((returns: void) => User)
+  @Mutation(() => User)
   public async deleteResume(@Ctx() context: IContext): Promise<Resume> {
     const user = context.state.user;
 
@@ -41,13 +41,13 @@ export class ResumeResolver {
   }
 
   @Authorized()
-  @Mutation((returns: void) => Resume)
+  @Mutation(() => Resume)
   public async uploadResume(
     @Ctx() context: IContext,
-    @Arg("resume", (returns: void) => GraphQLUpload) resume: File,
-    @Arg("graduationDate", (returns: void) => Date) graduationDate: Date,
-    @Arg("firstName", (returns: void) => String) firstName: string,
-    @Arg("lastName", (returns: void) => String) lastName: string
+    @Arg("resume", () => GraphQLUpload) resume: File,
+    @Arg("graduationDate", () => Date) graduationDate: Date,
+    @Arg("firstName", () => String) firstName: string,
+    @Arg("lastName", () => String) lastName: string
   ): Promise<Resume> {
     const user = context.state.user;
     if (!user) {
@@ -79,7 +79,7 @@ export class ResumeResolver {
     user.firstName = firstName;
     user.lastName = lastName;
 
-    const userResume = await this.resumeRepo.create({
+    const userResume = this.resumeRepo.create({
       id,
       url
     });
@@ -91,7 +91,7 @@ export class ResumeResolver {
   }
 
   @Authorized("view:resumes")
-  @Query((returns: void) => [Resume])
+  @Query(() => [Resume])
   public async resumes(): Promise<Resume[]> {
     return this.resumeRepo.find();
   }
