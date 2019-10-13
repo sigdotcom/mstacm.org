@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "devDependencies": {
+    "jest": "^24.8.0",
+    "lerna": "^3.17.0"
+  },
+  "name": "mstacm.org",
+  "dependencies": {
+    "@mstacm/oasis": "file:apps/web",
+    "@mstacm/phoenix": "file:api",
+    "@mstacm/profile": "file:apps/profile-web",
+    "@mstacm/resume-portal": "file:apps/resume-portal",
+    "@mstacm/warden": "file:apps/admin-web"
+  },
+  "workspaces": [
+    "api/",
+    "apps/*"
+  ]
+}
