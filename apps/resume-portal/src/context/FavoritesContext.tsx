@@ -11,8 +11,8 @@ export interface IFavoriteContextProps {
 
 export const FavoritesContext = createContext<IFavoriteContextProps>({
   users: [],
-  flipFavorite: (id: string) => {},
-  isFavorite: (id: string) => false,
+  flipFavorite: () => {},
+  isFavorite: () => false,
   filterFavorites: false,
-  setFilterFavorites: (filter: boolean) => {}
+  setFilterFavorites: () => {}
 });
