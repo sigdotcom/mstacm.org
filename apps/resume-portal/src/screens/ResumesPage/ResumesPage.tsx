@@ -25,13 +25,11 @@ const ResumesPage: React.FC = () => {
     setSearch(e.currentTarget.value);
   };
 
-  const onFilterFavorites = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const onFilterFavorites = () => {
     setFilterFavorites(!filterFavorites);
   };
 
-  const openDrawerOnClick = (e: any) => {
+  const openDrawerOnClick = () => {
     openDrawer();
   };
 

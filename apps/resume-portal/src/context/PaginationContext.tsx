@@ -10,6 +10,6 @@ export interface IPaginationContextProps {
 export const PaginationContext = createContext<IPaginationContextProps>({
   curPage: 1,
   displayPerPage: 10,
-  setCurPage: (page: number): void => {},
-  setDisplayPerPage: (numPerPage: number): void => {}
+  setCurPage: (): void => {},
+  setDisplayPerPage: (): void => {}
 });

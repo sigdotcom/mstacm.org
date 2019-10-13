@@ -28,8 +28,10 @@ module.exports = {
     "class-methods-use-this": 0,
     "max-classes-per-file": 0,
     "no-param-reassign": 1,
+    "no-unused-vars": [2, {"args": "after-used"}],
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
     "react/jsx-boolean-value": 0
+
   },
   settings: {
     "import/resolver": {

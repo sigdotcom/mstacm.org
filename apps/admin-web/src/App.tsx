@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
+import { Layout, Menu, PageHeader, Spin } from "antd";
 
 import { ToolList } from "./components/pages";
 import { Events } from "./components/pages/tools";
@@ -8,7 +9,6 @@ import "./static/css/App.css";
 
 import { useAuth0 } from "./utils/react-auth0-wrapper";
 
-import { Layout, Menu, PageHeader, Spin } from "antd";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -33,8 +33,10 @@ const App: React.SFC<{}> = (): JSX.Element => {
 
   useEffect(() => {
     if (loading) {
-      return;
-    } else if (!isAuthenticated) {
+      return
+    }
+
+    if (!isAuthenticated) {
       const fn: any = async (): Promise<void> => {
         await loginWithRedirect({
           appState: { targetUrl: window.location.origin }
