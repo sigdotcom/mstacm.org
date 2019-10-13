@@ -26,7 +26,7 @@ class ColumnNumericTransformer {
 @ObjectType()
 @Entity()
 export class Product extends BaseEntity {
-  @Field((returns: void) => ID)
+  @Field(() => ID)
   @PrimaryColumn()
   public tag: string;
 
@@ -52,11 +52,11 @@ export class Product extends BaseEntity {
   })
   public price: number;
 
-  @OneToMany((type: void) => Purchase, (purchase: Purchase) => purchase.product)
+  @OneToMany(() => Purchase, (purchase: Purchase) => purchase.product)
   public purchases: Lazy<Purchase[]>;
 
   @ManyToMany(
-    (type: void) => ProductCategory,
+    () => ProductCategory,
     (category: ProductCategory) => category.products
   )
   @JoinTable()

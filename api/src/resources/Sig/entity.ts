@@ -30,12 +30,12 @@ export class Sig extends BaseEntity {
   @Column()
   public description: string;
 
-  @Field((returns: void) => [User])
-  @ManyToMany((type: void) => User, (user: User) => user.sigs, { lazy: true })
+  @Field(() => [User])
+  @ManyToMany(() => User, (user: User) => user.sigs, { lazy: true })
   public users: Lazy<User[]>;
 
-  @Field((returns: void) => [Event])
-  @OneToMany((type: void) => Event, (event: Event) => event.hostSig, {
+  @Field(() => [Event])
+  @OneToMany(() => Event, (event: Event) => event.hostSig, {
     lazy: true
   })
   public hostedEvents: Lazy<Event[]>;

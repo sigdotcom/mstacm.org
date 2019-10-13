@@ -3,7 +3,7 @@ import { Purchase } from "./entity";
 
 @InputType()
 export class PurchaseInput implements Partial<Purchase> {
-  @Field(type => Int, { defaultValue: 1 })
+  @Field(() => Int, { defaultValue: 1 })
   public quantity: number;
 
   @Field()

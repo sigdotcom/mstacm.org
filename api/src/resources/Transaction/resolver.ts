@@ -15,7 +15,7 @@ import {
 
 import { getConnection, Repository } from "typeorm";
 
-@Resolver((of: void) => Transaction)
+@Resolver(() => Transaction)
 export class ProductResolver {
   public transactionRepo: Repository<
     Transaction
@@ -26,16 +26,16 @@ export class ProductResolver {
   );
 
   @Authorized("view:transactions")
-  @Query((returns: void) => [Transaction])
+  @Query(() => [Transaction])
   public async transactions(): Promise<Transaction[]> {
     return this.transactionRepo.find();
   }
 
   @Authorized()
-  @Mutation((returns: void) => TransactionPayload)
+  @Mutation(() => TransactionPayload)
   public async startMembershipTransaction(
     @Ctx() context: IContext,
-    @Arg("membershipType", (retuns: void) => MembershipTypes)
+    @Arg("membershipType", () => MembershipTypes)
     membershipType: MembershipTypes
   ): Promise<TransactionPayload> {
     const tag: string = membershipType.toString();
@@ -60,14 +60,16 @@ export class ProductResolver {
   }
 
   @Authorized()
-  @Mutation((returns: void) => TransactionPayload)
+  @Mutation(() => TransactionPayload)
   public async startProductTransaction(
     @Ctx() context: IContext,
-    @Arg("purchase", (returns: void) => PurchaseInput)
+    @Arg("purchase", () => PurchaseInput)
     reqPurchaseInput: PurchaseInput
   ): Promise<TransactionPayload> {
-    const tag: string = reqPurchaseInput.tag;
-    const quantity: number = reqPurchaseInput.quantity;
+    const {
+      tag,
+      quantity
+    }: { tag: string; quantity: number } = reqPurchaseInput;
     const user: User = context.state.user as User;
 
     const reqProduct: Product = await this.productRepo.findOneOrFail({

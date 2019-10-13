@@ -17,7 +17,7 @@ export interface IConfig {
   port: number;
 }
 
-const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN;
+const { AUTH0_DOMAIN } = process.env;
 export const config: IConfig = {
   AZURE_CDN_URI: process.env.AZURE_CDN_URI || "https://cdn.mstacm.org",
   AZURE_STORAGE_ACCOUNT: process.env.AZURE_STORAGE_ACCOUNT || "mstacm",

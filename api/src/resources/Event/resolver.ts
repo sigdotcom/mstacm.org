@@ -24,15 +24,16 @@ interface INumber {
 /**
  * Resolvers for viewing and modifying the Event entity
  */
-@Resolver((returns: void) => Event)
+@Resolver(() => Event)
 export class EventResolver {
   public repository: Repository<Event> = getRepository(Event);
+
   public sigRepository: Repository<Sig> = getRepository(Sig);
 
   @Authorized("delete:events")
-  @Mutation((returns: void) => EventDeletePayload)
+  @Mutation(() => EventDeletePayload)
   public async deleteEvent(
-    @Arg("id", (argType: void) => Number) id: number
+    @Arg("id", () => Number) id: number
   ): Promise<INumber> {
     await this.repository.delete(id);
 
@@ -40,10 +41,10 @@ export class EventResolver {
   }
 
   @Authorized("update:events")
-  @Mutation((returns: void) => Event)
+  @Mutation(() => Event)
   public async updateEvent(
-    @Arg("id", (argType: void) => Number) id: number,
-    @Arg("data", (argType: void) => EventUpdateInput)
+    @Arg("id", () => Number) id: number,
+    @Arg("data", () => EventUpdateInput)
     input: DeepPartial<Event>
   ): Promise<Event> {
     if (input.hostSig) {
@@ -60,10 +61,10 @@ export class EventResolver {
   }
 
   @Authorized("create:events")
-  @Mutation((returns: void) => Event)
+  @Mutation(() => Event)
   public async createEvent(
     @Ctx() context: IContext,
-    @Arg("data", (argType: void) => EventCreateInput)
+    @Arg("data", () => EventCreateInput)
     input: DeepPartial<Event>
   ): Promise<Event> {
     const creator: User | undefined = context.state.user;
@@ -81,12 +82,12 @@ export class EventResolver {
     return newResource.save();
   }
 
-  @Query((returns: void) => [Event])
+  @Query(() => [Event])
   protected async events(): Promise<Event[]> {
     return this.repository.find();
   }
 
-  @Query((returns: void) => [Event])
+  @Query(() => [Event])
   protected async currentEvents(): Promise<Event[]> {
     return this.repository.find({
       where: {
@@ -95,10 +96,8 @@ export class EventResolver {
     });
   }
 
-  @Query((returns: void) => Event)
-  protected async event(
-    @Arg("id", (argType: void) => Number) id: number
-  ): Promise<Event> {
+  @Query(() => Event)
+  protected async event(@Arg("id", () => Number) id: number): Promise<Event> {
     return this.repository.findOneOrFail({ id });
   }
 }

@@ -3,20 +3,20 @@ import { DeepPartial, getRepository, Repository } from "typeorm";
 import { Permission } from "./entity";
 import { PermissionCreateInput } from "./input";
 
-@Resolver((returns: void) => Permission)
+@Resolver(() => Permission)
 export class PermissionResolver {
   public repository: Repository<Permission> = getRepository(Permission);
 
   @Authorized("view:permissions")
-  @Query((returns: void) => [Permission])
+  @Query(() => [Permission])
   public async permissions(): Promise<Permission[]> {
     return this.repository.find();
   }
 
   @Authorized("create:permissions")
-  @Mutation((returns: void) => Permission)
+  @Mutation(() => Permission)
   public async createPermission(
-    @Arg("data", (argType: void) => PermissionCreateInput)
+    @Arg("data", () => PermissionCreateInput)
     input: DeepPartial<Permission>
   ): Promise<Permission> {
     const newResource = this.repository.create({ ...input });

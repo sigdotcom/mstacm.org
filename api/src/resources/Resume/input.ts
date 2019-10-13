@@ -2,7 +2,7 @@ import { Readable } from "stream";
 import { Field } from "type-graphql";
 
 export class File {
-  @Field((returns: void) => Readable)
+  @Field(() => Readable)
   public createReadStream: () => Readable;
 
   @Field()

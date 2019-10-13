@@ -4,13 +4,12 @@ import "reflect-metadata";
 import * as TypeGraphQL from "type-graphql";
 import { Container } from "typedi";
 import { createConnection, useContainer } from "typeorm";
+import Koa from "koa";
 import "./lib/errors";
 import "./lib/products";
 
 import { app } from "./app";
 import { authChecker } from "./lib/auth";
-
-import { ParameterizedContext as KoaContext } from "koa";
 
 // register 3rd party IOC container
 useContainer(Container);
@@ -36,7 +35,7 @@ async function bootstrap() {
     // create mocked context
     // Create GraphQL server
     const server = new ApolloServer({
-      context: ({ ctx }: { ctx: KoaContext }) => ctx,
+      context: ({ ctx }: { ctx: Koa.ParameterizedContext }) => ctx,
       schema
     });
 
