@@ -18,26 +18,26 @@ export function ResourceResolver<T extends BaseEntity>(
   const resourceCamelCase = firstLetter.toUpperCase() + resourceName.slice(1);
 
   // `isAbstract` decorator option is mandatory to prevent multiple registering in schema
-  @Resolver((returns: void) => ResourceCls, { isAbstract: true })
+  @Resolver(() => ResourceCls, { isAbstract: true })
   @Service()
   abstract class ResourceResolverClass {
-    @Mutation((returns: void) => ResourceCls, {
+    @Mutation(() => ResourceCls, {
       name: `create${resourceCamelCase}`
     })
     public async create(
-      @Arg(`data`, (argType: void) => CreateCls) input: DeepPartial<T>
+      @Arg(`data`, () => CreateCls) input: DeepPartial<T>
     ): Promise<T> {
-      const resource = await repository.create({ ...input });
+      const resource = repository.create({ ...input });
 
       return resource.save();
     }
 
-    @Mutation((returns: void) => ResourceCls, {
+    @Mutation(() => ResourceCls, {
       name: `update${resourceCamelCase}`
     })
     public async update(
-      @Arg("id", (argType: void) => String) id: string,
-      @Arg(`data`, (argType: void) => UpdateCls) input: any
+      @Arg("id", () => String) id: string,
+      @Arg(`data`, () => UpdateCls) input: any
     ): Promise<T> {
       const resource = await repository.findOneOrFail(id);
       const updatedResource = repository.merge(resource, { ...input });
@@ -45,23 +45,23 @@ export function ResourceResolver<T extends BaseEntity>(
       return updatedResource.save();
     }
 
-    @Mutation((returns: void) => DeleteCls, {
+    @Mutation(() => DeleteCls, {
       name: `delete${resourceCamelCase}`
     })
     public async remove(
-      @Arg("id", (argType: void) => String) id: string
+      @Arg("id", () => String) id: string
     ): Promise<{ id: string }> {
       await repository.delete(id);
 
       return { id };
     }
 
-    @Query((returns: void) => ResourceCls, { name: `${resourceName}` })
-    protected async getOne(@Arg("id", (argType: void) => String) id: string) {
+    @Query(() => ResourceCls, { name: `${resourceName}` })
+    protected async getOne(@Arg("id", () => String) id: string) {
       return repository.findOneOrFail({ id } as any);
     }
 
-    @Query((returns: void) => [ResourceCls], { name: `${resourceName}s` })
+    @Query(() => [ResourceCls], { name: `${resourceName}s` })
     protected async getAll() {
       return repository.find();
     }

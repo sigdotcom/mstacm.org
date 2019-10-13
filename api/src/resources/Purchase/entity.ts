@@ -15,7 +15,7 @@ import { Transaction } from "../Transaction";
 @ObjectType()
 @Entity()
 export class Purchase extends BaseEntity {
-  @Field((returns: void) => ID)
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   public id: string;
 
@@ -23,15 +23,15 @@ export class Purchase extends BaseEntity {
   @Column()
   public quantity: number;
 
-  @Field((returns: void) => Product)
-  @ManyToOne((type: void) => Product, (product: Product) => product.purchases, {
+  @Field(() => Product)
+  @ManyToOne(() => Product, (product: Product) => product.purchases, {
     lazy: true
   })
   public product: Lazy<Product>;
 
-  @Field((returns: void) => [Transaction])
+  @Field(() => [Transaction])
   @ManyToOne(
-    (type: void) => Transaction,
+    () => Transaction,
     (transaction: Transaction) => transaction.purchases,
     {
       lazy: true

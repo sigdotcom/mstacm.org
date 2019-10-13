@@ -16,7 +16,7 @@ import { Transaction } from "../Transaction";
 @ObjectType()
 @Entity()
 export class RedemptionCode extends BaseEntity {
-  @Field((returns: void) => ID)
+  @Field(() => ID)
   @PrimaryColumn()
   public id: string;
 
@@ -31,9 +31,9 @@ export class RedemptionCode extends BaseEntity {
   @Column()
   public expirationDate: Date;
 
-  @Field((returns: void) => Transaction)
+  @Field(() => Transaction)
   @OneToOne(
-    (returns: void) => Transaction,
+    () => Transaction,
     (transaction: Transaction) => transaction.redemptionCode,
     { lazy: true }
   )

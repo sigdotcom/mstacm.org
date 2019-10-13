@@ -14,7 +14,7 @@ import { User } from "../User";
 @ObjectType()
 @Entity()
 export class Resume extends BaseEntity {
-  @Field((returns: void) => ID)
+  @Field(() => ID)
   @Index({ unique: true })
   @PrimaryColumn()
   public id: string;
@@ -27,8 +27,8 @@ export class Resume extends BaseEntity {
   @CreateDateColumn()
   public readonly added: Date;
 
-  @Field((returns: void) => User)
-  @OneToOne((type: void) => User, (user: User) => user.resume, {
+  @Field(() => User)
+  @OneToOne(() => User, (user: User) => user.resume, {
     lazy: true,
     onDelete: "SET NULL"
   })

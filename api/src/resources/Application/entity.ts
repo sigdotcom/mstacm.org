@@ -21,6 +21,6 @@ export class Application extends BaseEntity {
   @Generated("uuid")
   public token: string;
 
-  @ManyToOne((type: void) => User, (user: User) => user.applications)
+  @ManyToOne(() => User, (user: User) => user.applications)
   public user: User;
 }

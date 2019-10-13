@@ -18,7 +18,7 @@ import { User } from "../User";
 @ObjectType()
 @Entity()
 export class Event extends BaseEntity {
-  @Field((returns: void) => ID)
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   public id: number;
 
@@ -36,16 +36,16 @@ export class Event extends BaseEntity {
   @Column()
   public dateExpire: Date;
 
-  @Field((returns: void) => User)
-  @ManyToOne((returns: void) => User, (user: User) => user.createdEvents, {
+  @Field(() => User)
+  @ManyToOne(() => User, (user: User) => user.createdEvents, {
     lazy: true,
     nullable: false
   })
   @JoinColumn()
   public creator: Lazy<User>;
 
-  @Field((returns: void) => Sig)
-  @ManyToOne((returns: void) => Sig, (sig: Sig) => sig.hostedEvents, {
+  @Field(() => Sig)
+  @ManyToOne(() => Sig, (sig: Sig) => sig.hostedEvents, {
     lazy: true,
     nullable: false
   })
