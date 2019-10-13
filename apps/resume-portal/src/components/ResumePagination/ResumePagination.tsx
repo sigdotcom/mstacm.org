@@ -10,11 +10,11 @@ export const ResumePagination: React.FC = () => {
     PaginationContext
   );
 
-  const onChange = (page: number, pageSize?: number | undefined): void => {
+  const onChange = (page: number): void => {
     setCurPage(page);
   };
 
-  const onShowSizeChange = (current: number, size: number): void => {
+  const onShowSizeChange = (_: number, size: number): void => {
     setDisplayPerPage(size);
   };
 

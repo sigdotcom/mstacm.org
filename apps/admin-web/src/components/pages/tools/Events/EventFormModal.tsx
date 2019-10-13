@@ -11,7 +11,7 @@ const EventFormModal: React.FC<{}> = (): JSX.Element => {
     setEventFormVisible(false);
   };
 
-  const action: string = `${event ? "Edit" : "Add"} Event`;
+  const action: string = `${eventFormVisible ? "Edit" : "Add"} Event`;
 
   return (
     <Modal
