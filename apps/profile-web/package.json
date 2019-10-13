@@ -1,5 +1,5 @@
 {
-  "name": "profile",
+  "name": "@mstacm/profile",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

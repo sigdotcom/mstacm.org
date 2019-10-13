@@ -1,6 +1,6 @@
 {
-  "name": "warden",
-  "version": "0.1.0",
+  "name": "@mstacm/warden",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@apollo/react-hooks": "^3.0.0",
