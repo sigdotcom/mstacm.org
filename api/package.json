@@ -1,5 +1,5 @@
 {
-  "name": "@mstacm/api",
+  "name": "@mstacm/phoenix",
   "version": "1.0.0",
   "description": "GraphQL api for mstacm.org",
   "main": "index.ts",
