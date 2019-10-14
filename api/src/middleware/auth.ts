@@ -51,11 +51,7 @@ export const authFromBearer = async (
         }
 
         if (info && info.scope) {
-          if (info.scope.length) {
-            ctx.state.scope = (info.scope as string[]).join(" ");
-          } else {
-            ctx.state.scope = info.scope as string;
-          }
+          ctx.state.scope = (info.scope as string) || undefined;
         }
       }
     )(ctx, next);
