@@ -1314,7 +1314,7 @@
     unique-filename "^1.1.1"
     which "^1.3.1"
 
-"@graphql-codegen/cli@^1.8.0":
+"@graphql-codegen/cli@^1.4.0", "@graphql-codegen/cli@^1.7.0", "@graphql-codegen/cli@^1.8.0":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/cli/-/cli-1.8.1.tgz#2fc918ce97c6779c2549c7256445358333214bbe"
   integrity sha512-HMJiEUqCEDqgeq6bzVssih3clz+4ShvtfEFl0bCY2iWs3+8CnbNooS+3KiFU1ESw86k+r8J5cKQTKLZmbU4P9g==
@@ -1366,7 +1366,7 @@
     graphql-toolkit "0.5.16"
     tslib "1.10.0"
 
-"@graphql-codegen/introspection@^1.8.0":
+"@graphql-codegen/introspection@^1.7.0", "@graphql-codegen/introspection@^1.8.0":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/introspection/-/introspection-1.8.1.tgz#7e8746bb6709a700f9da79be9e61620c7d21c4ba"
   integrity sha512-T4oVj50ICS6h9mBj6rE22URZ9NUjWqybQfPAvAJtUDPl+udcq4lqmk2gkr3wXW5l42Pdj91f1pQbLwpw3JpjTw==
@@ -1384,7 +1384,7 @@
     import-from "3.0.0"
     tslib "1.10.0"
 
-"@graphql-codegen/typescript-operations@^1.8.0":
+"@graphql-codegen/typescript-operations@^1.4.0", "@graphql-codegen/typescript-operations@^1.7.0", "@graphql-codegen/typescript-operations@^1.8.0":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-operations/-/typescript-operations-1.8.1.tgz#1eeb720b875670c0a02af1607d1bdcf0e1440ddf"
   integrity sha512-Bd5YwHQcUP+OSS0RR/MYWSa3oVMCC8eGbko7h8O3MSK61K0P/AlNgZj0Cu2SZJTRwmUKgmZE98UCQXdDQ44BqQ==
@@ -1394,7 +1394,7 @@
     "@graphql-codegen/visitor-plugin-common" "1.8.1"
     tslib "1.10.0"
 
-"@graphql-codegen/typescript-react-apollo@^1.8.0":
+"@graphql-codegen/typescript-react-apollo@^1.7.0", "@graphql-codegen/typescript-react-apollo@^1.8.0":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-react-apollo/-/typescript-react-apollo-1.8.1.tgz#2e407175fe8ae71ba2f2298a6cc3a12c3aab23ce"
   integrity sha512-BvWc5kbqcBkkaWhTgF4YzHOpNAFOqcraPhR6uCzu4ZN0VZNIjs04U8UIhz9dgLg2PxZurZqWAGrlNl7fj/QunQ==
@@ -1403,7 +1403,7 @@
     "@graphql-codegen/visitor-plugin-common" "1.8.1"
     tslib "1.10.0"
 
-"@graphql-codegen/typescript@1.8.1", "@graphql-codegen/typescript@^1.8.0":
+"@graphql-codegen/typescript@1.8.1", "@graphql-codegen/typescript@^1.7.0", "@graphql-codegen/typescript@^1.8.0":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-1.8.1.tgz#5580d27d099f68af1f34d36819f25c0c5196926d"
   integrity sha512-oNLO/V78PrJUsUGhdhExguZUIl6sVv1J14XNPpyQeNVtua5wQNyKHkzPqMGP4H63S4BDtA6wI3IqU7qHH5Io9w==
@@ -2311,6 +2311,122 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
+"@mstacm/oasis@file:apps/web":
+  version "0.1.0"
+  dependencies:
+    "@apollo/react-hooks" "^3.1.2"
+    "@auth0/auth0-spa-js" "^1.2.4"
+    "@sendgrid/helpers" "^6.4.0"
+    antd "^3.23.5"
+    apollo-cache-inmemory "^1.6.3"
+    apollo-client "^2.6.4"
+    apollo-link-context "^1.0.18"
+    apollo-link-http "^1.5.15"
+    debug "^4.1.1"
+    graphql "^14.5.8"
+    graphql-tag "^2.10.1"
+    history "^4.10.1"
+    react "^16.10.1"
+    react-dom "^16.10.1"
+    react-eva-icons "^0.0.8"
+    react-fullscreen-image "0.0.3"
+    react-lines-ellipsis "^0.14.1"
+    react-modal "^3.8.1"
+    react-router-dom "^5.1.2"
+    react-scripts "^3.1.2"
+    react-scroll "^1.7.12"
+    react-stripe-elements "^5.0.0"
+    react-toastify "^5.4.0"
+    styled-components "^4.4.0"
+
+"@mstacm/phoenix@file:api":
+  version "1.0.0"
+  dependencies:
+    "@azure/storage-blob" "^10.3.0"
+    "@koa/cors" "^3.0.0"
+    "@koa/router" "^8.0.0"
+    apollo-server "^2.6.4"
+    apollo-server-koa "^2.6.7"
+    axios "^0.19.0"
+    axios-cache-adapter "^2.3.3"
+    file-type "^12.0.1"
+    graphql "^14.3.1"
+    graphql-upload "^8.0.7"
+    jsonwebtoken "^8.5.1"
+    jwks-rsa "^1.6.0"
+    koa "^2.7.0"
+    koa-bodyparser "^4.2.1"
+    koa-logger "^3.2.0"
+    koa-passport "^4.1.3"
+    nanoid "^2.1.1"
+    nodemon "^1.19.1"
+    passport-http-bearer "^1.0.1"
+    passport-jwt "^4.0.0"
+    pg "^7.11.0"
+    stripe "^7.4.0"
+    ts-node "^8.3.0"
+    tslint "^5.18.0"
+    type-graphql "^0.17.4"
+    typedi "^0.8.0"
+    typeorm "^0.2.18"
+    typeorm-typedi-extensions "^0.2.3"
+    uuid "^3.3.2"
+
+"@mstacm/profile@file:apps/profile-web":
+  version "0.1.0"
+  dependencies:
+    "@apollo/react-hooks" "^3.0.0"
+    "@auth0/auth0-spa-js" "^1.2.2"
+    antd "^3.12.4"
+    apollo-boost "^0.4.3"
+    apollo-link-context "^1.0.18"
+    apollo-upload-client "^11.0.0"
+    graphql "^14.4.2"
+    npm-run-all "^4.1.5"
+    react "^16.7.0"
+    react-dom "^16.7.0"
+    react-router-dom "^4.3.1"
+    react-scripts "^2.1.8"
+    reactn "^2.2.1"
+    styled-components "^4.1.3"
+
+"@mstacm/resume-portal@file:apps/resume-portal":
+  version "0.1.0"
+  dependencies:
+    "@apollo/react-hooks" "^3.1.1"
+    "@auth0/auth0-spa-js" "^1.1.1"
+    antd "^3.20.7"
+    apollo-boost "^0.4.3"
+    apollo-link-context "^1.0.19"
+    graphql "^14.4.2"
+    graphql-tag "^2.10.1"
+    js-file-download "^0.4.7"
+    react "^16.8.6"
+    react-apollo "^3.1.1"
+    react-dom "^16.8.6"
+    react-eva-icons "^0.0.8"
+    react-scripts "^3.1.2"
+    react-svg "^10.0.11"
+    react-use "^12.2.0"
+    styled-components "^4.3.2"
+    typescript "^3.6.3"
+
+"@mstacm/warden@file:apps/admin-web":
+  version "0.1.0"
+  dependencies:
+    "@apollo/react-hooks" "^3.0.0"
+    "@auth0/auth0-spa-js" "^1.2.2"
+    antd "^3.12.4"
+    apollo-boost "^0.4.3"
+    apollo-link-context "^1.0.18"
+    graphql "^14.4.2"
+    react "^16.7.0"
+    react-dom "^16.7.0"
+    react-router-dom "^4.3.1"
+    react-scripts "^2.1.8"
+    reactn "^2.2.1"
+    styled-components "^4.1.3"
+
 "@nodelib/fs.scandir@2.1.3":
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.3.tgz#3a582bdb53804c6ba6d146579c46e52130cf4a3b"
@@ -2791,7 +2907,12 @@
   resolved "https://registry.yarnpkg.com/@types/jest-diff/-/jest-diff-20.0.1.tgz#35cc15b9c4f30a18ef21852e255fdb02f6d59b89"
   integrity sha512-yALhelO3i0hqZwhjtcr6dYyaLoCHbAMshwtj6cGxTvHZAKXHsYGdff6E8EPw3xLKY0ELUTQ69Q1rQiJENnccMA==
 
-"@types/jest@^24.0.18":
+"@types/jest@^23.3.13":
+  version "23.3.14"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.14.tgz#37daaf78069e7948520474c87b80092ea912520a"
+  integrity sha512-Q5hTcfdudEL2yOmluA1zaSyPbzWPmJ3XfSWeP3RyoYvS9hnje1ZyagrZOuQ6+1nQC1Gw+7gap3pLNL3xL6UBug==
+
+"@types/jest@^24.0.15", "@types/jest@^24.0.18":
   version "24.0.18"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-24.0.18.tgz#9c7858d450c59e2164a8a9df0905fc5091944498"
   integrity sha512-jcDDXdjTcrQzdN06+TSVsPPqxvsZA/5QkYfIZlq1JMw7FdP5AZylbOc+6B/cuDurctRe+MziUMtQ3xQdrbjqyQ==
@@ -2911,12 +3032,12 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@>=6", "@types/node@^12.6.2", "@types/node@^12.7.9":
+"@types/node@*", "@types/node@>=6", "@types/node@^12.6.2", "@types/node@^12.6.8", "@types/node@^12.7.9":
   version "12.7.12"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.7.12.tgz#7c6c571cc2f3f3ac4a59a5f2bd48f5bdbc8653cc"
   integrity sha512-KPYGmfD0/b1eXurQ59fXD1GBzhSQfz6/lKBxkaHX9dKTzjXbK68Zt7yGUxUsCS1jeTy/8aL+d9JEr+S54mpkWQ==
 
-"@types/node@^10.1.0":
+"@types/node@^10.1.0", "@types/node@^10.12.18":
   version "10.14.21"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.14.21.tgz#4a9db7ef1d1671c0015e632c5fa3d46c86c58c1e"
   integrity sha512-nuFlRdBiqbF+PJIEVxm2jLFcQWN7q7iWEJGsBV4n7v1dbI9qXB8im2pMMKMCUZe092sQb5SQft2DHfuQGK5hqQ==
@@ -2978,7 +3099,7 @@
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
   integrity sha512-ewFXqrQHlFsgc09MK5jP5iR7vumV/BYayNC6PgJO2LPe8vrnNFyjQjSppfEngITi0qvfKtzFvgKymGheFM9UOA==
 
-"@types/react-dom@^16.9.1":
+"@types/react-dom@^16.0.11", "@types/react-dom@^16.8.5", "@types/react-dom@^16.9.1":
   version "16.9.1"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.9.1.tgz#79206237cba9532a9f870b1cd5428bef6b66378c"
   integrity sha512-1S/akvkKr63qIUWVu5IKYou2P9fHLb/P2VAwyxVV85JGaGZTcUniMiTuIqM3lXFB25ej6h+CYEQ27ERVwi6eGA==
@@ -2999,6 +3120,15 @@
   dependencies:
     "@types/prop-types" "*"
     "@types/react" "*"
+
+"@types/react-router-dom@^4.3.1":
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/@types/react-router-dom/-/react-router-dom-4.3.5.tgz#72f229967690c890d00f96e6b85e9ee5780db31f"
+  integrity sha512-eFajSUASYbPHg2BDM1G8Btx+YqGgvROPIg6sBhl3O4kbDdYXdFdfrgQFf/pcBuQVObjfT9AL/dd15jilR5DIEA==
+  dependencies:
+    "@types/history" "*"
+    "@types/react" "*"
+    "@types/react-router" "*"
 
 "@types/react-router-dom@^5.1.0":
   version "5.1.0"
@@ -3046,7 +3176,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.9.4":
+"@types/react@*", "@types/react@^16.7.20", "@types/react@^16.8.23", "@types/react@^16.9.4":
   version "16.9.5"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.5.tgz#079dabd918b19b32118c25fd00a786bb6d0d5e51"
   integrity sha512-jQ12VMiFOWYlp+j66dghOWcmDDwhca0bnlcTxS4Qz/fh5gi6wpaZDthPEu/Gc/YlAuO87vbiUXL8qKstFvuOaA==
@@ -3094,7 +3224,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/styled-components@^4.1.19":
+"@types/styled-components@^4.1.19", "@types/styled-components@^4.1.6":
   version "4.1.19"
   resolved "https://registry.yarnpkg.com/@types/styled-components/-/styled-components-4.1.19.tgz#535b455d7744fda1608c605df82c0800eda61a09"
   integrity sha512-nDkoTQ8ItcJiyEvTa24TwsIpIfNKCG+Lq0LvAwApOcjQ8OaeOOCg66YSPHBePHUh6RPt1LA8aEzRlgWhQPFqPg==
