@@ -12,8 +12,15 @@
     "@mstacm/resume-portal": "file:apps/resume-portal",
     "@mstacm/warden": "file:apps/admin-web"
   },
-  "workspaces": [
-    "api/",
-    "apps/*"
-  ]
+  "workspaces": {
+    "packages": [
+      "api/",
+      "apps/*"
+    ],
+    "nohoist": [
+      "**/babel**",
+      "**/eslint**",
+      "**/jest**"
+    ]
+  }
 }
