@@ -71,6 +71,13 @@ export type Extension = {
   code: ErrorCodes,
 };
 
+export type Group = {
+   __typename?: 'Group',
+  name: Scalars['String'],
+  users: Array<User>,
+  permissions: Array<Permission>,
+};
+
 export type MembershipProduct = {
    __typename?: 'MembershipProduct',
   tag: MembershipTypes,
@@ -100,6 +107,8 @@ export type Mutation = {
   uploadResume: Resume,
   startMembershipTransaction: TransactionPayload,
   startProductTransaction: TransactionPayload,
+  addUserToGroups: User,
+  addPermissionsToUser: User,
 };
 
 
@@ -183,6 +192,18 @@ export type MutationStartProductTransactionArgs = {
   purchase: PurchaseInput
 };
 
+
+export type MutationAddUserToGroupsArgs = {
+  groupIds: Array<Scalars['String']>,
+  userId: Scalars['String']
+};
+
+
+export type MutationAddPermissionsToUserArgs = {
+  permissionIds: Array<Scalars['String']>,
+  userId: Scalars['String']
+};
+
 export type Permission = {
    __typename?: 'Permission',
   name: Scalars['ID'],
@@ -236,6 +257,7 @@ export type Query = {
   permissions: Array<Permission>,
   products: Array<Product>,
   redemptionCodes: Array<RedemptionCode>,
+  resumes: Array<Resume>,
   transactions: Array<Transaction>,
   me?: Maybe<User>,
 };
@@ -268,7 +290,7 @@ export type Resume = {
   id: Scalars['ID'],
   url: Scalars['String'],
   added: Scalars['DateTime'],
-  user?: Maybe<User>,
+  user: User,
 };
 
 export type Sig = {
@@ -322,13 +344,15 @@ export type User = {
   lastName?: Maybe<Scalars['String']>,
   email: Scalars['String'],
   emailVerified: Scalars['Boolean'],
+  profilePictureUrl: Scalars['String'],
+  graduationDate?: Maybe<Scalars['DateTime']>,
   isSuperAdmin?: Maybe<Scalars['Boolean']>,
   dateJoined: Scalars['DateTime'],
   membershipExpiration?: Maybe<Scalars['DateTime']>,
   isActive?: Maybe<Scalars['Boolean']>,
   resume?: Maybe<Resume>,
-  permissions: Array<Permission>,
-  graduationDate?: Maybe<Scalars['DateTime']>,
+  permissions?: Maybe<Array<Permission>>,
+  groups: Array<Group>,
 };
 
 export type UserCreateInput = {
@@ -348,6 +372,7 @@ export type UserUpdateInput = {
   lastName?: Maybe<Scalars['String']>,
   email?: Maybe<Scalars['String']>,
 };
+
 export type RedeemRedemptionCodeMutationVariables = {
   code: Scalars['String']
 };
@@ -400,6 +425,7 @@ export type MeExpirationQuery = (
   )> }
 );
 
+
 export const RedeemRedemptionCodeDocument = gql`
     mutation RedeemRedemptionCode($code: String!) {
   redeemRedemptionCode(redemptionCode: $code) {
@@ -410,9 +436,26 @@ export const RedeemRedemptionCodeDocument = gql`
     `;
 export type RedeemRedemptionCodeMutationFn = ApolloReactCommon.MutationFunction<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>;
 
-    export function useRedeemRedemptionCodeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>) {
-      return ApolloReactHooks.useMutation<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>(RedeemRedemptionCodeDocument, baseOptions);
-    }
+/**
+ * __useRedeemRedemptionCodeMutation__
+ *
+ * To run a mutation, you first call `useRedeemRedemptionCodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRedeemRedemptionCodeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [redeemRedemptionCodeMutation, { data, loading, error }] = useRedeemRedemptionCodeMutation({
+ *   variables: {
+ *      code: // value for 'code'
+ *   },
+ * });
+ */
+export function useRedeemRedemptionCodeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>) {
+        return ApolloReactHooks.useMutation<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>(RedeemRedemptionCodeDocument, baseOptions);
+      }
 export type RedeemRedemptionCodeMutationHookResult = ReturnType<typeof useRedeemRedemptionCodeMutation>;
 export type RedeemRedemptionCodeMutationResult = ApolloReactCommon.MutationResult<RedeemRedemptionCodeMutation>;
 export type RedeemRedemptionCodeMutationOptions = ApolloReactCommon.BaseMutationOptions<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>;
@@ -427,9 +470,26 @@ export const GetMembershipDocument = gql`
     `;
 export type GetMembershipMutationFn = ApolloReactCommon.MutationFunction<GetMembershipMutation, GetMembershipMutationVariables>;
 
-    export function useGetMembershipMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<GetMembershipMutation, GetMembershipMutationVariables>) {
-      return ApolloReactHooks.useMutation<GetMembershipMutation, GetMembershipMutationVariables>(GetMembershipDocument, baseOptions);
-    }
+/**
+ * __useGetMembershipMutation__
+ *
+ * To run a mutation, you first call `useGetMembershipMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useGetMembershipMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [getMembershipMutation, { data, loading, error }] = useGetMembershipMutation({
+ *   variables: {
+ *      membershipType: // value for 'membershipType'
+ *   },
+ * });
+ */
+export function useGetMembershipMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<GetMembershipMutation, GetMembershipMutationVariables>) {
+        return ApolloReactHooks.useMutation<GetMembershipMutation, GetMembershipMutationVariables>(GetMembershipDocument, baseOptions);
+      }
 export type GetMembershipMutationHookResult = ReturnType<typeof useGetMembershipMutation>;
 export type GetMembershipMutationResult = ApolloReactCommon.MutationResult<GetMembershipMutation>;
 export type GetMembershipMutationOptions = ApolloReactCommon.BaseMutationOptions<GetMembershipMutation, GetMembershipMutationVariables>;
@@ -452,14 +512,29 @@ export const GetCurrentEventsDocument = gql`
 }
     `;
 
-    export function useGetCurrentEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
-      return ApolloReactHooks.useQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
-    }
-      export function useGetCurrentEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
-        return ApolloReactHooks.useLazyQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
+/**
+ * __useGetCurrentEventsQuery__
+ *
+ * To run a query within a React component, call `useGetCurrentEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCurrentEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCurrentEventsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCurrentEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
       }
-      
+export function useGetCurrentEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
+        }
 export type GetCurrentEventsQueryHookResult = ReturnType<typeof useGetCurrentEventsQuery>;
+export type GetCurrentEventsLazyQueryHookResult = ReturnType<typeof useGetCurrentEventsLazyQuery>;
 export type GetCurrentEventsQueryResult = ApolloReactCommon.QueryResult<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>;
 export const MeExpirationDocument = gql`
     query MeExpiration {
@@ -469,12 +544,27 @@ export const MeExpirationDocument = gql`
 }
     `;
 
-    export function useMeExpirationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeExpirationQuery, MeExpirationQueryVariables>) {
-      return ApolloReactHooks.useQuery<MeExpirationQuery, MeExpirationQueryVariables>(MeExpirationDocument, baseOptions);
-    }
-      export function useMeExpirationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeExpirationQuery, MeExpirationQueryVariables>) {
-        return ApolloReactHooks.useLazyQuery<MeExpirationQuery, MeExpirationQueryVariables>(MeExpirationDocument, baseOptions);
+/**
+ * __useMeExpirationQuery__
+ *
+ * To run a query within a React component, call `useMeExpirationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeExpirationQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeExpirationQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMeExpirationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeExpirationQuery, MeExpirationQueryVariables>) {
+        return ApolloReactHooks.useQuery<MeExpirationQuery, MeExpirationQueryVariables>(MeExpirationDocument, baseOptions);
       }
-      
+export function useMeExpirationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeExpirationQuery, MeExpirationQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<MeExpirationQuery, MeExpirationQueryVariables>(MeExpirationDocument, baseOptions);
+        }
 export type MeExpirationQueryHookResult = ReturnType<typeof useMeExpirationQuery>;
+export type MeExpirationLazyQueryHookResult = ReturnType<typeof useMeExpirationLazyQuery>;
 export type MeExpirationQueryResult = ApolloReactCommon.QueryResult<MeExpirationQuery, MeExpirationQueryVariables>;
