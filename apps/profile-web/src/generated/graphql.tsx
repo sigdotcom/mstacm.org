@@ -71,6 +71,13 @@ export type Extension = {
   code: ErrorCodes,
 };
 
+export type Group = {
+   __typename?: 'Group',
+  name: Scalars['String'],
+  users: Array<User>,
+  permissions: Array<Permission>,
+};
+
 export type MembershipProduct = {
    __typename?: 'MembershipProduct',
   tag: MembershipTypes,
@@ -100,6 +107,8 @@ export type Mutation = {
   uploadResume: Resume,
   startMembershipTransaction: TransactionPayload,
   startProductTransaction: TransactionPayload,
+  addUserToGroups: User,
+  addPermissionsToUser: User,
 };
 
 
@@ -181,6 +190,18 @@ export type MutationStartMembershipTransactionArgs = {
 
 export type MutationStartProductTransactionArgs = {
   purchase: PurchaseInput
+};
+
+
+export type MutationAddUserToGroupsArgs = {
+  groupIds: Array<Scalars['String']>,
+  userId: Scalars['String']
+};
+
+
+export type MutationAddPermissionsToUserArgs = {
+  permissionIds: Array<Scalars['String']>,
+  userId: Scalars['String']
 };
 
 export type Permission = {
@@ -331,6 +352,7 @@ export type User = {
   isActive?: Maybe<Scalars['Boolean']>,
   resume?: Maybe<Resume>,
   permissions?: Maybe<Array<Permission>>,
+  groups: Array<Group>,
 };
 
 export type UserCreateInput = {
@@ -350,6 +372,7 @@ export type UserUpdateInput = {
   lastName?: Maybe<Scalars['String']>,
   email?: Maybe<Scalars['String']>,
 };
+
 export type UploadResumeMutationVariables = {
   resume: Scalars['Upload'],
   grad: Scalars['DateTime'],
@@ -377,6 +400,7 @@ export type MeQuery = (
   )> }
 );
 
+
 export const UploadResumeDocument = gql`
     mutation uploadResume($resume: Upload!, $grad: DateTime!, $fname: String!, $lname: String!) {
   uploadResume(resume: $resume, graduationDate: $grad, firstName: $fname, lastName: $lname) {
@@ -386,9 +410,29 @@ export const UploadResumeDocument = gql`
     `;
 export type UploadResumeMutationFn = ApolloReactCommon.MutationFunction<UploadResumeMutation, UploadResumeMutationVariables>;
 
-    export function useUploadResumeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UploadResumeMutation, UploadResumeMutationVariables>) {
-      return ApolloReactHooks.useMutation<UploadResumeMutation, UploadResumeMutationVariables>(UploadResumeDocument, baseOptions);
-    }
+/**
+ * __useUploadResumeMutation__
+ *
+ * To run a mutation, you first call `useUploadResumeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUploadResumeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uploadResumeMutation, { data, loading, error }] = useUploadResumeMutation({
+ *   variables: {
+ *      resume: // value for 'resume'
+ *      grad: // value for 'grad'
+ *      fname: // value for 'fname'
+ *      lname: // value for 'lname'
+ *   },
+ * });
+ */
+export function useUploadResumeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UploadResumeMutation, UploadResumeMutationVariables>) {
+        return ApolloReactHooks.useMutation<UploadResumeMutation, UploadResumeMutationVariables>(UploadResumeDocument, baseOptions);
+      }
 export type UploadResumeMutationHookResult = ReturnType<typeof useUploadResumeMutation>;
 export type UploadResumeMutationResult = ApolloReactCommon.MutationResult<UploadResumeMutation>;
 export type UploadResumeMutationOptions = ApolloReactCommon.BaseMutationOptions<UploadResumeMutation, UploadResumeMutationVariables>;
@@ -401,12 +445,27 @@ export const MeDocument = gql`
 }
     `;
 
-    export function useMeQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeQuery, MeQueryVariables>) {
-      return ApolloReactHooks.useQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
-    }
-      export function useMeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
-        return ApolloReactHooks.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
+/**
+ * __useMeQuery__
+ *
+ * To run a query within a React component, call `useMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMeQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeQuery, MeQueryVariables>) {
+        return ApolloReactHooks.useQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
       }
-      
+export function useMeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
+        }
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
+export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = ApolloReactCommon.QueryResult<MeQuery, MeQueryVariables>;

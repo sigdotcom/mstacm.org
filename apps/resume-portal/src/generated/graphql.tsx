@@ -71,6 +71,13 @@ export type Extension = {
   code: ErrorCodes,
 };
 
+export type Group = {
+   __typename?: 'Group',
+  name: Scalars['String'],
+  users: Array<User>,
+  permissions: Array<Permission>,
+};
+
 export type MembershipProduct = {
    __typename?: 'MembershipProduct',
   tag: MembershipTypes,
@@ -100,6 +107,8 @@ export type Mutation = {
   uploadResume: Resume,
   startMembershipTransaction: TransactionPayload,
   startProductTransaction: TransactionPayload,
+  addUserToGroups: User,
+  addPermissionsToUser: User,
 };
 
 
@@ -181,6 +190,18 @@ export type MutationStartMembershipTransactionArgs = {
 
 export type MutationStartProductTransactionArgs = {
   purchase: PurchaseInput
+};
+
+
+export type MutationAddUserToGroupsArgs = {
+  groupIds: Array<Scalars['String']>,
+  userId: Scalars['String']
+};
+
+
+export type MutationAddPermissionsToUserArgs = {
+  permissionIds: Array<Scalars['String']>,
+  userId: Scalars['String']
 };
 
 export type Permission = {
@@ -331,6 +352,7 @@ export type User = {
   isActive?: Maybe<Scalars['Boolean']>,
   resume?: Maybe<Resume>,
   permissions?: Maybe<Array<Permission>>,
+  groups: Array<Group>,
 };
 
 export type UserCreateInput = {
@@ -350,6 +372,7 @@ export type UserUpdateInput = {
   lastName?: Maybe<Scalars['String']>,
   email?: Maybe<Scalars['String']>,
 };
+
 export type ResumeCardsQueryVariables = {};
 
 
@@ -364,6 +387,7 @@ export type ResumeCardsQuery = (
     ) }
   )> }
 );
+
 
 export const ResumeCardsDocument = gql`
     query ResumeCards {
@@ -382,12 +406,27 @@ export const ResumeCardsDocument = gql`
 }
     `;
 
-    export function useResumeCardsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ResumeCardsQuery, ResumeCardsQueryVariables>) {
-      return ApolloReactHooks.useQuery<ResumeCardsQuery, ResumeCardsQueryVariables>(ResumeCardsDocument, baseOptions);
-    }
-      export function useResumeCardsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ResumeCardsQuery, ResumeCardsQueryVariables>) {
-        return ApolloReactHooks.useLazyQuery<ResumeCardsQuery, ResumeCardsQueryVariables>(ResumeCardsDocument, baseOptions);
+/**
+ * __useResumeCardsQuery__
+ *
+ * To run a query within a React component, call `useResumeCardsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useResumeCardsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useResumeCardsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useResumeCardsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ResumeCardsQuery, ResumeCardsQueryVariables>) {
+        return ApolloReactHooks.useQuery<ResumeCardsQuery, ResumeCardsQueryVariables>(ResumeCardsDocument, baseOptions);
       }
-      
+export function useResumeCardsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ResumeCardsQuery, ResumeCardsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ResumeCardsQuery, ResumeCardsQueryVariables>(ResumeCardsDocument, baseOptions);
+        }
 export type ResumeCardsQueryHookResult = ReturnType<typeof useResumeCardsQuery>;
+export type ResumeCardsLazyQueryHookResult = ReturnType<typeof useResumeCardsLazyQuery>;
 export type ResumeCardsQueryResult = ApolloReactCommon.QueryResult<ResumeCardsQuery, ResumeCardsQueryVariables>;
