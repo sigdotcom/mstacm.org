@@ -1,16 +1,7 @@
-
-
 # api.mstacm.org
 [View Live](https://api.mstacm.org) |
 [Report Bug](https://github.com/sigdotcom/mstacm.org/issues) |
 [Request Feature](https://github.com/sigdotcom/mstacm.org/issues)
-
-
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
 
 [api.mstacm.org](https://api.mstacm.org) is the primary [Apollo GraphQL
 API](https://www.apollographql.com/) that drives all database interactions from

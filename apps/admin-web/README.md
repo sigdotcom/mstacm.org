@@ -3,13 +3,6 @@
 [Report Bug](https://github.com/sigdotcom/mstacm.org/issues) |
 [Request Feature](https://github.com/sigdotcom/mstacm.org/issues)
 
-
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-
 [![admin.mstacm.org][product-screenshot]](https://admin.mstacm.org)
 
 [admin.mstacm.org](https://admin.mstacm.org) is the administrative interface for
@@ -165,13 +158,4 @@ Project Link: [https://github.com/sigdotcom/mstacm.org](https://github.com/sigdo
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/sigdotcom/mstacm.org.svg?style=flat-square
 [sigdotcom-organization]: https://github.com/sigdotcom/
-[contributors-url]: https://github.com/sigdotcom/mstacm.org/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/sigdotcom/mstacm.org.svg?style=flat-square
-[forks-url]: https://github.com/sigdotcom/mstacm.org/network/members
-[stars-shield]: https://img.shields.io/github/stars/sigdotcom/mstacm.org.svg?style=flat-square
-[stars-url]: https://github.com/sigdotcom/mstacm.org/stargazers
-[issues-shield]: https://img.shields.io/github/issues/sigdotcom/mstacm.org.svg?style=flat-square
-[issues-url]: https://github.com/sigdotcom/mstacm.org/issues
-[license-shield]: https://img.shields.io/github/license/sigdotcom/mstacm.org?style=flat-square
-[license-url]: https://github.com/sigdotcom/mstacm.org/blob/master/LICENSE.txt
 [product-screenshot]: images/admin-web-homepage.png
