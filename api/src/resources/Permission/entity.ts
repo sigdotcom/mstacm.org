@@ -25,9 +25,9 @@ export class Permission extends BaseEntity {
   })
   public users: Lazy<User[]>;
 
-  @Field((returns: void) => [RedemptionCode])
+  @Field(() => [RedemptionCode])
   @ManyToMany(
-    (type: void) => RedemptionCode,
+    () => RedemptionCode,
     (redemptionCode: RedemptionCode) => redemptionCode.permissions,
     {
       lazy: true
