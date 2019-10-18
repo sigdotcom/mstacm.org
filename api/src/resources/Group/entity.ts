@@ -35,9 +35,9 @@ export class Group extends BaseEntity {
   @JoinTable()
   public permissions: Lazy<Permission[]>;
 
-  @Field((returns: void) => [RedemptionCode])
+  @Field(() => [RedemptionCode])
   @ManyToMany(
-    (type: void) => RedemptionCode,
+    () => RedemptionCode,
     (redemptionCode: RedemptionCode) => redemptionCode.groups,
     {
       lazy: true
