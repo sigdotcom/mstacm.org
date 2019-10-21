@@ -3,6 +3,16 @@ version: '3'
 # See docker-compose.override.yml to see the 
 # additional development configuration 
 services:
+  phoenix_db:
+    image: "postgres:11"
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    networks:
+      - db_nw
+    environment:
+      - POSTGRES_USER=phoenix
+      - POSTGRES_PASSWORD=phoenix
   phoenix_web:
     restart: unless-stopped
     dns: 
