@@ -1,20 +1,20 @@
-# resumes.mstacm.org
-[View Live](https://resumes.mstacm.org) |
+# mstacm.org
+[View Live](https://mstacm.org) |
 [Report Bug](https://github.com/sigdotcom/mstacm.org/issues) |
 [Request Feature](https://github.com/sigdotcom/mstacm.org/issues)
 
-[![resumes.mstacm.org][product-screenshot]](https://resumes.mstacm.org)
+[![mstacm.org][product-screenshot]](https://mstacm.org)
 
-[resumes.mstacm.org](https://resumes.mstacm.org) is a company-facing page that
-allows recruiters to view the S&T ACM resume database. The primary features include:
-+ **Resume Previews** - Recruiters can preview resumes straight from the portal,
-  saving them time reading through resumes
-+ **Persistent Favoriting** - Recruiters can persistently favorite resumes they
-  like 
-+ **Filtering** - Resumes can be searched by student's name. Future work will add
-  more filtering options
-+ **Bulk Actions on Favorites** - All favorited resumes can be downloaded or
-  emailed at once in the `favorites` menu
+[mstacm.org](https://mstacm.org) is the primary promotional, advertising, and
+branding page for S&T ACM. The primary features include:
++ **Dynamic Events** - Automatically display the current ACM events in order of
+  occurrence in the 'events section'
++ **Authentication** - User authentication using
+  [auth0-spa-js](https://github.com/auth0/auth0-spa-js/)
++ **Dues Payment** - Ability to pay for dues using [Stripe](https://stripe.com)
+  in the 'Membership' section
++ **Marketing / Branding** - Various sections to promote ACM and our various
+  activities
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
@@ -36,7 +36,7 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 + [Git](https://git-scm.com/download/)
-+ [NodeJS](https://nodejs.org/)
++ [NodeJS](https://nodejs.org/en/)
 + [Yarn](https://yarnpkg.com/)
 
 ### Installation
@@ -48,9 +48,9 @@ To get a local copy up and running follow these simple steps.
 git clone git@github.com:sigdotcom/mstacm.org.git
 ```
 
-2. Navigate to the `apps/resume-portal` directory:
+2. Navigate to the `apps/web` directory:
 ```sh
-cd apps/resume-portal/
+cd apps/web
 ```
 
 3. Install all necessary dependencies:
@@ -61,8 +61,9 @@ yarn install
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-The entire page requires the GraphQL API to be running.  Please view the [API
-Installation Instructions](../../api/README.md) for more information.
+Certain features like dynamic events and dues payment requires the GraphQL API
+to be running. Please view the [API Installation
+Instructions](../../api/README.md) for more information.
 
 In the project directory, you can run:
 
@@ -163,4 +164,4 @@ Project Link: [https://github.com/sigdotcom/mstacm.org](https://github.com/sigdo
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [sigdotcom-organization]: https://github.com/sigdotcom/
-[product-screenshot]: images/resume-portal-homepage.png 
+[product-screenshot]: images/homepage-hero.png

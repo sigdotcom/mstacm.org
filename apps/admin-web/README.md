@@ -1,20 +1,13 @@
-# resumes.mstacm.org
-[View Live](https://resumes.mstacm.org) |
+# admin.mstacm.org
+[View Live](https://admin.mstacm.org) |
 [Report Bug](https://github.com/sigdotcom/mstacm.org/issues) |
 [Request Feature](https://github.com/sigdotcom/mstacm.org/issues)
 
-[![resumes.mstacm.org][product-screenshot]](https://resumes.mstacm.org)
+[![admin.mstacm.org][product-screenshot]](https://admin.mstacm.org)
 
-[resumes.mstacm.org](https://resumes.mstacm.org) is a company-facing page that
-allows recruiters to view the S&T ACM resume database. The primary features include:
-+ **Resume Previews** - Recruiters can preview resumes straight from the portal,
-  saving them time reading through resumes
-+ **Persistent Favoriting** - Recruiters can persistently favorite resumes they
-  like 
-+ **Filtering** - Resumes can be searched by student's name. Future work will add
-  more filtering options
-+ **Bulk Actions on Favorites** - All favorited resumes can be downloaded or
-  emailed at once in the `favorites` menu
+[admin.mstacm.org](https://admin.mstacm.org) is the administrative interface for
+accessing backend functionality in a user friendly way. The primary features include:
++ **Event Management** - Add, update, or remove events from the database.
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
@@ -36,7 +29,7 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 + [Git](https://git-scm.com/download/)
-+ [NodeJS](https://nodejs.org/)
++ [NodeJS](https://nodejs.org/en/)
 + [Yarn](https://yarnpkg.com/)
 
 ### Installation
@@ -48,9 +41,9 @@ To get a local copy up and running follow these simple steps.
 git clone git@github.com:sigdotcom/mstacm.org.git
 ```
 
-2. Navigate to the `apps/resume-portal` directory:
+2. Navigate to the `apps/admin-web` directory:
 ```sh
-cd apps/resume-portal/
+cd apps/admin-web/
 ```
 
 3. Install all necessary dependencies:
@@ -61,8 +54,9 @@ yarn install
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-The entire page requires the GraphQL API to be running.  Please view the [API
-Installation Instructions](../../api/README.md) for more information.
+Certain features like event management requires the GraphQL API to be running.
+Please view the [API Installation Instructions](../../api/README.md) for more
+information.
 
 In the project directory, you can run:
 
@@ -162,5 +156,6 @@ Project Link: [https://github.com/sigdotcom/mstacm.org](https://github.com/sigdo
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/sigdotcom/mstacm.org.svg?style=flat-square
 [sigdotcom-organization]: https://github.com/sigdotcom/
-[product-screenshot]: images/resume-portal-homepage.png 
+[product-screenshot]: images/admin-web-homepage.png
