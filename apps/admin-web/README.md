@@ -55,7 +55,7 @@ yarn install
 ## Usage
 
 Certain features like event management requires the GraphQL API to be running.
-Please view the [API Installation Instructions](../../api/README.md) for more
+Please view the [API Installation Instructions](../api/README.md) for more
 information.
 
 In the project directory, you can run:
