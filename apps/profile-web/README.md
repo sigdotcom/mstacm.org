@@ -1,20 +1,15 @@
-# resumes.mstacm.org
-[View Live](https://resumes.mstacm.org) |
+# profile.mstacm.org
+[View Live](https://profile.mstacm.org) |
 [Report Bug](https://github.com/sigdotcom/mstacm.org/issues) |
 [Request Feature](https://github.com/sigdotcom/mstacm.org/issues)
 
-[![resumes.mstacm.org][product-screenshot]](https://resumes.mstacm.org)
 
-[resumes.mstacm.org](https://resumes.mstacm.org) is a company-facing page that
-allows recruiters to view the S&T ACM resume database. The primary features include:
-+ **Resume Previews** - Recruiters can preview resumes straight from the portal,
-  saving them time reading through resumes
-+ **Persistent Favoriting** - Recruiters can persistently favorite resumes they
-  like 
-+ **Filtering** - Resumes can be searched by student's name. Future work will add
-  more filtering options
-+ **Bulk Actions on Favorites** - All favorited resumes can be downloaded or
-  emailed at once in the `favorites` menu
+[![profile.mstacm.org][product-screenshot]](https://profile.mstacm.org)
+
+[profile.mstacm.org](https://profile.mstacm.org) allows users to upload their
+resume to our resume database. Future work will allow users to perform a variety
+of personal customization options including notification settings, profile
+settings, and much more.
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
@@ -48,9 +43,9 @@ To get a local copy up and running follow these simple steps.
 git clone git@github.com:sigdotcom/mstacm.org.git
 ```
 
-2. Navigate to the `apps/resume-portal` directory:
+2. Navigate to the `apps/profile-web` directory:
 ```sh
-cd apps/resume-portal/
+cd apps/profile-web/
 ```
 
 3. Install all necessary dependencies:
@@ -163,4 +158,4 @@ Project Link: [https://github.com/sigdotcom/mstacm.org](https://github.com/sigdo
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [sigdotcom-organization]: https://github.com/sigdotcom/
-[product-screenshot]: images/resume-portal-homepage.png 
+[product-screenshot]: images/profile-web-homepage.png
