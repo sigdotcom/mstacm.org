@@ -16,3 +16,5 @@
   args:
     chdir: /opt/mstacm.org
     executable: /bin/bash
+
+# Replace deployment script with ansible commands
