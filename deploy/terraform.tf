@@ -1,7 +1,24 @@
-variable "do_token" {}
-variable "spaces_access_id" {}
-variable "spaces_secret_key" {} 
+#################
+# Variables
+#################
+variable "do_token" {
+  type        = string
+  description = "DigitalOcean personal access token generated at Application & API in the DigitalOcean control panel"
+}
 
+variable "spaces_access_id" {
+  type        = string
+  description = "DigitalOcean spaces access id generated at Application & API in the DigitalOcean control panel"
+}
+
+variable "spaces_secret_key" {
+  type        = string
+  description = "DigitalOcean spaces secret key generated at Application & API in the DigitalOcean control panel"
+}
+
+#################
+# Provider
+#################
 provider "digitalocean" {
   token = "${var.do_token}"
 
@@ -15,6 +32,15 @@ resource "digitalocean_ssh_key" "default" {
   public_key = "${file("~/.ssh/mstacm-digitalocean.pub")}"
 }
 
+
+#################
+# Domains
+#################
+# Domain name for mstacm.org
+# resource "digitalocean_domain" "default" {
+#   name       = "mstacm.org"
+# }
+
 # Domain name for api.mstacm.org
 resource "digitalocean_domain" "api" {
   name       = "api.mstacm.org"
@@ -22,40 +48,46 @@ resource "digitalocean_domain" "api" {
 }
 
 # Domain name for resumes.mstacm.org
-resource "digitalocean_domain" "resumes" {
-  name       = "resumes.mstacm.org"
-}
+# resource "digitalocean_domain" "resumes" {
+#   name       = "resumes.mstacm.org"
+# }
 
 # Create a DigitalOcean managed Let's Encrypt Certificate
-resource "digitalocean_certificate" "resumes" {
-  name    = "resumes-cert"
-  type    = "lets_encrypt"
-  domains = ["${digitalocean_domain.resumes.name}"]
-}
+# resource "digitalocean_certificate" "resumes" {
+#   name    = "resumes-cert"
+#   type    = "lets_encrypt"
+#   domains = ["${digitalocean_domain.resumes.name}"]
+# }
 
 # Domain name for assets.mstacm.org
-resource "digitalocean_domain" "assets" {
-  name       = "assets.mstacm.org"
-}
+# resource "digitalocean_domain" "assets" {
+#   name       = "assets.mstacm.org"
+# }
 
 # Create a DigitalOcean managed Let's Encrypt Certificate
-resource "digitalocean_certificate" "assets" {
-  name    = "assets-cert"
-  type    = "lets_encrypt"
-  domains = ["${digitalocean_domain.assets.name}"]
-}
+# resource "digitalocean_certificate" "assets" {
+#   name    = "assets-cert"
+#   type    = "lets_encrypt"
+#   domains = ["${digitalocean_domain.assets.name}"]
+# }
 
+#################
+# Droplets
+#################
 # Create droplet to host the api docker containers
 resource "digitalocean_droplet" "api" {
   image              = "ubuntu-16-04-x64"
   name               = "api.mstacm.org"
   region             = "nyc3"
-  size               = "512mb"
+  size               = "s-1vcpu-1gb"
   ssh_keys           = ["${digitalocean_ssh_key.default.fingerprint}"]
   monitoring         = true
   private_networking = true
 }
 
+#################
+# Databases
+#################
 # Create a postgres database for all client data
 resource "digitalocean_database_cluster" "default" {
   name       = "mstacm-postgres-cluster"
@@ -66,7 +98,10 @@ resource "digitalocean_database_cluster" "default" {
   node_count = 1
 }
 
-# create a firewall that only accepts port 80/443 traffic
+#################
+# Firewalls
+#################
+# create a firewall that only accepts port 22/80/443 traffic
 resource "digitalocean_firewall" "mstacm-firewall" {
   name = "mstacm-firewall"
 
@@ -105,32 +140,30 @@ resource "digitalocean_firewall" "mstacm-firewall" {
   }
 }
 
-# Space for storing student resumes
-resource "digitalocean_spaces_bucket" "resumes" {
-  name   = "mstacm-resumes"
-  region = "nyc3"
-}
-
-# Add a CDN endpoint with a custom sub-domain to the Resumes Bucket
-resource "digitalocean_cdn" "resumes" {
-  origin         = "${digitalocean_spaces_bucket.resumes.bucket_domain_name}"
-  custom_domain  = "${digitalocean_domain.resumes.name}"
-  certificate_id = "${digitalocean_certificate.resumes.id}"
-}
-
-# Space for storing static files like images
-resource "digitalocean_spaces_bucket" "assets" {
-  name   = "mstacm-assets"
+#################
+# Spaces
+#################
+# Space for storing all CDN files
+resource "digitalocean_spaces_bucket" "cdn" {
+  name   = "mstacm-cdn"
   region = "nyc3"
 }
 
 # Add a CDN endpoint with a custom sub-domain to the assets bucket
-resource "digitalocean_cdn" "asserts" {
-  origin         = "${digitalocean_spaces_bucket.assets.bucket_domain_name}"
-  custom_domain  = "${digitalocean_domain.assets.name}"
-  certificate_id = "${digitalocean_certificate.assets.id}"
-}
+# resource "digitalocean_cdn" "cdn" {
+#   origin         = "${digitalocean_spaces_bucket.cdn.bucket_domain_name}"
+#   custom_domain  = "${digitalocean_domain.cdn.name}"
+#   certificate_id = "${digitalocean_certificate.cdn.id}"
+# }
 
+# Add a CDN endpoint for the assets bucket
+resource "digitalocean_cdn" "primary" {
+  origin = "${digitalocean_spaces_bucket.cdn.bucket_domain_name}"
+}
+ 
+#################
+# Projects
+#################
 # Project for storing all of the resources for mstacm.org
 resource "digitalocean_project" "default" {
   name        = "mstacm.org"
@@ -139,19 +172,20 @@ resource "digitalocean_project" "default" {
   environment = "Production"
   resources   = [
     "${digitalocean_droplet.api.urn}",
-    "${digitalocean_spaces_bucket.resumes.urn}",
-    "${digitalocean_spaces_bucket.assets.urn}",
+    "${digitalocean_spaces_bucket.cdn.urn}",
     "${digitalocean_database_cluster.default.urn}"
   ]
 }
 
-
+#################
+# Provisioners
+#################
 # create an ansible inventory file
 resource "null_resource" "ansible-provision" {
   depends_on = ["digitalocean_droplet.api"]
 
   provisioner "local-exec" {
-    command = "echo '${digitalocean_droplet.api.name} ansible_host=${digitalocean_droplet.api.ipv4_address} ansible_ssh_user=root ansible_python_interpreter=/usr/bin/python3' > inventory"
+    command = "echo '${digitalocean_droplet.api.name} ansible_host=${digitalocean_droplet.api.ipv4_address}' > production"
   }
 }
 
