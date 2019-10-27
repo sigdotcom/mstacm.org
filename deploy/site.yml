@@ -4,3 +4,5 @@
     - andrewsomething.do-agent 
     - docker
     - api
+  vars_files:
+    - "group_vars/api-prod.yml"

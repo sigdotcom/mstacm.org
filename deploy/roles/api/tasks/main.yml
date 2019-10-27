@@ -6,10 +6,14 @@
     version: master
     accept_hostkey: yes
 
+- name: "Create the web.env file for api environment variables"
+  template: 
+    src: "web.env.j2"
+    dest: "/opt/mstacm.org/api/.docker/web.env"
+    # dest: "/opt/mstacm.org/apps/.docker/web.env"
+
 - name: "Run deployment script for the api"
   shell: bash deploy.sh
   args:
     chdir: /opt/mstacm.org
     executable: /bin/bash
-
-# Add web.env configuration

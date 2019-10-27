@@ -1,0 +1,16 @@
+---
+API_AUTH0_DOMAIN: mstacm-test.auth0.com
+
+API_SECRET_APP_KEY: changeme
+
+API_AZURE_STORAGE_ACCOUNT: mstacm
+API_AZURE_STORAGE_ACCOUNT_KEY: changeme
+
+API_STRIPE_PUBLIC_TOKEN: changeme
+API_STRIPE_PRIVATE_TOKEN: changeme
+API_STRIPE_WEBHOOK_SECRET: changeme
+
+DB_HOST: phoenix_db
+DB_TABLE: phoenix
+DB_USERNAME: phoenix
+DB_PASSWORD: phoenix
