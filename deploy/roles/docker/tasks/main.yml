@@ -1,0 +1,63 @@
+---
+- name: "Ensure old versions of docker are not present"
+  become: true
+  apt:
+    state: absent
+    purge: yes
+    name:
+      - docker
+      - docker-engine 
+      - docker.io 
+      - containerd 
+      - runc
+
+- name: "Install prerequisites for installing apt packages over https"
+  become: true
+  apt:
+    update_cache: yes
+    state: latest
+    name:
+      - apt-transport-https 
+      - ca-certificates 
+      - curl 
+      - software-properties-common
+
+- name: Add the docker signing key for the distribution
+  become: true
+  apt_key:
+    url: "https://download.docker.com/linux/{{ansible_distribution|lower}}/gpg"
+    state: present
+
+- name: "Add the docker repository to apt"
+  become: true
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/{{ansible_distribution|lower}} {{ansible_distribution_release}} stable"
+    state: present
+
+- name: "Install docker and docker-compose"
+  become: true
+  apt:
+    update_cache: yes
+    state: latest
+    name:
+      - docker-ce 
+      - docker-ce-cli 
+      - containerd.io
+      - docker-compose
+
+- name: "Install docker python library"
+  become: true
+  pip:
+    executable: pip3
+    name: docker
+
+- name: "Add root user to docker group"
+  become: true
+  user:
+    name: "root"
+    groups:
+      - docker
+    append: true
+
+- name: "Reset ssh connection to ensure the docker group is applied"
+  meta: reset_connection
