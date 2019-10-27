@@ -22,3 +22,5 @@ services:
       - DB_HOST=phoenix_db
       - DB_USERNAME=phoenix
       - DB_PASSWORD=phoenix
+    depends_on:
+      - phoenix_db

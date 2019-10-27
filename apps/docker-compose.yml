@@ -8,8 +8,6 @@ services:
     networks:
       - db_nw
       - web_nw
-    depends_on:
-      - phoenix_db
     env_file:
       - ./.docker/web.env
   phoenix_nginx:
