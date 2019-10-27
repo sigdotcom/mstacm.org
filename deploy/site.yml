@@ -1,4 +1,6 @@
 - hosts: all
   roles:
     - common
+    - andrewsomething.do-agent 
     - docker
+    - api

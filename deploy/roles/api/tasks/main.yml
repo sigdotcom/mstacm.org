@@ -1,0 +1,15 @@
+---
+- name: "Clone the mstacm.org monorepo"
+  git:
+    repo: "https://github.com/sigdotcom/mstacm.org.git"
+    dest: "/opt/mstacm.org"
+    version: master
+    accept_hostkey: yes
+
+- name: "Run deployment script for the api"
+  shell: bash deploy.sh
+  args:
+    chdir: /opt/mstacm.org
+    executable: /bin/bash
+
+# Add web.env configuration
