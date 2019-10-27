@@ -5,6 +5,6 @@ services:
     # Testing migrations
     # command: bash -c "yarn build && yarn start:prod"
     command: yarn start:dev
-    build: .
+    build: api/
     volumes:
-      - .:/server
+      - ./api:/server
