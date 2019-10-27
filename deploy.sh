@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 BACKUP_PATH="../../backups"
 
-cd api
+cd apps
 docker-compose -f docker-compose.yml \
                -f docker-compose.production.yml \
                pull
