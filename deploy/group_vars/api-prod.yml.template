@@ -23,7 +23,7 @@ API_SECRET_APP_KEY: changeme
 # https://manage.auth0.com/dashboard/us/mstacm/. NOTE: we are using a 
 # custom domain (https://auth0.com/docs/custom-domains) so it may require you to
 # look around a little
-API_AUTH0_DOMAIN: mstacm-test.auth0.com
+API_AUTH0_DOMAIN: auth0.mstacm.org
 
 # Located in the Azure portal under the mstacm storage account
 API_AZURE_STORAGE_ACCOUNT: mstacm

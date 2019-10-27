@@ -76,12 +76,11 @@ resource "digitalocean_domain" "api" {
 #################
 # Create droplet to host the api docker containers
 resource "digitalocean_droplet" "api" {
-  image              = "ubuntu-16-04-x64"
+  image              = "ubuntu-18-04-x64"
   name               = "api.mstacm.org"
   region             = "nyc3"
   size               = "s-1vcpu-1gb"
   ssh_keys           = ["${digitalocean_ssh_key.default.fingerprint}"]
-  monitoring         = true
   private_networking = true
 }
 
@@ -156,7 +155,7 @@ resource "digitalocean_spaces_bucket" "cdn" {
 #   certificate_id = "${digitalocean_certificate.cdn.id}"
 # }
 
-# Add a CDN endpoint for the assets bucket
+# Add a CDN endpoint for the CDN bucket
 resource "digitalocean_cdn" "primary" {
   origin = "${digitalocean_spaces_bucket.cdn.bucket_domain_name}"
 }
@@ -189,6 +188,28 @@ resource "null_resource" "ansible-provision" {
   }
 }
 
-output "postgres_private_uri" {
-    value = "${digitalocean_database_cluster.default.private_uri}"
+output "postgres_private_host" {
+    value = "${digitalocean_database_cluster.default.private_host}"
+    description = "The database's hostname accessible from resources in same region"
+}
+
+output "postgres_database" {
+    value = "${digitalocean_database_cluster.default.database}"
+    description = "The database's default database"
+}
+
+output "postgres_port" {
+    value = "${digitalocean_database_cluster.default.port}"
+    description = "The port used to access the database"
+}
+
+output "postgres_user" {
+    value = "${digitalocean_database_cluster.default.user}"
+    description = "The database's default user"
+}
+
+output "postgres_password" {
+    value = "${digitalocean_database_cluster.default.password}"
+    description = "The database's default user password"
+    sensitive = true
 }
