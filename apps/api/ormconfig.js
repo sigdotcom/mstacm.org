@@ -1,10 +1,6 @@
 const IS_PROD = process.env.NODE_ENV === "production";
 const ROOT_DIR = IS_PROD ? "build" : "src";
 
-const ssl_options = {
-  ca: process.env.DB_CERTIFICATE
-}
-
 module.exports = {
   type: "postgres",
   host: process.env.DB_HOST,
@@ -30,5 +26,5 @@ module.exports = {
     migrationsDir: `${ROOT_DIR}/migrations`,
     subscribersDir: `${ROOT_DIR}/subscribers`
   },
-  ssl: IS_PROD && ssl_options
+  ssl: IS_PROD ? true : false
 };
