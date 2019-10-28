@@ -45,11 +45,13 @@
       - containerd.io
       - docker-compose
 
-- name: "Install docker python library"
+- name: "Install docker and docker-compose python library"
   become: true
   pip:
     executable: pip3
-    name: docker
+    name: 
+      - docker
+      - docker-compose
 
 - name: "Add root user to docker group"
   become: true

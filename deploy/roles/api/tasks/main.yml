@@ -17,4 +17,12 @@
     chdir: /opt/mstacm.org
     executable: /bin/bash
 
-# Replace deployment script with ansible commands
+- name: "Deploy the latest version of the docker application"
+  docker_compose:
+    project_src: /opt/mstacm.org/apps
+    state: present
+    pull: yes
+    build: yes
+    files:
+      - docker-compose.yml
+      - docker-compose.production.yml
