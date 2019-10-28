@@ -25,5 +25,6 @@ module.exports = {
     entitiesDir: `${ROOT_DIR}/entities`,
     migrationsDir: `${ROOT_DIR}/migrations`,
     subscribersDir: `${ROOT_DIR}/subscribers`
-  }
+  },
+  ssl: IS_PROD ? true : false
 };

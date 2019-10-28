@@ -57,7 +57,7 @@ yarn install
 ## Usage
 
 The entire page requires the GraphQL API to be running.  Please view the [API
-Installation Instructions](../../api/README.md) for more information.
+Installation Instructions](../api/README.md) for more information.
 
 In the project directory, you can run:
 

@@ -1,35 +1,35 @@
 ## Version 2019/08/01 - Changelog: https://github.com/linuxserver/docker-letsencrypt/commits/master/root/defaults/default
-server {
-   listen         80;
-   server_name    acm.mst.edu;
-   return         301 https://$server_name$request_uri;
-
-    if ($scheme != "https") {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-}
-
-server {
-    listen 443 ssl;
-    server_name acm.mst.edu;
-    ssl_protocols TLSv1.2;
-    ssl_ciphers EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5;
-    ssl_prefer_server_ciphers On;
-    ssl_certificate /config/keys/acm.mst.edu/fullchain1.pem; # managed by Certbot
-    ssl_certificate_key /config/keys/acm.mst.edu/privkey1.pem; # managed by Certbot
-    ssl_trusted_certificate /config/keys/acm.mst.edu/chain1.pem;
-    add_header Strict-Transport-Security "max-age=31557600; includeSubDomains";
-    ssl_stapling on;
-    ssl_stapling_verify on;
-    add_header X-Frame-Options "SAMEORIGIN"; 
-    add_header X-Content-Type-Options "nosniff";
-    add_header X-Xss-Protection "1";
-    resolver 8.8.8.8;
-
-    location / {
-        rewrite ^/(.*)$ https://mstacm.org/ permanent;
-    }
-}
+# server {
+#    listen         80;
+#    server_name    acm.mst.edu;
+#    return         301 https://$server_name$request_uri;
+# 
+#     if ($scheme != "https") {
+#         return 301 https://$host$request_uri;
+#     } # managed by Certbot
+# }
+# 
+# server {
+#     listen 443 ssl;
+#     server_name acm.mst.edu;
+#     ssl_protocols TLSv1.2;
+#     ssl_ciphers EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5;
+#     ssl_prefer_server_ciphers On;
+#     ssl_certificate /config/keys/acm.mst.edu/fullchain1.pem; # managed by Certbot
+#     ssl_certificate_key /config/keys/acm.mst.edu/privkey1.pem; # managed by Certbot
+#     ssl_trusted_certificate /config/keys/acm.mst.edu/chain1.pem;
+#     add_header Strict-Transport-Security "max-age=31557600; includeSubDomains";
+#     ssl_stapling on;
+#     ssl_stapling_verify on;
+#     add_header X-Frame-Options "SAMEORIGIN"; 
+#     add_header X-Content-Type-Options "nosniff";
+#     add_header X-Xss-Protection "1";
+#     resolver 8.8.8.8;
+# 
+#     location / {
+#         rewrite ^/(.*)$ https://mstacm.org/ permanent;
+#     }
+# }
 
 
 # redirect all traffic to https
