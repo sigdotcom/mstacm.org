@@ -7,15 +7,6 @@ API_DB_TABLE: phoenix
 API_DB_USERNAME: phoenix
 API_DB_PASSWORD: phoenix
 
-# Located in the digitalocean control panel in 'databases' under
-# the postgres cluster created in terraform. There should be a 
-# 'download the CA certificate button`. You will need to download this
-# certificate and copy and paste the content below
-API_DB_CERTIFICATE: |
-  -----BEGIN CERTIFICATE-----
-  COPY DIGITALOCAEN DATABASE CERTIFICATE HERE
-  -----END CERTIFICATE-----
-
 # Set by the user.
 API_SECRET_APP_KEY: changeme
 
