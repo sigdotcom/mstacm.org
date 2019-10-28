@@ -11,12 +11,6 @@
     src: "web.env.j2"
     dest: "/opt/mstacm.org/apps/.docker/web.env"
 
-- name: "Run deployment script for the api"
-  shell: bash deploy.sh
-  args:
-    chdir: /opt/mstacm.org
-    executable: /bin/bash
-
 - name: "Deploy the latest version of the docker application"
   docker_compose:
     project_src: /opt/mstacm.org/apps
