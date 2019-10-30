@@ -1,4 +1,9 @@
 export interface IConfig {
+  DO_SPACES_CDN_BUCKET_NAME: string;
+  DO_SPACES_REGION: string;
+  DO_SPACES_ENDPOINT: string;
+  DO_SPACES_ACCESS_KEY_ID: string;
+  DO_SPACES_SECRET_KEY_ID: string;
   AZURE_CDN_URI: string;
   AZURE_STORAGE_ACCOUNT: string;
   AZURE_STORAGE_ACCOUNT_KEY: string;
@@ -18,7 +23,16 @@ export interface IConfig {
 }
 
 const { AUTH0_DOMAIN } = process.env;
+const DO_SPACES_REGION = process.env.DO_SPACES_REGION || "nyc3";
 export const config: IConfig = {
+  DO_SPACES_CDN_BUCKET_NAME:
+    process.env.DO_SPACES_CDN_BUCKET_NAME || "mstacm-cdn-test",
+  DO_SPACES_REGION,
+  DO_SPACES_ENDPOINT:
+    process.env.DO_SPACES_ENDPOINT ||
+    `${DO_SPACES_REGION}.digitaloceanspaces.com`,
+  DO_SPACES_ACCESS_KEY_ID: process.env.DO_SPACES_ACCESS_KEY_ID || "changeme",
+  DO_SPACES_SECRET_KEY_ID: process.env.DO_SPACES_SECRET_KEY_ID || "changeme",
   AZURE_CDN_URI: process.env.AZURE_CDN_URI || "https://cdn.mstacm.org",
   AZURE_STORAGE_ACCOUNT: process.env.AZURE_STORAGE_ACCOUNT || "mstacm",
   AZURE_STORAGE_ACCOUNT_KEY: process.env.AZURE_STORAGE_ACCOUNT_KEY || "DEV_KEY",
