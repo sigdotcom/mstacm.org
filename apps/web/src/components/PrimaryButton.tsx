@@ -35,11 +35,6 @@ const Button: AnyStyledComponent = styled.button`
     background: #1290cc;
     color: #fff;
   }
-
-  //   :disabled {
-  //     opacity: 0.5;
-  //     cursor: not-allowed;
-  //   }
 `;
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
