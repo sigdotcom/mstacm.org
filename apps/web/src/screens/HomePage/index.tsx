@@ -35,7 +35,11 @@ const NavHeroWrapper = styled.div`
   }
 `;
 
-const HomePage: React.FC<{}> = () => {
+interface IHomePageProps {
+  history: any;
+}
+
+const HomePage: React.FC<IHomePageProps> = (props: IHomePageProps) => {
   const { loading, isAuthenticated, loginWithRedirect } = useAuth0();
   const [redeemCode] = useRedeemRedemptionCodeMutation();
 
@@ -84,10 +88,13 @@ const HomePage: React.FC<{}> = () => {
           toast(
             <Toast
               iconName={"alert-circle-outline"}
-              message={"Success! Redemption code applied to your account. Please refresh to see changes."}
+              message={
+                "Success! Redemption code applied to your account. Please refresh to see changes."
+              }
               fill={"green"}
             />
           );
+          props.history.push("/");
 
           localStorage.removeItem(config.REDEMPTION_CODE_KEY);
         } else {
