@@ -1,72 +1,41 @@
-import {
-  Aborter,
-  BlobURL,
-  BlockBlobURL,
-  ContainerURL,
-  IUploadStreamToBlockBlobOptions,
-  Pipeline,
-  ServiceURL,
-  SharedKeyCredential,
-  StorageURL,
-  uploadStreamToBlockBlob
-} from "@azure/storage-blob";
+import AWS from "aws-sdk";
 import { Readable } from "stream";
 import { config } from "../config";
 
-const CONTAINER_NAME = "resumes";
-const EIGHT_MB = 8096 * 1000 * 1000;
-const STORAGE_ACCOUNT = config.AZURE_STORAGE_ACCOUNT;
-const STORAGE_KEY = config.AZURE_STORAGE_ACCOUNT_KEY;
-
-const generatePipeline = (): Pipeline => {
-  const sharedKeyCredential = new SharedKeyCredential(
-    STORAGE_ACCOUNT,
-    STORAGE_KEY
-  );
-
-  return StorageURL.newPipeline(sharedKeyCredential);
-};
-
-const generateContainerURL = (containerName: string): ContainerURL => {
-  const pipeline = generatePipeline();
-  const serviceURL = new ServiceURL(`${config.AZURE_CDN_URI}`, pipeline);
-
-  return ContainerURL.fromServiceURL(serviceURL, containerName);
-};
-
-const generateBlockBlobURL = (
-  containerURL: ContainerURL,
-  filename: string
-): BlockBlobURL => {
-  const blobURL = BlobURL.fromContainerURL(containerURL, filename);
-
-  return BlockBlobURL.fromBlobURL(blobURL);
-};
+const s3 = new AWS.S3({
+  endpoint: config.DO_SPACES_ENDPOINT,
+  region: config.DO_SPACES_REGION,
+  accessKeyId: config.DO_SPACES_ACCESS_KEY_ID,
+  secretAccessKey: config.DO_SPACES_SECRET_KEY_ID
+});
 
 export const deleteFile = async (url: string) => {
-  const pipeline = generatePipeline();
-  const blockBlobURL = new BlockBlobURL(url, pipeline);
-  await blockBlobURL.delete(Aborter.none);
+  // The URL will be something like
+  // https://mstacm-cdn-test.nyc3.digitaloceanspaces.com/test/UUID.pdf
+  // so this will split it down the middle and just give the 'test/UUID.pdf'
+  // portion.
+  const split_url: string[] = url.split(
+    `${config.DO_SPACES_CDN_BUCKET_NAME}.${config.DO_SPACES_ENDPOINT}/`
+  );
+  const filename: string = split_url[1];
+  await s3
+    .deleteObject({ Bucket: config.DO_SPACES_CDN_BUCKET_NAME, Key: filename })
+    .promise();
 };
 
 export const uploadFile = async (
   stream: Readable,
   filename: string,
-  options?: IUploadStreamToBlockBlobOptions
+  contentType?: string
 ): Promise<string> => {
-  const containerURL = generateContainerURL(CONTAINER_NAME);
-  try {
-    await containerURL.create(Aborter.none);
-  } catch (e) {}
-  const blockBlobURL = generateBlockBlobURL(containerURL, filename);
-  await uploadStreamToBlockBlob(
-    Aborter.none,
-    stream,
-    blockBlobURL,
-    EIGHT_MB,
-    16,
-    options
-  );
-
-  return Promise.resolve(blockBlobURL.url);
+  const response = await s3
+    .upload({
+      Bucket: config.DO_SPACES_CDN_BUCKET_NAME,
+      Key: filename,
+      ACL: "public-read",
+      Body: stream,
+      ContentType: contentType
+    })
+    .promise();
+  return response.Location;
 };
