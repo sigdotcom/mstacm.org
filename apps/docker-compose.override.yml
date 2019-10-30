@@ -9,6 +9,7 @@ services:
     networks:
       - db_nw
     environment:
+      - POSTGRES_DB=phoenix
       - POSTGRES_USER=phoenix
       - POSTGRES_PASSWORD=phoenix
   phoenix_web:
