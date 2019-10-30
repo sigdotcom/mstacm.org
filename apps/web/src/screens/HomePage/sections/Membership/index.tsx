@@ -17,6 +17,7 @@ import { BenefitBlock, IBenefitBlockProps } from "./BenefitBlock";
 import benefits from "./benefits.json";
 import { ConfirmationContainer } from "./ConfirmationContainer";
 import { Header, TierContainer } from "./TierContainer";
+import { useAuth0 } from "../../../../utils/react-auth0-wrapper";
 
 export const ME_EXPIRATION_QUERY: any = gql`
   query MeExpiration {
@@ -83,6 +84,7 @@ const Membership: React.FC = (): JSX.Element => {
     MembershipTypes | undefined,
     React.Dispatch<React.SetStateAction<MembershipTypes | undefined>>
   ] = useState<MembershipTypes | undefined>(undefined);
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
   const membershipBenefits: JSX.Element[] = (benefits as IBenefitBlockProps[]).map(
     (benefit: IBenefitBlockProps, index: number): JSX.Element => {
       return <BenefitBlock {...benefit} key={index} />;
@@ -118,9 +120,21 @@ const Membership: React.FC = (): JSX.Element => {
     result.refetch();
   };
 
-  const setYearly: voidFunction = (): void => setTag(MembershipTypes.Yearly);
-  const setSemesterly: voidFunction = (): void =>
-    setTag(MembershipTypes.Semesterly);
+  const setYearly: voidFunction = (): void => {
+    if (!isAuthenticated) {
+      loginWithRedirect({});
+    } else {
+      setTag(MembershipTypes.Yearly);
+    }
+  };
+
+  const setSemesterly: voidFunction = (): void => {
+    if (!isAuthenticated) {
+      loginWithRedirect({});
+    } else {
+      setTag(MembershipTypes.Semesterly);
+    }
+  };
 
   return (
     <Element name="membership">
