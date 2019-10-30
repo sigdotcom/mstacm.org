@@ -17,7 +17,6 @@ import { BenefitBlock, IBenefitBlockProps } from './BenefitBlock';
 import benefits from './benefits.json';
 import { ConfirmationContainer } from './ConfirmationContainer';
 import { Header, TierContainer } from './TierContainer';
-
 import { useAuth0 } from '../../../../utils/react-auth0-wrapper';
 
 export const ME_EXPIRATION_QUERY: any = gql`
@@ -121,24 +120,24 @@ const Membership: React.FC = (): JSX.Element => {
         result.refetch();
     };
 
-    const sendTheUserToTheLoginPageNowOk: () => void = isAuthenticated
+    const sendTheUserToTheLoginPageNowBecauseTheyAreNotLoggedIn: () => void = isAuthenticated
         ? (): void => logout({ returnTo: window.location.origin })
         : async (): Promise<void> => loginWithRedirect({});
 
     const setYearly: voidFunction = (): void => {
-        if (isAuthenticated) {
-            setTag(MembershipTypes.Yearly);
-        } else {
-            sendTheUserToTheLoginPageNowOk();
+        if (!isAuthenticated) {
+            sendTheUserToTheLoginPageNowBecauseTheyAreNotLoggedIn();
         }
+
+        setTag(MembershipTypes.Yearly);
     };
 
     const setSemesterly: voidFunction = (): void => {
-        if (isAuthenticated) {
-            setTag(MembershipTypes.Semesterly);
-        } else {
-            sendTheUserToTheLoginPageNowOk();
+        if (!isAuthenticated) {
+            sendTheUserToTheLoginPageNowBecauseTheyAreNotLoggedIn();
         }
+
+        setTag(MembershipTypes.Semesterly);
     };
 
     return (
