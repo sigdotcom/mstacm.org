@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 
 import { ExecutionResult } from "@apollo/react-common";
@@ -35,7 +36,9 @@ const NavHeroWrapper = styled.div`
   }
 `;
 
-const HomePage: React.FC<{}> = () => {
+const HomePage: React.FC<RouteComponentProps> = ({
+  history
+}: RouteComponentProps) => {
   const { loading, isAuthenticated, loginWithRedirect } = useAuth0();
   const [redeemCode] = useRedeemRedemptionCodeMutation();
 
@@ -84,10 +87,14 @@ const HomePage: React.FC<{}> = () => {
           toast(
             <Toast
               iconName={"alert-circle-outline"}
-              message={"Success! Redemption code applied to your account. Please refresh to see changes."}
+              message={
+                "Success! Redemption code applied to your account. Please refresh to see changes."
+              }
               fill={"green"}
             />
           );
+          queryParams.delete(config.REDEMPTION_QUERY_PARAM_KEY);
+          history.push("/?" + queryParams.toString());
 
           localStorage.removeItem(config.REDEMPTION_CODE_KEY);
         } else {
