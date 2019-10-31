@@ -9,7 +9,7 @@ services:
       - db_nw
       - web_nw
     env_file:
-      - ./.docker/web.env
+      - ./api/.docker/web.env
   phoenix_nginx:
     image: "nginx"
     restart: unless-stopped
