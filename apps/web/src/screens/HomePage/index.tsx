@@ -94,7 +94,8 @@ const HomePage: React.FC<IHomePageProps> = (props: IHomePageProps) => {
               fill={"green"}
             />
           );
-          props.history.push("/");
+          queryParams.delete(config.REDEMPTION_QUERY_PARAM_KEY);
+          props.history.push("/?" + queryParams.toString());
 
           localStorage.removeItem(config.REDEMPTION_CODE_KEY);
         } else {
