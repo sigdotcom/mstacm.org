@@ -272,7 +272,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
     <Element name="events">
       <PageConstraint>
         <Wrapper>
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", width: "100%" }}>
             <FilterWrapper>
               <h3>Filter</h3>
               <Sigs>
