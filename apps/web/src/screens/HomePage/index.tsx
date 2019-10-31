@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 
 import { ExecutionResult } from "@apollo/react-common";
@@ -35,11 +36,9 @@ const NavHeroWrapper = styled.div`
   }
 `;
 
-interface IHomePageProps {
-  history: any;
-}
-
-const HomePage: React.FC<IHomePageProps> = (props: IHomePageProps) => {
+const HomePage: React.FC<RouteComponentProps> = ({
+  history
+}: RouteComponentProps) => {
   const { loading, isAuthenticated, loginWithRedirect } = useAuth0();
   const [redeemCode] = useRedeemRedemptionCodeMutation();
 
@@ -95,7 +94,7 @@ const HomePage: React.FC<IHomePageProps> = (props: IHomePageProps) => {
             />
           );
           queryParams.delete(config.REDEMPTION_QUERY_PARAM_KEY);
-          props.history.push("/?" + queryParams.toString());
+          history.push("/?" + queryParams.toString());
 
           localStorage.removeItem(config.REDEMPTION_CODE_KEY);
         } else {
