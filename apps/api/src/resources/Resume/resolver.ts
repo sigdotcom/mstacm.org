@@ -67,9 +67,9 @@ export class ResumeResolver {
       await deleteResumeHelper(oldResume);
     }
 
-    const id = uuid();
-    const filename = `${id}.pdf`;
-    const url = await uploadFile(
+    const id: string = uuid();
+    const filename: string = `${id}.pdf`;
+    const url: string = await uploadFile(
       resume.createReadStream(),
       `resumes/${filename}`,
       "application/pdf"
