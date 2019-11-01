@@ -5,7 +5,9 @@ version: '3'
 services:
   phoenix_web:
     restart: unless-stopped
-    dns: 1.1.1.1
+    dns: 
+      - 1.1.1.1 
+      - 8.8.8.8
     networks:
       - db_nw
       - web_nw
