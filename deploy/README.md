@@ -13,6 +13,7 @@ machine. If you have a Windows computer, please use a linux jumpbox such as
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
 * [Usage](#usage)
+* [Terraform Cloud](#terraform-cloud)
 
 
 <!-- GETTING STARTED -->
@@ -28,6 +29,9 @@ To get a local copy up and running follow these simple steps.
   [DigitalOcean][digitalocean-url]. Ask the chair of ACM Web for access.
 + Make sure you have access to the mstacm team in [Netlify][netlify-url]. Ask
   the chair of ACM Web for access.
++ Make sure you have access to the mstacm team in
+  [Terraform Cloud][terraform-cloud-url]. Ask the chair of ACM Web for access.
+
 
 ### Installation
 1. Clone the mstacm.org repository using Git Bash:
@@ -45,10 +49,13 @@ cd mstacm.org
 3. Download / make sure you have all the [prerequisites listed](#prerequisites).
 
 ## Usage
-The following section will describe step-by-step how to deploy the application
-once in the `deploy` folder. **NOTE**: make sure you read the directions
-throughly before executing it. Some directions have notes and multiple parts
-that must be done.
+The following section will describe step-by-step how to manually deploy the
+application once in the `deploy` folder. In production, the first portion (up
+until the ansible part) should all be managed by [Terraform
+Cloud][terraform-cloud-url] and should not really come in to play. If you are
+looking for the ansible instructions, please read through all the steps just
+in case **NOTE**: make sure you read the directions throughly before executing
+it. Some directions have notes and multiple parts that must be done.
 
 1. Navigate to the deploy directory:
     ```sh
@@ -97,57 +104,96 @@ that must be done.
    If completed properly it should look like (as of 2019-10-27):
    ![NS Records](./imgs/ns_domains.png)
 
-11. Initialize terraform:
+10. Request access to the [Terraform Cloud][terraform-cloud-url] organization
+    from the chair of ACM Web.
+
+11. Generate a [Terraform Cloud API Token][terraform-cloud-api-token-url] and
+    configure terraform CLI to use the API Token with
+    [Credentials][terraform-cloud-credentials-url].
+
+12. Initialize terraform:
     ```sh
     terraform init
     ```
 
-10. (optional, but recommended) Create a backup of the current database:
+13. (optional, but recommended) Create a backup of the current database:
     ```sh
     pg_dump <CONNECTION_STRING_FOR_DATABASE> | \
         gzip > ./dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql.gz
     ```
 
-10. Run terraform (after this action, you will see a new `production` file
+14. Run terraform (after this action, you will see a new `production` file
     appear, this will be important for ansible):
     ```sh
     terraform apply
     ```
 
-11. Copy `group_vars/api-prod.yml.template` into `group_vars/api-prod.yml`:
+15. Copy `group_vars/api-prod.yml.template` into `group_vars/api-prod.yml`:
     ```sh
     cp  group_vars/api-prod.yml.template group_vars/api-prod.yml
     ```
 
-12. Navigate to the DigitalOcean dashboard in the mstacm team and click the
+16. Navigate to the DigitalOcean dashboard in the mstacm team and click the
     **Databases** tab.
 
-13. Click on the `mstacm-postgres-cluster`. This should look like:
+17. Click on the `mstacm-postgres-cluster`. This should look like:
     ![Database Page](./imgs/digitalocean_database_page.png)
 
-14. Configure the **Trusted Sources** to be the droplet created with terraform
+18. Configure the **Trusted Sources** to be the droplet created with terraform
     `api.mstacm.org`. If completed correctly, this should look like:
     ![Trusted Sources](./imgs/trusted_sources.png)
 
-16. Create the `phoenix` database and user in the **Users & Databases** tab.
+19. Create the `phoenix` database and user in the **Users & Databases** tab.
 
-17. (optional, but recommended) Upload an old backup of the database to the new
+20. (optional, but recommended) Upload an old backup of the database to the new
     database `phoenix` database:
     ```sh
     cat <YOUR_BACKUP_FILE> | gzip -d | psql <YOUR_CONNETION_STRING_TO_DATABASE>
     ```
 
-13. Edit the `groups_vars/api-prod.yml` file with the appropriate environment
+21. Edit the `groups_vars/api-prod.yml` file with the appropriate environment
     variables. Tips on where the acquire the correct values are found in the
     comments of this file.
     
-14. Run the ansible playbook:
+22. Run the ansible playbook:
     ```
     ansible-playbook -i production site.yml
     ```
 
+## Terraform Cloud
+Our terraform instance is setup to use [Terraform Cloud][terraform-cloud-url] as
+a remote backend. If you're unfamiliar with how terraform works, the limitation
+of the local terraform is that your `terraform.tfstate` file is stored locally
+and cannot be shared with a team. This means that only one person in ACM Web
+could deploy the infrastructure application. [Terraform
+Cloud][terraform-cloud-url] allows us to centralize the location of the
+`terraform.tfstate` and well as some other nice features.
+
+If you need to deploy new infrastructure for the application, please contact the
+chair of ACM Web to have access to the [Terraform Cloud][terraform-cloud-url]
+organization.
+
+You can migrate off [Terraform Cloud][terraform-cloud-url] by simply
+[downloading the state file](https://app.terraform.io/app/mstacm/workspaces/mstacm_org/states/) 
+and removing the following block from the `terraform.tf`:
+```hcl
+terraform {
+  backend "remote" {
+    hostname = "app.terraform.io"
+    organization = "mstacm"
+
+    workspaces {
+      name = "mstacm_org"
+    }
+  }
+}
+```
+
 [ansible-url]: https://docs.ansible.com/ansible/latest/index.html
 [terraform-url]: https://www.terraform.io/docs/index.html
+[terraform-cloud-url]: https://www.terraform.io/docs/cloud/index.html
+[terraform-cloud-api-token-url]: https://www.terraform.io/docs/cloud/users-teams-organizations/users.html#api-tokens
+[terraform-cloud-credentials-url]: https://www.terraform.io/docs/commands/cli-config.html#credentials
 [digitalocean-spaces-url]: https://www.digitalocean.com/products/spaces/
 [digitalocean-spaces-howto-url]: https://www.digitalocean.com/docs/spaces/how-to/administrative-access/
 [digitalocean-access-token-howto-url]: https://www.digitalocean.com/docs/api/create-personal-access-token/
