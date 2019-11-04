@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  frontend-tests:
     docker:
       # specify the version you desire here
       - image: circleci/node:lts
@@ -14,7 +14,7 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
 
-    working_directory: ~/mstacm.org/apps/web
+    working_directory: ~/mstacm.org
 
     steps:
       - checkout:
@@ -23,19 +23,58 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            # when lock file changes, use increasingly general patterns to restore cache
+            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-v1-{{ .Branch }}-
+            - yarn-packages-v1-
 
-      - run: yarn install
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
 
       - save_cache:
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+            - ~/.cache/yarn
+          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
 
       # run tests!
-      - run: yarn test
+      - run: CI=true yarn lerna run test
+
+  backend-tests:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:lts
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/mstacm.org/apps/api
+
+    steps:
+      - checkout:
+          path: ~/mstacm.org
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            # when lock file changes, use increasingly general patterns to restore cache
+            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-v1-{{ .Branch }}-
+            - yarn-packages-v1-
+
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+
+      - save_cache:
+          paths:
+            - ~/.cache/yarn
+          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+
+      # run tests!
+      - run: CI=true yarn test --passWithNoTests
 
 # TODO: when we have access to a production machine with SSH access
 #   deploy:
@@ -48,14 +87,9 @@ jobs:
 #           command: |
 #             ssh $SSH_USER@$SSH_HOST "cd /opt/mstacm.org/api && git pull && bash deploy.sh"
 #             workflows:
-#workflows:
-#  version: 2
-#  build-and-deploy:
-#    jobs:
-#      - build
-#      - deploy:
-#          requires:
-#            - build
-#          filters:
-#            branches:
-#              only: master
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - frontend-tests
+      - backend-tests
