@@ -26,6 +26,19 @@ provider "digitalocean" {
   spaces_secret_key = "${var.spaces_secret_key}"
 }
 
+# See https://www.terraform.io/docs/cloud/migrate/index.html for migration from
+# local to Terraform Cloud
+terraform {
+  backend "remote" {
+    hostname = "app.terraform.io"
+    organization = "mstacm"
+
+    workspaces {
+      name = "mstacm_org"
+    }
+  }
+}
+
 # Add local ssh key for accessing the various resources
 resource "digitalocean_ssh_key" "default" {
   name       = "Terraform Key"
