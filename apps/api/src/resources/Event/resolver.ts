@@ -53,18 +53,14 @@ export class EventResolver {
   @Mutation(() => Event)
   public async updateEvent(
     @Arg("id", () => Number) id: number,
-    @Arg("data", () => EventUpdateInput)
+    @Arg("data", () => EventUpdateInput, { nullable: true })
     input: DeepPartial<Event>,
-    @Arg("flier", () => GraphQLUpload) flier: File
+    @Arg("flier", () => GraphQLUpload, { nullable: true }) flier: File
   ): Promise<Event> {
-    if (input.hostSig) {
-      const hostSig = await this.sigRepository.findOneOrFail({
-        name: String(input.hostSig)
-      });
-      input.hostSig = hostSig;
-    }
+    // if data and flier null throw error
 
     const event = await this.repository.findOneOrFail(id);
+    const updates: DeepPartial<Event> = input ? input : {};
 
     if (flier) {
       const passthrough = await fileType.stream(flier.createReadStream());
@@ -91,11 +87,17 @@ export class EventResolver {
       if (event.flierLink) {
         deleteFile(event.flierLink);
       }
-      input.flierLink = url;
+      updates.flierLink = url;
     }
 
-    const updatedResource = this.repository.merge(event, { ...input });
+    if (input && input.hostSig) {
+      const hostSig = await this.sigRepository.findOneOrFail({
+        name: String(input.hostSig)
+      });
+      updates.hostSig = hostSig;
+    }
 
+    const updatedResource = this.repository.merge(event, { ...updates });
     return updatedResource.save();
   }
 
