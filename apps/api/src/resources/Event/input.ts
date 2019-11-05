@@ -3,7 +3,7 @@ import { Event } from "./entity";
 import { Readable } from "stream";
 
 @InputType()
-export class EventCreateInput /*implements Partial<Event>*/ {
+export class EventCreateInput /*implements Partial<Event> */ {
   @Field()
   public eventTitle: string;
 

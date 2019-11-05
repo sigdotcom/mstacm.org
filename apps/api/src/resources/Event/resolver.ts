@@ -9,8 +9,7 @@ import {
 
 import { GraphQLUpload } from "graphql-upload";
 import * as fileType from "file-type";
-import { v4 as uuid } from "uuid";
-import { uploadFile } from "../../lib/files";
+import { deleteFile, uploadFile } from "../../lib/files";
 
 import { IContext } from "../../lib/interfaces";
 import { Sig } from "../Sig";
@@ -41,6 +40,10 @@ export class EventResolver {
   public async deleteEvent(
     @Arg("id", () => Number) id: number
   ): Promise<INumber> {
+    const event = await this.repository.findOneOrFail(id);
+    if (event.flierLink) {
+      deleteFile(event.flierLink);
+    }
     await this.repository.delete(id);
 
     return { id };
@@ -51,7 +54,8 @@ export class EventResolver {
   public async updateEvent(
     @Arg("id", () => Number) id: number,
     @Arg("data", () => EventUpdateInput)
-    input: DeepPartial<Event>
+    input: DeepPartial<Event>,
+    @Arg("flier", () => GraphQLUpload) flier: File
   ): Promise<Event> {
     if (input.hostSig) {
       const hostSig = await this.sigRepository.findOneOrFail({
@@ -61,6 +65,35 @@ export class EventResolver {
     }
 
     const event = await this.repository.findOneOrFail(id);
+
+    if (flier) {
+      const passthrough = await fileType.stream(flier.createReadStream());
+      if (
+        !passthrough.fileType ||
+        passthrough.fileType.ext !== "jpg" ||
+        passthrough.fileType.mime !== "image/jpeg"
+      ) {
+        throw new UserInputError("Error when parsing user input", {
+          flier:
+            "File uploaded was not detected as JPG. Contact acm@mst.edu if you believe this is a mistake."
+        });
+      }
+
+      const encoded: string = encodeURIComponent(
+        flier.filename.replace(" ", "_")
+      );
+      const filename = `events/${encoded}_${event.id}.jpg`;
+      const url = await uploadFile(
+        flier.createReadStream(),
+        filename,
+        "image/jpeg"
+      );
+      if (event.flierLink) {
+        deleteFile(event.flierLink);
+      }
+      input.flierLink = url;
+    }
+
     const updatedResource = this.repository.merge(event, { ...input });
 
     return updatedResource.save();
@@ -71,7 +104,7 @@ export class EventResolver {
   public async createEvent(
     @Ctx() context: IContext,
     @Arg("data", () => EventCreateInput)
-    input: any,
+    input: DeepPartial<Event>,
     @Arg("flier", () => GraphQLUpload, { nullable: true }) flier?: File
   ): Promise<Event> {
     const creator: User | undefined = context.state.user;
@@ -80,31 +113,38 @@ export class EventResolver {
       throw new AuthenticationError("Please login to access this resource.");
     }
 
-    if (flier) {
-      const passthrough = await fileType.stream(flier.createReadStream());
-      if (!passthrough.fileType || passthrough.fileType.ext !== "pdf") {
-        throw new UserInputError("Error when parsing user input", {
-          flier:
-            "File uploaded was not detected as PDF. Contact acm@mst.edu if you believe this is a mistake."
-        });
-      }
-
-      const id = uuid();
-      const filename = `${id}.pdf`;
-      const url = await uploadFile(flier.createReadStream(), filename, {
-        blobHTTPHeaders: {
-          blobContentType: "application/pdf"
-        }
-      });
-      input.flierLink = url;
-    }
-
     const hostSig: Sig = await this.sigRepository.findOneOrFail({
       name: String(input.hostSig)
     });
     input.hostSig = hostSig;
-    const newResource: Event = this.repository.create({ ...input, creator })[0];
-    console.log("NEWEVENT", newResource);
+    const newResource = await this.repository
+      .create({ ...input, creator })
+      .save();
+
+    if (flier) {
+      const passthrough = await fileType.stream(flier.createReadStream());
+      if (
+        !passthrough.fileType ||
+        passthrough.fileType.ext !== "jpg" ||
+        passthrough.fileType.mime !== "image/jpeg"
+      ) {
+        throw new UserInputError("Error when parsing user input", {
+          flier:
+            "File uploaded was not detected as JPG. Contact acm@mst.edu if you believe this is a mistake."
+        });
+      }
+
+      const encoded: string = encodeURIComponent(
+        flier.filename.replace(" ", "_")
+      );
+      const filename = `events/${encoded}_${newResource.id}.jpg`;
+      const url = await uploadFile(
+        flier.createReadStream(),
+        filename,
+        "image/jpeg"
+      );
+      newResource.flierLink = url;
+    }
 
     return newResource.save();
   }
