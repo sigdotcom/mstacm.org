@@ -1,4 +1,4 @@
-import { AuthenticationError } from "apollo-server";
+import { AuthenticationError, UserInputError } from "apollo-server";
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import {
   DeepPartial,
@@ -7,10 +7,16 @@ import {
   Repository
 } from "typeorm";
 
+import { GraphQLUpload } from "graphql-upload";
+import * as fileType from "file-type";
+import { v4 as uuid } from "uuid";
+import { uploadFile } from "../../lib/files";
+
 import { IContext } from "../../lib/interfaces";
 import { Sig } from "../Sig";
 import { User } from "../User";
 import { Event } from "./entity";
+import { File } from "./input";
 import {
   EventCreateInput,
   EventDeletePayload,
@@ -65,7 +71,8 @@ export class EventResolver {
   public async createEvent(
     @Ctx() context: IContext,
     @Arg("data", () => EventCreateInput)
-    input: DeepPartial<Event>
+    input: any,
+    @Arg("flier", () => GraphQLUpload, { nullable: true }) flier?: File
   ): Promise<Event> {
     const creator: User | undefined = context.state.user;
 
@@ -73,11 +80,31 @@ export class EventResolver {
       throw new AuthenticationError("Please login to access this resource.");
     }
 
+    if (flier) {
+      const passthrough = await fileType.stream(flier.createReadStream());
+      if (!passthrough.fileType || passthrough.fileType.ext !== "pdf") {
+        throw new UserInputError("Error when parsing user input", {
+          flier:
+            "File uploaded was not detected as PDF. Contact acm@mst.edu if you believe this is a mistake."
+        });
+      }
+
+      const id = uuid();
+      const filename = `${id}.pdf`;
+      const url = await uploadFile(flier.createReadStream(), filename, {
+        blobHTTPHeaders: {
+          blobContentType: "application/pdf"
+        }
+      });
+      input.flierLink = url;
+    }
+
     const hostSig: Sig = await this.sigRepository.findOneOrFail({
       name: String(input.hostSig)
     });
     input.hostSig = hostSig;
-    const newResource = this.repository.create({ ...input, creator });
+    const newResource: Event = this.repository.create({ ...input, creator })[0];
+    console.log("NEWEVENT", newResource);
 
     return newResource.save();
   }
