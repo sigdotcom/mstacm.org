@@ -24,16 +24,16 @@ export const GET_EVENTS: any = gql`
 `;
 
 export const CREATE_EVENT: any = gql`
-  mutation CreateEvent($data: EventCreateInput!) {
-    createEvent(data: $data) {
+  mutation CreateEvent($flier: Upload, $data: EventCreateInput!) {
+    createEvent(flier: $flier, data: $data) {
       eventTitle
     }
   }
 `;
 
 export const UPDATE_EVENT: any = gql`
-  mutation UpdateEvent($data: EventUpdateInput!, $id: Float!) {
-    updateEvent(data: $data, id: $id) {
+  mutation UpdateEvent($flier: Upload, $data: EventUpdateInput, $id: Float!) {
+    updateEvent(flier: $flier, data: $data, id: $id) {
       eventTitle
     }
   }

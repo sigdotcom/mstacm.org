@@ -1,13 +1,22 @@
-import React, { useGlobal } from "reactn";
+import React, { useGlobal, useState } from "reactn";
 
 import { useMutation } from "@apollo/react-hooks";
 import moment from "moment";
 
 import { CREATE_EVENT, GET_EVENTS, UPDATE_EVENT } from "./helpers";
 
-import { Button, DatePicker, Form, Input, InputNumber } from "antd";
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  InputNumber,
+  Upload,
+  Icon
+} from "antd";
 
 import { IEvent } from "./interfaces";
+import { UploadFile } from "antd/lib/upload/interface";
 
 const { RangePicker }: any = DatePicker;
 const { TextArea }: any = Input;
@@ -28,6 +37,7 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
     updateEvent,
     { loading: updateLoading, error: updateError, data: updateData }
   ]: any = useMutation(UPDATE_EVENT);
+  const [files, setFiles] = useState<UploadFile[]>([]);
 
   const convertTimes: any = (data: any): any => {
     if (data.hasOwnProperty("dateRange") && data.dateRange) {
@@ -43,18 +53,24 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
     props.form.validateFields((err: any, values: any) => {
       if (!err) {
         convertTimes(values);
+        delete values.flier;
         if (editing) {
           const id: number = Number(values.id);
           delete values.id;
           updateEvent({
             refetchQueries: [{ query: GET_EVENTS }],
-            variables: { data: values, id }
+            variables: {
+              flier: files.length > 0 ? files[0] : undefined,
+              data: values,
+              id
+            }
           });
           // UPDATE THE NEW EVENT (values);
         } else {
+          console.log(values, files[0]);
           createEvent({
             refetchQueries: [{ query: GET_EVENTS }],
-            variables: { data: values }
+            variables: { data: values, flier: files[0] }
           });
           // CREATE THE NEW EVENT (values);
         }
@@ -63,6 +79,19 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
   };
 
   const { getFieldDecorator }: any = props.form;
+  const parm = {
+    accept: ".jpg",
+    multiple: false,
+    fileList: files,
+    onRemove: (): void => {
+      setFiles([]);
+    },
+    beforeUpload: (newFile: any): boolean => {
+      setFiles([newFile]);
+
+      return false;
+    }
+  };
 
   if (createLoading || updateLoading) {
     return <h1>Loading...</h1>;
@@ -138,17 +167,6 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
           ]
         })(<Input />)}
       </Form.Item>
-      <Form.Item label="Flier Address">
-        {getFieldDecorator("flierLink", {
-          initialValue: newEvent.flierLink,
-          rules: [
-            {
-              type: "url",
-              message: "The input is not a valid URL."
-            }
-          ]
-        })(<Input />)}
-      </Form.Item>
       <Form.Item
         label="Event Link"
         extra="Website, form, or other link to event."
@@ -163,6 +181,22 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
           ]
         })(<Input />)}
       </Form.Item>
+      <Form.Item label="Event Flier">
+        {getFieldDecorator("flier", {
+          valuePropName: "file"
+        })(
+          <Upload.Dragger {...parm}>
+            <p className="ant-upload-drag-icon">
+              <Icon type="inbox" />
+            </p>
+            <p className="ant-upload-text">
+              Click or drag file to this area to upload
+            </p>
+            <p className="ant-upload-hint">Support for a single file upload.</p>
+          </Upload.Dragger>
+        )}
+      </Form.Item>
+
       <Form.Item label="Date and Time">
         {getFieldDecorator("dateRange", {
           initialValue: [
