@@ -85,7 +85,7 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
     onRemove: (): void => {
       setFiles([]);
     },
-    beforeUpload: (newFile: any): boolean => {
+    beforeUpload: (newFile: UploadFile): boolean => {
       setFiles([newFile]);
 
       // Uploading will be stopped with false or a rejected Promise returned.
