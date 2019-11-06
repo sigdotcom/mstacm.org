@@ -79,9 +79,10 @@ export class EventResolver {
         });
       }
 
-      const encoded: string = encodeURIComponent(
-        flier.filename.replace(" ", "_")
-      );
+      const origName: string =
+        flier.filename.substr(0, flier.filename.lastIndexOf(".")) ||
+        flier.filename;
+      const encoded: string = encodeURIComponent(origName.replace(" ", "_"));
       const filename = `events/${encoded}_${event.id}.jpg`;
       const url = await uploadFile(
         flier.createReadStream(),
