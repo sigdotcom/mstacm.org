@@ -119,7 +119,7 @@ export class EventResolver {
       throw new AuthenticationError("Please login to access this resource.");
     }
 
-    input.hostSig: Sig = await this.sigRepository.findOneOrFail({
+    input.hostSig = await this.sigRepository.findOneOrFail({
       name: String(input.hostSig)
     });
     const newResource = await this.repository

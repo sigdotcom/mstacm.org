@@ -16,7 +16,7 @@ import {
 } from "antd";
 
 import { IEvent } from "./interfaces";
-import { UploadFile } from "antd/lib/upload/interface";
+import { UploadFile, UploadProps } from "antd/lib/upload/interface";
 
 const { RangePicker }: any = DatePicker;
 const { TextArea }: any = Input;
@@ -78,7 +78,7 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
   };
 
   const { getFieldDecorator }: any = props.form;
-  const params = {
+  const params: UploadProps = {
     accept: ".jpg",
     multiple: false,
     fileList: files,
