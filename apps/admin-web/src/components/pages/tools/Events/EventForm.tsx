@@ -67,7 +67,6 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
           });
           // UPDATE THE NEW EVENT (values);
         } else {
-          console.log(values, files[0]);
           createEvent({
             refetchQueries: [{ query: GET_EVENTS }],
             variables: { data: values, flier: files[0] }
@@ -79,7 +78,7 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
   };
 
   const { getFieldDecorator }: any = props.form;
-  const parm = {
+  const params = {
     accept: ".jpg",
     multiple: false,
     fileList: files,
@@ -89,6 +88,7 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
     beforeUpload: (newFile: any): boolean => {
       setFiles([newFile]);
 
+      // Uploading will be stopped with false or a rejected Promise returned.
       return false;
     }
   };
@@ -185,7 +185,7 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
         {getFieldDecorator("flier", {
           valuePropName: "file"
         })(
-          <Upload.Dragger {...parm}>
+          <Upload.Dragger {...params}>
             <p className="ant-upload-drag-icon">
               <Icon type="inbox" />
             </p>

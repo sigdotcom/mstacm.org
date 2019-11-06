@@ -59,12 +59,12 @@ export class EventResolver {
   ): Promise<Event> {
     if (!input && !flier) {
       throw new UserInputError(
-        "Please include either some new information or a flier to edit with"
+        "Please include either some new information or a flier to edit with."
       );
     }
 
     const event = await this.repository.findOneOrFail(id);
-    const updates: DeepPartial<Event> = input ? input : {};
+    const updates: DeepPartial<Event> = input || {};
 
     if (flier) {
       const passthrough = await fileType.stream(flier.createReadStream());
@@ -96,10 +96,9 @@ export class EventResolver {
     }
 
     if (input && input.hostSig) {
-      const hostSig = await this.sigRepository.findOneOrFail({
+      updates.hostSig = await this.sigRepository.findOneOrFail({
         name: String(input.hostSig)
       });
-      updates.hostSig = hostSig;
     }
 
     const updatedResource = this.repository.merge(event, { ...updates });
@@ -120,10 +119,9 @@ export class EventResolver {
       throw new AuthenticationError("Please login to access this resource.");
     }
 
-    const hostSig: Sig = await this.sigRepository.findOneOrFail({
+    input.hostSig: Sig = await this.sigRepository.findOneOrFail({
       name: String(input.hostSig)
     });
-    input.hostSig = hostSig;
     const newResource = await this.repository
       .create({ ...input, creator })
       .save();
