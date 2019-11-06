@@ -8,5 +8,4 @@
 secrets.yml
 *.retry
 inventory
-production
 api-prod.yml
