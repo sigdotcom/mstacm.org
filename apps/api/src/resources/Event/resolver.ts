@@ -1,4 +1,4 @@
-import { AuthenticationError } from "apollo-server";
+import { AuthenticationError, UserInputError } from "apollo-server";
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import {
   DeepPartial,
@@ -7,10 +7,15 @@ import {
   Repository
 } from "typeorm";
 
+import { GraphQLUpload } from "graphql-upload";
+import * as fileType from "file-type";
+import { deleteFile, uploadFile } from "../../lib/files";
+
 import { IContext } from "../../lib/interfaces";
 import { Sig } from "../Sig";
 import { User } from "../User";
 import { Event } from "./entity";
+import { File } from "./input";
 import {
   EventCreateInput,
   EventDeletePayload,
@@ -35,6 +40,10 @@ export class EventResolver {
   public async deleteEvent(
     @Arg("id", () => Number) id: number
   ): Promise<INumber> {
+    const event = await this.repository.findOneOrFail(id);
+    if (event.flierLink) {
+      deleteFile(event.flierLink);
+    }
     await this.repository.delete(id);
 
     return { id };
@@ -44,19 +53,55 @@ export class EventResolver {
   @Mutation(() => Event)
   public async updateEvent(
     @Arg("id", () => Number) id: number,
-    @Arg("data", () => EventUpdateInput)
-    input: DeepPartial<Event>
+    @Arg("data", () => EventUpdateInput, { nullable: true })
+    input: DeepPartial<Event>,
+    @Arg("flier", () => GraphQLUpload, { nullable: true }) flier: File
   ): Promise<Event> {
-    if (input.hostSig) {
-      const hostSig = await this.sigRepository.findOneOrFail({
-        name: String(input.hostSig)
-      });
-      input.hostSig = hostSig;
+    if (!input && !flier) {
+      throw new UserInputError(
+        "Please include either some new information or a flier to edit with."
+      );
     }
 
     const event = await this.repository.findOneOrFail(id);
-    const updatedResource = this.repository.merge(event, { ...input });
+    const updates: DeepPartial<Event> = input || {};
 
+    if (flier) {
+      const passthrough = await fileType.stream(flier.createReadStream());
+      if (
+        !passthrough.fileType ||
+        passthrough.fileType.ext !== "jpg" ||
+        passthrough.fileType.mime !== "image/jpeg"
+      ) {
+        throw new UserInputError("Error when parsing user input", {
+          flier:
+            "File uploaded was not detected as JPG. Contact acm@mst.edu if you believe this is a mistake."
+        });
+      }
+
+      const origName: string =
+        flier.filename.substr(0, flier.filename.lastIndexOf(".")) ||
+        flier.filename;
+      const encoded: string = encodeURIComponent(origName.replace(" ", "_"));
+      const filename = `events/${encoded}_${event.id}.jpg`;
+      const url = await uploadFile(
+        flier.createReadStream(),
+        filename,
+        "image/jpeg"
+      );
+      if (event.flierLink) {
+        deleteFile(event.flierLink);
+      }
+      updates.flierLink = url;
+    }
+
+    if (input && input.hostSig) {
+      updates.hostSig = await this.sigRepository.findOneOrFail({
+        name: String(input.hostSig)
+      });
+    }
+
+    const updatedResource = this.repository.merge(event, { ...updates });
     return updatedResource.save();
   }
 
@@ -65,7 +110,8 @@ export class EventResolver {
   public async createEvent(
     @Ctx() context: IContext,
     @Arg("data", () => EventCreateInput)
-    input: DeepPartial<Event>
+    input: DeepPartial<Event>,
+    @Arg("flier", () => GraphQLUpload, { nullable: true }) flier?: File
   ): Promise<Event> {
     const creator: User | undefined = context.state.user;
 
@@ -73,11 +119,38 @@ export class EventResolver {
       throw new AuthenticationError("Please login to access this resource.");
     }
 
-    const hostSig: Sig = await this.sigRepository.findOneOrFail({
+    input.hostSig = await this.sigRepository.findOneOrFail({
       name: String(input.hostSig)
     });
-    input.hostSig = hostSig;
-    const newResource = this.repository.create({ ...input, creator });
+    const newResource = await this.repository
+      .create({ ...input, creator })
+      .save();
+
+    if (flier) {
+      const passthrough = await fileType.stream(flier.createReadStream());
+      if (
+        !passthrough.fileType ||
+        passthrough.fileType.ext !== "jpg" ||
+        passthrough.fileType.mime !== "image/jpeg"
+      ) {
+        throw new UserInputError("Error when parsing user input", {
+          flier:
+            "File uploaded was not detected as JPG. Contact acm@mst.edu if you believe this is a mistake."
+        });
+      }
+
+      const origName: string =
+        flier.filename.substr(0, flier.filename.lastIndexOf(".")) ||
+        flier.filename;
+      const encoded: string = encodeURIComponent(origName.replace(" ", "_"));
+      const filename = `events/${encoded}_${newResource.id}.jpg`;
+      const url = await uploadFile(
+        flier.createReadStream(),
+        filename,
+        "image/jpeg"
+      );
+      newResource.flierLink = url;
+    }
 
     return newResource.save();
   }

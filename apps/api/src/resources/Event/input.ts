@@ -1,8 +1,9 @@
 import { Field, InputType, ObjectType } from "type-graphql";
 import { Event } from "./entity";
+import { Readable } from "stream";
 
 @InputType()
-export class EventCreateInput /*implements Partial<Event>*/ {
+export class EventCreateInput /*implements Partial<Event> */ {
   @Field()
   public eventTitle: string;
 
@@ -59,4 +60,18 @@ export class EventUpdateInput /*implements Partial<Event> */ {
 export class EventDeletePayload implements Partial<Event> {
   @Field({ nullable: true })
   public id: number;
+}
+
+export class File {
+  @Field(() => Readable)
+  public createReadStream: () => Readable;
+
+  @Field()
+  public filename: string;
+
+  @Field()
+  public mimetype: string;
+
+  @Field()
+  public encoding: string;
 }
