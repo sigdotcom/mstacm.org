@@ -57,7 +57,11 @@ export class EventResolver {
     input: DeepPartial<Event>,
     @Arg("flier", () => GraphQLUpload, { nullable: true }) flier: File
   ): Promise<Event> {
-    // if data and flier null throw error
+    if (!input && !flier) {
+      throw new UserInputError(
+        "Please include either some new information or a flier to edit with"
+      );
+    }
 
     const event = await this.repository.findOneOrFail(id);
     const updates: DeepPartial<Event> = input ? input : {};
