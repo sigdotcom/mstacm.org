@@ -112,19 +112,24 @@ export class RedemptionCodeResolver {
       );
     }
 
-    const transaction: Transaction = await redemptionCode.transaction;
-    transaction.user = user;
-    await transaction.save();
-    const purchases: Purchase[] = await transaction.purchases;
+    const transaction:
+      | Transaction
+      | undefined = await redemptionCode.transaction;
 
-    if (purchases.length > 1) {
-      throw new BadUserInputError(
-        "We currently only support redeeming transactions with 1 purchase."
-      );
+    if (transaction) {
+      transaction.user = user;
+      await transaction.save();
+      const purchases: Purchase[] = await transaction.purchases;
+
+      if (purchases.length > 1) {
+        throw new BadUserInputError(
+          "We currently only support redeeming transactions with 1 purchase."
+        );
+      }
+
+      const product: Product = await purchases[0].product;
+      await fulfillProduct(product.tag, user);
     }
-
-    const product: Product = await purchases[0].product;
-    await fulfillProduct(product.tag, user);
 
     user.permissions = mergeEntityLists<Permission>(
       await user.permissions,
