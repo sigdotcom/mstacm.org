@@ -236,6 +236,9 @@ workflows:
           requires:
             - publish-latest
             - ansible-lint
+          filters:
+            branches:
+              only: master
       - deploy:
           # Found at https://circleci.com/gh/organizations/sigdotcom/settings#contexts
           context: mstacm-ansible
