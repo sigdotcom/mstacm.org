@@ -128,34 +128,35 @@ it. Some directions have notes and multiple parts that must be done.
     terraform apply
     ```
 
-15. Copy `group_vars/api-prod.yml.template` into `group_vars/api-prod.yml`:
-    ```sh
-    cp  group_vars/api-prod.yml.template group_vars/api-prod.yml
-    ```
-
-16. Navigate to the DigitalOcean dashboard in the mstacm team and click the
+11. Navigate to the DigitalOcean dashboard in the mstacm team and click the
     **Databases** tab.
 
-17. Click on the `mstacm-postgres-cluster`. This should look like:
+12. Click on the `mstacm-postgres-cluster`. This should look like:
     ![Database Page](./imgs/digitalocean_database_page.png)
 
-18. Configure the **Trusted Sources** to be the droplet created with terraform
+13. Configure the **Trusted Sources** to be the droplet created with terraform
     `api.mstacm.org`. If completed correctly, this should look like:
     ![Trusted Sources](./imgs/trusted_sources.png)
 
-19. Create the `phoenix` database and user in the **Users & Databases** tab.
+14. Create the `phoenix` database and user in the **Users & Databases** tab.
 
-20. (optional, but recommended) Upload an old backup of the database to the new
+15. (optional, but recommended) Upload an old backup of the database to the new
     database `phoenix` database:
     ```sh
     cat <YOUR_BACKUP_FILE> | gzip -d | psql <YOUR_CONNETION_STRING_TO_DATABASE>
     ```
 
-21. Edit the `groups_vars/api-prod.yml` file with the appropriate environment
+16. Edit the `groups_vars/api-prod.yml` file with the appropriate environment
     variables. Tips on where the acquire the correct values are found in the
-    comments of this file.
+    comments of this file. The file is encrypted using [Ansible
+    Vault][ansible-vault-url] so that it can be automatically deployed by [Circle
+    CI][circle-ci-url]. To edit, get the vault password from the ACM Bitwarden
+    account or ask the Chair of ACM Web and use the following command:
+    ```
+    ansible-vault edit group_vars/api-prod.yml
+    ```
     
-22. Run the ansible playbook:
+17. Run the ansible playbook:
     ```
     ansible-playbook -i production site.yml
     ```
@@ -190,6 +191,8 @@ terraform {
 ```
 
 [ansible-url]: https://docs.ansible.com/ansible/latest/index.html
+[ansible-vault-url]: https://docs.ansible.com/ansible/latest/user_guide/vault.html
+[circle-ci-url]: https://circleci.com/gh/sigdotcom/workflows/mstacm.org
 [terraform-url]: https://www.terraform.io/docs/index.html
 [terraform-cloud-url]: https://www.terraform.io/docs/cloud/index.html
 [terraform-cloud-api-token-url]: https://www.terraform.io/docs/cloud/users-teams-organizations/users.html#api-tokens
