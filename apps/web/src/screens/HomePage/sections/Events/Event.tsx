@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Icon from "react-eva-icons";
-import LinesEllipsis from "react-lines-ellipsis";
+import HTMLEllipses from "react-lines-ellipsis/lib/html";
 import styled from "styled-components";
 
 import { config } from "../../../../config";
@@ -250,7 +250,10 @@ const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
             <h3>{eventDate.toLocaleString("default", { month: "short" })}</h3>
             <h2>{eventDate.getDate()}</h2>
           </DateArea>
-          <img alt="Community Logo" src={`${config.CDN_URI}/static/${logoLink}`} />
+          <img
+            alt="Community Logo"
+            src={`${config.CDN_URI}/static/${logoLink}`}
+          />
         </SmallInfo>
       </div>
       <VerticalLine />
@@ -258,7 +261,10 @@ const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
         <EventName>{event.eventTitle}</EventName>
         <div style={{ marginBottom: "10px" }}>
           <Time>
-            <img alt="Location Icon" src={`${config.CDN_URI}/static/location.png`} />
+            <img
+              alt="Location Icon"
+              src={`${config.CDN_URI}/static/location.png`}
+            />
             <h2>{event.location}</h2>
           </Time>
           <Time>
@@ -273,8 +279,13 @@ const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
           </Time>
         </div>
         <Description onClick={handleClick} style={{ marginRight: "5px" }}>
-          <LinesEllipsis
-            text={event.description}
+          <HTMLEllipses
+            unsafeHTML={
+              event.description +
+              (showFullDesc
+                ? "&nbsp<span class='LinesEllipsis-ellipsis'>... Click to hide</span>"
+                : "")
+            }
             maxLine={showFullDesc ? Number.MAX_VALUE : NUM_DESC_LINES}
             ellipsis="... read more"
             basedOn="words"

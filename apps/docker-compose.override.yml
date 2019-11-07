@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  phoenix_db:
+    image: "postgres"
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    networks:
+      - db_nw
+    environment:
+      - POSTGRES_DB=phoenix
+      - POSTGRES_USER=phoenix
+      - POSTGRES_PASSWORD=phoenix
+  phoenix_web:
+    # Testing migrations
+    # command: bash -c "yarn build && yarn start:prod"
+    command: yarn start:dev
+    build: ./api
+    volumes:
+      - ./api:/server
+    environment:
+      - DB_HOST=phoenix_db
+      - DB_USERNAME=phoenix
+      - DB_PASSWORD=phoenix
+    depends_on:
+      - phoenix_db

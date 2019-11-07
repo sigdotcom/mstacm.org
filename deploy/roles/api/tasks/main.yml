@@ -1,0 +1,22 @@
+---
+- name: "Clone the mstacm.org monorepo"
+  git:
+    repo: "https://github.com/sigdotcom/mstacm.org.git"
+    dest: "/opt/mstacm.org"
+    version: master
+    accept_hostkey: yes
+
+- name: "Create the web.env file for api environment variables"
+  template: 
+    src: "web.env.j2"
+    dest: "/opt/mstacm.org/apps/.docker/web.env"
+
+- name: "Deploy the latest version of the docker application"
+  docker_compose:
+    project_src: /opt/mstacm.org/apps
+    state: present
+    pull: yes
+    build: yes
+    files:
+      - docker-compose.yml
+      - docker-compose.production.yml
