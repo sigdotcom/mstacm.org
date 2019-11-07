@@ -1,0 +1,27 @@
+---
+# Located in deploy/terraform.tfstate in "outputs" after a successful 
+# 'terraform apply'
+API_DB_HOST: phoenix_db
+API_DB_PORT: 25060
+API_DB_TABLE: phoenix # except this one, should be created during 'Usage'
+API_DB_USERNAME: phoenix
+API_DB_PASSWORD: phoenix
+
+# Set by the user.
+API_SECRET_APP_KEY: changeme
+
+# Located under the auth0 admin portal at 
+# https://manage.auth0.com/dashboard/us/mstacm/. NOTE: we are using a 
+# custom domain (https://auth0.com/docs/custom-domains) so it may require you to
+# look around a little
+API_AUTH0_DOMAIN: auth.mstacm.org
+
+# Located in the Azure portal under the mstacm storage account
+API_AZURE_STORAGE_ACCOUNT: mstacm
+API_AZURE_STORAGE_ACCOUNT_KEY: changeme
+
+# Located in the stripe admin portal (https://dashboard.stripe.com/dashboard)
+# under the 'developers' tab
+API_STRIPE_PUBLIC_TOKEN: changeme
+API_STRIPE_PRIVATE_TOKEN: changeme
+API_STRIPE_WEBHOOK_SECRET: changeme

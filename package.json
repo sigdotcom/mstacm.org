@@ -8,8 +8,10 @@
   "dependencies": {},
   "workspaces": {
     "packages": [
-      "api/",
-      "apps/*"
+      "apps/admin-web",
+      "apps/profile-web",
+      "apps/web",
+      "apps/resume-portal"
     ],
     "nohoist": [
       "**/babel**",

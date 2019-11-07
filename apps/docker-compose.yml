@@ -1,0 +1,31 @@
+version: '3'
+
+# See docker-compose.override.yml to see the 
+# additional development configuration 
+services:
+  phoenix_web:
+    restart: unless-stopped
+    dns: 
+      - 1.1.1.1 
+      - 8.8.8.8
+    networks:
+      - db_nw
+      - web_nw
+    env_file:
+      - ./api/.docker/web.env
+  phoenix_nginx:
+    image: "nginx"
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./.docker/conf.d:/etc/nginx/conf.d
+    networks:
+      - web_nw
+    depends_on:
+      - phoenix_web
+networks:
+  db_nw:
+    driver: bridge
+  web_nw:
+    driver: bridge
