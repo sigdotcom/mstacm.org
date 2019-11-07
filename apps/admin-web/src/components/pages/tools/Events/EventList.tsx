@@ -1,11 +1,11 @@
 import React, { setGlobal } from "reactn";
 
-import { useQuery } from "@apollo/react-hooks";
-
 import styled, { AnyStyledComponent } from "styled-components";
 
 import { Event } from "./Event";
-import { GET_EVENTS } from "./helpers";
+
+import { useEventsQuery } from "../../../../generated/graphql";
+
 import { IEvent } from "./interfaces";
 
 const PageWrapper: AnyStyledComponent = styled.div`
@@ -19,7 +19,7 @@ const List: AnyStyledComponent = styled.ul`
 `;
 
 const EventList: React.SFC<{}> = (): JSX.Element => {
-  const { loading, error, data }: any = useQuery(GET_EVENTS);
+  const { loading, error, data }: any = useEventsQuery();
 
   if (loading) {
     return (

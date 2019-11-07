@@ -1,9 +1,9 @@
 import React, { setGlobal } from "reactn";
 
-import { useMutation } from "@apollo/react-hooks";
 import styled, { AnyStyledComponent } from "styled-components";
 
-import { DELETE_EVENT, GET_EVENTS } from "./helpers";
+import { GET_EVENTS } from "./helpers";
+import { useDeleteEventMutation } from "../../../../generated/graphql";
 import { IEvent } from "./interfaces";
 
 import { Button } from "antd";
@@ -47,7 +47,7 @@ const EventDescription: AnyStyledComponent = styled.div``;
 const EventLowLevel: AnyStyledComponent = styled.div``;
 
 const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
-  const [deleteEvent] = useMutation(DELETE_EVENT);
+  const [deleteEvent] = useDeleteEventMutation();
 
   const formatDate: (date: string) => string = (date: string): string => {
     const options: any = {
