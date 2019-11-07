@@ -213,17 +213,14 @@ workflows:
           requires:
             - frontend-tests
             - backend-tests
-          # filters:
-          #   branches:
-          #     only: master
       - publish-latest:
           # Found at https://circleci.com/gh/organizations/sigdotcom/settings#contexts
           context: mstacm-docker
           requires:
             - build-api-docker
-          # filters:
-          #   branches:
-          #     only: master
+          filters:
+            branches:
+              only: master
       - publish-tag:
           # Found at https://circleci.com/gh/organizations/sigdotcom/settings#contexts
           context: mstacm-docker
@@ -244,7 +241,7 @@ workflows:
           context: mstacm-ansible
           requires:
             - deployment-hold
-          # filters:
-          #   branches:
-          #     only: master
+          filters:
+            branches:
+              only: master
 
