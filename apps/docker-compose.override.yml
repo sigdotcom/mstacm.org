@@ -2,7 +2,7 @@ version: '3'
 
 services:
   phoenix_db:
-    image: "postgres"
+    image: "postgres:11"
     restart: unless-stopped
     ports:
       - "5432:5432"
