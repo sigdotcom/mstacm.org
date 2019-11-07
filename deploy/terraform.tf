@@ -40,9 +40,16 @@ terraform {
 }
 
 # Add local ssh key for accessing the various resources
-resource "digitalocean_ssh_key" "default" {
+resource "digitalocean_ssh_key" "terraform" {
   name       = "Terraform Key"
   public_key = "${file("~/.ssh/mstacm-digitalocean.pub")}"
+}
+
+# Add ssh key used in the CircleCI workflow to automatically deploy the
+# application
+resource "digitalocean_ssh_key" "circleci" {
+  name       = "CircleCI Key"
+  public_key = "${file("~/.ssh/mstacm-circleci-deploy.pub")}"
 }
 
 
@@ -93,7 +100,10 @@ resource "digitalocean_droplet" "api" {
   name               = "api.mstacm.org"
   region             = "nyc3"
   size               = "s-1vcpu-1gb"
-  ssh_keys           = ["${digitalocean_ssh_key.default.fingerprint}"]
+  ssh_keys           = [
+    "${digitalocean_ssh_key.terraform.fingerprint}",
+    "${digitalocean_ssh_key.circleci.fingerprint}"
+  ]
   private_networking = true
 }
 
