@@ -66,7 +66,8 @@
     name: "{{ item }}"
     enabled: true
     state: started
-  with_items: do-agent
+  with_items:
+    - "do-agent"
 
 - include: "{{ item }}"
   with_first_found:

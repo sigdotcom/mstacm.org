@@ -1,7 +1,7 @@
 - hosts: all
   roles:
     - common
-    - andrewsomething.do-agent 
+    - andrewsomething.do-agent
     - docker
     - api
   vars_files:

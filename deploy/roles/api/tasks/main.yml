@@ -7,7 +7,7 @@
     accept_hostkey: yes
 
 - name: "Create the web.env file for api environment variables"
-  template: 
+  template:
     src: "web.env.j2"
     dest: "/opt/mstacm.org/apps/api/.docker/web.env"
 
