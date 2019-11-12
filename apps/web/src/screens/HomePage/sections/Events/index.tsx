@@ -22,7 +22,7 @@ export const GET_CURRENT_EVENTS_QUERY: any = gql`
       dateCreated
       dateHosted
       dateExpire
-      hostSig {
+      hostCommunity {
         name
       }
       eventTitle
@@ -118,7 +118,7 @@ const FilterWrapper = styled.div`
   }
 `;
 
-const Sigs = styled.div`
+const Communitys = styled.div`
   display: flex;
   height: 300px;
 `;
@@ -138,7 +138,7 @@ const ImgImg = styled.img`
   border-radius: 50%;
 `;
 
-const SigWrapper = styled.div`
+const CommunityWrapper = styled.div`
   padding: 5px;
   height: 325px;
   display: flex;
@@ -260,7 +260,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
       count = events.length;
     } else {
       for (const e of events) {
-        if (filters[FILTER_TYPES.indexOf(e.hostSig.name)]) {
+        if (filters[FILTER_TYPES.indexOf(e.hostCommunity.name)]) {
           count += 1;
         }
       }
@@ -275,7 +275,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
           <div style={{ display: "flex", width: "100%" }}>
             <FilterWrapper>
               <h3>Filter</h3>
-              <Sigs>
+              <Communitys>
                 <ImgWrapper>
                   <ImgImg src={`${config.CDN_URI}/static/comp-dark.png`} />
                   <ImgImg src={`${config.CDN_URI}/static/data-dark.png`} />
@@ -285,7 +285,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
                   <ImgImg src={`${config.CDN_URI}/static/sec-dark.png`} />
                   <ImgImg src={`${config.CDN_URI}/static/acm-w-dark.png`} />
                 </ImgWrapper>
-                <SigWrapper>
+                <CommunityWrapper>
                   <h4>ACM Comp</h4>
                   <h4>ACM Data</h4>
                   <h4>ACM Game</h4>
@@ -293,7 +293,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
                   <h4>ACM Hack</h4>
                   <h4>ACM Sec</h4>
                   <h4>ACM-W</h4>
-                </SigWrapper>
+                </CommunityWrapper>
                 <CheckBoxWrapper>
                   <Checkbox
                     checked={filters[0]}
@@ -338,12 +338,12 @@ const Events: React.FC<{}> = (): JSX.Element => {
                     }}
                   />
                 </CheckBoxWrapper>
-              </Sigs>
+              </Communitys>
             </FilterWrapper>
             <EventsWrapper>
               {events
                 .filter((event: IEvent) => {
-                  return showEvent(event.hostSig.name);
+                  return showEvent(event.hostCommunity.name);
                 })
                 .slice(0, maxEvents)
                 .map((event: IEvent, i: number) => {

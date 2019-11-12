@@ -1,7 +1,7 @@
 import React from "react";
 import Icon from "react-eva-icons";
 import styled from "styled-components";
-import { ISIG } from "./interfaces";
+import { ICommunity } from "./interfaces";
 
 import { config } from "../../../../config";
 
@@ -18,18 +18,18 @@ const PaneWrapper: any = styled.div`
   }
 `;
 
-const SIGName: any = styled.h1`
+const CommunityName: any = styled.h1`
   font-family: "Roboto", sans-serif;
   font-size: 21px;
   margin: 0 0 0 10px;
 `;
-const SIGDesc: any = styled.p`
+const CommunityDesc: any = styled.p`
   margin-bottom: 20px;
   font-size: 17px;
   rgba(0, 0, 0, 0.65);
 `;
 /*
-const SIGWebsite: any = styled(SIGButton)`
+const CommunityWebsite: any = styled(CommunityButton)`
   background: #11bb66;
   color: white;
   margin-right: 20px;
@@ -40,7 +40,7 @@ const SIGWebsite: any = styled(SIGButton)`
 `;
 */
 
-const SIGWebsite = styled.a`
+const CommunityWebsite = styled.a`
   transition: 0.2s ease-in-out;
   font-weight: bold;
   font-family: "Nunito Sans", sans-serif;
@@ -64,7 +64,7 @@ const SIGWebsite = styled.a`
 `;
 
 /*
-const SIGDiscord: any = styled(SIGButton)`
+const CommunityDiscord: any = styled(CommunityButton)`
   background: #1166bb;
   color: white;
   &:hover {
@@ -74,7 +74,7 @@ const SIGDiscord: any = styled(SIGButton)`
 `;
 */
 
-const SIGDiscord = styled.a`
+const CommunityDiscord = styled.a`
   background: #42c0fc;
   border: none;
   border-radius: 30px;
@@ -97,7 +97,7 @@ const SIGDiscord = styled.a`
   }
 `;
 
-const SIGLogo: any = styled.img`
+const CommunityLogo: any = styled.img`
   min-width: 70px;
   max-width: 70px;
   min-height: 70px;
@@ -105,7 +105,7 @@ const SIGLogo: any = styled.img`
   border-radius: 50%;
 `;
 
-const SIGEmail: any = styled.a`
+const CommunityEmail: any = styled.a`
   display: inline-flex;
   align-items: center;
 
@@ -132,35 +132,35 @@ const Header = styled.div`
   margin: 0 0 16px 0;
 `;
 
-const SIGDetails = styled.div`
+const CommunityDetails = styled.div`
   display: flex;
   align-items: center;
 `;
 
-interface ISIGDetailPaneProps {
-  sig: ISIG;
+interface ICommunityDetailPaneProps {
+  community: ICommunity;
 }
 
-const SIGDetailPane: React.FC<ISIGDetailPaneProps> = (props: any): any => {
-  const { sig }: any = props;
+const CommunityDetailPane: React.FC<ICommunityDetailPaneProps> = (props: any): any => {
+  const { community }: any = props;
 
   return (
     <PaneWrapper>
       <Header>
-        <SIGDetails>
-          <SIGLogo src={`${config.CDN_URI}/static/${sig.logoLink}`} />
-          <SIGName>ACM {sig.name}</SIGName>
-        </SIGDetails>
-        <SIGEmail href={"mailto:" + sig.email}>
+        <CommunityDetails>
+          <CommunityLogo src={`${config.CDN_URI}/static/${community.logoLink}`} />
+          <CommunityName>ACM {community.name}</CommunityName>
+        </CommunityDetails>
+        <CommunityEmail href={"mailto:" + community.email}>
           <Icon name="email" size="large" fill="#777" />
-        </SIGEmail>
+        </CommunityEmail>
       </Header>
       <Row>
-        <SIGDesc>{sig.desc}</SIGDesc>
+        <CommunityDesc>{community.desc}</CommunityDesc>
         <Row>
           <ButtonRow>
-            <SIGWebsite href={sig.website}>Website</SIGWebsite>
-            <SIGDiscord href={sig.discord}>Discord</SIGDiscord>
+            <CommunityWebsite href={community.website}>Website</CommunityWebsite>
+            <CommunityDiscord href={community.discord}>Discord</CommunityDiscord>
           </ButtonRow>
         </Row>
       </Row>
@@ -168,4 +168,4 @@ const SIGDetailPane: React.FC<ISIGDetailPaneProps> = (props: any): any => {
   );
 };
 
-export { SIGDetailPane };
+export { CommunityDetailPane };

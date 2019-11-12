@@ -12,7 +12,7 @@ import * as fileType from "file-type";
 import { deleteFile, uploadFile } from "../../lib/files";
 
 import { IContext } from "../../lib/interfaces";
-import { Sig } from "../Sig";
+import { Community } from "../Community";
 import { User } from "../User";
 import { Event } from "./entity";
 import { File } from "./input";
@@ -33,7 +33,7 @@ interface INumber {
 export class EventResolver {
   public repository: Repository<Event> = getRepository(Event);
 
-  public sigRepository: Repository<Sig> = getRepository(Sig);
+  public communityRepository: Repository<Community> = getRepository(Community);
 
   @Authorized("delete:events")
   @Mutation(() => EventDeletePayload)
@@ -95,9 +95,9 @@ export class EventResolver {
       updates.flierLink = url;
     }
 
-    if (input && input.hostSig) {
-      updates.hostSig = await this.sigRepository.findOneOrFail({
-        name: String(input.hostSig)
+    if (input && input.hostCommunity) {
+      updates.hostCommunity = await this.communityRepository.findOneOrFail({
+        name: String(input.hostCommunity)
       });
     }
 
@@ -119,8 +119,8 @@ export class EventResolver {
       throw new AuthenticationError("Please login to access this resource.");
     }
 
-    input.hostSig = await this.sigRepository.findOneOrFail({
-      name: String(input.hostSig)
+    input.hostCommunity = await this.communityRepository.findOneOrFail({
+      name: String(input.hostCommunity)
     });
     const newResource = await this.repository
       .create({ ...input, creator })

@@ -1,8 +1,8 @@
 import { Field, InputType, ObjectType } from "type-graphql";
-import { Sig } from "./entity";
+import { Community } from "./entity";
 
 @InputType()
-export class SigCreateInput implements Partial<Sig> {
+export class CommunityCreateInput implements Partial<Community> {
   @Field()
   public name: string;
 
@@ -11,7 +11,7 @@ export class SigCreateInput implements Partial<Sig> {
 }
 
 @InputType()
-export class SigUpdateInput implements Partial<Sig> {
+export class CommunityUpdateInput implements Partial<Community> {
   @Field({ nullable: true })
   public name?: string;
 
@@ -20,7 +20,7 @@ export class SigUpdateInput implements Partial<Sig> {
 }
 
 @ObjectType()
-export class SigDeletePayload implements Partial<Sig> {
+export class CommunityDeletePayload implements Partial<Community> {
   @Field({ nullable: true })
   public name: string;
 }

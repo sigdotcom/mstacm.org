@@ -1,14 +1,14 @@
 import React from "react";
 import { Element } from "react-scroll";
 import styled, { AnyStyledComponent } from "styled-components";
-import { ISIG } from "./interfaces";
-import { SIGsDisplay } from "./SIGsDisplay";
+import { ICommunity } from "./interfaces";
+import { CommunitiesDisplay } from "./CommunitiesDisplay";
 
 import Icon from "react-eva-icons";
 
 import { PageConstraint } from "../../../../components/PageConstraint";
 
-const SIGsData: ISIG[] = [
+const CommunitiesData: ICommunity[] = [
   {
     color: "skyblue",
     desc:
@@ -88,7 +88,7 @@ const SIGsData: ISIG[] = [
   }
 ];
 
-const SIGsWrapper: AnyStyledComponent = styled.div`
+const CommunitiesWrapper: AnyStyledComponent = styled.div`
   margin: auto;
   margin-top: 100px;
   width: 100%;
@@ -119,27 +119,27 @@ const Line: AnyStyledComponent = styled.hr`
   margin: 100px 0;
 `;
 
-const SIGs: React.FC = (): JSX.Element => {
+const Communities: React.FC = (): JSX.Element => {
   return (
     <Element name="communities">
       <PageConstraint>
-        <SIGsWrapper>
+        <CommunitiesWrapper>
           <Heading>
             <Icon name="people" size="large" fill="#777" /> Our Communities
           </Heading>
           <Description>
-            Members of our communities (formerly known as SIGs) hone their
+            Members of our communities (formerly known as Communities) hone their
             computing skills in special topics, listed below, and work towards
             highly specialized goals in development and career-making. Click on
             the topic to learn more about the community and find out how to get
             involved!
           </Description>
-          <SIGsDisplay sigs={SIGsData} />
-        </SIGsWrapper>
+          <CommunitiesDisplay communities={CommunitiesData} />
+        </CommunitiesWrapper>
         <Line />
       </PageConstraint>
     </Element>
   );
 };
 
-export { SIGs };
+export { Communities };

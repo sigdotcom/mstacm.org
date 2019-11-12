@@ -183,7 +183,7 @@ const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
   };
 
   let logoLink: string;
-  switch (event.hostSig.name) {
+  switch (event.hostCommunity.name) {
     case "Web":
       logoLink = "web.png";
       break;
@@ -275,7 +275,7 @@ const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
             <Icon name="people" size="medium" fill="#000" />
             <h2
               style={{ margin: "-1px 0 0 3.5px" }}
-            >{`ACM ${event.hostSig.name}`}</h2>
+            >{`ACM ${event.hostCommunity.name}`}</h2>
           </Time>
         </div>
         <Description onClick={handleClick} style={{ marginRight: "5px" }}>

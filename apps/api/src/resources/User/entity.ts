@@ -18,7 +18,7 @@ import { Event } from "../Event";
 import { Group } from "../Group";
 import { Permission } from "../Permission";
 import { Resume } from "../Resume";
-import { Sig } from "../Sig";
+import { Community } from "../Community";
 import { Transaction } from "../Transaction";
 
 @ObjectType()
@@ -123,12 +123,12 @@ export class User extends BaseEntity {
   @JoinTable()
   public transactions: Lazy<Transaction[]>;
 
-  @ManyToMany(() => Sig, (sig: Sig) => sig.users, {
+  @ManyToMany(() => Community, (community: Community) => community.users, {
     lazy: true,
     nullable: true
   })
   @JoinTable()
-  public sigs: Lazy<Sig[]>;
+  public communities: Lazy<Community[]>;
 
   @OneToMany(() => Event, (event: Event) => event.creator, {
     lazy: true

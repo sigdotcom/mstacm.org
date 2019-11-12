@@ -15,6 +15,30 @@ export type Scalars = {
   Upload: any,
 };
 
+export type Community = {
+   __typename?: 'Community',
+  name: Scalars['String'],
+  dateFounded: Scalars['DateTime'],
+  description: Scalars['String'],
+  users: Array<User>,
+  hostedEvents: Array<Event>,
+};
+
+export type CommunityCreateInput = {
+  name: Scalars['String'],
+  description: Scalars['String'],
+};
+
+export type CommunityDeletePayload = {
+   __typename?: 'CommunityDeletePayload',
+  name?: Maybe<Scalars['String']>,
+};
+
+export type CommunityUpdateInput = {
+  name?: Maybe<Scalars['String']>,
+  description?: Maybe<Scalars['String']>,
+};
+
 
 /** The potential errors codes that will be sent to a user. */
 export enum ErrorCodes {
@@ -31,7 +55,7 @@ export type Event = {
   dateHosted: Scalars['DateTime'],
   dateExpire: Scalars['DateTime'],
   creator: User,
-  hostSig: Sig,
+  hostCommunity: Community,
   eventTitle: Scalars['String'],
   description: Scalars['String'],
   location: Scalars['String'],
@@ -47,7 +71,7 @@ export type EventCreateInput = {
   location: Scalars['String'],
   flierLink?: Maybe<Scalars['String']>,
   eventLink?: Maybe<Scalars['String']>,
-  hostSig: Scalars['String'],
+  hostCommunity: Scalars['String'],
 };
 
 export type EventDeletePayload = {
@@ -63,7 +87,7 @@ export type EventUpdateInput = {
   location?: Maybe<Scalars['String']>,
   flierLink?: Maybe<Scalars['String']>,
   eventLink?: Maybe<Scalars['String']>,
-  hostSig: Scalars['String'],
+  hostCommunity: Scalars['String'],
 };
 
 export type Extension = {
@@ -95,9 +119,9 @@ export type Mutation = {
   createUser: User,
   updateUser: User,
   deleteUser: UserDeletePayload,
-  createSig: Sig,
-  updateSig: Sig,
-  deleteSig: SigDeletePayload,
+  createCommunity: Community,
+  updateCommunity: Community,
+  deleteCommunity: CommunityDeletePayload,
   deleteEvent: EventDeletePayload,
   updateEvent: Event,
   createEvent: Event,
@@ -129,18 +153,18 @@ export type MutationDeleteUserArgs = {
 };
 
 
-export type MutationCreateSigArgs = {
-  data: SigCreateInput
+export type MutationCreateCommunityArgs = {
+  data: CommunityCreateInput
 };
 
 
-export type MutationUpdateSigArgs = {
-  data: SigUpdateInput,
+export type MutationUpdateCommunityArgs = {
+  data: CommunityUpdateInput,
   id: Scalars['String']
 };
 
 
-export type MutationDeleteSigArgs = {
+export type MutationDeleteCommunityArgs = {
   id: Scalars['String']
 };
 
@@ -151,12 +175,14 @@ export type MutationDeleteEventArgs = {
 
 
 export type MutationUpdateEventArgs = {
-  data: EventUpdateInput,
+  flier?: Maybe<Scalars['Upload']>,
+  data?: Maybe<EventUpdateInput>,
   id: Scalars['Float']
 };
 
 
 export type MutationCreateEventArgs = {
+  flier?: Maybe<Scalars['Upload']>,
   data: EventCreateInput
 };
 
@@ -253,8 +279,8 @@ export type Query = {
    __typename?: 'Query',
   user: User,
   users: Array<User>,
-  sig: Sig,
-  sigs: Array<Sig>,
+  community: Community,
+  communitys: Array<Community>,
   events: Array<Event>,
   currentEvents: Array<Event>,
   event: Event,
@@ -272,7 +298,7 @@ export type QueryUserArgs = {
 };
 
 
-export type QuerySigArgs = {
+export type QueryCommunityArgs = {
   id: Scalars['String']
 };
 
@@ -297,30 +323,6 @@ export type Resume = {
   url: Scalars['String'],
   added: Scalars['DateTime'],
   user: User,
-};
-
-export type Sig = {
-   __typename?: 'Sig',
-  name: Scalars['String'],
-  dateFounded: Scalars['DateTime'],
-  description: Scalars['String'],
-  users: Array<User>,
-  hostedEvents: Array<Event>,
-};
-
-export type SigCreateInput = {
-  name: Scalars['String'],
-  description: Scalars['String'],
-};
-
-export type SigDeletePayload = {
-   __typename?: 'SigDeletePayload',
-  name?: Maybe<Scalars['String']>,
-};
-
-export type SigUpdateInput = {
-  name?: Maybe<Scalars['String']>,
-  description?: Maybe<Scalars['String']>,
 };
 
 export type Transaction = {
@@ -413,9 +415,9 @@ export type GetCurrentEventsQuery = (
   & { currentEvents: Array<(
     { __typename?: 'Event' }
     & Pick<Event, 'id' | 'dateCreated' | 'dateHosted' | 'dateExpire' | 'eventTitle' | 'description' | 'location' | 'flierLink' | 'eventLink'>
-    & { hostSig: (
-      { __typename?: 'Sig' }
-      & Pick<Sig, 'name'>
+    & { hostCommunity: (
+      { __typename?: 'Community' }
+      & Pick<Community, 'name'>
     ) }
   )> }
 );
@@ -506,7 +508,7 @@ export const GetCurrentEventsDocument = gql`
     dateCreated
     dateHosted
     dateExpire
-    hostSig {
+    hostCommunity {
       name
     }
     eventTitle

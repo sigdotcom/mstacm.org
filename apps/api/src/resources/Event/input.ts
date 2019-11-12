@@ -26,7 +26,7 @@ export class EventCreateInput /*implements Partial<Event> */ {
   public eventLink: string;
 
   @Field()
-  public hostSig: string;
+  public hostCommunity: string;
 }
 
 @InputType()
@@ -53,7 +53,7 @@ export class EventUpdateInput /*implements Partial<Event> */ {
   public eventLink: string;
 
   @Field()
-  public hostSig: string;
+  public hostCommunity: string;
 }
 
 @ObjectType()

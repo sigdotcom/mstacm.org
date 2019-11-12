@@ -15,7 +15,7 @@ import { User } from "../User";
 
 @ObjectType()
 @Entity()
-export class Sig extends BaseEntity {
+export class Community extends BaseEntity {
   @Field()
   @PrimaryColumn()
   public name: string;
@@ -31,11 +31,11 @@ export class Sig extends BaseEntity {
   public description: string;
 
   @Field(() => [User])
-  @ManyToMany(() => User, (user: User) => user.sigs, { lazy: true })
+  @ManyToMany(() => User, (user: User) => user.communities, { lazy: true })
   public users: Lazy<User[]>;
 
   @Field(() => [Event])
-  @OneToMany(() => Event, (event: Event) => event.hostSig, {
+  @OneToMany(() => Event, (event: Event) => event.hostCommunity, {
     lazy: true
   })
   public hostedEvents: Lazy<Event[]>;

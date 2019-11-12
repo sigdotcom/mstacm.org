@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { ISIG } from "./interfaces";
+import { ICommunity } from "./interfaces";
 
 import { config } from "../../../../config";
 
-const SIGListWrapper: any = styled.ul`
+const CommunityListWrapper: any = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
@@ -45,43 +45,43 @@ const Logo: any = styled.img`
   margin: 0 10px 0 10px;
 `;
 
-function SIGListItem(props: any): any {
-  const { sig, index, selected, setSelected }: any = props;
+function CommunityListItem(props: any): any {
+  const { community, index, selected, setSelected }: any = props;
   const onClick: any = (): any => {
     setSelected(index);
   };
   let styles: any = {};
   if (selected === index) {
     styles = {
-      background: sig.color,
+      background: community.color,
       boxShadow: "none"
     };
   }
 
   return (
     <Item style={styles} onClick={onClick}>
-      <Logo src={`${config.CDN_URI}/static/${sig.logoLinkDark}`} />
-      <h3>{sig.name}</h3>
+      <Logo src={`${config.CDN_URI}/static/${community.logoLinkDark}`} />
+      <h3>{community.name}</h3>
     </Item>
   );
 }
 
-function SIGList(props: any): any {
-  const { sigs, selected, setSelected }: any = props;
+function CommunityList(props: any): any {
+  const { communities, selected, setSelected }: any = props;
 
   return (
-    <SIGListWrapper>
-      {sigs.map((sig: ISIG, index: number) => (
-        <SIGListItem
-          sig={sig}
+    <CommunityListWrapper>
+      {communities.map((community: ICommunity, index: number) => (
+        <CommunityListItem
+          community={community}
           index={index}
           key={index}
           selected={selected}
           setSelected={setSelected}
         />
       ))}
-    </SIGListWrapper>
+    </CommunityListWrapper>
   );
 }
 
-export { SIGList };
+export { CommunityList };

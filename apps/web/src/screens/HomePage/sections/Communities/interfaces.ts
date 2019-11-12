@@ -1,4 +1,4 @@
-export interface ISIG {
+export interface ICommunity {
   color: string;
   name: string;
   desc: string;

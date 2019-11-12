@@ -19,7 +19,7 @@ import Hero from "./sections/Hero";
 import { Membership } from "./sections/Membership";
 import { Nav } from "./sections/Nav";
 import { ResumeBanner } from "./sections/ResumeBanner";
-import { SIGs } from "./sections/SIGs";
+import { Communities } from "./sections/Communities";
 import { Sponsors } from "./sections/Sponsors";
 
 const NavHeroWrapper = styled.div`
@@ -134,7 +134,7 @@ const HomePage: React.FC<RouteComponentProps> = ({
         <Nav />
         <Hero />
       </NavHeroWrapper>
-      <SIGs />
+      <Communities />
       <Events />
       <Membership />
       <Sponsors />

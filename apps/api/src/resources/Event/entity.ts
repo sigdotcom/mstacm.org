@@ -12,7 +12,7 @@ import {
 import { Field, ID, ObjectType } from "type-graphql";
 
 import { Lazy } from "../../lib/helpers";
-import { Sig } from "../Sig";
+import { Community } from "../Community";
 import { User } from "../User";
 
 @ObjectType()
@@ -44,13 +44,17 @@ export class Event extends BaseEntity {
   @JoinColumn()
   public creator: Lazy<User>;
 
-  @Field(() => Sig)
-  @ManyToOne(() => Sig, (sig: Sig) => sig.hostedEvents, {
-    lazy: true,
-    nullable: false
-  })
+  @Field(() => Community)
+  @ManyToOne(
+    () => Community,
+    (community: Community) => community.hostedEvents,
+    {
+      lazy: true,
+      nullable: false
+    }
+  )
   @JoinTable()
-  public hostSig: Lazy<Sig>;
+  public hostCommunity: Lazy<Community>;
 
   @Field()
   @Column()

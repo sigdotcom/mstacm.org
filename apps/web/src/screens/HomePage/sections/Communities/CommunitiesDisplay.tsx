@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { SIGDetailPane } from "./SIGDetailPane";
-import { SIGList } from "./SIGList";
+import { CommunityDetailPane } from "./CommunityDetailPane";
+import { CommunityList } from "./CommunityList";
 
 const DisplayWrapper: any = styled.div`
   display: flex;
@@ -13,15 +13,15 @@ const DisplayWrapper: any = styled.div`
   }
 `;
 
-function SIGsDisplay(props: any): any {
+function CommunitiesDisplay(props: any): any {
   const [selected, setSelected]: [number, any] = useState<number>(0);
-  const { sigs }: any = props;
+  const { communities }: any = props;
   return (
     <DisplayWrapper>
-      <SIGList sigs={sigs} selected={selected} setSelected={setSelected} />
-      <SIGDetailPane sig={sigs[selected]} />
+      <CommunityList communities={communities} selected={selected} setSelected={setSelected} />
+      <CommunityDetailPane community={communities[selected]} />
     </DisplayWrapper>
   );
 }
 
-export { SIGsDisplay };
+export { CommunitiesDisplay };
