@@ -1,9 +1,12 @@
 import React, { useGlobal, useState } from "reactn";
 
-import { useMutation } from "@apollo/react-hooks";
 import moment from "moment";
 
-import { CREATE_EVENT, GET_EVENTS, UPDATE_EVENT } from "./helpers";
+import { GET_EVENTS } from "./helpers";
+import {
+  useCreateEventMutation,
+  useUpdateEventMutation
+} from "../../../../generated/graphql";
 
 import {
   Button,
@@ -32,11 +35,11 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
   const [
     createEvent,
     { loading: createLoading, error: createError, data: createData }
-  ]: any = useMutation(CREATE_EVENT);
+  ]: any = useCreateEventMutation();
   const [
     updateEvent,
     { loading: updateLoading, error: updateError, data: updateData }
-  ]: any = useMutation(UPDATE_EVENT);
+  ]: any = useUpdateEventMutation();
   const [files, setFiles] = useState<UploadFile[]>([]);
 
   const convertTimes: any = (data: any): any => {

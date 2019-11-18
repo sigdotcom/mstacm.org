@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export const GET_EVENTS: any = gql`
-  {
+  query events {
     events {
       id
       dateCreated
