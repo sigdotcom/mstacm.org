@@ -199,31 +199,59 @@ const Footer: React.FC<{}> = (): JSX.Element => {
             </PageLinks>
             <Communities>
               <div>
-                <a href="https://acmcomp.mst.edu" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://acmcomp.mst.edu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   ACM Competition
                 </a>
-                <a href="https://modata.blog/" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://modata.blog/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   ACM Data
                 </a>
-                <a href="https://siggame.io/" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://siggame.io/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   ACM Game
                 </a>
               </div>
               <div>
-                <a href="https://pickhacks.io/" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://pickhacks.io/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   ACM Hack
                 </a>
-                <a href="https://acmsigsec.mst.edu/" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://acmsigsec.mst.edu/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   ACM Security
                 </a>
-                <a href="http://mst.orgsync.com/org/acmw/home" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://women.mstacm.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   ACM-W
                 </a>
               </div>
             </Communities>
             <Info>
               <div>
-                <a href="https://www.acm.org/" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://www.acm.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   ACM Global
                 </a>
                 <a
@@ -246,7 +274,10 @@ const Footer: React.FC<{}> = (): JSX.Element => {
             </Info>
           </Links>
           <Copyright>
-            <img alt="ACM Web Logo" src={`${config.CDN_URI}/static/web_footer.png`} />
+            <img
+              alt="ACM Web Logo"
+              src={`${config.CDN_URI}/static/web_footer.png`}
+            />
             <h2>Copyright © 2019 ACM Web.</h2>
           </Copyright>
         </Wrapper>
