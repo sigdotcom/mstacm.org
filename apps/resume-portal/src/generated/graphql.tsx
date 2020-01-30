@@ -9,14 +9,11 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
-  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
   DateTime: any,
-  /** The `Upload` scalar type represents a file upload. */
   Upload: any,
 };
 
 
-/** The potential errors codes that will be sent to a user. */
 export enum ErrorCodes {
   InternalServerError = 'INTERNAL_SERVER_ERROR',
   ResourceNotFound = 'RESOURCE_NOT_FOUND',
@@ -76,6 +73,7 @@ export type Group = {
   name: Scalars['String'],
   users: Array<User>,
   permissions: Array<Permission>,
+  redemptionCodes: Array<RedemptionCode>,
 };
 
 export type MembershipProduct = {
@@ -83,7 +81,6 @@ export type MembershipProduct = {
   tag: MembershipTypes,
 };
 
-/** Different types of ACM memberships one can have. */
 export enum MembershipTypes {
   Yearly = 'YEARLY',
   Semesterly = 'SEMESTERLY'
@@ -101,7 +98,7 @@ export type Mutation = {
   updateEvent: Event,
   createEvent: Event,
   createPermission: Permission,
-  createMembershipRedemptionCode: RedemptionCode,
+  createRedemptionCode: RedemptionCode,
   redeemRedemptionCode: RedemptionCode,
   deleteResume: User,
   uploadResume: Resume,
@@ -150,12 +147,14 @@ export type MutationDeleteEventArgs = {
 
 
 export type MutationUpdateEventArgs = {
-  data: EventUpdateInput,
+  flier?: Maybe<Scalars['Upload']>,
+  data?: Maybe<EventUpdateInput>,
   id: Scalars['Float']
 };
 
 
 export type MutationCreateEventArgs = {
+  flier?: Maybe<Scalars['Upload']>,
   data: EventCreateInput
 };
 
@@ -165,8 +164,10 @@ export type MutationCreatePermissionArgs = {
 };
 
 
-export type MutationCreateMembershipRedemptionCodeArgs = {
-  membershipType: MembershipTypes
+export type MutationCreateRedemptionCodeArgs = {
+  groupIds?: Maybe<Array<Scalars['String']>>,
+  permissionIds?: Maybe<Array<Scalars['String']>>,
+  productTags?: Maybe<Array<Scalars['String']>>
 };
 
 
@@ -208,6 +209,7 @@ export type Permission = {
    __typename?: 'Permission',
   name: Scalars['ID'],
   users: Array<User>,
+  redemptionCodes: Array<RedemptionCode>,
 };
 
 export type PermissionCreateInput = {
@@ -283,6 +285,8 @@ export type RedemptionCode = {
   redeemed?: Maybe<Scalars['Boolean']>,
   expirationDate: Scalars['DateTime'],
   transaction: Transaction,
+  permissions: Array<Permission>,
+  groups: Array<Group>,
 };
 
 export type Resume = {
