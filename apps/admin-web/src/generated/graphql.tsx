@@ -9,14 +9,11 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
-  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
   DateTime: any,
-  /** The `Upload` scalar type represents a file upload. */
   Upload: any,
 };
 
 
-/** The potential errors codes that will be sent to a user. */
 export enum ErrorCodes {
   InternalServerError = 'INTERNAL_SERVER_ERROR',
   ResourceNotFound = 'RESOURCE_NOT_FOUND',
@@ -84,7 +81,6 @@ export type MembershipProduct = {
   tag: MembershipTypes,
 };
 
-/** Different types of ACM memberships one can have. */
 export enum MembershipTypes {
   Yearly = 'YEARLY',
   Semesterly = 'SEMESTERLY'
