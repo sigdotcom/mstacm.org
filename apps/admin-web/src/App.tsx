@@ -4,6 +4,7 @@ import { Layout, Menu, PageHeader, Spin } from "antd";
 
 import { ToolList } from "./components/pages";
 import { Events } from "./components/pages/tools";
+import { Membership } from "./components/pages/tools/Membership"
 import { config } from "./config";
 import "./static/css/App.css";
 
@@ -17,6 +18,7 @@ const MainContent: React.SFC<{}> = (): JSX.Element => {
     <Switch>
       <Route exact={true} path="/" component={ToolList} />
       <Route exact={true} path="/events" component={Events} />
+      <Route exact={true} path="/membership" component={Membership} />
     </Switch>
   );
 };
@@ -76,6 +78,11 @@ const App: React.SFC<{}> = (): JSX.Element => {
             <Menu.Item key="events">
               <Link to="/events">
                 <span className="nav-text">Events</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="membership">
+              <Link to="/membership">
+                <span className="nav-text">Membership Tool</span>
               </Link>
             </Menu.Item>
             <Menu.Item onClick={onLogoutClick} key="signOut">
