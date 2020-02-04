@@ -109,11 +109,10 @@ const Membership: React.FC<{}> = () => {
   const columns: ColumnProps<IUser>[] = [
     {
       title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      key: 'id',
       render: (record: IUser) => (
         <span>
-          {record.firstName} {record.lastName}
+          {`${record.firstName} ${record.lastName}`}
         </span>
       )
     },
@@ -124,7 +123,6 @@ const Membership: React.FC<{}> = () => {
     },
     {
       title: 'Status',
-      dataIndex: 'status',
       key: 'status',
       render: (record: any) => (
         <span>
@@ -134,7 +132,6 @@ const Membership: React.FC<{}> = () => {
     },
     {
       title: 'Action',
-      dataIndex: 'action',
       key: 'action',
       render: (record: IUser) => (
         <span>
@@ -145,7 +142,6 @@ const Membership: React.FC<{}> = () => {
       )
     }
   ];
-
   return (
     <div>
       <Table dataSource={usersBase} columns={columns} />
