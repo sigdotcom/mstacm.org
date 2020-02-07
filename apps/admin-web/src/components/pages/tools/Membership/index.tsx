@@ -3,6 +3,7 @@ import { ColumnProps } from 'antd/es/table';
 import React, { useState } from 'react';
 import { IStyles } from './IStyles';
 import { IUser } from './IUser';
+import { Modal } from "antd";
 
 const users: IUser[] = [
   {
@@ -35,8 +36,19 @@ const styles: IStyles = {
 };*/
 
 const Membership: React.FC<{}> = () => {
-  const [userState, setUserState] = useState<IUser[]>(users);
+  // setUserState
+  const [userState] = useState<IUser[]>(users);
   const usersBase: IUser[] = [...userState];
+  const [confirmLoading] = useState(false);
+  const [editMembershipVisible, setEditMembershipVisible] = useState(false);
+
+  const handleVisibility: () => void = (): void => {
+    setEditMembershipVisible(true);
+  };
+
+  const handleCancel: () => void = (): void => {
+    setEditMembershipVisible(false);
+  };
 
   const statusActive: (expirationDate: string) => string = (expirationDate: string)=> {
     const currentDate: Date = new Date();
@@ -52,7 +64,9 @@ const Membership: React.FC<{}> = () => {
       return "Invalid";
     }
   }
+
   
+<<<<<<< HEAD
   /*const dateFormat: (expirationDate: string | null) => string = (expirationDate: string | null) => {
     if(expirationDate === null) {
       return "N/A";
@@ -73,49 +87,59 @@ const Membership: React.FC<{}> = () => {
       return startYear.toString() + formattedDate.toString().slice(4,10);
     }
   }
+=======
+  // const dateFormat: (expirationDate: string | null) => string = (expirationDate: string | null) => {
+  //   if(expirationDate === null) {
+  //     return "null";
+  //   }
+  //   else {
+  //     return expirationDate.toString().slice(0, 10);
+  //   }
+  // }
+>>>>>>> working modal
   
-  const saveAction: Function = (id: string) => {
-    let dateInputs: any = document.getElementsByClassName("date");
+  // const saveAction: Function = (id: string) => {
+  //   let dateInputs: any = document.getElementsByClassName("date");
 
-    return (): void => {
-      for (let i = 0; i < usersBase.length; i++) {
-        if (usersBase[i].id === id) {
-          usersBase[i].membershipExpiration = dateInputs[i].value;
-          setUserState(usersBase);
-          break;
-        }
-      }
-    }
-  }
+  //   return (): void => {
+  //     for (let i = 0; i < usersBase.length; i++) {
+  //       if (usersBase[i].id === id) {
+  //         usersBase[i].membershipExpiration = dateInputs[i].value;
+  //         setUserState(usersBase);
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
   
-  const deleteAction: Function = (id: string) => {
-    let dateInputs: any = document.getElementsByClassName("date");
+  // const deleteAction: Function = (id: string) => {
+  //   let dateInputs: any = document.getElementsByClassName("date");
 
-    return (): void => {
-      for (let i = 0; i < usersBase.length; i++) {
-        if (usersBase[i].id == id) {
-          usersBase[i].membershipExpiration = null;
-          setUserState(usersBase);
-          dateInputs[i].value = "";
-          break;
-        }
-      }
-    }
-  }
+  //   return (): void => {
+  //     for (let i = 0; i < usersBase.length; i++) {
+  //       if (usersBase[i].id == id) {
+  //         usersBase[i].membershipExpiration = null;
+  //         setUserState(usersBase);
+  //         dateInputs[i].value = "";
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
 
-  const changeDate: Function = (id: string) => {
-    let dateInputs: any = document.getElementsByClassName("date");
+  // const changeDate: Function = (id: string) => {
+  //   let dateInputs: any = document.getElementsByClassName("date");
 
-    return (): void => {
-      for (let i = 0; i < usersBase.length; i++) {
-        if (usersBase[i].id == id) {
-          usersBase[i].membershipExpiration = dateInputs[i].value;
-          setUserState(usersBase);
-          break;
-        }
-      }
-    }
-  }
+  //   return (): void => {
+  //     for (let i = 0; i < usersBase.length; i++) {
+  //       if (usersBase[i].id == id) {
+  //         usersBase[i].membershipExpiration = dateInputs[i].value;
+  //         setUserState(usersBase);
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
 
   const columns: ColumnProps<IUser>[] = [
     {
@@ -162,6 +186,7 @@ const Membership: React.FC<{}> = () => {
       )
     },
     {
+<<<<<<< HEAD
       title: 'Edit Status',
       key: 'edit status',
       width: '15%',
@@ -171,6 +196,18 @@ const Membership: React.FC<{}> = () => {
           <button style={styles} onClick={saveAction(record.id)}>Save</button>
           <button style={styles} onClick={deleteAction(record.id)}>Delete</button>
         </span>
+=======
+      title: 'Action',
+      key: 'action',
+      // record: IUser
+      render: () => (
+        <button style={styles} onClick={handleVisibility}>Edit</button>
+        // <span>
+        //   <input onChange={changeDate(record.id)} className="date" type="date" value={dateFormat(record.membershipExpiration)} />
+        //   <button style={styles} onClick={saveAction(record.id)}>Save</button>
+        //   <button style={styles} onClick={deleteAction(record.id)}>Delete</button>
+        // </span>
+>>>>>>> working modal
       )
     },
     {
@@ -181,6 +218,13 @@ const Membership: React.FC<{}> = () => {
   return (
     <div>
       <Table dataSource={usersBase} columns={columns} />
+      <Modal
+        visible={editMembershipVisible}
+        confirmLoading={confirmLoading}
+        footer={null}
+        onCancel={handleCancel}
+      >
+      </Modal>
     </div>
   );
 };
