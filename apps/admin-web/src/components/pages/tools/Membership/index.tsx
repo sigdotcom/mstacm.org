@@ -52,16 +52,17 @@ const styles: IStyles = {
 =======
 };
 
-const ShirtPickup: AnyStyledComponent = styled.input`
-  margin-left: 20px;
-`;
-
-const DateInput: AnyStyledComponent = styled.input`
+const EditInputs: AnyStyledComponent = styled.input`
   margin-left: 20px;
 `;
 
 const LengthDropdown: AnyStyledComponent = styled.select`
   margin-left: 20px;
+`;
+
+const EditCol: AnyStyledComponent = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 >>>>>>> non-functional edit tool
 
@@ -290,23 +291,23 @@ const Membership: React.FC<{}> = () => {
         <div>
           {/* <input onChange={changeDate(userId)} className="date" type="date" value={dateFormat(record.membershipExpiration)} /> */}
           {/* <button style={styles} onClick={saveAction(userId)}>Save</button> */}
-          <div>
+          <EditCol>
             <span>Picked Up Shirt:</span>
-            <ShirtPickup type="checkbox" />
-          </div>
+            <EditInputs type="checkbox" />
+          </EditCol>
 
-          <div>
+          <EditCol>
             <span>Membership Start Date:</span>
-            <DateInput className="date" type="date" />
-          </div>
+            <EditInputs className="date" type="date" />
+          </EditCol>
 
-          <div>
+          <EditCol>
             <span>Length: </span>
             <LengthDropdown>
               <option value="Semester">Semester</option>
               <option value="Year">Year</option>
             </LengthDropdown>
-          </div>
+          </EditCol>
           <hr />
           <button style={styles} onClick={deleteAction(userId)}>Delete</button>
         </div>
