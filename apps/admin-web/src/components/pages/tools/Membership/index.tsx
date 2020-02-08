@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { IStyles } from './IStyles';
 import { IUser } from './IUser';
 import { Modal } from "antd";
+import styled, { AnyStyledComponent } from "styled-components";
 
 const users: IUser[] = [
   {
@@ -29,20 +30,49 @@ const users: IUser[] = [
   },
 ];
 
+// const lengthOptions = [
+//   {
+//     key: 'Semester',
+//     text: 'Semester',
+//     value: 'Semester'
+//   },
+//   {
+//     key: 'Year',
+//     text: 'Year',
+//     value: 'Year'
+//   }
+// ];
+
 const styles: IStyles = {
   display: 'inline-block',
   cursor: 'pointer',
   marginLeft: '9px'
+<<<<<<< HEAD
 };*/
+=======
+};
+
+const ShirtPickup: AnyStyledComponent = styled.input`
+  margin-left: 20px;
+`;
+
+const DateInput: AnyStyledComponent = styled.input`
+  margin-left: 20px;
+`;
+
+const LengthDropdown: AnyStyledComponent = styled.select`
+  margin-left: 20px;
+`;
+>>>>>>> non-functional edit tool
 
 const Membership: React.FC<{}> = () => {
-  // setUserState
-  const [userState] = useState<IUser[]>(users);
+  const [userState, setUserState] = useState<IUser[]>(users);
   const usersBase: IUser[] = [...userState];
   const [confirmLoading] = useState(false);
   const [editMembershipVisible, setEditMembershipVisible] = useState(false);
+  const [userId, setUserId] = useState(0);
 
-  const handleVisibility: () => void = (): void => {
+  const handleVisibility: () => any = (): any => {
     setEditMembershipVisible(true);
   };
 
@@ -63,6 +93,26 @@ const Membership: React.FC<{}> = () => {
     else {
       return "Invalid";
     }
+  }
+
+  const name: Function = (id: string) => {
+    for (let i = 0; i < usersBase.length; i++) {
+      if (usersBase[i].id === id) {
+        return usersBase[i].firstName + " " + usersBase[i].lastName;
+      }
+    }
+
+    return "";
+  }
+
+  const email: Function = (id: string) => {
+    for (let i = 0; i < usersBase.length; i++) {
+      if (usersBase[i].id === id) {
+        return usersBase[i].email;
+      }
+    }
+
+    return "";
   }
 
   
@@ -112,20 +162,18 @@ const Membership: React.FC<{}> = () => {
   //   }
   // }
   
-  // const deleteAction: Function = (id: string) => {
-  //   let dateInputs: any = document.getElementsByClassName("date");
-
-  //   return (): void => {
-  //     for (let i = 0; i < usersBase.length; i++) {
-  //       if (usersBase[i].id == id) {
-  //         usersBase[i].membershipExpiration = null;
-  //         setUserState(usersBase);
-  //         dateInputs[i].value = "";
-  //         break;
-  //       }
-  //     }
-  //   }
-  // }
+  const deleteAction: Function = (id: string) => {
+    return (): void => {
+      for (let i = 0; i < usersBase.length; i++) {
+        if (usersBase[i].id == id) {
+          usersBase.splice(i, 1);
+          setUserState(usersBase);
+          handleCancel();
+          break;
+        }
+      }
+    }
+  }
 
   // const changeDate: Function = (id: string) => {
   //   let dateInputs: any = document.getElementsByClassName("date");
@@ -199,6 +247,7 @@ const Membership: React.FC<{}> = () => {
 =======
       title: 'Action',
       key: 'action',
+<<<<<<< HEAD
       // record: IUser
       render: () => (
         <button style={styles} onClick={handleVisibility}>Edit</button>
@@ -208,6 +257,13 @@ const Membership: React.FC<{}> = () => {
         //   <button style={styles} onClick={deleteAction(record.id)}>Delete</button>
         // </span>
 >>>>>>> working modal
+=======
+      render: (record: any) => (
+        <button style={styles} onClick={() => {
+          handleVisibility();
+          setUserId(record.id);
+        }}>Edit</button>
+>>>>>>> non-functional edit tool
       )
     },
     {
@@ -224,6 +280,36 @@ const Membership: React.FC<{}> = () => {
         footer={null}
         onCancel={handleCancel}
       >
+        <div>
+          <strong>{name(userId)}</strong>
+        </div>
+        <div>
+          {email(userId)}
+        </div>
+        <hr />
+        <div>
+          {/* <input onChange={changeDate(userId)} className="date" type="date" value={dateFormat(record.membershipExpiration)} /> */}
+          {/* <button style={styles} onClick={saveAction(userId)}>Save</button> */}
+          <div>
+            <span>Picked Up Shirt:</span>
+            <ShirtPickup type="checkbox" />
+          </div>
+
+          <div>
+            <span>Membership Start Date:</span>
+            <DateInput className="date" type="date" />
+          </div>
+
+          <div>
+            <span>Length: </span>
+            <LengthDropdown>
+              <option value="Semester">Semester</option>
+              <option value="Year">Year</option>
+            </LengthDropdown>
+          </div>
+          <hr />
+          <button style={styles} onClick={deleteAction(userId)}>Delete</button>
+        </div>
       </Modal>
     </div>
   );
