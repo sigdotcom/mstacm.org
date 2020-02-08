@@ -30,19 +30,6 @@ const users: IUser[] = [
   },
 ];
 
-// const lengthOptions = [
-//   {
-//     key: 'Semester',
-//     text: 'Semester',
-//     value: 'Semester'
-//   },
-//   {
-//     key: 'Year',
-//     text: 'Year',
-//     value: 'Year'
-//   }
-// ];
-
 const styles: IStyles = {
   display: 'inline-block',
   cursor: 'pointer',
@@ -66,6 +53,14 @@ const EditCol: AnyStyledComponent = styled.div`
 `;
 >>>>>>> non-functional edit tool
 
+const DeleteYes: AnyStyledComponent = styled.button`
+  margin-right: 10px;
+`;
+
+const DeleteConfirmation: AnyStyledComponent = styled.div`
+  margin: 10px;
+`;
+
 const Membership: React.FC<{}> = () => {
   const [userState, setUserState] = useState<IUser[]>(users);
   const usersBase: IUser[] = [...userState];
@@ -73,12 +68,23 @@ const Membership: React.FC<{}> = () => {
   const [editMembershipVisible, setEditMembershipVisible] = useState(false);
   const [userId, setUserId] = useState(0);
 
+  const [editMembershipVisibleDelete, setEditMembershipVisibleDelete] = useState(false);
+  const [confirmLoadingDelete] = useState(false);
+
   const handleVisibility: () => any = (): any => {
     setEditMembershipVisible(true);
   };
 
   const handleCancel: () => void = (): void => {
     setEditMembershipVisible(false);
+  };
+
+  const handleVisibilityDelete: () => any = (): any => {
+    setEditMembershipVisibleDelete(true);
+  };
+
+  const handleCancelDelete: () => void = (): void => {
+    setEditMembershipVisibleDelete(false);
   };
 
   const statusActive: (expirationDate: string) => string = (expirationDate: string)=> {
@@ -115,7 +121,6 @@ const Membership: React.FC<{}> = () => {
 
     return "";
   }
-
   
 <<<<<<< HEAD
   /*const dateFormat: (expirationDate: string | null) => string = (expirationDate: string | null) => {
@@ -163,16 +168,32 @@ const Membership: React.FC<{}> = () => {
   //   }
   // }
   
-  const deleteAction: Function = (id: string) => {
+  const deleteUser: Function = (id: string) => {
     return (): void => {
       for (let i = 0; i < usersBase.length; i++) {
         if (usersBase[i].id == id) {
+          handleCancel();
+          handleVisibilityDelete();
           usersBase.splice(i, 1);
           setUserState(usersBase);
-          handleCancel();
+          handleCancelDelete();
           break;
         }
       }
+    }
+  }
+
+  const handleNo: Function = () => {
+    return (): void => {
+      handleCancelDelete();
+      handleVisibility();
+    }
+  }
+
+  const deleteAction: Function = () => {
+    return (): void => {
+      handleCancel();
+      handleVisibilityDelete();
     }
   }
 
@@ -309,8 +330,22 @@ const Membership: React.FC<{}> = () => {
             </LengthDropdown>
           </EditCol>
           <hr />
-          <button style={styles} onClick={deleteAction(userId)}>Delete</button>
+          <button style={styles} onClick={deleteAction()}>Delete</button>
         </div>
+      </Modal>
+      <Modal
+        visible={editMembershipVisibleDelete}
+        confirmLoading={confirmLoadingDelete}
+        footer={null}
+        onCancel={handleCancelDelete}
+      >
+        <div>
+          Are you sure you want to delete this user?
+        </div>
+        <DeleteConfirmation>
+          <DeleteYes onClick={deleteUser(userId)}>Yes</DeleteYes>
+          <button onClick={handleNo()}>No</button>
+        </DeleteConfirmation>
       </Modal>
     </div>
   );
