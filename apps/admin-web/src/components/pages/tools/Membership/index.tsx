@@ -12,14 +12,14 @@ const users: IUser[] = [
     "firstName": "MST",
     "lastName": "ACM",
     "email": "acm@mst.edu",
-    "membershipExpiration": null
+    "membershipExpiration": 'null'
   },
   {
     "id": "1bb766b6-d237-f329-a70a-625deb254da0",
     "firstName": "Kevin",
     "lastName": "Schoonover",
     "email": "ksyh3@umsystem.edu",
-    "membershipExpiration": null
+    "membershipExpiration": 'null'
   },
   {
     "id": "4feafds35-7101-460e-aee8-5a0d58023abc",
@@ -40,10 +40,6 @@ const styles: IStyles = {
 };
 
 const EditInputs: AnyStyledComponent = styled.input`
-  margin-left: 20px;
-`;
-
-const LengthDropdown: AnyStyledComponent = styled.select`
   margin-left: 20px;
 `;
 
@@ -123,6 +119,7 @@ const Membership: React.FC<{}> = () => {
   }
   
 <<<<<<< HEAD
+<<<<<<< HEAD
   /*const dateFormat: (expirationDate: string | null) => string = (expirationDate: string | null) => {
     if(expirationDate === null) {
       return "N/A";
@@ -153,6 +150,16 @@ const Membership: React.FC<{}> = () => {
   //   }
   // }
 >>>>>>> working modal
+=======
+  const dateFormat: () => string | null = () => {
+    for (let i = 0; i < usersBase.length; i++) {
+      if (usersBase[i].id == userId.toString()) {
+        return usersBase[i].membershipExpiration.toString().slice(0, 10);
+      }
+    }
+    return "";
+  }
+>>>>>>> membership expiration date works and changes state value
   
   // const saveAction: Function = (id: string) => {
   //   let dateInputs: any = document.getElementsByClassName("date");
@@ -197,19 +204,18 @@ const Membership: React.FC<{}> = () => {
     }
   }
 
-  // const changeDate: Function = (id: string) => {
-  //   let dateInputs: any = document.getElementsByClassName("date");
-
-  //   return (): void => {
-  //     for (let i = 0; i < usersBase.length; i++) {
-  //       if (usersBase[i].id == id) {
-  //         usersBase[i].membershipExpiration = dateInputs[i].value;
-  //         setUserState(usersBase);
-  //         break;
-  //       }
-  //     }
-  //   }
-  // }
+  const changeDate: Function = () => {
+    let dateInputs: any = document.getElementsByClassName("date");
+    return (): void => {
+      for (let i = 0; i < usersBase.length; i++) {
+        if (usersBase[i].id == userId.toString()) {
+          usersBase[i].membershipExpiration = dateInputs[0].value;
+          setUserState(usersBase);
+          break;
+        }
+      }
+    }
+  }
 
   const columns: ColumnProps<IUser>[] = [
     {
@@ -318,17 +324,10 @@ const Membership: React.FC<{}> = () => {
           </EditCol>
 
           <EditCol>
-            <span>Membership Start Date:</span>
-            <EditInputs className="date" type="date" />
+            <span>Membership Expiration Date:</span>
+            <EditInputs className="date" type="date" value={dateFormat()} onChange={changeDate()} />
           </EditCol>
 
-          <EditCol>
-            <span>Length: </span>
-            <LengthDropdown>
-              <option value="Semester">Semester</option>
-              <option value="Year">Year</option>
-            </LengthDropdown>
-          </EditCol>
           <hr />
           <button style={styles} onClick={deleteAction()}>Delete</button>
         </div>
