@@ -3,5 +3,5 @@ export interface IUser {
     firstName: string | any;
     lastName: string;
     email: string;
-    membershipExpiration: string | null;
+    membershipExpiration: string;
 }
