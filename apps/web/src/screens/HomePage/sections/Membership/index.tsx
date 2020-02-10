@@ -122,7 +122,9 @@ const Membership: React.FC = (): JSX.Element => {
 
   const setYearly: voidFunction = (): void => {
     if (!isAuthenticated) {
-      loginWithRedirect({});
+      loginWithRedirect({
+	redirect_uri: `${window.location.origin}/#membership`
+      });
     } else {
       setTag(MembershipTypes.Yearly);
     }
@@ -130,7 +132,9 @@ const Membership: React.FC = (): JSX.Element => {
 
   const setSemesterly: voidFunction = (): void => {
     if (!isAuthenticated) {
-      loginWithRedirect({});
+      loginWithRedirect({
+	redirect_uri: `${window.location.origin}/#membership`
+      });
     } else {
       setTag(MembershipTypes.Semesterly);
     }
@@ -139,7 +143,7 @@ const Membership: React.FC = (): JSX.Element => {
   return (
     <Element name="membership">
       <MembershipWrapper>
-        <Line />
+        <Line id="membership" />
         <Modal
           isOpen={tag !== undefined}
           onRequestClose={removeTag}
