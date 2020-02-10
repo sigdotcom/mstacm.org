@@ -32,7 +32,7 @@ const styles: IStyles = {
   display: 'inline-block',
   cursor: 'pointer',
   marginLeft: '9px'
-};
+};*/
 
 const Membership: React.FC<{}> = () => {
   const [userState, setUserState] = useState<IUser[]>(users);
@@ -53,7 +53,7 @@ const Membership: React.FC<{}> = () => {
     }
   }
   
-  const dateFormat: (expirationDate: string | null) => string = (expirationDate: string | null) => {
+  /*const dateFormat: (expirationDate: string | null) => string = (expirationDate: string | null) => {
     if(expirationDate === null) {
       return "N/A";
     }
@@ -251,18 +251,6 @@ const Membership: React.FC<{}> = () => {
       return expirationDate.toString().slice(0, 10);
     }
   }
-
-  const decrementYear: (formattedDate: string | null) => string = (formattedDate: string | null) => {
-    if(formattedDate === null) {
-      return "null";
-    }
-    else {
-      let startYear: any = parseInt(formattedDate.toString().slice(0,4)) - 1;
-      if (isNaN(startYear))
-        return "N/A";
-      return startYear.toString() + formattedDate.toString().slice(4,10);
-    }
-  }
   
   /*const saveAction: Function = (id: string) => {
     let dateInputs: any = document.getElementsByClassName("date");
@@ -393,8 +381,16 @@ const Membership: React.FC<{}> = () => {
       key: 'activation',
       render: (record: any) => (
         <span>
-          {decrementYear(dateFormat(record.membershipExpiration))}
-          {/*Would there be something for this in the backend instead?*/}
+          
+        </span>
+      )
+    },
+    {
+      title: 'Status',
+      key: 'status',
+      render: (record: any) => (
+        <span>
+          {statusActive(record.membershipExpiration)}
         </span>
       )
     },
