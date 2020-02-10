@@ -217,6 +217,7 @@ const Membership: React.FC<{}> = () => {
     }
   }
 
+<<<<<<< HEAD
   const columns: ColumnProps<IUser>[] = [
     {
       title: 'Name',
@@ -432,6 +433,9 @@ const Membership: React.FC<{}> = () => {
   }
   
   const deleteAction: Function = (id: string) => {
+=======
+  const changeDate: Function = () => {
+>>>>>>> Removed unnecessary comments
     let dateInputs: any = document.getElementsByClassName("date");
 
     return (): void => {
@@ -585,7 +589,53 @@ const Membership: React.FC<{}> = () => {
 
   return(
     <div>
+<<<<<<< HEAD
        <Table columns={columns} dataSource={users} />;
+=======
+      <Table dataSource={usersBase} columns={columns} />
+      <Modal
+        visible={editMembershipVisible}
+        confirmLoading={confirmLoading}
+        footer={null}
+        onCancel={handleCancel}
+      >
+        <div>
+          <strong>{name(userId)}</strong>
+        </div>
+        <div>
+          {email(userId)}
+        </div>
+        <hr />
+        <div>
+          <EditCol>
+            <span>Picked Up Shirt:</span>
+            <EditInputs type="checkbox" />
+          </EditCol>
+
+          <EditCol>
+            <span>Membership Expiration Date:</span>
+            <EditInputs className="date" type="date" value={dateFormat()} onChange={changeDate()} />
+          </EditCol>
+
+          <hr />
+          <button style={styles} onClick={deleteAction()}>Delete</button>
+        </div>
+      </Modal>
+      <Modal
+        visible={editMembershipVisibleDelete}
+        confirmLoading={confirmLoadingDelete}
+        footer={null}
+        onCancel={handleCancelDelete}
+      >
+        <div>
+          Are you sure you want to delete this user?
+        </div>
+        <DeleteConfirmation>
+          <DeleteYes onClick={deleteUser(userId)}>Yes</DeleteYes>
+          <button onClick={handleNo()}>No</button>
+        </DeleteConfirmation>
+      </Modal>
+>>>>>>> Removed unnecessary comments
     </div>
   );
 }
