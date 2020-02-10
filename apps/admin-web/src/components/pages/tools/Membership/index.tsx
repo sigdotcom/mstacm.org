@@ -125,8 +125,13 @@ const Membership: React.FC<{}> = () => {
   
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /*const dateFormat: (expirationDate: string | null) => string = (expirationDate: string | null) => {
     if(expirationDate === null) {
+=======
+  const formatDateString: (expirationDate: string | null) => string = (expirationDate: string | null) => {
+    if(expirationDate == "null" || expirationDate == null) {
+>>>>>>> Changed default search bar message
       return "N/A";
     }
     else {
@@ -476,7 +481,7 @@ const Membership: React.FC<{}> = () => {
           ref={node => {
             setSearchInput(node);
           }}
-          placeholder={`Search ${dataIndex}`}
+          placeholder={`Search ${dataIndex == "fullName" ? "name" : dataIndex}`}
           value={selectedKeys[0]}
           onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
