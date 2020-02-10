@@ -67,6 +67,11 @@ const Membership: React.FC<{}> = () => {
   const [editMembershipVisibleDelete, setEditMembershipVisibleDelete] = useState(false);
   const [confirmLoadingDelete] = useState(false);
 
+  const createNameDataIndex = () => {
+    for (let i = 0; i < usersBase.length; i++)
+      usersBase[i].fullName = usersBase[i].firstName + " " + usersBase[i].lastName;
+  }
+
   const handleVisibility: () => any = (): any => {
     setEditMembershipVisible(true);
   };
@@ -532,7 +537,7 @@ const Membership: React.FC<{}> = () => {
     {
       title: 'Name',
       key: 'name',
-      ...getColumnSearchProps('name'),
+      ...getColumnSearchProps('fullName'),
       render: (record: IUser) => (
         <span>
           {`${record.firstName} ${record.lastName}`}
@@ -590,8 +595,13 @@ const Membership: React.FC<{}> = () => {
   return(
     <div>
 <<<<<<< HEAD
+<<<<<<< HEAD
        <Table columns={columns} dataSource={users} />;
 =======
+=======
+      {createNameDataIndex()}
+
+>>>>>>> Allowed for full name search
       <Table dataSource={usersBase} columns={columns} />
       <Modal
         visible={editMembershipVisible}
