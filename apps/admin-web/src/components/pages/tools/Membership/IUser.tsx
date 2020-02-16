@@ -4,5 +4,7 @@ export interface IUser {
     lastName: string;
     fullName?: string;
     email: string;
+    isActive?: boolean; //eventually, not optional
     membershipExpiration: string;
+    shirtReceived?: boolean; //eventually, not optional
 }
