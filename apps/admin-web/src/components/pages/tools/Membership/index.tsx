@@ -5,6 +5,10 @@ import { IStyles } from './IStyles';
 import { IUser } from './IUser';
 import { Modal } from "antd";
 import styled, { AnyStyledComponent } from "styled-components";
+import { useUpdateExpirationDateMutation,
+         useUpdateShirtReceivedMutation,
+         /*useResetShirtReceivedMutation,
+useDeleteMemberMutation*/ } from "../../../../generated/graphql";
 
 const users: IUser[] = [
   {
@@ -12,21 +16,24 @@ const users: IUser[] = [
     "firstName": "MST",
     "lastName": "ACM",
     "email": "acm@mst.edu",
-    "membershipExpiration": 'null'
+    "membershipExpiration": 'null',
+    //"shirtReceived": 'true',
   },
   {
     "id": "1bb766b6-d237-f329-a70a-625deb254da0",
     "firstName": "Kevin",
     "lastName": "Schoonover",
     "email": "ksyh3@umsystem.edu",
-    "membershipExpiration": 'null'
+    "membershipExpiration": 'null',
+    //"shirtReceived": 'false',
   },
   {
     "id": "4feafds35-7101-460e-aee8-5a0d58023abc",
     "firstName": "Kevin",
     "lastName": "Schoonover",
     "email": "schoonoverkevinm@gmail.com",
-    "membershipExpiration": "2020-03-04T07:01:09.118Z"
+    "membershipExpiration": "2020-03-04T07:01:09.118Z",
+    //"shirtReceived": 'true',
   },
 ];
 
@@ -62,10 +69,20 @@ const Membership: React.FC<{}> = () => {
   const usersBase: IUser[] = [...userState];
   const [confirmLoading] = useState(false);
   const [editMembershipVisible, setEditMembershipVisible] = useState(false);
-  const [userId, setUserId] = useState(0);
+  const [userId, setUserId] = useState("");
 
   const [editMembershipVisibleDelete, setEditMembershipVisibleDelete] = useState(false);
   const [confirmLoadingDelete] = useState(false);
+
+  const [
+    updateExpirationDate,
+    { loading: expirationLoading, error: expirationError, data: expirationData }
+  ]: any = useUpdateExpirationDateMutation();
+
+  const [
+    updateShirtReceived,
+    { loading: updateLoading, error: updateError, data: updateData }
+  ]: any = useUpdateShirtReceivedMutation();
 
   const createNameDataIndex = () => {
     for (let i = 0; i < usersBase.length; i++)
@@ -450,8 +467,14 @@ const Membership: React.FC<{}> = () => {
 
     return (): void => {
       for (let i = 0; i < usersBase.length; i++) {
+<<<<<<< HEAD
         if (usersBase[i].id == id) {
           usersBase[i].membershipExpiration = null;
+=======
+        if (usersBase[i].id == userId.toString()) {
+          usersBase[i].membershipExpiration = dateInputs[0].value;
+          updateExpirationDate(dateInputs[0].value, usersBase[i].id);
+>>>>>>> Added mutations/fixed various backend issues
           setUserState(usersBase);
           dateInputs[i].value = "";
           break;
@@ -460,6 +483,7 @@ const Membership: React.FC<{}> = () => {
     }
   }
 
+<<<<<<< HEAD
   const changeDate: Function = (id: string) => {
     let dateInputs: any = document.getElementsByClassName("date");
 
@@ -472,6 +496,22 @@ const Membership: React.FC<{}> = () => {
         }
       }
     }
+=======
+  /*const changeShirtReceived: any = (newShirtReceived: boolean) => {
+    updateShirtReceived({
+      variables: {received: newShirtReceived, id: userId}
+    })
+    for (let i = 0; i < usersBase.length; i++) {
+      if (usersBase[i].id == userId.toString()) {
+        usersBase[i].shirtReceived = newShirtReceived;
+        break;
+      }
+    }
+  }
+
+  const displayShirtReceived: any = (shirtReceived: boolean) => {
+    return (shirtReceived ? "Received" : "Not Received");
+>>>>>>> Added mutations/fixed various backend issues
   }*/
 
   const getColumnSearchProps = (dataIndex: string) => ({
@@ -585,15 +625,29 @@ const Membership: React.FC<{}> = () => {
     {
       title: 'Edit',
       key: 'edit',
+<<<<<<< HEAD
       render: (/*record: IUser*/) => (
         <span>
           <button style={styles}>Edit</button>
         </span>
+=======
+      render: (record: any) => (
+        <button style={styles} onClick={() => {
+          console.log(record.id)
+          handleVisibility();
+          setUserId(record.id);
+        }}>Edit</button>
+>>>>>>> Added mutations/fixed various backend issues
       )
     },
     {
       title: 'ACM Shirt',
       key: 'acm shirt',
+      /*render: (record: any) => {
+        <span>
+          {displayShirtReceived(record.shirtReceived)}
+        </span>
+      }*/
     }
   ];
 
@@ -624,7 +678,7 @@ const Membership: React.FC<{}> = () => {
         <div>
           <EditCol>
             <span>Picked Up Shirt:</span>
-            <EditInputs type="checkbox" />
+            <EditInputs type="checkbox"/>
           </EditCol>
 
           <EditCol>

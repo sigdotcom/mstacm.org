@@ -29,6 +29,8 @@ export class UserResolver extends ResourceResolver<resourceType>(
   UserDeletePayload,
   getRepository(resource)
 ) {
+
+  public repository: any = getRepository(User);
   // Workaround waiting for
   // https://github.com/19majkel94/type-graphql/issues/351
   @Authorized()
@@ -102,6 +104,43 @@ export class UserResolver extends ResourceResolver<resourceType>(
     const curPermissions: Set<Permission> = new Set(await user.permissions);
     user.permissions = [...new Set([...permissions, ...curPermissions])];
     return user.save();
+  }
+
+  @Authorized("update:user_expiration_date")
+  @Mutation((_: void) => User)
+  public async updateExpirationDate(
+    @Arg("userId") userId: string,
+    @Arg("newExpirationDate") newExpirationDate: Date,
+  ): Promise<User> {
+    const user: User = await User.findOneOrFail({ id: userId });
+    user.membershipExpiration = newExpirationDate;
+    return user.save();
+  }
+
+  @Authorized("update:user_shirt_received")
+  @Mutation((_: void) => User)
+  public async updateShirtReceived(
+    @Arg("userId") userId: string,
+    @Arg("updatedShirtStatus") updatedShirtStatus: boolean,
+  ): Promise<User> {
+    const user: User = await User.findOneOrFail({ id: userId });
+    user.shirtReceived = updatedShirtStatus;
+    return user.save();
+  }
+
+  @Authorized("reset:user_shirt_received")
+  @Mutation((_: void) => [User], { nullable: true })
+  public async resetShirtReceived(
+  ): Promise<User[]> {
+    const users: User[] = await User.find();
+
+    for(let i = 0; i < users.length; i++)
+    {
+      users[i].shirtReceived = false;
+      await users[i].save();
+    }
+
+    return users;
   }
 
   @Query((_: void) => resource, { nullable: true })
