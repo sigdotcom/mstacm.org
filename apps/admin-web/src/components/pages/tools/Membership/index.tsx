@@ -1,23 +1,29 @@
+<<<<<<< HEAD
 /*import { Table } from 'antd';
 import { ColumnProps } from 'antd/es/table';
 import React, { useState } from 'react';
+=======
+import { Table, Input, Button, Icon, Modal } from 'antd';
+import React, { useState, useEffect } from 'react';
+>>>>>>> Made some progress integrating backend
 import { IStyles } from './IStyles';
 import { IUser } from './IUser';
 import { Modal } from "antd";
 import styled, { AnyStyledComponent } from "styled-components";
 import { useUpdateExpirationDateMutation,
+         useMembersQuery,
          useUpdateShirtReceivedMutation,
          /*useResetShirtReceivedMutation,
 useDeleteMemberMutation*/ } from "../../../../generated/graphql";
 
-const users: IUser[] = [
+/*const users: IUser[] = [
   {
     "id": "8f6ea01b-63b1-41b0-feaf-6603cf59d456",
     "firstName": "MST",
     "lastName": "ACM",
     "email": "acm@mst.edu",
     "membershipExpiration": 'null',
-    //"shirtReceived": 'true',
+    "shirtReceived": true,
   },
   {
     "id": "1bb766b6-d237-f329-a70a-625deb254da0",
@@ -25,7 +31,7 @@ const users: IUser[] = [
     "lastName": "Schoonover",
     "email": "ksyh3@umsystem.edu",
     "membershipExpiration": 'null',
-    //"shirtReceived": 'false',
+    "shirtReceived": false,
   },
   {
     "id": "4feafds35-7101-460e-aee8-5a0d58023abc",
@@ -33,9 +39,9 @@ const users: IUser[] = [
     "lastName": "Schoonover",
     "email": "schoonoverkevinm@gmail.com",
     "membershipExpiration": "2020-03-04T07:01:09.118Z",
-    //"shirtReceived": 'true',
+    "shirtReceived": true,
   },
-];
+];*/
 
 const styles: IStyles = {
   display: 'inline-block',
@@ -65,8 +71,18 @@ const DeleteConfirmation: AnyStyledComponent = styled.div`
 `;
 
 const Membership: React.FC<{}> = () => {
+<<<<<<< HEAD
   const [userState, setUserState] = useState<IUser[]>(users);
   const usersBase: IUser[] = [...userState];
+=======
+  const { loading: memberLoading, error: memberError, data: memberData }: any = useMembersQuery();
+
+  const [searchText, setSearchText] = useState<string>('');
+  const [searchedColumn, setSearchedColumn] = useState<string>('');
+  const [searchInput, setSearchInput] = useState<any>('');
+
+  const [userState, setUserState] = useState<IUser[]>([]);
+>>>>>>> Made some progress integrating backend
   const [confirmLoading] = useState(false);
   const [editMembershipVisible, setEditMembershipVisible] = useState(false);
   const [userId, setUserId] = useState("");
@@ -74,14 +90,31 @@ const Membership: React.FC<{}> = () => {
   const [editMembershipVisibleDelete, setEditMembershipVisibleDelete] = useState(false);
   const [confirmLoadingDelete] = useState(false);
 
+  let users: IUser[] = [];
+
+  useEffect(() => {
+    if (memberLoading) {
+      //make an antd message about loading
+    }
+    else if (memberError) {
+      console.log("Error loading members"); //make an antd message about error
+    }
+    else if (memberData) {
+      users = memberData.users;
+      setUserState(users);
+    }
+  }, [memberData]);
+
+  const usersBase: IUser[] = [...userState];
+
   const [
     updateExpirationDate,
-    { loading: expirationLoading, error: expirationError, data: expirationData }
+    /*{ loading: expirationLoading, error: expirationError, data: expirationData }*/
   ]: any = useUpdateExpirationDateMutation();
 
   const [
     updateShirtReceived,
-    { loading: updateLoading, error: updateError, data: updateData }
+    /*{ loading: updateLoading, error: updateError, data: updateData }*/
   ]: any = useUpdateShirtReceivedMutation();
 
   const createNameDataIndex = () => {
@@ -181,6 +214,8 @@ const Membership: React.FC<{}> = () => {
   const dateFormat: () => string | null = () => {
     for (let i = 0; i < usersBase.length; i++) {
       if (usersBase[i].id == userId.toString()) {
+        if(usersBase[i].membershipExpiration == null)
+          break;
         return usersBase[i].membershipExpiration.toString().slice(0, 10);
       }
     }
@@ -462,7 +497,11 @@ const Membership: React.FC<{}> = () => {
   const deleteAction: Function = (id: string) => {
 =======
   const changeDate: Function = () => {
+<<<<<<< HEAD
 >>>>>>> Removed unnecessary comments
+=======
+    console.log("change date called");
+>>>>>>> Made some progress integrating backend
     let dateInputs: any = document.getElementsByClassName("date");
 
     return (): void => {
@@ -484,6 +523,7 @@ const Membership: React.FC<{}> = () => {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const changeDate: Function = (id: string) => {
     let dateInputs: any = document.getElementsByClassName("date");
 
@@ -501,18 +541,32 @@ const Membership: React.FC<{}> = () => {
     updateShirtReceived({
       variables: {received: newShirtReceived, id: userId}
     })
+=======
+  const changeShirtReceived: any = () => {
+    console.log("change shirt received called");
+>>>>>>> Made some progress integrating backend
     for (let i = 0; i < usersBase.length; i++) {
       if (usersBase[i].id == userId.toString()) {
-        usersBase[i].shirtReceived = newShirtReceived;
+        updateShirtReceived(usersBase[i].shirtReceived, usersBase[i].id)
+        usersBase[i].shirtReceived = !usersBase[i].shirtReceived;
         break;
       }
     }
   }
 
+<<<<<<< HEAD
   const displayShirtReceived: any = (shirtReceived: boolean) => {
     return (shirtReceived ? "Received" : "Not Received");
 >>>>>>> Added mutations/fixed various backend issues
   }*/
+=======
+  const displayShirtReceived: Function = (shirtReceived: boolean) => {
+    if(shirtReceived)
+      return "Received";
+    else
+      return "Not Received";
+  }
+>>>>>>> Made some progress integrating backend
 
   const getColumnSearchProps = (dataIndex: string) => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters}: any) => (
@@ -633,7 +687,6 @@ const Membership: React.FC<{}> = () => {
 =======
       render: (record: any) => (
         <button style={styles} onClick={() => {
-          console.log(record.id)
           handleVisibility();
           setUserId(record.id);
         }}>Edit</button>
@@ -643,11 +696,11 @@ const Membership: React.FC<{}> = () => {
     {
       title: 'ACM Shirt',
       key: 'acm shirt',
-      /*render: (record: any) => {
+      render: (record: any) => (
         <span>
           {displayShirtReceived(record.shirtReceived)}
         </span>
-      }*/
+      )
     }
   ];
 
@@ -678,7 +731,7 @@ const Membership: React.FC<{}> = () => {
         <div>
           <EditCol>
             <span>Picked Up Shirt:</span>
-            <EditInputs type="checkbox"/>
+            <EditInputs type="checkbox" onClick={changeShirtReceived()}/>
           </EditCol>
 
           <EditCol>
