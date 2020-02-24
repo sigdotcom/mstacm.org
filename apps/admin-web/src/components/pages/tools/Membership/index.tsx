@@ -5,15 +5,21 @@ import React, { useState } from 'react';
 =======
 import { Table, Input, Button, Icon, Modal } from 'antd';
 import React, { useState, useEffect } from 'react';
+<<<<<<< HEAD
 >>>>>>> Made some progress integrating backend
 import { IStyles } from './IStyles';
 import { IUser } from './IUser';
 import { Modal } from "antd";
+=======
+import Highlighter from 'react-highlight-words';
+>>>>>>> Added confirm
 import styled, { AnyStyledComponent } from "styled-components";
+import { IStyles } from './IStyles';
+import { IUser } from './IUser';
 import { useUpdateExpirationDateMutation,
          useMembersQuery,
          useUpdateShirtReceivedMutation,
-         /*useResetShirtReceivedMutation,*/
+         /* useResetShirtReceivedMutation, */
          useDeleteMemberMutation } from "../../../../generated/graphql";
 
 const styles: IStyles = {
@@ -34,6 +40,10 @@ const EditCol: AnyStyledComponent = styled.div`
   margin-bottom: 10px;
 `;
 >>>>>>> non-functional edit tool
+
+const ConfirmButton: AnyStyledComponent = styled.button`
+  margin-left: 20px;
+`;
 
 const DeleteYes: AnyStyledComponent = styled.button`
   margin-right: 10px;
@@ -67,10 +77,10 @@ const Membership: React.FC<{}> = () => {
 
   useEffect(() => {
     if (memberLoading) {
-      //make an antd message about loading
+      // make an antd message about loading
     }
     else if (memberError) {
-      console.log("Error loading members"); //make an antd message about error
+      console.log("Error loading members"); // make an antd message about error
     }
     else if (memberData) {
       users = memberData.users;
@@ -82,12 +92,12 @@ const Membership: React.FC<{}> = () => {
 
   const [
     updateExpirationDate,
-    /*{ loading: expirationLoading, error: expirationError, data: expirationData }*/
+    /* { loading: expirationLoading, error: expirationError, data: expirationData } */
   ]: any = useUpdateExpirationDateMutation();
 
   const [
     updateShirtReceived,
-    /*{ loading: updateShirtLoading, error: updateShirtError, data: updateShirtData }*/
+    /* { loading: updateLoading, error: updateError, data: updateData } */
   ]: any = useUpdateShirtReceivedMutation();
 
   const [
@@ -97,7 +107,7 @@ const Membership: React.FC<{}> = () => {
 
   const createNameDataIndex = () => {
     for (let i = 0; i < usersBase.length; i++)
-      usersBase[i].fullName = usersBase[i].firstName + " " + usersBase[i].lastName;
+      usersBase[i].fullName = `${usersBase[i].firstName  } ${  usersBase[i].lastName}`;
   }
 
   const handleVisibility: () => any = (): any => {
@@ -123,18 +133,18 @@ const Membership: React.FC<{}> = () => {
     if(expirationDate === null) {
       return "Not Member";
     }
-    else if(currentDate <= expDate) {
+    if(currentDate <= expDate) {
       return "Active";
     }
-    else {
+    
       return "Invalid";
-    }
+    
   }
 
   const name: Function = (id: string) => {
     for (let i = 0; i < usersBase.length; i++) {
       if (usersBase[i].id === id) {
-        return usersBase[i].firstName + " " + usersBase[i].lastName;
+        return `${usersBase[i].firstName  } ${  usersBase[i].lastName}`;
       }
     }
 
@@ -162,9 +172,9 @@ const Membership: React.FC<{}> = () => {
 >>>>>>> Changed default search bar message
       return "N/A";
     }
-    else {
+    
       return expirationDate.toString().slice(0, 10);
-    }
+    
   }
 
   const decrementYear: (formattedDate: string | null) => string = (formattedDate: string | null) => {
@@ -477,12 +487,16 @@ const Membership: React.FC<{}> = () => {
 =======
   const changeDate: Function = () => {
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Removed unnecessary comments
 =======
     console.log("change date called");
 >>>>>>> Made some progress integrating backend
     let dateInputs: any = document.getElementsByClassName("date");
 
+=======
+    const dateInputs: any = document.getElementsByClassName("date");
+>>>>>>> Added confirm
     return (): void => {
       for (let i = 0; i < usersBase.length; i++) {
 <<<<<<< HEAD
@@ -491,6 +505,27 @@ const Membership: React.FC<{}> = () => {
 =======
         if (usersBase[i].id == userId.toString()) {
           usersBase[i].membershipExpiration = dateInputs[0].value;
+          break;
+        }
+      }
+    }
+  }
+
+  const saveAction: Function = () => {
+    console.log("inside save action");
+
+    const dateInputs: any = document.getElementsByClassName("date");
+
+    return (): void => {
+      for (let i = 0; i < usersBase.length; i++) {
+        if (usersBase[i].id == userId.toString()) {
+          updateShirtReceived(usersBase[i].shirtReceived, usersBase[i].id)
+          break;
+        }
+      }
+
+      for (let i = 0; i < usersBase.length; i++) {
+        if (usersBase[i].id == userId.toString()) {
           updateExpirationDate(dateInputs[0].value, usersBase[i].id);
 >>>>>>> Added mutations/fixed various backend issues
           setUserState(usersBase);
@@ -498,6 +533,8 @@ const Membership: React.FC<{}> = () => {
           break;
         }
       }
+
+      handleCancel();
     }
   }
 
@@ -522,11 +559,14 @@ const Membership: React.FC<{}> = () => {
     })
 =======
   const changeShirtReceived: any = () => {
+<<<<<<< HEAD
     console.log("change shirt received called");
 >>>>>>> Made some progress integrating backend
+=======
+>>>>>>> Added confirm
     for (let i = 0; i < usersBase.length; i++) {
       if (usersBase[i].id == userId.toString()) {
-        updateShirtReceived(usersBase[i].shirtReceived, usersBase[i].id)
+        // updateShirtReceived(usersBase[i].shirtReceived, usersBase[i].id)
         usersBase[i].shirtReceived = !usersBase[i].shirtReceived;
         break;
       }
@@ -542,8 +582,7 @@ const Membership: React.FC<{}> = () => {
   const displayShirtReceived: Function = (shirtReceived: boolean) => {
     if(shirtReceived)
       return "Received";
-    else
-      return "Not Received";
+    return "Not Received";
   }
 >>>>>>> Made some progress integrating backend
 
@@ -665,11 +704,20 @@ const Membership: React.FC<{}> = () => {
         </span>
 =======
       render: (record: any) => (
-        <button style={styles} onClick={() => {
+        <button
+          style={styles}
+          onClick={() => {
           handleVisibility();
           setUserId(record.id);
+<<<<<<< HEAD
         }}>Edit</button>
 >>>>>>> Added mutations/fixed various backend issues
+=======
+        }}
+        >
+          Edit
+        </button>
+>>>>>>> Added confirm
       )
     },
     {
@@ -710,7 +758,7 @@ const Membership: React.FC<{}> = () => {
         <div>
           <EditCol>
             <span>Picked Up Shirt:</span>
-            <EditInputs type="checkbox" onClick={() => changeShirtReceived()}/>
+            <EditInputs type="checkbox" onClick={() => changeShirtReceived()} />
           </EditCol>
 
           <EditCol>
@@ -719,7 +767,9 @@ const Membership: React.FC<{}> = () => {
           </EditCol>
 
           <hr />
+
           <button style={styles} onClick={deleteAction()}>Delete</button>
+          <ConfirmButton style={styles} onClick={saveAction()}>Confirm</ConfirmButton>
         </div>
       </Modal>
       <Modal
