@@ -13,35 +13,8 @@ import styled, { AnyStyledComponent } from "styled-components";
 import { useUpdateExpirationDateMutation,
          useMembersQuery,
          useUpdateShirtReceivedMutation,
-         /*useResetShirtReceivedMutation,
-useDeleteMemberMutation*/ } from "../../../../generated/graphql";
-
-/*const users: IUser[] = [
-  {
-    "id": "8f6ea01b-63b1-41b0-feaf-6603cf59d456",
-    "firstName": "MST",
-    "lastName": "ACM",
-    "email": "acm@mst.edu",
-    "membershipExpiration": 'null',
-    "shirtReceived": true,
-  },
-  {
-    "id": "1bb766b6-d237-f329-a70a-625deb254da0",
-    "firstName": "Kevin",
-    "lastName": "Schoonover",
-    "email": "ksyh3@umsystem.edu",
-    "membershipExpiration": 'null',
-    "shirtReceived": false,
-  },
-  {
-    "id": "4feafds35-7101-460e-aee8-5a0d58023abc",
-    "firstName": "Kevin",
-    "lastName": "Schoonover",
-    "email": "schoonoverkevinm@gmail.com",
-    "membershipExpiration": "2020-03-04T07:01:09.118Z",
-    "shirtReceived": true,
-  },
-];*/
+         /*useResetShirtReceivedMutation,*/
+         useDeleteMemberMutation } from "../../../../generated/graphql";
 
 const styles: IStyles = {
   display: 'inline-block',
@@ -114,8 +87,13 @@ const Membership: React.FC<{}> = () => {
 
   const [
     updateShirtReceived,
-    /*{ loading: updateLoading, error: updateError, data: updateData }*/
+    /*{ loading: updateShirtLoading, error: updateShirtError, data: updateShirtData }*/
   ]: any = useUpdateShirtReceivedMutation();
+
+  const [
+    updateDeleteMember,
+    /*{ loading: deleteMemberLoading, error: deleteMemberError, data: deleteMemberEror }*/
+  ]: any = useDeleteMemberMutation();
 
   const createNameDataIndex = () => {
     for (let i = 0; i < usersBase.length; i++)
@@ -241,6 +219,7 @@ const Membership: React.FC<{}> = () => {
     return (): void => {
       for (let i = 0; i < usersBase.length; i++) {
         if (usersBase[i].id == id) {
+          updateDeleteMember(id);
           handleCancel();
           handleVisibilityDelete();
           usersBase.splice(i, 1);
