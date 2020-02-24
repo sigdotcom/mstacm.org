@@ -731,12 +731,12 @@ const Membership: React.FC<{}> = () => {
         <div>
           <EditCol>
             <span>Picked Up Shirt:</span>
-            <EditInputs type="checkbox" onClick={changeShirtReceived()}/>
+            <EditInputs type="checkbox" onClick={() => changeShirtReceived()}/>
           </EditCol>
 
           <EditCol>
             <span>Membership Expiration Date:</span>
-            <EditInputs className="date" type="date" value={dateFormat()} onChange={changeDate()} />
+            <EditInputs className="date" type="date" value={dateFormat()} onChange={() => changeDate()} />
           </EditCol>
 
           <hr />
