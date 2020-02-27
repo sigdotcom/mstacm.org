@@ -1,9 +1,13 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*import { Table } from 'antd';
 import { ColumnProps } from 'antd/es/table';
 import React, { useState } from 'react';
 =======
 import { Table, Input, Button, Icon, Modal } from 'antd';
+=======
+import { Table, Input, Button, Icon, Modal, DatePicker } from 'antd';
+>>>>>>> Various fixes
 import React, { useState, useEffect } from 'react';
 <<<<<<< HEAD
 >>>>>>> Made some progress integrating backend
@@ -19,7 +23,7 @@ import { IUser } from './IUser';
 import { useUpdateExpirationDateMutation,
          useMembersQuery,
          useUpdateShirtReceivedMutation,
-         /* useResetShirtReceivedMutation, */
+         useResetShirtReceivedMutation,
          useDeleteMemberMutation } from "../../../../generated/graphql";
 
 const styles: IStyles = {
@@ -53,6 +57,10 @@ const DeleteConfirmation: AnyStyledComponent = styled.div`
   margin: 10px;
 `;
 
+const ShirtResetButton: AnyStyledComponent = styled.button`
+  margin-bottom: 25px;
+`;
+
 const Membership: React.FC<{}> = () => {
 <<<<<<< HEAD
   const [userState, setUserState] = useState<IUser[]>(users);
@@ -68,7 +76,10 @@ const Membership: React.FC<{}> = () => {
 >>>>>>> Made some progress integrating backend
   const [confirmLoading] = useState(false);
   const [editMembershipVisible, setEditMembershipVisible] = useState(false);
+
   const [userId, setUserId] = useState("");
+  const [checkboxShirtStatus, setCheckboxShirtStatus] = useState(false);
+  const [datePickerStatus, setDatePickerStatus] = useState<any>('');
 
   const [editMembershipVisibleDelete, setEditMembershipVisibleDelete] = useState(false);
   const [confirmLoadingDelete] = useState(false);
@@ -88,6 +99,10 @@ const Membership: React.FC<{}> = () => {
     }
   }, [memberData]);
 
+  useEffect(() => {
+    getShirtStatus();
+  }, [userId]);
+
   const usersBase: IUser[] = [...userState];
 
   const [
@@ -102,8 +117,13 @@ const Membership: React.FC<{}> = () => {
 
   const [
     updateDeleteMember,
-    /*{ loading: deleteMemberLoading, error: deleteMemberError, data: deleteMemberEror }*/
+    /*{ loading: deleteMemberLoading, error: deleteMemberError, data: deleteMemberData }*/
   ]: any = useDeleteMemberMutation();
+
+  const [
+    updateResetShirts,
+    /*{ loading: resetShirtsLoading, error: resetShirtsError, data: resetShirtsData }*/
+  ]: any = useResetShirtReceivedMutation();
 
   const createNameDataIndex = () => {
     for (let i = 0; i < usersBase.length; i++)
@@ -164,6 +184,7 @@ const Membership: React.FC<{}> = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /*const dateFormat: (expirationDate: string | null) => string = (expirationDate: string | null) => {
     if(expirationDate === null) {
 =======
@@ -172,9 +193,16 @@ const Membership: React.FC<{}> = () => {
 >>>>>>> Changed default search bar message
       return "N/A";
     }
+=======
+  // const formatDateString: (expirationDate: string | null) => string = (expirationDate: string | null) => {
+  //   if(expirationDate == "null" || expirationDate == null) {
+  //     return "N/A";
+  //   }
+>>>>>>> Various fixes
     
-      return expirationDate.toString().slice(0, 10);
+  //     return expirationDate.toString().slice(0, 10);
     
+<<<<<<< HEAD
   }
 
   const decrementYear: (formattedDate: string | null) => string = (formattedDate: string | null) => {
@@ -240,6 +268,20 @@ const Membership: React.FC<{}> = () => {
       }
     }
   }
+=======
+  // }
+
+  // const dateFormat: () => string | null = () => {
+  //   for (let i = 0; i < usersBase.length; i++) {
+  //     if (usersBase[i].id == userId.toString()) {
+  //       if(usersBase[i].membershipExpiration == null)
+  //         break;
+  //       return usersBase[i].membershipExpiration.toString().slice(0, 10);
+  //     }
+  //   }
+  //   return "";
+  // }
+>>>>>>> Various fixes
 
   const handleNo: Function = () => {
     return (): void => {
@@ -268,6 +310,7 @@ const Membership: React.FC<{}> = () => {
     }
   }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   const columns: ColumnProps<IUser>[] = [
     {
@@ -507,15 +550,21 @@ const Membership: React.FC<{}> = () => {
           usersBase[i].membershipExpiration = dateInputs[0].value;
           break;
         }
+=======
+  const changeDate: (date: any, dateString: string)=> void = (date: any, dateString: string) => {
+    setDatePickerStatus(date);
+    setDatePickerStatus(dateString);
+
+    for (let i = 0; i < usersBase.length; i++) {
+      if (usersBase[i].id == userId.toString()) {
+        usersBase[i].membershipExpiration = datePickerStatus;
+        break;
+>>>>>>> Various fixes
       }
     }
   }
 
   const saveAction: Function = () => {
-    console.log("inside save action");
-
-    const dateInputs: any = document.getElementsByClassName("date");
-
     return (): void => {
       for (let i = 0; i < usersBase.length; i++) {
         if (usersBase[i].id == userId.toString()) {
@@ -526,13 +575,19 @@ const Membership: React.FC<{}> = () => {
 
       for (let i = 0; i < usersBase.length; i++) {
         if (usersBase[i].id == userId.toString()) {
+<<<<<<< HEAD
           updateExpirationDate(dateInputs[0].value, usersBase[i].id);
 >>>>>>> Added mutations/fixed various backend issues
+=======
+          updateExpirationDate(datePickerStatus);
+>>>>>>> Various fixes
           setUserState(usersBase);
           dateInputs[i].value = "";
           break;
         }
       }
+
+      console.log()
 
       handleCancel();
     }
@@ -560,15 +615,19 @@ const Membership: React.FC<{}> = () => {
 =======
   const changeShirtReceived: any = () => {
 <<<<<<< HEAD
+<<<<<<< HEAD
     console.log("change shirt received called");
 >>>>>>> Made some progress integrating backend
 =======
 >>>>>>> Added confirm
+=======
+    setCheckboxShirtStatus(!checkboxShirtStatus);
+
+>>>>>>> Various fixes
     for (let i = 0; i < usersBase.length; i++) {
-      if (usersBase[i].id == userId.toString()) {
-        // updateShirtReceived(usersBase[i].shirtReceived, usersBase[i].id)
+      if (usersBase[i].id == userId)
+      {
         usersBase[i].shirtReceived = !usersBase[i].shirtReceived;
-        break;
       }
     }
   }
@@ -585,6 +644,21 @@ const Membership: React.FC<{}> = () => {
     return "Not Received";
   }
 >>>>>>> Made some progress integrating backend
+
+  const resetAllShirts: Function = () => {
+    updateResetShirts();
+    for (let i = 0; i < usersBase.length; i++) {
+      usersBase[i].shirtReceived = false;
+    }
+  }
+
+  const getShirtStatus: Function = () => {
+    for (let i = 0; i < usersBase.length; i++) {
+      if(usersBase[i].id == userId)
+        return usersBase[i].shirtReceived;
+    }
+    return false;
+  }
 
   const getColumnSearchProps = (dataIndex: string) => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters}: any) => (
@@ -690,7 +764,11 @@ const Membership: React.FC<{}> = () => {
       key: 'expiration',
       render: (record: any) => (
         <span>
+<<<<<<< HEAD
           {dateFormat(record.membershipExpiration)}
+=======
+          {record.membershipExpiration}
+>>>>>>> Various fixes
         </span>
       )
     },
@@ -707,12 +785,17 @@ const Membership: React.FC<{}> = () => {
         <button
           style={styles}
           onClick={() => {
+<<<<<<< HEAD
           handleVisibility();
           setUserId(record.id);
 <<<<<<< HEAD
         }}>Edit</button>
 >>>>>>> Added mutations/fixed various backend issues
 =======
+=======
+            setUserId(record.id);
+            handleVisibility();
+>>>>>>> Various fixes
         }}
         >
           Edit
@@ -740,7 +823,12 @@ const Membership: React.FC<{}> = () => {
 =======
       {createNameDataIndex()}
 
+<<<<<<< HEAD
 >>>>>>> Allowed for full name search
+=======
+      <ShirtResetButton style={styles} onClick={() => resetAllShirts()}>Reset Shirt Status</ShirtResetButton>
+
+>>>>>>> Various fixes
       <Table dataSource={usersBase} columns={columns} />
       <Modal
         visible={editMembershipVisible}
@@ -758,12 +846,12 @@ const Membership: React.FC<{}> = () => {
         <div>
           <EditCol>
             <span>Picked Up Shirt:</span>
-            <EditInputs type="checkbox" onClick={() => changeShirtReceived()} />
+            <EditInputs type="checkbox" value={checkboxShirtStatus} onClick={changeShirtReceived} />
           </EditCol>
 
           <EditCol>
             <span>Membership Expiration Date:</span>
-            <EditInputs className="date" type="date" value={dateFormat()} onChange={() => changeDate()} />
+            <DatePicker onChange={changeDate} placeholder="Select Expiration Date" />
           </EditCol>
 
           <hr />
