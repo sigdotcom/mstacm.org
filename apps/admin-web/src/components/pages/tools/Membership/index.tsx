@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*import { Table } from 'antd';
 import { ColumnProps } from 'antd/es/table';
 import React, { useState } from 'react';
@@ -8,6 +9,9 @@ import { Table, Input, Button, Icon, Modal } from 'antd';
 =======
 import { Table, Input, Button, Icon, Modal, DatePicker } from 'antd';
 >>>>>>> Various fixes
+=======
+import { Table, Input, Button, Icon, Modal, DatePicker, message } from 'antd';
+>>>>>>> Added messages for loading/error of mutations and queries
 import React, { useState, useEffect } from 'react';
 <<<<<<< HEAD
 >>>>>>> Made some progress integrating backend
@@ -68,6 +72,26 @@ const Membership: React.FC<{}> = () => {
 =======
   const { loading: memberLoading, error: memberError, data: memberData }: any = useMembersQuery();
 
+  const [
+    updateExpirationDate,
+    { loading: expirationLoading, error: expirationError, data: expirationData }
+  ]: any = useUpdateExpirationDateMutation();
+
+  const [
+    updateShirtReceived,
+    { loading: updateShirtLoading, error: updateShirtError, data: updateShirtData } 
+  ]: any = useUpdateShirtReceivedMutation();
+
+  const [
+    updateDeleteMember,
+    { loading: deleteMemberLoading, error: deleteMemberError, data: deleteMemberData }
+  ]: any = useDeleteMemberMutation();
+
+  const [
+    updateResetShirts,
+    { loading: resetShirtsLoading, error: resetShirtsError, data: resetShirtsData }
+  ]: any = useResetShirtReceivedMutation();
+
   const [searchText, setSearchText] = useState<string>('');
   const [searchedColumn, setSearchedColumn] = useState<string>('');
   const [searchInput, setSearchInput] = useState<any>('');
@@ -88,10 +112,10 @@ const Membership: React.FC<{}> = () => {
 
   useEffect(() => {
     if (memberLoading) {
-      // make an antd message about loading
+      //message.info("Member Data Loading");
     }
     else if (memberError) {
-      console.log("Error loading members"); // make an antd message about error
+      message.info("An error occured loading member data.");
     }
     else if (memberData) {
       users = memberData.users;
@@ -100,30 +124,46 @@ const Membership: React.FC<{}> = () => {
   }, [memberData]);
 
   useEffect(() => {
+    if (updateShirtLoading) {
+      //message.info("Update Shirt Data Loading");
+    }
+    else if (updateShirtError) {
+      message.info("An error occured loading shirt mutation data.");
+    }
+  }, [updateShirtData]);
+
+  useEffect(() => {
+    if (expirationLoading) {
+      //message.info("Expiration Data Loading");
+    }
+    else if (expirationError) {
+      message.info("An error occured loading expiration mutation data.");
+    }
+  }, [expirationData]);
+
+  useEffect(() => {
+    if (deleteMemberLoading) {
+      //message.info("Delete Member Data Loading");
+    }
+    else if (deleteMemberError) {
+      message.info("An error occured loading delete member mutation data.");
+    }
+  }, [deleteMemberData]);
+
+  useEffect(() => {
+    if (resetShirtsLoading) {
+      //message.info("Shirt Reset Data Loading");
+    }
+    else if (resetShirtsError) {
+      message.info("An error occured loading shirt reset mutation data.");
+    }
+  }, [resetShirtsData]);
+
+  useEffect(() => {
     getShirtStatus();
   }, [userId]);
 
   const usersBase: IUser[] = [...userState];
-
-  const [
-    updateExpirationDate,
-    /* { loading: expirationLoading, error: expirationError, data: expirationData } */
-  ]: any = useUpdateExpirationDateMutation();
-
-  const [
-    updateShirtReceived,
-    /* { loading: updateLoading, error: updateError, data: updateData } */
-  ]: any = useUpdateShirtReceivedMutation();
-
-  const [
-    updateDeleteMember,
-    /*{ loading: deleteMemberLoading, error: deleteMemberError, data: deleteMemberData }*/
-  ]: any = useDeleteMemberMutation();
-
-  const [
-    updateResetShirts,
-    /*{ loading: resetShirtsLoading, error: resetShirtsError, data: resetShirtsData }*/
-  ]: any = useResetShirtReceivedMutation();
 
   const createNameDataIndex = () => {
     for (let i = 0; i < usersBase.length; i++)
