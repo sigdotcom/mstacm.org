@@ -30,6 +30,8 @@ import { useUpdateExpirationDateMutation,
          useResetShirtReceivedMutation,
          useDeleteMemberMutation } from "../../../../generated/graphql";
 
+const moment = require('moment');
+
 const styles: IStyles = {
   display: 'inline-block',
   cursor: 'pointer',
@@ -108,6 +110,8 @@ const Membership: React.FC<{}> = () => {
   const [editMembershipVisibleDelete, setEditMembershipVisibleDelete] = useState(false);
   const [confirmLoadingDelete] = useState(false);
 
+  const [getDateFromUsers, setDateFromUsers] = useState(true);
+
   let users: IUser[] = [];
 
   useEffect(() => {
@@ -175,6 +179,7 @@ const Membership: React.FC<{}> = () => {
   };
 
   const handleCancel: () => void = (): void => {
+    setDateFromUsers(true);
     setEditMembershipVisible(false);
   };
 
@@ -313,8 +318,6 @@ const Membership: React.FC<{}> = () => {
   // }
 =======
   const formatDateString: (expirationDate: string | null) => string = (expirationDate: string | null) => {
-    console.log(expirationDate);
-
     if(expirationDate == "null" || expirationDate == null || expirationDate == "")
       return "N/A";
     return expirationDate;
@@ -603,8 +606,11 @@ const Membership: React.FC<{}> = () => {
         }
 =======
   const changeDate: (date: any, dateString: string)=> void = (date: any, dateString: string) => {
+    setDateFromUsers(false);
+
     setDatePickerStatus(date); //ignore this, date is required to be used by typescript
     setDatePickerStatus(dateString);
+<<<<<<< HEAD
     console.log(datePickerStatus);
 
     for (let i = 0; i < usersBase.length; i++) {
@@ -614,12 +620,15 @@ const Membership: React.FC<{}> = () => {
 >>>>>>> Various fixes
       }
     }
+=======
+>>>>>>> Fixed saveAction issue
   }
 
   const saveAction: Function = () => {
     return (): void => {
       for (let i = 0; i < usersBase.length; i++) {
         if (usersBase[i].id == userId.toString()) {
+<<<<<<< HEAD
           updateShirtReceived(usersBase[i].shirtReceived, usersBase[i].id)
           break;
         }
@@ -631,15 +640,20 @@ const Membership: React.FC<{}> = () => {
           updateExpirationDate(dateInputs[0].value, usersBase[i].id);
 >>>>>>> Added mutations/fixed various backend issues
 =======
+=======
+          updateShirtReceived(usersBase[i].shirtReceived, usersBase[i].id);
+>>>>>>> Fixed saveAction issue
           updateExpirationDate(datePickerStatus);
 >>>>>>> Various fixes
           setUserState(usersBase);
+<<<<<<< HEAD
           dateInputs[i].value = "";
+=======
+          usersBase[i].membershipExpiration = datePickerStatus;
+>>>>>>> Fixed saveAction issue
           break;
         }
       }
-
-      console.log()
 
       handleCancel();
     }
@@ -710,6 +724,21 @@ const Membership: React.FC<{}> = () => {
         return usersBase[i].shirtReceived;
     }
     return false;
+  }
+
+  const getExpirationDate: Function = () => {
+    for (let i = 0; i < usersBase.length; i++) {
+      if(usersBase[i].id == userId)
+        return usersBase[i].membershipExpiration;
+    }
+    return null;
+  }
+
+  const getValueForDatePicker: Function = () => {
+    if(getDateFromUsers)
+      return moment(getExpirationDate())
+    else
+      return moment(datePickerStatus)
   }
 
   const getColumnSearchProps = (dataIndex: string) => ({
@@ -907,7 +936,7 @@ const Membership: React.FC<{}> = () => {
 
           <EditCol>
             <span>Membership Expiration Date: </span>
-            <DatePicker onChange={changeDate} placeholder="Select Expiration Date" />
+            <DatePicker onChange={changeDate} placeholder="Select Expiration Date" value={getValueForDatePicker()}/>
           </EditCol>
 
           <hr />
