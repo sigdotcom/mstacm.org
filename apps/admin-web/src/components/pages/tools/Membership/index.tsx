@@ -20,7 +20,11 @@ import { IUser } from './IUser';
 import { Modal } from "antd";
 =======
 import Highlighter from 'react-highlight-words';
+<<<<<<< HEAD
 >>>>>>> Added confirm
+=======
+import moment from 'moment';
+>>>>>>> Refactored some stuff into useEffect format
 import styled, { AnyStyledComponent } from "styled-components";
 import { IStyles } from './IStyles';
 import { IUser } from './IUser';
@@ -29,8 +33,6 @@ import { useUpdateExpirationDateMutation,
          useUpdateShirtReceivedMutation,
          useResetShirtReceivedMutation,
          useDeleteMemberMutation } from "../../../../generated/graphql";
-
-const moment = require('moment');
 
 const styles: IStyles = {
   display: 'inline-block',
@@ -104,14 +106,12 @@ const Membership: React.FC<{}> = () => {
   const [editMembershipVisible, setEditMembershipVisible] = useState(false);
 
   const [userId, setUserId] = useState("");
-  const [checkboxShirtStatus, setCheckboxShirtStatus] = useState(false);
-  const [datePickerStatus, setDatePickerStatus] = useState<string>('');
 
   const [editMembershipVisibleDelete, setEditMembershipVisibleDelete] = useState(false);
   const [confirmLoadingDelete] = useState(false);
 
-  const [getDateFromUsers, setDateFromUsers] = useState(true);
-  const [getShirtStatusFromUsers, setShirtStatusFromUsers] = useState(true);
+  const [curExpDate, setCurExpDate] = useState<any>('');
+  const [curShirtStatus, setCurShirtStatus] = useState<any>(false);
 
   let users: IUser[] = [];
 
@@ -166,6 +166,8 @@ const Membership: React.FC<{}> = () => {
 
   useEffect(() => {
     getShirtStatus();
+    getExpirationDate();
+    handleVisibility();
   }, [userId]);
 
   const usersBase: IUser[] = [...userState];
@@ -180,8 +182,6 @@ const Membership: React.FC<{}> = () => {
   };
 
   const handleCancel: () => void = (): void => {
-    setDateFromUsers(true);
-    setShirtStatusFromUsers(true);
     setEditMembershipVisible(false);
   };
 
@@ -204,8 +204,7 @@ const Membership: React.FC<{}> = () => {
       return "Active";
     }
     
-      return "Invalid";
-    
+    return "Invalid";
   }
 
   const name: Function = (id: string) => {
@@ -327,6 +326,7 @@ const Membership: React.FC<{}> = () => {
   }
 >>>>>>> Various fixes
 
+<<<<<<< HEAD
   // const dateFormat: () => string | null = () => {
   //   for (let i = 0; i < usersBase.length; i++) {
   //     if (usersBase[i].id === userId.toString()) {
@@ -339,6 +339,8 @@ const Membership: React.FC<{}> = () => {
   // }
 >>>>>>> Various fixes
 
+=======
+>>>>>>> Refactored some stuff into useEffect format
   const handleNo: Function = () => {
     return (): void => {
       handleCancelDelete();
@@ -616,6 +618,7 @@ const Membership: React.FC<{}> = () => {
         }
 =======
   const changeDate: (date: any, dateString: string)=> void = (date: any, dateString: string) => {
+<<<<<<< HEAD
     setDateFromUsers(false);
 
     setDatePickerStatus(date); //ignore this, date is required to be used by typescript
@@ -632,6 +635,10 @@ const Membership: React.FC<{}> = () => {
     }
 =======
 >>>>>>> Fixed saveAction issue
+=======
+    setCurExpDate(date); //ignore this, date is required to be used by typescript
+    setCurExpDate(dateString);
+>>>>>>> Refactored some stuff into useEffect format
   }
 
   const saveAction: Function = () => {
@@ -656,6 +663,7 @@ const Membership: React.FC<{}> = () => {
         if (usersBase[i].id === userId.toString()) {
 >>>>>>> Fixed checkbox issue
           updateShirtReceived(usersBase[i].shirtReceived, usersBase[i].id);
+<<<<<<< HEAD
 >>>>>>> Fixed saveAction issue
           updateExpirationDate(datePickerStatus);
 >>>>>>> Various fixes
@@ -669,6 +677,12 @@ const Membership: React.FC<{}> = () => {
 =======
           usersBase[i].shirtReceived = checkboxShirtStatus;
 >>>>>>> Fixed checkbox issue
+=======
+          updateExpirationDate(curExpDate);
+          setUserState(usersBase);
+          usersBase[i].membershipExpiration = curExpDate;
+          usersBase[i].shirtReceived = curShirtStatus;
+>>>>>>> Refactored some stuff into useEffect format
           break;
         }
       }
@@ -717,9 +731,13 @@ const Membership: React.FC<{}> = () => {
     }
 =======
   const changeShirtReceived: Function = () => {
+<<<<<<< HEAD
     setCheckboxShirtStatus(!checkboxShirtStatus);
     setShirtStatusFromUsers(false);
 >>>>>>> Fixed checkbox issue
+=======
+    setCurShirtStatus(!curShirtStatus);
+>>>>>>> Refactored some stuff into useEffect format
   }
 
 <<<<<<< HEAD
@@ -745,38 +763,17 @@ const Membership: React.FC<{}> = () => {
   const getShirtStatus: Function = () => {
     for (let i = 0; i < usersBase.length; i++) {
       if(usersBase[i].id === userId)
-        return usersBase[i].shirtReceived;
+        setCurShirtStatus(usersBase[i].shirtReceived);
     }
-    return false;
+    setCurShirtStatus(false);
   }
 
   const getExpirationDate: Function = () => {
     for (let i = 0; i < usersBase.length; i++) {
-      if(usersBase[i].id === userId)
-        return usersBase[i].membershipExpiration;
+      if(usersBase[i].id === userId) {}
+        setCurExpDate(usersBase[i].membershipExpiration);
     }
-    return null;
-  }
-
-  const getValueForCheckbox: Function = () => {
-    console.log("getShirtStatusFromUsers: " + getShirtStatusFromUsers);
-
-    console.log("getShirtStatus(): " + getShirtStatus());
-
-    if(getShirtStatusFromUsers)
-      return getShirtStatus();
-    else
-      return checkboxShirtStatus;
-  }
-
-  const getValueForDatePicker: Function = () => {
-    if(getDateFromUsers)
-      if(!getExpirationDate === null)
-        return moment(getExpirationDate());
-      else
-        return "";
-    else
-      return moment(datePickerStatus);
+    setCurExpDate('null');
   }
 
   const getColumnSearchProps = (dataIndex: string) => ({
@@ -917,8 +914,11 @@ const Membership: React.FC<{}> = () => {
 =======
 =======
             setUserId(record.id);
+<<<<<<< HEAD
             handleVisibility();
 >>>>>>> Various fixes
+=======
+>>>>>>> Refactored some stuff into useEffect format
         }}
         >
           Edit
@@ -969,12 +969,12 @@ const Membership: React.FC<{}> = () => {
         <div>
           <EditCol>
             <span>Picked Up Shirt:</span>
-            <EditInputs type="checkbox" checked={getValueForCheckbox()} onClick={changeShirtReceived} />
+            <EditInputs type="checkbox" checked={curShirtStatus} onClick={changeShirtReceived} />
           </EditCol>
 
           <EditCol>
             <span>Membership Expiration Date: </span>
-            <DatePicker onChange={changeDate} placeholder="Select Expiration Date" value={getValueForDatePicker()}/>
+            <DatePicker value={moment(curExpDate)} onChange={changeDate} placeholder="Select Expiration Date" />
           </EditCol>
 
           <hr />
