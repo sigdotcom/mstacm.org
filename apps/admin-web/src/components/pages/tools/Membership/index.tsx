@@ -111,6 +111,7 @@ const Membership: React.FC<{}> = () => {
   const [confirmLoadingDelete] = useState(false);
 
   const [getDateFromUsers, setDateFromUsers] = useState(true);
+  const [getShirtStatusFromUsers, setShirtStatusFromUsers] = useState(true);
 
   let users: IUser[] = [];
 
@@ -174,16 +175,17 @@ const Membership: React.FC<{}> = () => {
       usersBase[i].fullName = `${usersBase[i].firstName  } ${  usersBase[i].lastName}`;
   }
 
-  const handleVisibility: () => any = (): any => {
+  const handleVisibility: () => void = (): void => {
     setEditMembershipVisible(true);
   };
 
   const handleCancel: () => void = (): void => {
     setDateFromUsers(true);
+    setShirtStatusFromUsers(true);
     setEditMembershipVisible(false);
   };
 
-  const handleVisibilityDelete: () => any = (): any => {
+  const handleVisibilityDelete: () => void = (): void => {
     setEditMembershipVisibleDelete(true);
   };
 
@@ -318,7 +320,7 @@ const Membership: React.FC<{}> = () => {
   // }
 =======
   const formatDateString: (expirationDate: string | null) => string = (expirationDate: string | null) => {
-    if(expirationDate == "null" || expirationDate == null || expirationDate == "")
+    if(expirationDate === "null" || expirationDate === null || expirationDate === "")
       return "N/A";
     return expirationDate;
     
@@ -327,8 +329,8 @@ const Membership: React.FC<{}> = () => {
 
   // const dateFormat: () => string | null = () => {
   //   for (let i = 0; i < usersBase.length; i++) {
-  //     if (usersBase[i].id == userId.toString()) {
-  //       if(usersBase[i].membershipExpiration == null)
+  //     if (usersBase[i].id === userId.toString()) {
+  //       if(usersBase[i].membershipExpiration === null)
   //         break;
   //       return usersBase[i].membershipExpiration.toString().slice(0, 10);
   //     }
@@ -355,8 +357,16 @@ const Membership: React.FC<{}> = () => {
     let dateInputs: any = document.getElementsByClassName("date");
     return (): void => {
       for (let i = 0; i < usersBase.length; i++) {
+<<<<<<< HEAD
         if (usersBase[i].id == userId.toString()) {
           usersBase[i].membershipExpiration = dateInputs[0].value;
+=======
+        if (usersBase[i].id === id) {
+          updateDeleteMember(id);
+          handleCancel();
+          handleVisibilityDelete();
+          usersBase.splice(i, 1);
+>>>>>>> Fixed checkbox issue
           setUserState(usersBase);
           break;
         }
@@ -627,6 +637,7 @@ const Membership: React.FC<{}> = () => {
   const saveAction: Function = () => {
     return (): void => {
       for (let i = 0; i < usersBase.length; i++) {
+<<<<<<< HEAD
         if (usersBase[i].id == userId.toString()) {
 <<<<<<< HEAD
           updateShirtReceived(usersBase[i].shirtReceived, usersBase[i].id)
@@ -641,6 +652,9 @@ const Membership: React.FC<{}> = () => {
 >>>>>>> Added mutations/fixed various backend issues
 =======
 =======
+=======
+        if (usersBase[i].id === userId.toString()) {
+>>>>>>> Fixed checkbox issue
           updateShirtReceived(usersBase[i].shirtReceived, usersBase[i].id);
 >>>>>>> Fixed saveAction issue
           updateExpirationDate(datePickerStatus);
@@ -650,7 +664,11 @@ const Membership: React.FC<{}> = () => {
           dateInputs[i].value = "";
 =======
           usersBase[i].membershipExpiration = datePickerStatus;
+<<<<<<< HEAD
 >>>>>>> Fixed saveAction issue
+=======
+          usersBase[i].shirtReceived = checkboxShirtStatus;
+>>>>>>> Fixed checkbox issue
           break;
         }
       }
@@ -659,6 +677,7 @@ const Membership: React.FC<{}> = () => {
     }
   }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   const changeDate: Function = (id: string) => {
@@ -696,6 +715,11 @@ const Membership: React.FC<{}> = () => {
         usersBase[i].shirtReceived = !usersBase[i].shirtReceived;
       }
     }
+=======
+  const changeShirtReceived: Function = () => {
+    setCheckboxShirtStatus(!checkboxShirtStatus);
+    setShirtStatusFromUsers(false);
+>>>>>>> Fixed checkbox issue
   }
 
 <<<<<<< HEAD
@@ -720,7 +744,7 @@ const Membership: React.FC<{}> = () => {
 
   const getShirtStatus: Function = () => {
     for (let i = 0; i < usersBase.length; i++) {
-      if(usersBase[i].id == userId)
+      if(usersBase[i].id === userId)
         return usersBase[i].shirtReceived;
     }
     return false;
@@ -728,17 +752,31 @@ const Membership: React.FC<{}> = () => {
 
   const getExpirationDate: Function = () => {
     for (let i = 0; i < usersBase.length; i++) {
-      if(usersBase[i].id == userId)
+      if(usersBase[i].id === userId)
         return usersBase[i].membershipExpiration;
     }
     return null;
   }
 
+  const getValueForCheckbox: Function = () => {
+    console.log("getShirtStatusFromUsers: " + getShirtStatusFromUsers);
+
+    console.log("getShirtStatus(): " + getShirtStatus());
+
+    if(getShirtStatusFromUsers)
+      return getShirtStatus();
+    else
+      return checkboxShirtStatus;
+  }
+
   const getValueForDatePicker: Function = () => {
     if(getDateFromUsers)
-      return moment(getExpirationDate())
+      if(!getExpirationDate === null)
+        return moment(getExpirationDate());
+      else
+        return "";
     else
-      return moment(datePickerStatus)
+      return moment(datePickerStatus);
   }
 
   const getColumnSearchProps = (dataIndex: string) => ({
@@ -748,7 +786,7 @@ const Membership: React.FC<{}> = () => {
           ref={node => {
             setSearchInput(node);
           }}
-          placeholder={`Search ${dataIndex == "fullName" ? "name" : dataIndex}`}
+          placeholder={`Search ${dataIndex === "fullName" ? "name" : dataIndex}`}
           value={selectedKeys[0]}
           onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
@@ -931,7 +969,7 @@ const Membership: React.FC<{}> = () => {
         <div>
           <EditCol>
             <span>Picked Up Shirt:</span>
-            <EditInputs type="checkbox" value={checkboxShirtStatus} onClick={changeShirtReceived} />
+            <EditInputs type="checkbox" checked={getValueForCheckbox()} onClick={changeShirtReceived} />
           </EditCol>
 
           <EditCol>
