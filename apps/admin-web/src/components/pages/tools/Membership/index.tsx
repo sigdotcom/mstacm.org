@@ -103,7 +103,7 @@ const Membership: React.FC<{}> = () => {
 
   const [userId, setUserId] = useState("");
   const [checkboxShirtStatus, setCheckboxShirtStatus] = useState(false);
-  const [datePickerStatus, setDatePickerStatus] = useState<any>('');
+  const [datePickerStatus, setDatePickerStatus] = useState<string>('');
 
   const [editMembershipVisibleDelete, setEditMembershipVisibleDelete] = useState(false);
   const [confirmLoadingDelete] = useState(false);
@@ -225,6 +225,7 @@ const Membership: React.FC<{}> = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /*const dateFormat: (expirationDate: string | null) => string = (expirationDate: string | null) => {
     if(expirationDate === null) {
 =======
@@ -310,6 +311,16 @@ const Membership: React.FC<{}> = () => {
   }
 =======
   // }
+=======
+  const formatDateString: (expirationDate: string | null) => string = (expirationDate: string | null) => {
+    console.log(expirationDate);
+
+    if(expirationDate == "null" || expirationDate == null || expirationDate == "")
+      return "N/A";
+    return expirationDate;
+    
+  }
+>>>>>>> Various fixes
 
   // const dateFormat: () => string | null = () => {
   //   for (let i = 0; i < usersBase.length; i++) {
@@ -592,8 +603,9 @@ const Membership: React.FC<{}> = () => {
         }
 =======
   const changeDate: (date: any, dateString: string)=> void = (date: any, dateString: string) => {
-    setDatePickerStatus(date);
+    setDatePickerStatus(date); //ignore this, date is required to be used by typescript
     setDatePickerStatus(dateString);
+    console.log(datePickerStatus);
 
     for (let i = 0; i < usersBase.length; i++) {
       if (usersBase[i].id == userId.toString()) {
@@ -805,9 +817,13 @@ const Membership: React.FC<{}> = () => {
       render: (record: any) => (
         <span>
 <<<<<<< HEAD
+<<<<<<< HEAD
           {dateFormat(record.membershipExpiration)}
 =======
           {record.membershipExpiration}
+>>>>>>> Various fixes
+=======
+          {formatDateString(record.membershipExpiration)}
 >>>>>>> Various fixes
         </span>
       )
@@ -890,7 +906,7 @@ const Membership: React.FC<{}> = () => {
           </EditCol>
 
           <EditCol>
-            <span>Membership Expiration Date:</span>
+            <span>Membership Expiration Date: </span>
             <DatePicker onChange={changeDate} placeholder="Select Expiration Date" />
           </EditCol>
 
