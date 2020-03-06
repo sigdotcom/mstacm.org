@@ -61,7 +61,7 @@ export const TierContainer: React.SFC<ITierContainerProps> = (
       </Cost>
 
       <div style={{ margin: "auto auto 16px auto" }}>
-        <PrimaryButton disabled={!isAuthenticated} onClick={props.onClick}>
+        <PrimaryButton onClick={props.onClick}>
           {isAuthenticated && "BUY NOW"}
           {!isAuthenticated && "PLEASE LOGIN"}
         </PrimaryButton>
