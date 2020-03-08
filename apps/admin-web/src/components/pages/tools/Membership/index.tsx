@@ -11,6 +11,7 @@ import { Table, Input, Button, Icon, Modal, DatePicker } from 'antd';
 >>>>>>> Various fixes
 =======
 import { Table, Input, Button, Icon, Modal, DatePicker, message } from 'antd';
+<<<<<<< HEAD
 >>>>>>> Added messages for loading/error of mutations and queries
 import React, { useState, useEffect } from 'react';
 <<<<<<< HEAD
@@ -19,6 +20,9 @@ import { IStyles } from './IStyles';
 import { IUser } from './IUser';
 import { Modal } from "antd";
 =======
+=======
+import React, { useState, useEffect, useRef } from 'react';
+>>>>>>> Fixed modal on render issue
 import Highlighter from 'react-highlight-words';
 <<<<<<< HEAD
 >>>>>>> Added confirm
@@ -164,9 +168,14 @@ const Membership: React.FC<{}> = () => {
     }
   }, [resetShirtsData]);
 
+  const firstUpdate = useRef(true);
   useEffect(() => {
     getShirtStatus();
     getExpirationDate();
+    if(firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
     handleVisibility();
   }, [userId]);
 
@@ -770,7 +779,7 @@ const Membership: React.FC<{}> = () => {
 
   const getExpirationDate: Function = () => {
     for (let i = 0; i < usersBase.length; i++) {
-      if(usersBase[i].id === userId) {}
+      if(usersBase[i].id === userId)
         setCurExpDate(usersBase[i].membershipExpiration);
     }
     setCurExpDate('null');
