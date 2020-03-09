@@ -170,6 +170,7 @@ const Membership: React.FC<{}> = () => {
 
   const firstUpdate = useRef(true);
   useEffect(() => {
+    console.log("inside useeffect");
     getShirtStatus();
     getExpirationDate();
     if(firstUpdate.current) {
@@ -779,8 +780,10 @@ const Membership: React.FC<{}> = () => {
 
   const getExpirationDate: Function = () => {
     for (let i = 0; i < usersBase.length; i++) {
-      if(usersBase[i].id === userId)
+      if(usersBase[i].id === userId) {
         setCurExpDate(usersBase[i].membershipExpiration);
+        return;
+      }
     }
     setCurExpDate('null');
   }
@@ -924,10 +927,14 @@ const Membership: React.FC<{}> = () => {
 =======
             setUserId(record.id);
 <<<<<<< HEAD
+<<<<<<< HEAD
             handleVisibility();
 >>>>>>> Various fixes
 =======
 >>>>>>> Refactored some stuff into useEffect format
+=======
+            console.log("clicked");
+>>>>>>> Fixed date render issue
         }}
         >
           Edit
