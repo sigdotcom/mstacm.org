@@ -117,11 +117,13 @@ const Membership: React.FC<{}> = () => {
   const [curExpDate, setCurExpDate] = useState<any>('');
   const [curShirtStatus, setCurShirtStatus] = useState<any>(false);
 
+  const [arbitraryEditToggle, setArbitraryEditToggle] = useState<any>(true);
+
   let users: IUser[] = [];
 
   useEffect(() => {
     if (memberLoading) {
-      //message.info("Member Data Loading");
+      message.info("Member Data Loading");
     }
     else if (memberError) {
       message.info("An error occured loading member data.");
@@ -134,7 +136,7 @@ const Membership: React.FC<{}> = () => {
 
   useEffect(() => {
     if (updateShirtLoading) {
-      //message.info("Update Shirt Data Loading");
+      message.info("Update Shirt Data Loading");
     }
     else if (updateShirtError) {
       message.info("An error occured loading shirt mutation data.");
@@ -143,7 +145,7 @@ const Membership: React.FC<{}> = () => {
 
   useEffect(() => {
     if (expirationLoading) {
-      //message.info("Expiration Data Loading");
+      message.info("Expiration Data Loading");
     }
     else if (expirationError) {
       message.info("An error occured loading expiration mutation data.");
@@ -152,7 +154,7 @@ const Membership: React.FC<{}> = () => {
 
   useEffect(() => {
     if (deleteMemberLoading) {
-      //message.info("Delete Member Data Loading");
+      message.info("Delete Member Data Loading");
     }
     else if (deleteMemberError) {
       message.info("An error occured loading delete member mutation data.");
@@ -161,7 +163,7 @@ const Membership: React.FC<{}> = () => {
 
   useEffect(() => {
     if (resetShirtsLoading) {
-      //message.info("Shirt Reset Data Loading");
+      message.info("Shirt Reset Data Loading");
     }
     else if (resetShirtsError) {
       message.info("An error occured loading shirt reset mutation data.");
@@ -170,7 +172,6 @@ const Membership: React.FC<{}> = () => {
 
   const firstUpdate = useRef(true);
   useEffect(() => {
-    console.log("inside useeffect");
     getShirtStatus();
     getExpirationDate();
     if(firstUpdate.current) {
@@ -178,7 +179,7 @@ const Membership: React.FC<{}> = () => {
       return;
     }
     handleVisibility();
-  }, [userId]);
+  }, [arbitraryEditToggle]);
 
   const usersBase: IUser[] = [...userState];
 
@@ -930,6 +931,7 @@ const Membership: React.FC<{}> = () => {
             setUserId(record.id);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             handleVisibility();
 >>>>>>> Various fixes
 =======
@@ -937,6 +939,9 @@ const Membership: React.FC<{}> = () => {
 =======
             console.log("clicked");
 >>>>>>> Fixed date render issue
+=======
+            setArbitraryEditToggle(!arbitraryEditToggle);
+>>>>>>> Completed membership tool
         }}
         >
           Edit
