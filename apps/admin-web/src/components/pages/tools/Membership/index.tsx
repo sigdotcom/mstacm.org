@@ -772,8 +772,10 @@ const Membership: React.FC<{}> = () => {
 
   const getShirtStatus: Function = () => {
     for (let i = 0; i < usersBase.length; i++) {
-      if(usersBase[i].id === userId)
+      if(usersBase[i].id === userId) {
         setCurShirtStatus(usersBase[i].shirtReceived);
+        return;
+      }
     }
     setCurShirtStatus(false);
   }
