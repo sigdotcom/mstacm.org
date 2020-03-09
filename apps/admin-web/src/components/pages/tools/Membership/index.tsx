@@ -31,7 +31,7 @@ import moment from 'moment';
 >>>>>>> Refactored some stuff into useEffect format
 import styled, { AnyStyledComponent } from "styled-components";
 import { IStyles } from './IStyles';
-import { IUser } from './IUser';
+import { IUser } from './interfaces';
 import { useUpdateExpirationDateMutation,
          useMembersQuery,
          useUpdateShirtReceivedMutation,
@@ -114,8 +114,8 @@ const Membership: React.FC<{}> = () => {
   const [editMembershipVisibleDelete, setEditMembershipVisibleDelete] = useState(false);
   const [confirmLoadingDelete] = useState(false);
 
-  const [curExpDate, setCurExpDate] = useState<any>('');
-  const [curShirtStatus, setCurShirtStatus] = useState<any>(false);
+  const [curExpDate, setCurExpDate] = useState<moment.Moment | any>('');
+  const [curShirtStatus, setCurShirtStatus] = useState<boolean | undefined>(false);
 
   const [arbitraryEditToggle, setArbitraryEditToggle] = useState<any>(true);
 
@@ -818,15 +818,15 @@ const Membership: React.FC<{}> = () => {
         </Button>
       </div>
     ),
-    filterIcon: (filtered: any) => (
+    filterIcon: (filtered: boolean) => (
       <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />
     ),
-    onFilter: (value: any, record: any) =>
+    onFilter: (value: any, record: any)=>
       record[dataIndex]
         .toString()
         .toLowerCase()
         .includes(value.toLowerCase()),
-    onFilterDropdownVisibleChange: (visible: any) => {
+    onFilterDropdownVisibleChange: (visible: boolean) => {
       if (visible) {
         setTimeout(() => searchInput.select());
       }
@@ -884,7 +884,7 @@ const Membership: React.FC<{}> = () => {
     {
       title: 'Status',
       key: 'status',
-      render: (record: any) => (
+      render: (record: IUser) => (
         <span>
           {statusActive(record.membershipExpiration)}
         </span>
@@ -893,7 +893,7 @@ const Membership: React.FC<{}> = () => {
     {
       title: 'Expiration',
       key: 'expiration',
-      render: (record: any) => (
+      render: (record: IUser) => (
         <span>
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -911,12 +911,16 @@ const Membership: React.FC<{}> = () => {
       title: 'Edit',
       key: 'edit',
 <<<<<<< HEAD
+<<<<<<< HEAD
       render: (/*record: IUser*/) => (
         <span>
           <button style={styles}>Edit</button>
         </span>
 =======
       render: (record: any) => (
+=======
+      render: (record: IUser) => (
+>>>>>>> Fixed some any types
         <button
           style={styles}
           onClick={() => {
@@ -952,7 +956,7 @@ const Membership: React.FC<{}> = () => {
     {
       title: 'ACM Shirt',
       key: 'acm shirt',
-      render: (record: any) => (
+      render: (record: IUser) => (
         <span>
           {displayShirtReceived(record.shirtReceived)}
         </span>
