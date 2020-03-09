@@ -129,7 +129,7 @@ export class UserResolver extends ResourceResolver<resourceType>(
   }
 
   @Authorized("reset:user_shirt_received")
-  @Mutation((_: void) => [User], { nullable: true })
+  @Mutation((_: void) => [User])
   public async resetShirtReceived(
   ): Promise<User[]> {
     const users: User[] = await User.find();
