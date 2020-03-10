@@ -15,7 +15,8 @@ import {
   Input,
   InputNumber,
   Upload,
-  Icon
+  Icon,
+  Select
 } from "antd";
 
 import { IEvent } from "./interfaces";
@@ -128,14 +129,25 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
       )}
       <Form.Item label="Host Community">
         {getFieldDecorator("hostSig", {
-          initialValue: editing ? newEvent.hostSig.name : "",
+          initialValue: editing ? newEvent.hostSig.value : "",
           rules: [
             {
               required: !editing,
-              message: "Please input the host community's name!"
+              message: "Please choose a host community's name!"
             }
           ]
-        })(<Input />)}
+        })(
+        <Select>
+          <Select.Option value="Web">Web</Select.Option>
+          <Select.Option value="security">Security</Select.Option>
+          <Select.Option value="data">Data</Select.Option>
+          <Select.Option value="hack">Hack</Select.Option>
+          <Select.Option value="competition">Competition</Select.Option>
+          <Select.Option value="game">Game</Select.Option>
+          <Select.Option value="women">Women</Select.Option>
+        </Select>
+        )}
+        
       </Form.Item>
       <Form.Item label="Name">
         {getFieldDecorator("eventTitle", {

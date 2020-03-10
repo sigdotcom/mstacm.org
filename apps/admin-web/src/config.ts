@@ -11,9 +11,7 @@ const IS_PROD: boolean = process.env.NODE_ENV === "production";
 
 export const config: IConfig = {
   ACCESS_TOKEN_KEY: "auth0_access_token",
-  API_URI: IS_PROD
-    ? "https://api.mstacm.org/graphql"
-    : "http://localhost/graphql",
+  API_URI: "https://api.mstacm.org/graphql",
   REDIRECT_PAGE_URI: IS_PROD ? "https://mstacm.org" : "http://localhost:3000",
   AUTH0_AUDIENCE: process.env.REACT_APP_AUTH0_AUDIENCE || "graphql.mstacm.org",
   AUTH0_CLIENT_ID:
