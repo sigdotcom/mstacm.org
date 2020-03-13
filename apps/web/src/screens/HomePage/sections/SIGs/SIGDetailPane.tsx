@@ -61,6 +61,12 @@ const SIGWebsite = styled.a`
     background: #2d9cdb;
     color: #fff;
   }
+
+  &:hover #child{
+    transition: filter 0.17s ease-in;
+    
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(230deg) brightness(101%) contrast(102%);
+  }
 `;
 
 /*
@@ -137,6 +143,22 @@ const SIGDetails = styled.div`
   align-items: center;
 `;
 
+const ExternalIconWebsite: any = styled.img`
+  filter: invert(52%) sepia(79%) saturate(1058%) hue-rotate(173deg) brightness(91%) contrast(87%);
+  max-width: 20px;
+  padding-left: 5px;
+  
+  &:hover {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(230deg) brightness(101%) contrast(102%);
+  }
+`;
+
+const ExternalIconDiscord: any = styled.img`
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(230deg) brightness(101%) contrast(102%);
+  max-width: 20px;
+  padding-left: 5px;
+`;
+
 interface ISIGDetailPaneProps {
   sig: ISIG;
 }
@@ -159,8 +181,14 @@ const SIGDetailPane: React.FC<ISIGDetailPaneProps> = (props: any): any => {
         <SIGDesc>{sig.desc}</SIGDesc>
         <Row>
           <ButtonRow>
-            <SIGWebsite href={sig.website}>Website</SIGWebsite>
-            <SIGDiscord href={sig.discord}>Discord</SIGDiscord>
+            <SIGWebsite href={sig.website}>
+              Website
+              <ExternalIconWebsite id="child" src="https://cdn.mstacm.org/static/external-link.svg" />
+            </SIGWebsite>
+            <SIGDiscord href={sig.discord}>
+              Discord
+              <ExternalIconDiscord src="https://cdn.mstacm.org/static/external-link.svg" />
+            </SIGDiscord>
           </ButtonRow>
         </Row>
       </Row>
