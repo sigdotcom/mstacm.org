@@ -28,17 +28,6 @@ const SIGDesc: any = styled.p`
   font-size: 17px;
   rgba(0, 0, 0, 0.65);
 `;
-/*
-const SIGWebsite: any = styled(SIGButton)`
-  background: #11bb66;
-  color: white;
-  margin-right: 20px;
-  &:hover {
-    color: white;
-    background: #00aa55;
-  }
-`;
-*/
 
 const SIGWebsite = styled.a`
   transition: 0.2s ease-in-out;
@@ -64,21 +53,9 @@ const SIGWebsite = styled.a`
 
   &:hover #child{
     transition: filter 0.17s ease-in;
-    
     filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(230deg) brightness(101%) contrast(102%);
   }
 `;
-
-/*
-const SIGDiscord: any = styled(SIGButton)`
-  background: #1166bb;
-  color: white;
-  &:hover {
-    color: white;
-    background: #0055aa;
-  }
-`;
-*/
 
 const SIGDiscord = styled.a`
   background: #42c0fc;
