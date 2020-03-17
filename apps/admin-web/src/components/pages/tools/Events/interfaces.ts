@@ -4,6 +4,10 @@ export interface ISig {
   name: string;
 }
 
+export interface IHostSig {
+  name: string;
+}
+
 export interface IEvent {
   dateCreated: Date;
   dateExpire: Date;

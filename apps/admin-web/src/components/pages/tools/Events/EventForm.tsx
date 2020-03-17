@@ -2,11 +2,13 @@ import React, { useGlobal, useState } from "reactn";
 
 import moment from "moment";
 
-import { GET_EVENTS } from "./helpers";
+import { GET_EVENTS, GET_SIGS } from "./helpers";
 import {
   useCreateEventMutation,
   useUpdateEventMutation
 } from "../../../../generated/graphql";
+
+import { useQuery } from '@apollo/react-hooks';
 
 import {
   Button,
@@ -19,7 +21,7 @@ import {
   Select
 } from "antd";
 
-import { IEvent } from "./interfaces";
+import { IEvent, IHostSig } from "./interfaces";
 import { UploadFile, UploadProps } from "antd/lib/upload/interface";
 
 const { RangePicker }: any = DatePicker;
@@ -50,6 +52,23 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
       delete data.dateRange;
     }
   };
+
+  const Sigs: any = () => {
+    const { loading, error, data } = useQuery(GET_SIGS);
+  
+    if (loading) return 'Loading...';
+    if (error) return `Error! ${error.message}`;
+  
+    return (
+      <Select>
+        {data.sigs.map((sig: IHostSig) => (
+          <Select.Option value={sig.name}>
+            {sig.name}
+          </Select.Option>
+        ))}
+      </Select>
+    );
+  }
 
   const handleSubmit: any = (e: any): any => {
     e.preventDefault();
@@ -129,7 +148,7 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
       )}
       <Form.Item label="Host Community">
         {getFieldDecorator("hostSig", {
-          initialValue: editing ? newEvent.hostSig.value : "",
+          initialValue: editing ? newEvent.hostSig.name : "",
           rules: [
             {
               required: !editing,
@@ -137,15 +156,7 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
             }
           ]
         })(
-        <Select>
-          <Select.Option value="Web">Web</Select.Option>
-          <Select.Option value="security">Security</Select.Option>
-          <Select.Option value="data">Data</Select.Option>
-          <Select.Option value="hack">Hack</Select.Option>
-          <Select.Option value="competition">Competition</Select.Option>
-          <Select.Option value="game">Game</Select.Option>
-          <Select.Option value="women">Women</Select.Option>
-        </Select>
+        Sigs()
         )}
         
       </Form.Item>
