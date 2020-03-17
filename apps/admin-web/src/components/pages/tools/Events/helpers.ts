@@ -1,5 +1,13 @@
 import gql from "graphql-tag";
 
+export const GET_SIGS: any = gql`
+  query {
+    sigs {
+      name
+    }
+  }
+`;
+
 export const GET_EVENTS: any = gql`
   query events {
     events {
