@@ -2,13 +2,12 @@ import React, { useGlobal, useState } from "reactn";
 
 import moment from "moment";
 
-import { GET_EVENTS, GET_SIGS } from "./helpers";
+import { GET_EVENTS } from "./helpers";
 import {
   useCreateEventMutation,
-  useUpdateEventMutation
+  useUpdateEventMutation,
+  useSigsQuery
 } from "../../../../generated/graphql";
-
-import { useQuery } from '@apollo/react-hooks';
 
 import {
   Button,
@@ -44,6 +43,7 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
     { loading: updateLoading, error: updateError, data: updateData }
   ]: any = useUpdateEventMutation();
   const [files, setFiles] = useState<UploadFile[]>([]);
+  const { loading, error, data } = useSigsQuery();
 
   const convertTimes: any = (data: any): any => {
     if (data.hasOwnProperty("dateRange") && data.dateRange) {
@@ -54,21 +54,19 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
   };
 
   const Sigs: any = () => {
-    const { loading, error, data } = useQuery(GET_SIGS);
-  
-    if (loading) return 'Loading...';
-    if (error) return `Error! ${error.message}`;
-  
-    return (
-      <Select>
-        {data.sigs.map((sig: IHostSig) => (
-          <Select.Option value={sig.name}>
-            {sig.name}
-          </Select.Option>
-        ))}
-      </Select>
-    );
-  }
+    if (loading) return;
+    // "Loading...";
+    else if (error) return;
+    // `Error! ${error.message}`;
+    else if (data) {
+      return data.sigs.map((sig: IHostSig, index: number) => (
+        <Select.Option value={sig.name} key={index}>
+          {sig.name}
+        </Select.Option>
+      ));
+    }
+    return;
+  };
 
   const handleSubmit: any = (e: any): any => {
     e.preventDefault();
@@ -80,6 +78,7 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
         if (editing) {
           const id: number = Number(values.id);
           delete values.id;
+          console.log("VALUES", values);
           updateEvent({
             refetchQueries: [{ query: GET_EVENTS }],
             variables: {
@@ -148,17 +147,14 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
       )}
       <Form.Item label="Host Community">
         {getFieldDecorator("hostSig", {
-          initialValue: editing ? newEvent.hostSig.name : "",
+          initialValue: editing ? newEvent.hostSig.name : undefined,
           rules: [
             {
               required: !editing,
               message: "Please choose a host community's name!"
             }
           ]
-        })(
-        Sigs()
-        )}
-        
+        })(<Select>{Sigs()}</Select>)}
       </Form.Item>
       <Form.Item label="Name">
         {getFieldDecorator("eventTitle", {
@@ -180,7 +176,7 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
               message: "Please input the event's description!"
             }
           ]
-        })(<TextArea autosize={{ minRows: 2, maxRows: 6 }} />)}
+        })(<TextArea autoSize={{ minRows: 2, maxRows: 6 }} />)}
       </Form.Item>
       <Form.Item label="Location">
         {getFieldDecorator("location", {

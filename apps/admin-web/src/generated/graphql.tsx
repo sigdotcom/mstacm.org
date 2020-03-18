@@ -393,6 +393,17 @@ export type UserUpdateInput = {
   email?: Maybe<Scalars['String']>,
 };
 
+export type SigsQueryVariables = {};
+
+
+export type SigsQuery = (
+  { __typename?: 'Query' }
+  & { sigs: Array<(
+    { __typename?: 'Sig' }
+    & Pick<Sig, 'name'>
+  )> }
+);
+
 export type EventsQueryVariables = {};
 
 
@@ -517,6 +528,38 @@ export type DeleteMemberMutation = (
 );
 
 
+export const SigsDocument = gql`
+    query sigs {
+  sigs {
+    name
+  }
+}
+    `;
+
+/**
+ * __useSigsQuery__
+ *
+ * To run a query within a React component, call `useSigsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSigsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSigsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSigsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<SigsQuery, SigsQueryVariables>) {
+        return ApolloReactHooks.useQuery<SigsQuery, SigsQueryVariables>(SigsDocument, baseOptions);
+      }
+export function useSigsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SigsQuery, SigsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<SigsQuery, SigsQueryVariables>(SigsDocument, baseOptions);
+        }
+export type SigsQueryHookResult = ReturnType<typeof useSigsQuery>;
+export type SigsLazyQueryHookResult = ReturnType<typeof useSigsLazyQuery>;
+export type SigsQueryResult = ApolloReactCommon.QueryResult<SigsQuery, SigsQueryVariables>;
 export const EventsDocument = gql`
     query events {
   events {
