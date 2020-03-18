@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export const GET_SIGS: any = gql`
-  query {
+  query sigs {
     sigs {
       name
     }
