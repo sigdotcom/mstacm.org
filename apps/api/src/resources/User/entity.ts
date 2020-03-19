@@ -66,6 +66,10 @@ export class User extends BaseEntity {
 
   @Field({ defaultValue: false })
   @Column({ default: false })
+  public shirtReceived: boolean;
+
+  @Field({ defaultValue: false })
+  @Column({ default: false })
   public isSuperAdmin: boolean;
 
   @Field()

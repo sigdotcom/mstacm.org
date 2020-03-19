@@ -106,6 +106,9 @@ export type Mutation = {
   startProductTransaction: TransactionPayload,
   addUserToGroups: User,
   addPermissionsToUser: User,
+  updateExpirationDate: User,
+  updateShirtReceived: User,
+  resetShirtReceived?: Maybe<Array<User>>,
 };
 
 
@@ -202,6 +205,18 @@ export type MutationAddUserToGroupsArgs = {
 
 export type MutationAddPermissionsToUserArgs = {
   permissionIds: Array<Scalars['String']>,
+  userId: Scalars['String']
+};
+
+
+export type MutationUpdateExpirationDateArgs = {
+  newExpirationDate: Scalars['DateTime'],
+  userId: Scalars['String']
+};
+
+
+export type MutationUpdateShirtReceivedArgs = {
+  updatedShirtStatus: Scalars['Boolean'],
   userId: Scalars['String']
 };
 
@@ -350,6 +365,7 @@ export type User = {
   emailVerified: Scalars['Boolean'],
   profilePictureUrl: Scalars['String'],
   graduationDate?: Maybe<Scalars['DateTime']>,
+  shirtReceived?: Maybe<Scalars['Boolean']>,
   isSuperAdmin?: Maybe<Scalars['Boolean']>,
   dateJoined: Scalars['DateTime'],
   membershipExpiration?: Maybe<Scalars['DateTime']>,
@@ -427,6 +443,69 @@ export type MeExpirationQuery = (
     { __typename?: 'User' }
     & Pick<User, 'membershipExpiration'>
   )> }
+);
+
+export type MembersQueryVariables = {};
+
+
+export type MembersQuery = (
+  { __typename?: 'Query' }
+  & { users: Array<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'firstName' | 'lastName' | 'email' | 'isActive' | 'membershipExpiration' | 'shirtReceived'>
+  )> }
+);
+
+export type UpdateExpirationDateMutationVariables = {
+  date: Scalars['DateTime'],
+  id: Scalars['String']
+};
+
+
+export type UpdateExpirationDateMutation = (
+  { __typename?: 'Mutation' }
+  & { updateExpirationDate: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ) }
+);
+
+export type UpdateShirtReceivedMutationVariables = {
+  received: Scalars['Boolean'],
+  id: Scalars['String']
+};
+
+
+export type UpdateShirtReceivedMutation = (
+  { __typename?: 'Mutation' }
+  & { updateShirtReceived: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ) }
+);
+
+export type ResetShirtReceivedMutationVariables = {};
+
+
+export type ResetShirtReceivedMutation = (
+  { __typename?: 'Mutation' }
+  & { resetShirtReceived: Maybe<Array<(
+    { __typename?: 'User' }
+    & Pick<User, 'shirtReceived'>
+  )>> }
+);
+
+export type DeleteMemberMutationVariables = {
+  id: Scalars['String']
+};
+
+
+export type DeleteMemberMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteUser: (
+    { __typename?: 'UserDeletePayload' }
+    & Pick<UserDeletePayload, 'firstName'>
+  ) }
 );
 
 
@@ -566,9 +645,182 @@ export const MeExpirationDocument = gql`
 export function useMeExpirationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeExpirationQuery, MeExpirationQueryVariables>) {
         return ApolloReactHooks.useQuery<MeExpirationQuery, MeExpirationQueryVariables>(MeExpirationDocument, baseOptions);
       }
+<<<<<<< HEAD:apps/web/src/generated/graphql.tsx
 export function useMeExpirationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeExpirationQuery, MeExpirationQueryVariables>) {
           return ApolloReactHooks.useLazyQuery<MeExpirationQuery, MeExpirationQueryVariables>(MeExpirationDocument, baseOptions);
         }
 export type MeExpirationQueryHookResult = ReturnType<typeof useMeExpirationQuery>;
 export type MeExpirationLazyQueryHookResult = ReturnType<typeof useMeExpirationLazyQuery>;
 export type MeExpirationQueryResult = ApolloReactCommon.QueryResult<MeExpirationQuery, MeExpirationQueryVariables>;
+=======
+export type DeleteEventMutationHookResult = ReturnType<typeof useDeleteEventMutation>;
+export type DeleteEventMutationResult = ApolloReactCommon.MutationResult<DeleteEventMutation>;
+export type DeleteEventMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteEventMutation, DeleteEventMutationVariables>;
+export const MembersDocument = gql`
+    query members {
+  users {
+    id
+    firstName
+    lastName
+    email
+    isActive
+    membershipExpiration
+    shirtReceived
+  }
+}
+    `;
+
+/**
+ * __useMembersQuery__
+ *
+ * To run a query within a React component, call `useMembersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMembersQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMembersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMembersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MembersQuery, MembersQueryVariables>) {
+        return ApolloReactHooks.useQuery<MembersQuery, MembersQueryVariables>(MembersDocument, baseOptions);
+      }
+export function useMembersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MembersQuery, MembersQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<MembersQuery, MembersQueryVariables>(MembersDocument, baseOptions);
+        }
+export type MembersQueryHookResult = ReturnType<typeof useMembersQuery>;
+export type MembersLazyQueryHookResult = ReturnType<typeof useMembersLazyQuery>;
+export type MembersQueryResult = ApolloReactCommon.QueryResult<MembersQuery, MembersQueryVariables>;
+export const UpdateExpirationDateDocument = gql`
+    mutation UpdateExpirationDate($date: DateTime!, $id: String!) {
+  updateExpirationDate(newExpirationDate: $date, userId: $id) {
+    id
+  }
+}
+    `;
+export type UpdateExpirationDateMutationFn = ApolloReactCommon.MutationFunction<UpdateExpirationDateMutation, UpdateExpirationDateMutationVariables>;
+
+/**
+ * __useUpdateExpirationDateMutation__
+ *
+ * To run a mutation, you first call `useUpdateExpirationDateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateExpirationDateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateExpirationDateMutation, { data, loading, error }] = useUpdateExpirationDateMutation({
+ *   variables: {
+ *      date: // value for 'date'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUpdateExpirationDateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateExpirationDateMutation, UpdateExpirationDateMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateExpirationDateMutation, UpdateExpirationDateMutationVariables>(UpdateExpirationDateDocument, baseOptions);
+      }
+export type UpdateExpirationDateMutationHookResult = ReturnType<typeof useUpdateExpirationDateMutation>;
+export type UpdateExpirationDateMutationResult = ApolloReactCommon.MutationResult<UpdateExpirationDateMutation>;
+export type UpdateExpirationDateMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateExpirationDateMutation, UpdateExpirationDateMutationVariables>;
+export const UpdateShirtReceivedDocument = gql`
+    mutation UpdateShirtReceived($received: Boolean!, $id: String!) {
+  updateShirtReceived(updatedShirtStatus: $received, userId: $id) {
+    id
+  }
+}
+    `;
+export type UpdateShirtReceivedMutationFn = ApolloReactCommon.MutationFunction<UpdateShirtReceivedMutation, UpdateShirtReceivedMutationVariables>;
+
+/**
+ * __useUpdateShirtReceivedMutation__
+ *
+ * To run a mutation, you first call `useUpdateShirtReceivedMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateShirtReceivedMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateShirtReceivedMutation, { data, loading, error }] = useUpdateShirtReceivedMutation({
+ *   variables: {
+ *      received: // value for 'received'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUpdateShirtReceivedMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateShirtReceivedMutation, UpdateShirtReceivedMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateShirtReceivedMutation, UpdateShirtReceivedMutationVariables>(UpdateShirtReceivedDocument, baseOptions);
+      }
+export type UpdateShirtReceivedMutationHookResult = ReturnType<typeof useUpdateShirtReceivedMutation>;
+export type UpdateShirtReceivedMutationResult = ApolloReactCommon.MutationResult<UpdateShirtReceivedMutation>;
+export type UpdateShirtReceivedMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateShirtReceivedMutation, UpdateShirtReceivedMutationVariables>;
+export const ResetShirtReceivedDocument = gql`
+    mutation ResetShirtReceived {
+  resetShirtReceived {
+    shirtReceived
+  }
+}
+    `;
+export type ResetShirtReceivedMutationFn = ApolloReactCommon.MutationFunction<ResetShirtReceivedMutation, ResetShirtReceivedMutationVariables>;
+
+/**
+ * __useResetShirtReceivedMutation__
+ *
+ * To run a mutation, you first call `useResetShirtReceivedMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useResetShirtReceivedMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [resetShirtReceivedMutation, { data, loading, error }] = useResetShirtReceivedMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useResetShirtReceivedMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ResetShirtReceivedMutation, ResetShirtReceivedMutationVariables>) {
+        return ApolloReactHooks.useMutation<ResetShirtReceivedMutation, ResetShirtReceivedMutationVariables>(ResetShirtReceivedDocument, baseOptions);
+      }
+export type ResetShirtReceivedMutationHookResult = ReturnType<typeof useResetShirtReceivedMutation>;
+export type ResetShirtReceivedMutationResult = ApolloReactCommon.MutationResult<ResetShirtReceivedMutation>;
+export type ResetShirtReceivedMutationOptions = ApolloReactCommon.BaseMutationOptions<ResetShirtReceivedMutation, ResetShirtReceivedMutationVariables>;
+export const DeleteMemberDocument = gql`
+    mutation DeleteMember($id: String!) {
+  deleteUser(id: $id) {
+    firstName
+  }
+}
+    `;
+export type DeleteMemberMutationFn = ApolloReactCommon.MutationFunction<DeleteMemberMutation, DeleteMemberMutationVariables>;
+
+/**
+ * __useDeleteMemberMutation__
+ *
+ * To run a mutation, you first call `useDeleteMemberMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteMemberMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteMemberMutation, { data, loading, error }] = useDeleteMemberMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteMemberMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteMemberMutation, DeleteMemberMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteMemberMutation, DeleteMemberMutationVariables>(DeleteMemberDocument, baseOptions);
+      }
+export type DeleteMemberMutationHookResult = ReturnType<typeof useDeleteMemberMutation>;
+export type DeleteMemberMutationResult = ApolloReactCommon.MutationResult<DeleteMemberMutation>;
+export type DeleteMemberMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteMemberMutation, DeleteMemberMutationVariables>;
+>>>>>>> Added mutations/fixed various backend issues:apps/admin-web/src/generated/graphql.tsx

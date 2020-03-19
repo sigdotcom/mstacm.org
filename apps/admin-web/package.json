@@ -12,8 +12,17 @@
     "react": "^16.7.0",
     "react-apollo": "^3.1.3",
     "react-dom": "^16.7.0",
+    "react-highlight-words": "^0.16.0",
     "react-router-dom": "^5.1.2",
+<<<<<<< HEAD
     "react-scripts": "^3.3.1",
+=======
+    "react-scripts": "^3.2.0",
+<<<<<<< HEAD
+    "reactjs-popup": "^1.5.0",
+>>>>>>> Added search feature and various changes
+=======
+>>>>>>> Fixed pull request issues
     "reactn": "^2.2.1",
     "serialize-javascript": "^2.1.2",
     "styled-components": "^4.1.3"
@@ -39,6 +48,7 @@
     "@types/react-dom": "^16.0.11",
     "@types/react-router-dom": "^5.1.0",
     "@types/styled-components": "4.1.8",
+    "@types/react-highlight-words": "^0.16.0",
     "@typescript-eslint/eslint-plugin": "^2.3.3",
     "@typescript-eslint/parser": "^2.3.3",
     "eslint": "^6.5.1",
