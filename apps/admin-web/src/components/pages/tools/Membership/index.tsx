@@ -1,34 +1,7 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*import { Table } from 'antd';
-import { ColumnProps } from 'antd/es/table';
-import React, { useState } from 'react';
-=======
-import { Table, Input, Button, Icon, Modal } from 'antd';
-=======
-import { Table, Input, Button, Icon, Modal, DatePicker } from 'antd';
->>>>>>> Various fixes
-=======
 import { Table, Input, Button, Icon, Modal, DatePicker, message } from 'antd';
-<<<<<<< HEAD
->>>>>>> Added messages for loading/error of mutations and queries
-import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
->>>>>>> Made some progress integrating backend
-import { IStyles } from './IStyles';
-import { IUser } from './IUser';
-import { Modal } from "antd";
-=======
-=======
 import React, { useState, useEffect, useRef } from 'react';
->>>>>>> Fixed modal on render issue
 import Highlighter from 'react-highlight-words';
-<<<<<<< HEAD
->>>>>>> Added confirm
-=======
 import moment from 'moment';
->>>>>>> Refactored some stuff into useEffect format
 import styled, { AnyStyledComponent } from "styled-components";
 import { IStyles } from './IStyles';
 import { IUser } from './interfaces';
@@ -42,9 +15,6 @@ const styles: IStyles = {
   display: 'inline-block',
   cursor: 'pointer',
   marginLeft: '9px'
-<<<<<<< HEAD
-};*/
-=======
 };
 
 const EditInputs: AnyStyledComponent = styled.input`
@@ -55,8 +25,6 @@ const EditCol: AnyStyledComponent = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
 `;
->>>>>>> non-functional edit tool
-
 const ConfirmButton: AnyStyledComponent = styled.button`
   margin-left: 20px;
 `;
@@ -74,10 +42,6 @@ const ShirtResetButton: AnyStyledComponent = styled.button`
 `;
 
 const Membership: React.FC<{}> = () => {
-<<<<<<< HEAD
-  const [userState, setUserState] = useState<IUser[]>(users);
-  const usersBase: IUser[] = [...userState];
-=======
   const { loading: memberLoading, error: memberError, data: memberData }: any = useMembersQuery();
 
   const [
@@ -104,8 +68,6 @@ const Membership: React.FC<{}> = () => {
   const [searchedColumn, setSearchedColumn] = useState<string>('');
   const [searchInput, setSearchInput] = useState<any>('');
 
-  const [userState, setUserState] = useState<IUser[]>([]);
->>>>>>> Made some progress integrating backend
   const [confirmLoading] = useState(false);
   const [editMembershipVisible, setEditMembershipVisible] = useState(false);
 
@@ -120,6 +82,9 @@ const Membership: React.FC<{}> = () => {
   const [arbitraryEditToggle, setArbitraryEditToggle] = useState<any>(true);
 
   let users: IUser[] = [];
+
+  const [userState, setUserState] = useState<IUser[]>(users);
+  const usersBase: IUser[] = [...userState];
 
   useEffect(() => {
     if (memberLoading) {
@@ -181,8 +146,6 @@ const Membership: React.FC<{}> = () => {
     handleVisibility();
   }, [arbitraryEditToggle]);
 
-  const usersBase: IUser[] = [...userState];
-
   const createNameDataIndex = () => {
     for (let i = 0; i < usersBase.length; i++)
       usersBase[i].fullName = `${usersBase[i].firstName  } ${  usersBase[i].lastName}`;
@@ -237,80 +200,7 @@ const Membership: React.FC<{}> = () => {
 
     return "";
   }
-  
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  /*const dateFormat: (expirationDate: string | null) => string = (expirationDate: string | null) => {
-    if(expirationDate === null) {
-=======
-  const formatDateString: (expirationDate: string | null) => string = (expirationDate: string | null) => {
-    if(expirationDate == "null" || expirationDate == null) {
->>>>>>> Changed default search bar message
-      return "N/A";
-    }
-=======
-  // const formatDateString: (expirationDate: string | null) => string = (expirationDate: string | null) => {
-  //   if(expirationDate == "null" || expirationDate == null) {
-  //     return "N/A";
-  //   }
->>>>>>> Various fixes
-    
-  //     return expirationDate.toString().slice(0, 10);
-    
-<<<<<<< HEAD
-  }
 
-  const decrementYear: (formattedDate: string | null) => string = (formattedDate: string | null) => {
-    if(formattedDate === null) {
-      return "null";
-    }
-    else {
-      let startYear: any = parseInt(formattedDate.toString().slice(0,4)) - 1;
-      if (isNaN(startYear))
-        return "N/A";
-      return startYear.toString() + formattedDate.toString().slice(4,10);
-    }
-  }
-=======
-  // const dateFormat: (expirationDate: string | null) => string = (expirationDate: string | null) => {
-  //   if(expirationDate === null) {
-  //     return "null";
-  //   }
-  //   else {
-  //     return expirationDate.toString().slice(0, 10);
-  //   }
-  // }
->>>>>>> working modal
-=======
-  const dateFormat: () => string | null = () => {
-    for (let i = 0; i < usersBase.length; i++) {
-      if (usersBase[i].id == userId.toString()) {
-        if(usersBase[i].membershipExpiration == null)
-          break;
-        return usersBase[i].membershipExpiration.toString().slice(0, 10);
-      }
-    }
-    return "";
-  }
->>>>>>> membership expiration date works and changes state value
-  
-  // const saveAction: Function = (id: string) => {
-  //   let dateInputs: any = document.getElementsByClassName("date");
-
-  //   return (): void => {
-  //     for (let i = 0; i < usersBase.length; i++) {
-  //       if (usersBase[i].id === id) {
-  //         usersBase[i].membershipExpiration = dateInputs[i].value;
-  //         setUserState(usersBase);
-  //         break;
-  //       }
-  //     }
-  //   }
-  // }
-  
   const deleteUser: Function = (id: string) => {
     return (): void => {
       for (let i = 0; i < usersBase.length; i++) {
@@ -326,32 +216,14 @@ const Membership: React.FC<{}> = () => {
       }
     }
   }
-=======
-  // }
-=======
+
   const formatDateString: (expirationDate: string | null) => string = (expirationDate: string | null) => {
     if(expirationDate === "null" || expirationDate === null || expirationDate === "")
       return "N/A";
     return expirationDate;
     
   }
->>>>>>> Various fixes
 
-<<<<<<< HEAD
-  // const dateFormat: () => string | null = () => {
-  //   for (let i = 0; i < usersBase.length; i++) {
-  //     if (usersBase[i].id === userId.toString()) {
-  //       if(usersBase[i].membershipExpiration === null)
-  //         break;
-  //       return usersBase[i].membershipExpiration.toString().slice(0, 10);
-  //     }
-  //   }
-  //   return "";
-  // }
->>>>>>> Various fixes
-
-=======
->>>>>>> Refactored some stuff into useEffect format
   const handleNo: Function = () => {
     return (): void => {
       handleCancelDelete();
@@ -366,334 +238,20 @@ const Membership: React.FC<{}> = () => {
     }
   }
 
-  const changeDate: Function = () => {
-    let dateInputs: any = document.getElementsByClassName("date");
-    return (): void => {
-      for (let i = 0; i < usersBase.length; i++) {
-<<<<<<< HEAD
-        if (usersBase[i].id == userId.toString()) {
-          usersBase[i].membershipExpiration = dateInputs[0].value;
-=======
-        if (usersBase[i].id === id) {
-          updateDeleteMember(id);
-          handleCancel();
-          handleVisibilityDelete();
-          usersBase.splice(i, 1);
->>>>>>> Fixed checkbox issue
-          setUserState(usersBase);
-          break;
-        }
-      }
-    }
-  }
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const columns: ColumnProps<IUser>[] = [
-    {
-      title: 'Name',
-      key: 'id',
-      render: (record: IUser) => (
-        <span>
-          {`${record.firstName} ${record.lastName}`}
-        </span>
-      )
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-    },
-    {
-      title: 'Activation',
-      key: 'activation',
-      width: '12%',
-      render: (record: any) => (
-        <span>
-          {decrementYear(dateFormat(record.membershipExpiration))}
-        </span>
-      )
-    },
-    {
-      title: 'Expiration',
-      key: 'expiration',
-      width: '12%',
-      render: (record: any) => (
-        <span>
-          {dateFormat(record.membershipExpiration)}
-        </span>
-      )
-    },
-    {
-      title: 'Status',
-      key: 'status',
-      render: (record: any) => (
-        <span>
-          {statusActive(record.membershipExpiration)}
-        </span>
-      )
-    },
-    {
-<<<<<<< HEAD
-      title: 'Edit Status',
-      key: 'edit status',
-      width: '15%',
-      render: (record: IUser) => (
-        <span>
-          <input onChange={changeDate(record.id)} className="date" type="date" value={dateFormat(record.membershipExpiration)} />
-          <button style={styles} onClick={saveAction(record.id)}>Save</button>
-          <button style={styles} onClick={deleteAction(record.id)}>Delete</button>
-        </span>
-=======
-      title: 'Action',
-      key: 'action',
-<<<<<<< HEAD
-      // record: IUser
-      render: () => (
-        <button style={styles} onClick={handleVisibility}>Edit</button>
-        // <span>
-        //   <input onChange={changeDate(record.id)} className="date" type="date" value={dateFormat(record.membershipExpiration)} />
-        //   <button style={styles} onClick={saveAction(record.id)}>Save</button>
-        //   <button style={styles} onClick={deleteAction(record.id)}>Delete</button>
-        // </span>
->>>>>>> working modal
-=======
-      render: (record: any) => (
-        <button style={styles} onClick={() => {
-          handleVisibility();
-          setUserId(record.id);
-        }}>Edit</button>
->>>>>>> non-functional edit tool
-      )
-    },
-    {
-      title: 'ACM Shirt',
-      key: 'acm shirt',
-    }
-  ];
-  return (
-    <div>
-      <Table dataSource={usersBase} columns={columns} />
-      <Modal
-        visible={editMembershipVisible}
-        confirmLoading={confirmLoading}
-        footer={null}
-        onCancel={handleCancel}
-      >
-        <div>
-          <strong>{name(userId)}</strong>
-        </div>
-        <div>
-          {email(userId)}
-        </div>
-        <hr />
-        <div>
-          {/* <input onChange={changeDate(userId)} className="date" type="date" value={dateFormat(record.membershipExpiration)} /> */}
-          {/* <button style={styles} onClick={saveAction(userId)}>Save</button> */}
-          <EditCol>
-            <span>Picked Up Shirt:</span>
-            <EditInputs type="checkbox" />
-          </EditCol>
-
-          <EditCol>
-            <span>Membership Expiration Date:</span>
-            <EditInputs className="date" type="date" value={dateFormat()} onChange={changeDate()} />
-          </EditCol>
-
-          <hr />
-          <button style={styles} onClick={deleteAction()}>Delete</button>
-        </div>
-      </Modal>
-      <Modal
-        visible={editMembershipVisibleDelete}
-        confirmLoading={confirmLoadingDelete}
-        footer={null}
-        onCancel={handleCancelDelete}
-      >
-        <div>
-          Are you sure you want to delete this user?
-        </div>
-        <DeleteConfirmation>
-          <DeleteYes onClick={deleteUser(userId)}>Yes</DeleteYes>
-          <button onClick={handleNo()}>No</button>
-        </DeleteConfirmation>
-      </Modal>
-    </div>
-  );
-};
-
-export { Membership };*/
-
-import { Table, Input, Button, Icon } from 'antd';
-import React, { useState } from 'react';
-import { IStyles } from './IStyles';
-import { IUser } from './IUser';
-import Highlighter from 'react-highlight-words';
-
-const users: IUser[] = [
-  {
-    "id": "8f6ea01b-63b1-41b0-feaf-6603cf59d456",
-    "firstName": "MST",
-    "lastName": "ACM",
-    "email": "acm@mst.edu",
-    "membershipExpiration": null
-  },
-  {
-    "id": "1bb766b6-d237-f329-a70a-625deb254da0",
-    "firstName": "Kevin",
-    "lastName": "Schoonover",
-    "email": "ksyh3@umsystem.edu",
-    "membershipExpiration": null
-  },
-  {
-    "id": "4feafds35-7101-460e-aee8-5a0d58023abc",
-    "firstName": "Kevin",
-    "lastName": "Schoonover",
-    "email": "schoonoverkevinm@gmail.com",
-    "membershipExpiration": "2020-03-04T07:01:09.118Z"
-  },
-];
-
-const styles: IStyles = {
-  display: 'inline-block',
-  cursor: 'pointer',
-  marginLeft: '9px'
-};
-
-const Membership: React.FC<{}> = () => {
-  const [searchText, setSearchText] = useState<string>('');
-  const [searchedColumn, setSearchedColumn] = useState<string>(''); //at least, I think it's a string
-  const [searchInput, setSearchInput] = useState<any>('');
-
-  /*const statusActive: (expirationDate: string) => string = (expirationDate: string)=> {
-    const currentDate: Date = new Date();
-    const expDate: Date = new Date(expirationDate);
-  
-    if(expirationDate === null) {
-      return "Not Member";
-    }
-    else if(currentDate <= expDate) {
-      return "Active";
-    }
-    else {
-      return "Invalid";
-    }
-  }*/
-  
-  const dateFormat: (expirationDate: string | null) => string = (expirationDate: string | null) => {
-    if(expirationDate === null) {
-      return "N/A";
-    }
-    else {
-      return expirationDate.toString().slice(0, 10);
-    }
-  }
-  
-  /*const saveAction: Function = (id: string) => {
-    let dateInputs: any = document.getElementsByClassName("date");
-
-    return (): void => {
-      for (let i = 0; i < usersBase.length; i++) {
-        if (usersBase[i].id === id) {
-          usersBase[i].membershipExpiration = dateInputs[i].value;
-          setUserState(usersBase);
-          break;
-        }
-      }
-    }
-  }
-  
-  const deleteAction: Function = (id: string) => {
-=======
-  const changeDate: Function = () => {
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> Removed unnecessary comments
-=======
-    console.log("change date called");
->>>>>>> Made some progress integrating backend
-    let dateInputs: any = document.getElementsByClassName("date");
-
-=======
-    const dateInputs: any = document.getElementsByClassName("date");
->>>>>>> Added confirm
-    return (): void => {
-      for (let i = 0; i < usersBase.length; i++) {
-<<<<<<< HEAD
-        if (usersBase[i].id == id) {
-          usersBase[i].membershipExpiration = null;
-=======
-        if (usersBase[i].id == userId.toString()) {
-          usersBase[i].membershipExpiration = dateInputs[0].value;
-          break;
-        }
-=======
   const changeDate: (date: any, dateString: string)=> void = (date: any, dateString: string) => {
-<<<<<<< HEAD
-    setDateFromUsers(false);
-
-    setDatePickerStatus(date); //ignore this, date is required to be used by typescript
-    setDatePickerStatus(dateString);
-<<<<<<< HEAD
-    console.log(datePickerStatus);
-
-    for (let i = 0; i < usersBase.length; i++) {
-      if (usersBase[i].id == userId.toString()) {
-        usersBase[i].membershipExpiration = datePickerStatus;
-        break;
->>>>>>> Various fixes
-      }
-    }
-=======
->>>>>>> Fixed saveAction issue
-=======
     setCurExpDate(date); //ignore this, date is required to be used by typescript
     setCurExpDate(dateString);
->>>>>>> Refactored some stuff into useEffect format
   }
 
   const saveAction: Function = () => {
     return (): void => {
       for (let i = 0; i < usersBase.length; i++) {
-<<<<<<< HEAD
-        if (usersBase[i].id == userId.toString()) {
-<<<<<<< HEAD
-          updateShirtReceived(usersBase[i].shirtReceived, usersBase[i].id)
-          break;
-        }
-      }
-
-      for (let i = 0; i < usersBase.length; i++) {
-        if (usersBase[i].id == userId.toString()) {
-<<<<<<< HEAD
-          updateExpirationDate(dateInputs[0].value, usersBase[i].id);
->>>>>>> Added mutations/fixed various backend issues
-=======
-=======
-=======
         if (usersBase[i].id === userId.toString()) {
->>>>>>> Fixed checkbox issue
           updateShirtReceived(usersBase[i].shirtReceived, usersBase[i].id);
-<<<<<<< HEAD
->>>>>>> Fixed saveAction issue
-          updateExpirationDate(datePickerStatus);
->>>>>>> Various fixes
-          setUserState(usersBase);
-<<<<<<< HEAD
-          dateInputs[i].value = "";
-=======
-          usersBase[i].membershipExpiration = datePickerStatus;
-<<<<<<< HEAD
->>>>>>> Fixed saveAction issue
-=======
-          usersBase[i].shirtReceived = checkboxShirtStatus;
->>>>>>> Fixed checkbox issue
-=======
           updateExpirationDate(curExpDate);
           setUserState(usersBase);
           usersBase[i].membershipExpiration = curExpDate;
           usersBase[i].shirtReceived = curShirtStatus;
->>>>>>> Refactored some stuff into useEffect format
           break;
         }
       }
@@ -702,67 +260,15 @@ const Membership: React.FC<{}> = () => {
     }
   }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const changeDate: Function = (id: string) => {
-    let dateInputs: any = document.getElementsByClassName("date");
-
-    return (): void => {
-      for (let i = 0; i < usersBase.length; i++) {
-        if (usersBase[i].id == id) {
-          usersBase[i].membershipExpiration = dateInputs[i].value;
-          setUserState(usersBase);
-          break;
-        }
-      }
-    }
-=======
-  /*const changeShirtReceived: any = (newShirtReceived: boolean) => {
-    updateShirtReceived({
-      variables: {received: newShirtReceived, id: userId}
-    })
-=======
-  const changeShirtReceived: any = () => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    console.log("change shirt received called");
->>>>>>> Made some progress integrating backend
-=======
->>>>>>> Added confirm
-=======
-    setCheckboxShirtStatus(!checkboxShirtStatus);
-
->>>>>>> Various fixes
-    for (let i = 0; i < usersBase.length; i++) {
-      if (usersBase[i].id == userId)
-      {
-        usersBase[i].shirtReceived = !usersBase[i].shirtReceived;
-      }
-    }
-=======
   const changeShirtReceived: Function = () => {
-<<<<<<< HEAD
-    setCheckboxShirtStatus(!checkboxShirtStatus);
-    setShirtStatusFromUsers(false);
->>>>>>> Fixed checkbox issue
-=======
     setCurShirtStatus(!curShirtStatus);
->>>>>>> Refactored some stuff into useEffect format
   }
 
-<<<<<<< HEAD
-  const displayShirtReceived: any = (shirtReceived: boolean) => {
-    return (shirtReceived ? "Received" : "Not Received");
->>>>>>> Added mutations/fixed various backend issues
-  }*/
-=======
   const displayShirtReceived: Function = (shirtReceived: boolean) => {
     if(shirtReceived)
       return "Received";
     return "Not Received";
   }
->>>>>>> Made some progress integrating backend
 
   const resetAllShirts: Function = () => {
     updateResetShirts();
@@ -873,15 +379,6 @@ const Membership: React.FC<{}> = () => {
       ...getColumnSearchProps('email'),
     },
     {
-      title: 'Activation',
-      key: 'activation',
-      render: (record: any) => (
-        <span>
-          
-        </span>
-      )
-    },
-    {
       title: 'Status',
       key: 'status',
       render: (record: IUser) => (
@@ -895,62 +392,24 @@ const Membership: React.FC<{}> = () => {
       key: 'expiration',
       render: (record: IUser) => (
         <span>
-<<<<<<< HEAD
-<<<<<<< HEAD
-          {dateFormat(record.membershipExpiration)}
-=======
-          {record.membershipExpiration}
->>>>>>> Various fixes
-=======
           {formatDateString(record.membershipExpiration)}
->>>>>>> Various fixes
         </span>
       )
     },
     {
       title: 'Edit',
       key: 'edit',
-<<<<<<< HEAD
-<<<<<<< HEAD
-      render: (/*record: IUser*/) => (
-        <span>
-          <button style={styles}>Edit</button>
-        </span>
-=======
-      render: (record: any) => (
-=======
       render: (record: IUser) => (
->>>>>>> Fixed some any types
         <button
           style={styles}
           onClick={() => {
-<<<<<<< HEAD
-          handleVisibility();
-          setUserId(record.id);
-<<<<<<< HEAD
-        }}>Edit</button>
->>>>>>> Added mutations/fixed various backend issues
-=======
-=======
             setUserId(record.id);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
             handleVisibility();
->>>>>>> Various fixes
-=======
->>>>>>> Refactored some stuff into useEffect format
-=======
-            console.log("clicked");
->>>>>>> Fixed date render issue
-=======
             setArbitraryEditToggle(!arbitraryEditToggle);
->>>>>>> Completed membership tool
         }}
         >
           Edit
         </button>
->>>>>>> Added confirm
       )
     },
     {
@@ -966,19 +425,10 @@ const Membership: React.FC<{}> = () => {
 
   return(
     <div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-       <Table columns={columns} dataSource={users} />;
-=======
-=======
       {createNameDataIndex()}
 
-<<<<<<< HEAD
->>>>>>> Allowed for full name search
-=======
       <ShirtResetButton style={styles} onClick={() => resetAllShirts()}>Reset Shirt Status</ShirtResetButton>
 
->>>>>>> Various fixes
       <Table dataSource={usersBase} columns={columns} />
       <Modal
         visible={editMembershipVisible}
@@ -1024,7 +474,6 @@ const Membership: React.FC<{}> = () => {
           <button onClick={handleNo()}>No</button>
         </DeleteConfirmation>
       </Modal>
->>>>>>> Removed unnecessary comments
     </div>
   );
 }
