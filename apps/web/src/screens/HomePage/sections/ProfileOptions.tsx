@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 import { useAuth0 } from "../../../utils/react-auth0-wrapper";
 
-import { Options } from "../sections/Options";
+import { Options } from "./Options";
 
-const Thing = styled.div`
+const DropdownWrapper = styled.div`
   position: relative;
 `
 
@@ -31,7 +31,7 @@ const Picture = styled.img`
   border-radius: 50%;
 `
 
-const Something = styled.button`
+const ProfileDisplay = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,14 +62,14 @@ const ProfileOptions: React.FC<{}> = (): JSX.Element => {
   const [down, setDown] = React.useState(false);
 
   return (
-    <Thing>
-      <Something onClick={() => {if (down) {setDown(false)} else {setDown(true)}}}>
+    <DropdownWrapper>
+      <ProfileDisplay onClick={() => {if (down) {setDown(false)} else {setDown(true)}}}>
 	{ !loading && <Picture src={user.picture} alt="Profile"></ Picture> }
 	{ !loading && <Name>{user.name}</ Name> }
 	{ down ? <TriangleDown /> : <TriangleRight /> }
-      </ Something>
+      </ ProfileDisplay>
       { down && <Options /> }
-    </Thing>
+    </DropdownWrapper>
   );
 };
 

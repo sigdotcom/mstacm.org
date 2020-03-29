@@ -18,34 +18,36 @@ const Dropdown = styled.div`
   color: black;
   margin-top: .5em;
   z-index: 1000;
+  text-align: center;
+
+  a {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    width: 100%;
+    padding: .3em 0;
+  }
 `;
 
 const Profile = styled.a`
   border-radius: 8px 8px 0 0;
-  padding: .3em 0;
-  color: black;
-  font-weight: bold;
-  background-color: white;
 `
 
-const SignOut = styled.button`
+const LogoutBtn = styled.a`
   border-radius: 0 0 8px 8px;
-  font-weight: bold;
-  padding: .3em 0;
-  border: none;
-  background-color: white;
-
-  &:hover {
-    cursor: pointer;
 `
 
 const Options: React.FC<{}> = (): JSX.Element => {
   const { logout } = useAuth0();
 
+  const logoutClick = () => {
+    logout({ returnTo: window.location.origin });
+  };
+
   return (
     <Dropdown>
       <Profile href={`https://profile.mstacm.org/`}>Profile</Profile>
-      <SignOut onClick={() => logout({ returnTo: window.location.origin })}>Log Out</SignOut>
+      <LogoutBtn onClick={logoutClick}>Log Out</LogoutBtn>
     </ Dropdown>
   );
 };
