@@ -7,6 +7,8 @@ import { useAuth0 } from "../../../utils/react-auth0-wrapper";
 
 import { config } from "../../../config";
 
+import { ProfileOptions } from "./ProfileOptions";
+
 const BG = styled.div`
   height: 120px;
   width: 100%;
@@ -71,8 +73,6 @@ const Nav: React.FC<{}> = (): JSX.Element => {
     ? (): void => logout({ returnTo: window.location.origin })
     : async (): Promise<void> => loginWithRedirect({});
 
-  const signInPrompt: string = isAuthenticated ? "SIGN OUT" : "SIGN IN";
-
   return (
     <BG>
       <PageConstraint>
@@ -94,7 +94,9 @@ const Nav: React.FC<{}> = (): JSX.Element => {
               </Link>
             </MenuItems>
           </NavRow>
-          <SignIn onClick={onClick}>{signInPrompt}</SignIn>
+	  {isAuthenticated ?
+	  <ProfileOptions /> :
+	  <SignIn onClick={onClick}>Sign In</SignIn>}
         </Wrapper>
       </PageConstraint>
     </BG>
