@@ -1,7 +1,6 @@
 - hosts: all
   roles:
     - common
-    - docker
     - api
   vars_files:
-    - "group_vars/api-prod.yml"
+    - "group_vars/secrets.yml"
