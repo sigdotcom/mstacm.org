@@ -1,7 +1,7 @@
 ---
 version: "3.0"
 services:
-  traefik:
+  phoenix_traefik:
     image: "traefik:v2.1.0"
     command:
       - --entrypoints.web.address=:80
@@ -19,7 +19,7 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./acme.json:/acme.json"
-  web:
+  phoenix_web:
     image: acmweb/api
     labels:
       - traefik.enable=true
