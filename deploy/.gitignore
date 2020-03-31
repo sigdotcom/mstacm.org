@@ -12,6 +12,7 @@ crash.log
 # .tfvars files are managed as part of configuration and so should be included in
 # version control.
 #
+terraform.tfvars
 secrets.tfvars
 secrets.auto.tfvars
 
@@ -34,4 +35,5 @@ digital_ocean.ini
 secrets.yml
 *.retry
 inventory
-./keys/digitalocean-mstacm
+.keys/digitalocean-mstacm
+.keys/deploy-master-mstacm

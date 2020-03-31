@@ -1,30 +1,28 @@
-version: '3'
-
+---
+version: "3.0"
 services:
-  phoenix_web:
-    image: acmweb/api
-  phoenix_nginx:
-    image: linuxserver/letsencrypt
-    container_name: letsencrypt
-    cap_add:
-      - NET_ADMIN
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Chicago
-      - URL=api.mstacm.org
-      - SUBDOMAINS=,
-      - VALIDATION=http
-      - DNSPLUGIN=cloudflare #optional
-      # - DUCKDNSTOKEN=token #optional
-      - EMAIL=schoonoverkevinm@gmail.com #optional
-      - DHLEVEL=2048 #optional
-      - ONLY_SUBDOMAINS=false #optional
-      # - EXTRA_DOMAINS=extradomains #optional
-      - STAGING=false #optional
+  traefik:
+    image: "traefik:v2.1.0"
+    command:
+      - --entrypoints.web.address=:80
+      - --entrypoints.secureweb.address=:443
+      - --providers.docker=true
+      - --api
+      - --certificatesResolvers.tls_resolver.acme.email=acmweb@mst.edu
+      - --certificatesResolvers.tls_resolver.acme.storage=/acme.json
+      - --certificatesResolvers.tls_resolver.acme.httpChallenge.entryPoint=web
+    labels:
+      - traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)
+      - traefik.http.routers.http-catchall.entrypoints=web
+      - traefik.http.routers.http-catchall.middlewares=redirect-to-https@docker
+      - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
     volumes:
-      - ./.docker/letsencrypt:/config
-    ports:
-      - 443:443
-      - 80:80
-    restart: unless-stopped
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./acme.json:/acme.json"
+  web:
+    image: acmweb/api
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.api.rule=Host(`api.mstacm.org`)
+      - traefik.http.routers.api.tls=true
+      - traefik.http.routers.api.tls.certresolver=tls_resolver

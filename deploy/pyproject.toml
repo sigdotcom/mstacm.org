@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "deploy"
+version = "1.0.0"
+description = "Python depedencies necessary for deploying the application and linting the deployment components"
+authors = ["Kevin Schoonover <schoonoverkevinm@gmail.com>"]
+license = "MPL-2.0"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+ansible = "^2.9.6"
+
+[tool.poetry.dev-dependencies]
+ansible-lint = "^4.2.0"
+jinja2 = "^2.11.1"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
