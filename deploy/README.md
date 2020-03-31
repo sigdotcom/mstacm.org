@@ -1,4 +1,4 @@
-# Deployment
+# Deploy
 Automated deployment of the \*.mstacm.org application stack using
 [ansible][ansible-url] and [terraform][terraform-url]. The installation
 instructions below will assume prior knowledge of [ansible][ansible-url] and
@@ -6,25 +6,15 @@ instructions below will assume prior knowledge of [ansible][ansible-url] and
 machine. If you have a Windows computer, please use a linux jumpbox such as
 `acmvm1.srv.mst.edu`.
 
-<!-- TABLE OF CONTENTS -->
+
 ## Table of Contents
++ [Requirements](#requirements)
++ [Installation](#installation)
 
-* [Getting Started](#getting-started)
-  * [Prerequisites](#prerequisites)
-  * [Installation](#installation)
-* [Usage](#usage)
-* [Terraform Cloud](#terraform-cloud)
-
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-To get a local copy up and running follow these simple steps.
-
-### Prerequisites
-+ [Git](https://git-scm.com/download/)
-+ [Ansible][ansible-url]
-+ [Terraform][terraform-url]
+## Requirements
++ [Terraform](https://www.terraform.io/docs/index.html)
++ [git](https://git-scm.com/downloads)
++ [ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 + Make sure you have access to the mstacm team in
   [DigitalOcean][digitalocean-url]. Ask the chair of ACM Web for access.
 + Make sure you have access to the mstacm team in [Netlify][netlify-url]. Ask
@@ -33,112 +23,128 @@ To get a local copy up and running follow these simple steps.
   [Terraform Cloud][terraform-cloud-url]. Ask the chair of ACM Web for access.
 
 
-### Installation
-1. Clone the mstacm.org repository using Git Bash:
-```sh
-# Make sure to setup ssh keys on your github account
-# https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account
-git clone git@github.com:sigdotcom/mstacm.org.git
-```
-
-2. Navigate into the repository directory:
-```sh
-cd mstacm.org
-```
-
-3. Download / make sure you have all the [prerequisites listed](#prerequisites).
-
-## Usage
-The following section will describe step-by-step how to manually deploy the
-application once in the `deploy` folder. In production, the first portion (up
-until the ansible part) should all be managed by [Terraform
-Cloud][terraform-cloud-url] and should not really come in to play. If you are
-looking for the ansible instructions, please read through all the steps just
-in case **NOTE**: make sure you read the directions throughly before executing
-it. Some directions have notes and multiple parts that must be done.
-
-1. Navigate to the deploy directory:
-    ```sh
-    cd deploy
+## Installation
+1. Clone the repository to your local computer by running: 
+    ```bash
+    # Make sure to setup ssh keys on your github account
+    # https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account
+    git clone https://github.com/sigdotcom/mstacm.org.git
     ```
 
-2. Generate a ssh key at `~/.ssh/mstacm-digitalocean` to access the virtual
-   machines (where `{HOME_DIR}` is the actual path to your home directory):
-    ```sh
-    $ ssh-keygen -t rsa -b 4096
-    Generating public/private rsa key pair.
-    Enter file in which to save the key ({HOME_DIR}/.ssh/id_rsa): {HOME_DIR}/.ssh/mstacm-digitalocean
-    ...
+2. Generate a new (or reuse an old) personal access token by navigating to the
+   [Applications & API section](https://cloud.digitalocean.com/account/api) of
+   the DigitalOcean control panel with read AND write permissions. Be sure to
+   save this token.
+
+3. Navigate to the `deploy` directory in the repo:
+    ```bash
+    cd ./mstacm.org/deploy
     ```
 
-3. Generate a DigitalOcean Access Token with the [How to Create a Personal
-   Access Token documentation][digitalocean-access-token-howto-url] with
-   read/write scopes. Save the access token for later. **NOTE**: make sure you are
-   in the mstacm project in DigitalOcean (See [prerequisites](#prerequisites)
-   for more details).
-
-4. Generate a [DigitalOcean spaces][digitalocean-spaces-url] access key and
-   secret by following the [Manage Admin Access to Spaces
-   documentation][digitalocean-spaces-howto-url].
-   Save the access key and secret for later. **NOTE**: make sure you are in the
-   mstacm project in DigitalOcean (See [prerequisites](#prerequisites) for more
-   details).
-
-5. Copy `terraform.tfvars.template` to `terraform.tfvars`
-    ```sh
-    cp terraform.tfvars.template terraform.tfvars
+3. Copy the `secrets.examples.tfvars` into `secrets.auto.tfvars`:
+    ```bash
+    cp secrets.examples.tfvars secrets.auto.tfvars
     ```
 
-6. Add the DigitalOcean Access Token and Spaces keys to the appropriate
-   variables in `terraform.tfvars`
+   The `*.auto.tfvars` is used to automatically apply the variables to any run
+   of terraform
 
-7. Open up the [mstacm project][netlify-project-url] in [netlify][netlify-url].
+4. Populate the `secrets.auto.tfvars` with the appropriate values.
 
-8. Navigate to the [domains tab][netlify-dns-url] and select `mstacm.org`.
+5. Copy the `digital_ocean.examples.ini` into `digital_ocean.ini`:
+    ```bash
+    cp digital_ocean.examples.tfvars digital_ocean.ini
+    ```
 
-9. Add NS records for `api.mstacm.org` that point to the [DigitalOcean
-   Nameservers][digitalocean-nameservers] to netlify DNS records by clicking the
-   **Add new record** button. The properties should look like: ![New DNS
-   Record](./imgs/new_dns_record.png)
+6. Populate the `digital_ocean.ini` with the appropriate values.
 
-   If completed properly it should look like (as of 2019-10-27):
-   ![NS Records](./imgs/ns_domains.png)
+7. (optional) Generate a ssh key with the following path
+   `./.keys/digitalocean-mstacm` (or your own ssh key, but make sure to add it
+   to the terraform file):
+    ```bash
+    ssh-keygen -t rsa -b 4096 -m PEM -f ./.keys/digitalocean-mstacm
+    ```
+7. (optional) Generate a ssh key with the following path
+   `./.keys/deploy-master-mstacm` (or your own ssh key, but make sure to add it
+   to the terraform file):
+    ```bash
+    ssh-keygen -t rsa -b 4096 -m PEM -f ./.keys/deploy-master-mstacm
+    ```
 
-10. Request access to the [Terraform Cloud][terraform-cloud-url] organization
-    from the chair of ACM Web.
+8. (optional) Add this SSH Key to the [CircleCI
+   Project](https://circleci.com/gh/kevinschoonover/kschoon.me/edit#ssh)
 
-11. Generate a [Terraform Cloud API Token][terraform-cloud-api-token-url] and
-    configure terraform CLI to use the API Token with
-    [Credentials][terraform-cloud-credentials-url].
+9. (optional) Configure the `add_ssh_key` command in the `.circleci/config.yml`
+   to use the appropriate fingerprint
 
-12. Initialize terraform:
-    ```sh
+10. (optional) Add the ssh private key to circleci by following 
+    [these instructions](https://circleci.com/docs/2.0/add-ssh-key/#steps)
+
+11. Request access to the [mstacm organization](https://app.terraform.io/app/mstacm/workspaces) 
+    on [Terraform Cloud](https://app.terraform.io)
+
+12. Generate a terraform cloud access token using their CLI:
+    ```bash
+    terraform login
+    ```
+
+13. Initialize terraform:
+    ```bash
     terraform init
     ```
 
-13. (optional, but recommended) Create a backup of the current database:
+14. Switch to the 'developement' terraform workspace:
+    ```bash
+    terraform workspace select development
+    ```
+
+15. Generate a DigitalOcean Access Token with the [How to Create a Personal
+    Access Token documentation][digitalocean-access-token-howto-url] with
+    read/write scopes. Save the access token for later. **NOTE**: make sure you
+    are in the mstacm project in DigitalOcean (See
+    [prerequisites](#prerequisites) for more details).
+
+16. Generate a [DigitalOcean spaces][digitalocean-spaces-url] access key and
+    secret by following the [Manage Admin Access to Spaces
+    documentation][digitalocean-spaces-howto-url].  Save the access key and
+    secret for later. **NOTE**: make sure you are in the mstacm project in
+    DigitalOcean (See [prerequisites](#prerequisites) for more details).
+
+17. 
+
+
+## Usage
+To **spin up** infrastructure, simply run:
+    ```bash
+    terraform apply
+    ```
+
+To **tear down** infrastructure that has been created, run:
+    ```bash
+    terraform destroy
+    ```
+
+To **configure provisioned machines**, run:
+    ```bash
+    ansible-playbook -i digital_ocean.py site.yml
+    ```
+
+To **deploy the application the application end-to-end**, run:
+1. (optional, but recommended) Create a backup of the current database:
     ```sh
     pg_dump <CONNECTION_STRING_FOR_DATABASE> | \
         gzip > ./dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql.gz
     ```
 
-14. Run terraform (after this action, you will see a new `production` file
-    appear, this will be important for ansible):
+2. Switch to the `production` terraform workspace:
+    ```
+    terraform workspace select production
+    ```
+
+2. Run terraform:
     ```sh
     terraform apply
     ```
-
-11. Navigate to the DigitalOcean dashboard in the mstacm team and click the
-    **Databases** tab.
-
-12. Click on the `mstacm-postgres-cluster`. This should look like:
-    ![Database Page](./imgs/digitalocean_database_page.png)
-
-13. Configure the **Trusted Sources** to be the droplet created with terraform
-    `api.mstacm.org`. If completed correctly, this should look like:
-    ![Trusted Sources](./imgs/trusted_sources.png)
-
-14. Create the `phoenix` database and user in the **Users & Databases** tab.
 
 15. (optional, but recommended) Upload an old backup of the database to the new
     database `phoenix` database:
@@ -158,7 +164,7 @@ it. Some directions have notes and multiple parts that must be done.
     
 17. Run the ansible playbook:
     ```
-    ansible-playbook -i production site.yml
+    ansible-playbook -i digital_ocean.py site.yml
     ```
 
 ## Terraform Cloud
