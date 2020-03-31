@@ -152,14 +152,17 @@ To **deploy the application the application end-to-end**, run:
     cat <YOUR_BACKUP_FILE> | gzip -d | psql <YOUR_CONNETION_STRING_TO_DATABASE>
     ```
 
-16. Edit the `groups_vars/api-prod.yml` file with the appropriate environment
-    variables. Tips on where the acquire the correct values are found in the
-    comments of this file. The file is encrypted using [Ansible
-    Vault][ansible-vault-url] so that it can be automatically deployed by [Circle
-    CI][circle-ci-url]. To edit, get the vault password from the ACM Bitwarden
-    account or ask the Chair of ACM Web and use the following command:
+16. Edit the `groups_vars/secrets.yml` file with the appropriate environment
+    variables. Please note that not all of these values are strictly 'secret';
+    however, they are all kept in the encrypted 'secret.yml' to prevent the
+    uninitiated from pushing production secrets. Tips on where to acquire the
+    correct values are found in the comments of this file. The file is encrypted
+    using [Ansible Vault][ansible-vault-url] so that it can be automatically
+    deployed by [Circle CI][circle-ci-url]. To edit, get the vault password from
+    the ACM Bitwarden account or ask the Chair of ACM Web and use the following
+    command:
     ```
-    ansible-vault edit group_vars/api-prod.yml
+    ansible-vault edit group_vars/secrets.yml
     ```
     
 17. Run the ansible playbook:

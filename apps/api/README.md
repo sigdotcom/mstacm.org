@@ -38,42 +38,68 @@ To get a local copy up and running follow these simple steps.
 + [Docker Compose](https://docs.docker.com/compose/install/)
 + [NodeJS](https://nodejs.org/en/)
 + [Yarn](https://yarnpkg.com/)
++ (optional) [python](https://www.python.org/downloads/) - This will allow you
+  to more easily configure the environment variables, but I will show you how to
+  do it manually.
 
 ### Installation
- 
 1. Clone the mstacm.org repository using Git Bash:
-```sh
-# Make sure to setup ssh keys on your github account
-# https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account
-git clone git@github.com:sigdotcom/mstacm.org.git
-```
+    ```sh
+    # Make sure to setup ssh keys on your github account
+    # https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account
+    git clone git@github.com:sigdotcom/mstacm.org.git
+    ```
+
 2. Navigate to the `api` directory:
-```sh
-cd api
-```
+    ```sh
+    cd api
+    ```
 
 3. Install necessary dependencies:
-```sh
-yarn install
-```
+    ```sh
+    yarn install
+    ```
 
-4. Copy the docker environment variables template into the docker environment
-   file:
-```sh
-cp .docker/web.env.default .docker/web.env
-```
+4. Configure the environment variables template using jinja2 or manually: 
+    + **With python**:
+        ```sh
+        # If you have python installed, the recommend option:
+        pip install --user j2cli
+        j2 ./.docker/web.env.default > ./.docker/web.env
+        ```
+
+    + **With sed**:
+        ```sh
+        # If you're on windows, you can use online sed with 
+        # https://sed.js.org/index.html, just place -r followed by the
+        # PATTERN into the 'command line' box (i.e. -r "s#USE#THE REAL PATTERN#g") 
+        # and web.env.default into the STDIN box 
+        PATTERN="s#=\{\{.+default\(\"?([[:alnum:]._-]+)\"?,.+#=\1#g"
+
+        cat ./.docker/web.env.default | sed -r $PATTERN > .docker/web.env
+        ```
+
+    + **Manually**:
+        ```sh
+        cp ./.docker/web.env.default ./.docker/web.env
+        # Now edit the ./.docker/web.env with the appropriate values.
+        # Instructions how are located in the file.
+        ```
+
 5. Start the docker containers using `docker-compose`:
-```sh
-docker-compose up
-```
+    ```sh
+    docker-compose up
+    ```
+
 6. If everything goes well, the last lines of output should look like:
-```bash
->>> docker-compose up
-# ... meaningless output ...
-phoenix_web_1    | Server is running, GraphQL Playground available at:
-phoenix_web_1    |
-phoenix_web_1    |       http://localhost/graphql || http://localhost:4000/graphql
-```
+    ```bash
+    >>> docker-compose up
+    # ... meaningless output ...
+    phoenix_web_1    | Server is running, GraphQL Playground available at:
+    phoenix_web_1    |
+    phoenix_web_1    |       http://localhost/graphql || http://localhost:4000/graphql
+    ```
+    
 7. Navigate to [http://localhost/graphql](http://localhost/graphql). **NOTE**:
    if you are using Docker on Windows 10 Home, you need to put the IP of your
    docker-machine instead of `localhost`. This is usually something like
