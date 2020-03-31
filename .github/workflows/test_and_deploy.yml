@@ -212,14 +212,14 @@ jobs:
 
     - name: Create vault password file
       run: echo ${{ secrets.ANSIBLE_VAULT_PASSWORD }} > ~/.vault_pass
-      working-directory: ${{env.working_directory}}
+      working-directory: ${{ $env.working_directory }}
 
     - name: Copy digital_ocean.examples.ini
       run: cp digital_ocean.examples.ini digital_ocean.ini
-      working-directory: ${{env.working_directory}}
+      working-directory: ${{ env.working_directory }}
 
     - name: Deploy application with ansible
       run: poetry run ansible-playbook -i digital_ocean.py site.yml --vault-password-file ~/.vault_pass
-      working-directory: ${{env.working_directory}}
+      working-directory: ${{ env.working_directory }}
       env:
-        DO_API_TOKEN: ${{ env.DO_ACCESS_TOKEN }}
+        DO_API_TOKEN: ${{ secrets.DO_ACCESS_TOKEN }}
