@@ -599,7 +599,7 @@ export const GetCurrentEventsDocument = gql`
  * __useGetCurrentEventsQuery__
  *
  * To run a query within a React component, call `useGetCurrentEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetCurrentEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useGetCurrentEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -631,7 +631,7 @@ export const MeExpirationDocument = gql`
  * __useMeExpirationQuery__
  *
  * To run a query within a React component, call `useMeExpirationQuery` and pass it any options that fit your needs.
- * When your component renders, `useMeExpirationQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useMeExpirationQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -645,14 +645,6 @@ export const MeExpirationDocument = gql`
 export function useMeExpirationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeExpirationQuery, MeExpirationQueryVariables>) {
         return ApolloReactHooks.useQuery<MeExpirationQuery, MeExpirationQueryVariables>(MeExpirationDocument, baseOptions);
       }
-<<<<<<< HEAD:apps/web/src/generated/graphql.tsx
-export function useMeExpirationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeExpirationQuery, MeExpirationQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<MeExpirationQuery, MeExpirationQueryVariables>(MeExpirationDocument, baseOptions);
-        }
-export type MeExpirationQueryHookResult = ReturnType<typeof useMeExpirationQuery>;
-export type MeExpirationLazyQueryHookResult = ReturnType<typeof useMeExpirationLazyQuery>;
-export type MeExpirationQueryResult = ApolloReactCommon.QueryResult<MeExpirationQuery, MeExpirationQueryVariables>;
-=======
 export type DeleteEventMutationHookResult = ReturnType<typeof useDeleteEventMutation>;
 export type DeleteEventMutationResult = ApolloReactCommon.MutationResult<DeleteEventMutation>;
 export type DeleteEventMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteEventMutation, DeleteEventMutationVariables>;
@@ -674,7 +666,7 @@ export const MembersDocument = gql`
  * __useMembersQuery__
  *
  * To run a query within a React component, call `useMembersQuery` and pass it any options that fit your needs.
- * When your component renders, `useMembersQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useMembersQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -823,4 +815,3 @@ export function useDeleteMemberMutation(baseOptions?: ApolloReactHooks.MutationH
 export type DeleteMemberMutationHookResult = ReturnType<typeof useDeleteMemberMutation>;
 export type DeleteMemberMutationResult = ApolloReactCommon.MutationResult<DeleteMemberMutation>;
 export type DeleteMemberMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteMemberMutation, DeleteMemberMutationVariables>;
->>>>>>> Added mutations/fixed various backend issues:apps/admin-web/src/generated/graphql.tsx

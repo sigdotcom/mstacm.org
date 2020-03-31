@@ -1,0 +1,209 @@
+name: Test and Deploy the Application
+
+on: [push]
+
+jobs:
+  ansible_lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+    env:
+      working_directory: ./deploy
+
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install poetry
+      run: |
+        python -m pip install --upgrade pip
+        pip install poetry
+    - name: Cache poetry environments
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/pypoetry/virtualenvs # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.OS }}-python-${{ hashFiles('**/poetry.lock') }}
+        restore-keys: |
+          ${{ runner.OS }}-python-${{ hashFiles('**/poetry.lock') }}
+          ${{ runner.OS }}-python-
+          ${{ runner.OS }}-
+    - name: Install dependencies with poetry
+      run: poetry install
+      working-directory: ${{env.working_directory}}
+    - name: Lint the ansible file
+      run: poetry run ansible-lint -x 403,701 site.ymlk
+      working-directory: ${{env.working_directory}}
+
+  frontend_tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: Cache Node.js modules
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/yarn # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.OS }}-node-frontend-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.OS }}-node-frontend-${{ hashFiles('**/yarn.lock') }}
+          ${{ runner.OS }}-node-frontend-
+          ${{ runner.OS }}-
+    - name: Install dependencies
+      run: yarn --frozen-lockfile
+    - name: Run tests
+      run: CI=true yarn lerna run test
+
+  backend_tests:
+    runs-on: ubuntu-latest
+    env:
+      working_directory: ./apps/api
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: Cache Node.js modules
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/yarn # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.OS }}-node-backend-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.OS }}-node-backend-${{ hashFiles('**/yarn.lock') }}
+          ${{ runner.OS }}-node-backend-
+          ${{ runner.OS }}-
+    - name: Install dependencies
+      run: yarn --frozen-lockfile
+      working-directory: ${{env.working_directory}}
+    - name: Run tests
+      run: CI=true yarn test --passWithNoTests
+      working-directory: ${{env.working_directory}}
+
+  docker_publish:
+    needs: [backend_tests]
+
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: kschoonie/api-test
+      working_directory: ./apps/api/
+      DOCKERHUB_USERNAME: kschoonie
+
+    # if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build image
+        run: docker build . --file Dockerfile --tag image
+        working-directory: ${{env.working_directory}}
+
+      - name: Log into registry
+        run: echo "${{ secrets.DOCKERHUB_PASS }}" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
+      - name: Push image
+        run: |
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "master" ] && VERSION=latest
+
+          echo IMAGE_NAME=$IMAGE_NAME
+          echo VERSION=$VERSION
+
+          docker tag image $IMAGE_NAME:$VERSION
+          docker push $IMAGE_NAME:$VERSION
+
+  deploy:
+    needs: [docker_publish, frontend_tests, ansible_lint]
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    env:
+      working_directory: ./deploy
+      terraform_version: latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install poetry
+      run: |
+        python -m pip install --upgrade pip
+        pip install poetry
+    - name: Cache poetry environments
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/pypoetry/virtualenvs # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.OS }}-python-${{ hashFiles('**/poetry.lock') }}
+        restore-keys: |
+          ${{ runner.OS }}-python-${{ hashFiles('**/poetry.lock') }}
+          ${{ runner.OS }}-python-
+          ${{ runner.OS }}-
+    - name: Install dependencies with poetry
+      run: poetry install
+      working-directory: ${{env.working_directory}}
+    - name: "Initialize terraform"
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: ${{ env.terraform_version }}
+        tf_actions_subcommand: 'init'
+        tf_actions_working_dir: './deploy/'
+        tf_actions_cli_credentials_token: ${{ secrets.TF_CLOUD_TOKEN }}
+      env:
+        # TODO: change to production when ready
+        TF_WORKSPACE: development
+        # https://www.terraform.io/docs/commands/environment-variables.html#tf_var_name
+        TF_VAR_do_token: ${{ secrets.DO_ACCESS_TOKEN }}
+        TF_VAR_spaces_access_id: ${{ secrets.DO_SPACES_ACCESS_ID }}
+        TF_VAR_spaces_secret_key: ${{ secrets.DO_SPACES_SECRET_KEY }}
+
+    - name: 'Terraform Apply'
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: ${{ env.terraform_version }}
+        tf_actions_subcommand: 'apply'
+        tf_actions_working_dir: './deploy/'
+        tf_actions_cli_credentials_token: ${{ secrets.TF_CLOUD_TOKEN }}
+      env:
+        TF_WORKSPACE: development
+        # https://www.terraform.io/docs/commands/environment-variables.html#tf_var_name
+        TF_VAR_do_token: ${{ secrets.DO_ACCESS_TOKEN }}
+        TF_VAR_spaces_access_id: ${{ secrets.DO_SPACES_ACCESS_ID }}
+        TF_VAR_spaces_secret_key: ${{ secrets.DO_SPACES_SECRET_KEY }}
+    - name: Deploy application with ansible
+      run: poetry run ansible-playbook -i digital_ocean.py site.yml
+      working-directory: ${{env.working_directory}}

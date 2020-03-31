@@ -2,12 +2,10 @@ version: '3'
 
 services:
   phoenix_db:
-    image: "postgres:11"
+    image: "postgres:12"
     restart: unless-stopped
     ports:
       - "5432:5432"
-    networks:
-      - db_nw
     environment:
       - POSTGRES_DB=phoenix
       - POSTGRES_USER=phoenix
@@ -21,6 +19,8 @@ services:
       - ./api:/server
     environment:
       - DB_HOST=phoenix_db
+      - DB_PORT=5432
+      - DB_TABLE=phoenix
       - DB_USERNAME=phoenix
       - DB_PASSWORD=phoenix
     depends_on:

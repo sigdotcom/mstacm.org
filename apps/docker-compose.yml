@@ -1,31 +1,30 @@
-version: '3'
-
-# See docker-compose.override.yml to see the 
-# additional development configuration 
+# See docker-compose.override.yml to see the
+# additional development configuration
+---
+version: "3.0"
 services:
-  phoenix_web:
-    restart: unless-stopped
-    dns: 
-      - 1.1.1.1 
-      - 8.8.8.8
-    networks:
-      - db_nw
-      - web_nw
-    env_file:
-      - ./api/.docker/web.env
-  phoenix_nginx:
-    image: "nginx"
-    restart: unless-stopped
+  traefik:
+    image: "traefik:v2.1.0"
+    command:
+      - --entrypoints.web.address=:80
+      - --providers.docker=true
+      - --api.insecure
+      - --accessLog
     ports:
       - "80:80"
+      - "443:443"
+      - "8080:8080"
     volumes:
-      - ./.docker/conf.d:/etc/nginx/conf.d
-    networks:
-      - web_nw
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
     depends_on:
       - phoenix_web
-networks:
-  db_nw:
-    driver: bridge
-  web_nw:
-    driver: bridge
+  phoenix_web:
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    env_file:
+      - ./api/.docker/web.env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.api.rule=Host(`localhost`)

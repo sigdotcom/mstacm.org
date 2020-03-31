@@ -78,7 +78,7 @@ resource "digitalocean_domain" "resumes" {
 
 # Create a DigitalOcean managed Let's Encrypt Certificate
 resource "digitalocean_certificate" "resumes" {
-  name    = "resumes-cert"
+  name    = terraform.workspace == "production" ? "resumes-cert" : "develop-resumes-cert"
   type    = "lets_encrypt"
   domains = [digitalocean_domain.resumes.name]
 }
@@ -90,7 +90,7 @@ resource "digitalocean_domain" "cdn" {
 
 # Create a DigitalOcean managed Let's Encrypt Certificate
 resource "digitalocean_certificate" "cdn" {
-  name    = "assets-cert"
+  name    = terraform.workspace == "production" ? "assests-cert" : "develop-assets-cert"
   type    = "lets_encrypt"
   domains = [digitalocean_domain.cdn.name]
 }
@@ -102,7 +102,7 @@ resource "digitalocean_certificate" "cdn" {
 # providers
 
 # Point mstacm.org to netlify
-resource "digitalocean_record" "cname-admin" {
+resource "digitalocean_record" "a-default" {
   domain   = digitalocean_domain.default.name
   type     = "A"
   name     = "@"
@@ -110,7 +110,7 @@ resource "digitalocean_record" "cname-admin" {
 }
 
 # Point www.mstacm.org to netlify
-resource "digitalocean_record" "cname-admin" {
+resource "digitalocean_record" "a-www" {
   domain   = digitalocean_domain.default.name
   type     = "A"
   name     = "www"
