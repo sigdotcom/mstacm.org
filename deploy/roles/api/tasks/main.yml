@@ -16,7 +16,6 @@
     project_src: /opt/mstacm.org/apps
     state: present
     pull: yes
-    build: yes
     files:
       - docker-compose.yml
       - docker-compose.production.yml
