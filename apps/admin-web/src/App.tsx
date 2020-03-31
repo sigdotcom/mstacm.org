@@ -4,12 +4,11 @@ import { Layout, Menu, PageHeader, Spin } from "antd";
 
 import { ToolList } from "./components/pages";
 import { Events } from "./components/pages/tools";
-import { Membership } from "./components/pages/tools/Membership"
+import { Membership } from "./components/pages/tools/Membership";
 import { config } from "./config";
 import "./static/css/App.css";
 
 import { useAuth0 } from "./utils/react-auth0-wrapper";
-
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -17,8 +16,8 @@ const MainContent: React.SFC<{}> = (): JSX.Element => {
   return (
     <Switch>
       <Route exact={true} path="/" component={ToolList} />
-      <Route exact={true} path="/events" component={Events} />
-      <Route exact={true} path="/membership" component={Membership} />
+      <Route path="/events" component={Events} />
+      <Route path="/membership" component={Membership} />
     </Switch>
   );
 };
@@ -30,18 +29,18 @@ const App: React.SFC<{}> = (): JSX.Element => {
     getTokenSilently,
     loginWithRedirect,
     logout,
-    user
+    user,
   } = useAuth0();
 
   useEffect(() => {
     if (loading) {
-      return
+      return;
     }
 
     if (!isAuthenticated) {
       const fn: any = async (): Promise<void> => {
         await loginWithRedirect({
-          appState: { targetUrl: window.location.origin }
+          appState: { targetUrl: window.location.href },
         });
       };
 

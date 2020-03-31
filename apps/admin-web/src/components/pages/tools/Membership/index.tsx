@@ -117,6 +117,7 @@ const Membership: React.FC<{}> = () => {
     } else if (memberData) {
       const usersData: IUser[] = memberData.users.map((user: User) => ({
         ...user,
+        key: user.id,
         fullName: `${user.firstName} ${user.lastName}`,
       }));
       setUsers(usersData);
@@ -228,7 +229,9 @@ const Membership: React.FC<{}> = () => {
     return (): void => {
       for (let i = 0; i < users.length; i++) {
         if (users[i].id === id) {
-          updateDeleteMember(id);
+          updateDeleteMember({
+            variables: { id },
+          });
           handleCancel();
           handleVisibilityDelete();
           users.splice(i, 1);
