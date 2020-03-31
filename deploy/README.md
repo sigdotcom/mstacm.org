@@ -167,7 +167,7 @@ To **deploy the application the application end-to-end**, run:
     
 17. Run the ansible playbook:
     ```
-    ansible-playbook -i digital_ocean.py site.yml
+    ansible-playbook -i digital_ocean.py site.yml --ask-vault-pass
     ```
 
 ## Terraform Cloud
