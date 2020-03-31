@@ -9,25 +9,12 @@ const ToolList: React.SFC<{}> = (): JSX.Element => {
         <li>
           <Link to="/events">Events</Link>
         </li>
+        <li>
+          <Link to="/membership">Membership</Link>
+        </li>
       </ul>
     </div>
   );
 };
-
-/*
- * Future Routes
-        <li>
-          <Link to="/membership">Membership</Link>
-        </li>
-        <li>
-          <Link to="/sigs">SIGs</Link>
-        </li>
-        <li>
-          <Link to="/sponsors">Sponsors</Link>
-        </li>
-        <li>
-          <Link to="/products">Products</Link>
-        </li>
-*/
 
 export { ToolList };
