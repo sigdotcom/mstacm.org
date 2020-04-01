@@ -192,6 +192,15 @@ resource "digitalocean_database_user" "default" {
   name       = "phoenix"
 }
 
+resource "digitalocean_database_firewall" "default" {
+  cluster_id = digitalocean_database_cluster.default.id
+
+  rule {
+    type  = "droplet"
+    value = digitalocean_droplet.api.id
+  }
+}
+
 
 #################
 # Firewalls
