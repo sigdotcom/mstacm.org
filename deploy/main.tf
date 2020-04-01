@@ -255,29 +255,29 @@ resource "digitalocean_firewall" "mstacm-firewall" {
 # Spaces
 #################
 # Space for storing all CDN files
-# resource "digitalocean_spaces_bucket" "cdn" {
-#   name   = terraform.workspace == "production" ? "mstacm-cdn" : "mstacm-cdn-develop"
-#   region = "nyc3"
-# }
-# 
-# # Add a CDN endpoint with a custom sub-domain to the assets bucket
-# resource "digitalocean_cdn" "cdn" {
-#   origin         = digitalocean_spaces_bucket.cdn.bucket_domain_name
-#   custom_domain  = digitalocean_domain.cdn.name
-# #  certificate_id = digitalocean_certificate.cdn.id
-# }
-# 
-# resource "digitalocean_spaces_bucket" "resumes" {
-#   name   = terraform.workspace == "production" ? "mstacm-resumes" : "mstacm-resumes-develop"
-#   region = "nyc3"
-# }
-# 
-# # Add a CDN endpoint with a custom sub-domain to the assets bucket
-# resource "digitalocean_cdn" "resumes" {
-#   origin         = digitalocean_spaces_bucket.resumes.bucket_domain_name
-#   custom_domain  = digitalocean_domain.resumes.name
-# #  certificate_id = digitalocean_certificate.resumes.id
-# }
+resource "digitalocean_spaces_bucket" "cdn" {
+  name   = terraform.workspace == "production" ? "mstacm-cdn" : "mstacm-cdn-develop"
+  region = "nyc3"
+}
+
+# Add a CDN endpoint with a custom sub-domain to the assets bucket
+resource "digitalocean_cdn" "cdn" {
+  origin         = digitalocean_spaces_bucket.cdn.bucket_domain_name
+  custom_domain  = digitalocean_domain.cdn.name
+#  certificate_id = digitalocean_certificate.cdn.id
+}
+
+resource "digitalocean_spaces_bucket" "resumes" {
+  name   = terraform.workspace == "production" ? "mstacm-resumes" : "mstacm-resumes-develop"
+  region = "nyc3"
+}
+
+# Add a CDN endpoint with a custom sub-domain to the assets bucket
+resource "digitalocean_cdn" "resumes" {
+  origin         = digitalocean_spaces_bucket.resumes.bucket_domain_name
+  custom_domain  = digitalocean_domain.resumes.name
+#  certificate_id = digitalocean_certificate.resumes.id
+}
 
 #################
 # Projects
@@ -290,8 +290,8 @@ resource "digitalocean_project" "default" {
   environment = "Production"
   resources   = [
     digitalocean_droplet.api.urn,
-#    digitalocean_spaces_bucket.cdn.urn,
-#    digitalocean_spaces_bucket.resumes.urn,
+    digitalocean_spaces_bucket.cdn.urn,
+    digitalocean_spaces_bucket.resumes.urn,
     digitalocean_database_cluster.default.urn,
     digitalocean_domain.default.urn,
     digitalocean_domain.api.urn,
