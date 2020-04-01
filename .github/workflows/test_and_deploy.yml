@@ -212,7 +212,7 @@ jobs:
 
     - name: Create vault password file
       run: echo ${{ secrets.ANSIBLE_VAULT_PASSWORD }} > ~/.vault_pass
-      working-directory: ${{ $env.working_directory }}
+      working-directory: ${{ env.working_directory }}
 
     - name: Copy digital_ocean.examples.ini
       run: cp digital_ocean.examples.ini digital_ocean.ini
