@@ -32,7 +32,6 @@ override.tf.json
 digital_ocean.ini
 
 # ansible
-secrets.yml
 *.retry
 inventory
 .keys/digitalocean-mstacm
