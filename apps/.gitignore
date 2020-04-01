@@ -3,3 +3,6 @@
 !.docker/letsencrypt/nginx/
 .docker/letsencrypt/nginx/proxy-confs/
 .docker/letsencrypt/nginx/dhparams.pem
+
+# Private keys
+acme.json
