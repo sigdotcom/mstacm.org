@@ -18,6 +18,7 @@ variable "spaces_secret_key" {
 
 locals {
   uri = terraform.workspace == "production" ? "mstacm.org" : "devel.mstacm.org"
+  cdn_url = terraform.workspace == "production" ? "cdn.mstacm.org" : "devel-cdn.mstacm.org"
 }
 
 
@@ -71,29 +72,17 @@ resource "digitalocean_domain" "api" {
   ip_address = digitalocean_droplet.api.ipv4_address
 }
 
-# Domain name for resumes.mstacm.org
-resource "digitalocean_domain" "resumes" {
-  name       = "resumes.${local.uri}"
-}
-
-# Create a DigitalOcean managed Let's Encrypt Certificate
-# resource "digitalocean_certificate" "resumes" {
-#   name    = terraform.workspace == "production" ? "resumes-cert" : "develop-resumes-cert"
-#   type    = "lets_encrypt"
-#   domains = [digitalocean_domain.resumes.name]
-# }
-
-# Domain name for assets.mstacm.org
+# Domain name for cdn.mstacm.org
 resource "digitalocean_domain" "cdn" {
-  name       = "cdn.${local.uri}"
+  name       = local.cdn_url
 }
 
 # Create a DigitalOcean managed Let's Encrypt Certificate
-# resource "digitalocean_certificate" "cdn" {
-#   name    = terraform.workspace == "production" ? "assests-cert" : "develop-assets-cert"
-#   type    = "lets_encrypt"
-#   domains = [digitalocean_domain.cdn.name]
-# }
+resource "digitalocean_certificate" "cdn" {
+  name    = terraform.workspace == "production" ? "cdn-cert" : "develop-cdn-cert"
+  type    = "lets_encrypt"
+  domains = [digitalocean_domain.cdn.name]
+}
 
 #################
 # Domain Records
@@ -264,19 +253,7 @@ resource "digitalocean_spaces_bucket" "cdn" {
 resource "digitalocean_cdn" "cdn" {
   origin         = digitalocean_spaces_bucket.cdn.bucket_domain_name
   custom_domain  = digitalocean_domain.cdn.name
-#  certificate_id = digitalocean_certificate.cdn.id
-}
-
-resource "digitalocean_spaces_bucket" "resumes" {
-  name   = terraform.workspace == "production" ? "mstacm-resumes" : "mstacm-resumes-develop"
-  region = "nyc3"
-}
-
-# Add a CDN endpoint with a custom sub-domain to the assets bucket
-resource "digitalocean_cdn" "resumes" {
-  origin         = digitalocean_spaces_bucket.resumes.bucket_domain_name
-  custom_domain  = digitalocean_domain.resumes.name
-#  certificate_id = digitalocean_certificate.resumes.id
+  certificate_id = digitalocean_certificate.cdn.id
 }
 
 #################
@@ -291,11 +268,9 @@ resource "digitalocean_project" "default" {
   resources   = [
     digitalocean_droplet.api.urn,
     digitalocean_spaces_bucket.cdn.urn,
-    digitalocean_spaces_bucket.resumes.urn,
     digitalocean_database_cluster.default.urn,
     digitalocean_domain.default.urn,
     digitalocean_domain.api.urn,
-    digitalocean_domain.resumes.urn,
     digitalocean_domain.cdn.urn,
   ]
 }
