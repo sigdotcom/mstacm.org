@@ -109,9 +109,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      IMAGE_NAME: kschoonie/api-test
+      IMAGE_NAME: acmweb/api
       working_directory: ./apps/api/
-      DOCKERHUB_USERNAME: kschoonie
+      DOCKERHUB_USERNAME: acmwebbuilder
 
     if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v')
     steps:
