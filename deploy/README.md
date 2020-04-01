@@ -31,10 +31,19 @@ machine. If you have a Windows computer, please use a linux jumpbox such as
     git clone https://github.com/sigdotcom/mstacm.org.git
     ```
 
-2. Generate a new (or reuse an old) personal access token by navigating to the
-   [Applications & API section](https://cloud.digitalocean.com/account/api) of
-   the DigitalOcean control panel with read AND write permissions. Be sure to
-   save this token.
+2. Generate a new (or reuse an old) DigitalOcean Access Token with the [How to
+   Create a Personal Access Token
+   documentation][digitalocean-access-token-howto-url] with read/write scopes.
+   Save the access token for later. **NOTE**: make sure you are in the mstacm
+   project in DigitalOcean (See [prerequisites](#prerequisites) for more
+   details).
+
+3. Generate a (or reuse an old) [DigitalOcean spaces][digitalocean-spaces-url]
+   access key and secret by following the [Manage Admin Access to Spaces
+   documentation][digitalocean-spaces-howto-url].  Save the access key and
+   secret for later. **NOTE**: make sure you are in the mstacm project in
+   DigitalOcean (See [prerequisites](#prerequisites) for more details).
+
 
 3. Navigate to the `deploy` directory in the repo:
     ```bash
@@ -58,27 +67,22 @@ machine. If you have a Windows computer, please use a linux jumpbox such as
 
 6. Populate the `digital_ocean.ini` with the appropriate values.
 
-7. (optional) Generate a ssh key with the following path
+7. (if you deploy the application) Generate a ssh key with the following path
    `./.keys/digitalocean-mstacm` (or your own ssh key, but make sure to add it
    to the terraform file):
     ```bash
     ssh-keygen -t rsa -b 4096 -m PEM -f ./.keys/digitalocean-mstacm
     ```
-7. (optional) Generate a ssh key with the following path
+7. (if you deploy the application) Generate a ssh key with the following path
    `./.keys/deploy-master-mstacm` (or your own ssh key, but make sure to add it
    to the terraform file):
     ```bash
     ssh-keygen -t rsa -b 4096 -m PEM -f ./.keys/deploy-master-mstacm
     ```
 
-8. (optional) Add this SSH Key to the [CircleCI
-   Project](https://circleci.com/gh/kevinschoonover/kschoon.me/edit#ssh)
-
-9. (optional) Configure the `add_ssh_key` command in the `.circleci/config.yml`
-   to use the appropriate fingerprint
-
-10. (optional) Add the ssh private key to circleci by following 
-    [these instructions](https://circleci.com/docs/2.0/add-ssh-key/#steps)
+8. (if you deploy the application) Add this SSH Key to the [Github
+   Secrets](https://github.com/sigdotcom/mstacm.org/settings/secrets) under
+   `DEPLOY_SSH_PRIV_KEY`
 
 11. Request access to the [mstacm organization](https://app.terraform.io/app/mstacm/workspaces) 
     on [Terraform Cloud](https://app.terraform.io)
@@ -98,21 +102,6 @@ machine. If you have a Windows computer, please use a linux jumpbox such as
     terraform workspace select development
     ```
 
-15. Generate a DigitalOcean Access Token with the [How to Create a Personal
-    Access Token documentation][digitalocean-access-token-howto-url] with
-    read/write scopes. Save the access token for later. **NOTE**: make sure you
-    are in the mstacm project in DigitalOcean (See
-    [prerequisites](#prerequisites) for more details).
-
-16. Generate a [DigitalOcean spaces][digitalocean-spaces-url] access key and
-    secret by following the [Manage Admin Access to Spaces
-    documentation][digitalocean-spaces-howto-url].  Save the access key and
-    secret for later. **NOTE**: make sure you are in the mstacm project in
-    DigitalOcean (See [prerequisites](#prerequisites) for more details).
-
-17. 
-
-
 ## Usage
 To **spin up** infrastructure, simply run:
     ```bash
@@ -126,7 +115,7 @@ To **tear down** infrastructure that has been created, run:
 
 To **configure provisioned machines**, run:
     ```bash
-    ansible-playbook -i digital_ocean.py site.yml
+    ansible-playbook -i digital_ocean.py site.yml --ask-vault-pass
     ```
 
 To **deploy the application the application end-to-end**, run:
@@ -169,6 +158,21 @@ To **deploy the application the application end-to-end**, run:
     ```
     ansible-playbook -i digital_ocean.py site.yml --ask-vault-pass
     ```
+
+## Github Actions
+You should very rarely need to manually deploy / configure the application
+unless things are seriously broken. The entire deployment pipeline will
+automatically run using [Github Actions](https://github.com/features/actions)
+whenever there is a push to the master branch. You can checkout the
+`.github/workflows/` folder in the root of this repository for more information
+about what is explicitly run and should act as good documentation of how to
+deploy manually.
+
+Github Actions also acts as our continuous integration (CI) platform by running
+unit tests on the repository of every push to make sure things are broken. The
+power of the CI system to prevent bugs is directly proportional to the quality
+and quantity of tests written so keep that in mind when you 'will write your
+tests another day'.
 
 ## Terraform Cloud
 Our terraform instance is setup to use [Terraform Cloud][terraform-cloud-url] as
