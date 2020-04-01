@@ -1,0 +1,4 @@
+---
+API_INSTALLATION_DIR: "/opt/mstacm.org"
+API_USER: "mstacm_api"
+ACME_FILE_PATH: "{{ API_INSTALLATION_DIR }}/apps/acme.json"

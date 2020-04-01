@@ -72,16 +72,11 @@ resource "digitalocean_domain" "api" {
   ip_address = digitalocean_droplet.api.ipv4_address
 }
 
-# Domain name for cdn.mstacm.org
-resource "digitalocean_domain" "cdn" {
-  name       = local.cdn_url
-}
-
 # Create a DigitalOcean managed Let's Encrypt Certificate
 resource "digitalocean_certificate" "cdn" {
   name    = terraform.workspace == "production" ? "cdn-cert" : "develop-cdn-cert"
   type    = "lets_encrypt"
-  domains = [digitalocean_domain.cdn.name]
+  domains = [local.cdn_url]
 }
 
 #################
@@ -245,6 +240,7 @@ resource "digitalocean_firewall" "mstacm-firewall" {
 #################
 # Space for storing all CDN files
 resource "digitalocean_spaces_bucket" "cdn" {
+  acl = "public-read"
   name   = terraform.workspace == "production" ? "mstacm-cdn" : "mstacm-cdn-develop"
   region = "nyc3"
 }
@@ -252,7 +248,7 @@ resource "digitalocean_spaces_bucket" "cdn" {
 # Add a CDN endpoint with a custom sub-domain to the assets bucket
 resource "digitalocean_cdn" "cdn" {
   origin         = digitalocean_spaces_bucket.cdn.bucket_domain_name
-  custom_domain  = digitalocean_domain.cdn.name
+  custom_domain  = local.cdn_url
   certificate_id = digitalocean_certificate.cdn.id
 }
 
@@ -271,7 +267,6 @@ resource "digitalocean_project" "default" {
     digitalocean_database_cluster.default.urn,
     digitalocean_domain.default.urn,
     digitalocean_domain.api.urn,
-    digitalocean_domain.cdn.urn,
   ]
 }
 

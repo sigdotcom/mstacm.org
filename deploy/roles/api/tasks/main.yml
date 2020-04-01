@@ -1,19 +1,50 @@
 ---
+- name: "Create the API user"
+  user:
+    name: "{{ API_USER }}"
+    comment: "User responsible for managing the API"
+    system: yes
+    groups:
+      - docker
+
 - name: "Clone the mstacm.org monorepo"
   git:
     repo: "https://github.com/sigdotcom/mstacm.org.git"
-    dest: "/opt/mstacm.org"
+    dest: "{{ API_INSTALLATION_DIR }}"
     version: master
     accept_hostkey: yes
 
 - name: "Create the web.env file for api environment variables"
   template:
     src: "web.env.j2"
-    dest: "/opt/mstacm.org/apps/api/.docker/web.env"
+    dest: "{{ API_INSTALLATION_DIR }}/apps/api/.docker/web.env"
+
+- name: "Update the API installation directory permissions"
+  file:
+    path: "{{ API_INSTALLATION_DIR }}"
+    owner: "{{ API_USER }}"
+    state: directory
+    recurse: yes
+
+- name: "See if acme file exists"
+  stat:
+    path: "{{ ACME_FILE_PATH }}"
+  register: acme_file
+
+- name: "Create or update the acme.json"
+  file:
+    path: "{{ ACME_FILE_PATH }}"
+    owner: "{{ API_USER }}"
+    state: "{{ 'file' if  acme_file.stat.exists else 'touch' }}"
+    mode: 0600
 
 - name: "Deploy the latest version of the docker application"
+  become: yes
+  become_user: "{{ API_USER }}"
+  vars:
+    DOCKER_DIR: "{{ API_INSTALLATION_DIR }}/apps/"
   docker_compose:
-    project_src: /opt/mstacm.org/apps
+    project_src: "{{ DOCKER_DIR }}"
     state: present
     pull: yes
     files:
