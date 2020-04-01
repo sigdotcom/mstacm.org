@@ -15,6 +15,7 @@ machine. If you have a Windows computer, please use a linux jumpbox such as
 + [Terraform](https://www.terraform.io/docs/index.html)
 + [git](https://git-scm.com/downloads)
 + [ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
++ [poetry](https://python-poetry.org/)
 + Make sure you have access to the mstacm team in
   [DigitalOcean][digitalocean-url]. Ask the chair of ACM Web for access.
 + Make sure you have access to the mstacm team in [Netlify][netlify-url]. Ask
@@ -97,28 +98,47 @@ machine. If you have a Windows computer, please use a linux jumpbox such as
     terraform init
     ```
 
-14. Switch to the 'developement' terraform workspace:
+14. Switch to the `development` terraform workspace:
     ```bash
     terraform workspace select development
     ```
 
 ## Usage
-To **spin up** infrastructure, simply run:
-    ```bash
-    terraform apply
-    ```
 
-To **tear down** infrastructure that has been created, run:
-    ```bash
-    terraform destroy
-    ```
+### Switching Terraform workspaces
+If you deploy the application you can access the `production` workspace:
+```bash
+terraform workspace select production
+```
 
-To **configure provisioned machines**, run:
-    ```bash
-    ansible-playbook -i digital_ocean.py site.yml --ask-vault-pass
-    ```
+But if you're developing infrastructure components, only use the `development`
+workspace:
+```bash
+terraform workspace select production
+```
 
-To **deploy the application the application end-to-end**, run:
+### Stand up the entire infrastructure
+```bash
+terraform apply
+```
+
+### Tear down the entire infrastructure
+```bash
+terraform destroy
+```
+
+Please be careful with this command as it will **permanently** destroy all of
+the infrastructure components and their backups. It should be used only in the
+`development` workspace or when something really terrible has happened and you
+have taken the proper backups.
+
+
+### Configure provisioned machines
+```bash
+poerty run ansible-playbook -i digital_ocean.py site.yml --ask-vault-pass
+```
+
+### Deploy the application end-to-end
 1. (optional, but recommended) Create a backup of the current database:
     ```sh
     pg_dump <CONNECTION_STRING_FOR_DATABASE> | \
@@ -141,6 +161,9 @@ To **deploy the application the application end-to-end**, run:
     cat <YOUR_BACKUP_FILE> | gzip -d | psql <YOUR_CONNETION_STRING_TO_DATABASE>
     ```
 
+    The connection string can be found in the online database panel on
+    digitalocean.
+
 16. Edit the `groups_vars/secrets.yml` file with the appropriate environment
     variables. Please note that not all of these values are strictly 'secret';
     however, they are all kept in the encrypted 'secret.yml' to prevent the
@@ -151,12 +174,12 @@ To **deploy the application the application end-to-end**, run:
     the ACM Bitwarden account or ask the Chair of ACM Web and use the following
     command:
     ```
-    ansible-vault edit group_vars/secrets.yml
+    poetry run ansible-vault edit group_vars/secrets.yml
     ```
     
 17. Run the ansible playbook:
     ```
-    ansible-playbook -i digital_ocean.py site.yml --ask-vault-pass
+    poetry run ansible-playbook -i digital_ocean.py site.yml --ask-vault-pass
     ```
 
 ## Github Actions
