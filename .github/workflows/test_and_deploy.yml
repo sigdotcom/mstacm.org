@@ -113,7 +113,7 @@ jobs:
       working_directory: ./apps/api/
       DOCKERHUB_USERNAME: kschoonie
 
-    # if: github.event_name == 'push'
+    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v')
     steps:
       - uses: actions/checkout@v2
 
@@ -154,6 +154,7 @@ jobs:
       terraform_version: latest
       terraform_workspace: development
 
+    if: github.ref == 'refs/heads/master'
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
