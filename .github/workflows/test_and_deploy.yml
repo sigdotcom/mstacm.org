@@ -152,7 +152,7 @@ jobs:
     env:
       working_directory: ./deploy
       terraform_version: latest
-      terraform_workspace: development
+      terraform_workspace: production
 
     if: github.ref == 'refs/heads/master'
     steps:
@@ -185,7 +185,6 @@ jobs:
         tf_actions_working_dir: './deploy/'
         tf_actions_cli_credentials_token: ${{ secrets.TF_CLOUD_TOKEN }}
       env:
-        # TODO: change to production when ready
         TF_WORKSPACE: ${{ env.terraform_workspace }}
         # https://www.terraform.io/docs/commands/environment-variables.html#tf_var_name
         TF_VAR_do_token: ${{ secrets.DO_ACCESS_TOKEN }}
