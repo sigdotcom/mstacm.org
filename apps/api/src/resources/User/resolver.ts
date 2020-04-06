@@ -6,7 +6,7 @@ import {
   FieldResolver,
   Query,
   Resolver,
-  Root
+  Root,
 } from "type-graphql";
 import { getRepository } from "typeorm";
 import { BadUserInputError } from "../../lib/errors";
@@ -29,11 +29,10 @@ export class UserResolver extends ResourceResolver<resourceType>(
   UserDeletePayload,
   getRepository(resource)
 ) {
-
   public repository: any = getRepository(User);
   // Workaround waiting for
   // https://github.com/19majkel94/type-graphql/issues/351
-  @Authorized()
+  @Authorized("view:user_super_admin")
   @FieldResolver((_: void) => String, { nullable: true })
   public isSuperAdmin(
     @Root() user: User,
@@ -49,7 +48,7 @@ export class UserResolver extends ResourceResolver<resourceType>(
 
   // Workaround waiting for
   // https://github.com/19majkel94/type-graphql/issues/351
-  @Authorized()
+  @Authorized("view:user_permissions")
   @FieldResolver((_: void) => String, { nullable: true })
   public permissions(
     @Root() user: User,
@@ -110,7 +109,7 @@ export class UserResolver extends ResourceResolver<resourceType>(
   @Mutation((_: void) => User)
   public async updateExpirationDate(
     @Arg("userId") userId: string,
-    @Arg("newExpirationDate") newExpirationDate: Date,
+    @Arg("newExpirationDate") newExpirationDate: Date
   ): Promise<User> {
     const user: User = await User.findOneOrFail({ id: userId });
     user.membershipExpiration = newExpirationDate;
@@ -121,7 +120,7 @@ export class UserResolver extends ResourceResolver<resourceType>(
   @Mutation((_: void) => User)
   public async updateShirtReceived(
     @Arg("userId") userId: string,
-    @Arg("updatedShirtStatus") updatedShirtStatus: boolean,
+    @Arg("updatedShirtStatus") updatedShirtStatus: boolean
   ): Promise<User> {
     const user: User = await User.findOneOrFail({ id: userId });
     user.shirtReceived = updatedShirtStatus;
@@ -130,12 +129,10 @@ export class UserResolver extends ResourceResolver<resourceType>(
 
   @Authorized("reset:user_shirt_received")
   @Mutation((_: void) => [User])
-  public async resetShirtReceived(
-  ): Promise<User[]> {
+  public async resetShirtReceived(): Promise<User[]> {
     const users: User[] = await User.find();
 
-    for(let i = 0; i < users.length; i++)
-    {
+    for (let i = 0; i < users.length; i++) {
       users[i].shirtReceived = false;
       await users[i].save();
     }
@@ -153,3 +150,4 @@ export class UserResolver extends ResourceResolver<resourceType>(
     return user;
   }
 }
+
