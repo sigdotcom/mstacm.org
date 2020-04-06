@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import { Layout, Menu, PageHeader, Spin } from "antd";
 
@@ -8,9 +8,25 @@ import { Membership } from "./components/pages/tools/Membership";
 import { config } from "./config";
 import "./static/css/App.css";
 
+import { useSuperUserQuery } from "./generated/graphql";
+
 import { useAuth0 } from "./utils/react-auth0-wrapper";
 
 const { Header, Content, Footer, Sider } = Layout;
+
+const Forbidden: React.FC = () => {
+  return (
+    <div>
+      <h1 style={{ textAlign: "center" }}>403 Forbidden</h1>
+      <p style={{ textAlign: "center" }}>
+        It appears your permissions prevent me from letting you pass.
+        <br />
+        Please contact <a href="mailto:acm@mst.edu">acm@mst.edu</a> if you
+        believe this is a mistake.
+      </p>
+    </div>
+  );
+};
 
 const MainContent: React.SFC<{}> = (): JSX.Element => {
   return (
@@ -32,6 +48,10 @@ const App: React.SFC<{}> = (): JSX.Element => {
     user,
   } = useAuth0();
 
+  const { loading: suLoading, error } = useSuperUserQuery();
+  const [forbidden, setForbidden] = useState<boolean>(false);
+  const [fetched, setFetched] = useState<boolean>(false);
+
   useEffect(() => {
     if (loading) {
       return;
@@ -48,12 +68,33 @@ const App: React.SFC<{}> = (): JSX.Element => {
     } else {
       const setToken: () => void = async (): Promise<void> => {
         const token: string = (await getTokenSilently()) || "";
+        console.log(token);
         localStorage.setItem(config.ACCESS_TOKEN_KEY, token);
       };
 
       setToken();
     }
-  }, [loading, isAuthenticated, getTokenSilently]);
+
+    if (localStorage.getItem(config.ACCESS_TOKEN_KEY)) {
+      if (suLoading) {
+        return;
+      } else if (error && !forbidden) {
+        console.log(JSON.stringify(error));
+        setForbidden(error.graphQLErrors[0].message.includes("Access denied!"));
+      } else if (suLoading === false && !fetched) {
+        setFetched(true);
+      }
+    }
+  }, [
+    error,
+    fetched,
+    forbidden,
+    loginWithRedirect,
+    suLoading,
+    loading,
+    isAuthenticated,
+    getTokenSilently,
+  ]);
 
   const onLogoutClick: () => void = (): void => {
     logout({ returnTo: config.REDIRECT_PAGE_URI });
@@ -61,6 +102,8 @@ const App: React.SFC<{}> = (): JSX.Element => {
 
   if (loading || !isAuthenticated) {
     return <Spin size="large" className="load-page" tip="Loading..." />;
+  } else if (forbidden) {
+    return <Forbidden />;
   }
 
   return (

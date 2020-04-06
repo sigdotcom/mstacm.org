@@ -516,6 +516,17 @@ export type DeleteMemberMutation = (
   ) }
 );
 
+export type SuperUserQueryVariables = {};
+
+
+export type SuperUserQuery = (
+  { __typename?: 'Query' }
+  & { me: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'isSuperAdmin'>
+  )> }
+);
+
 
 export const EventsDocument = gql`
     query events {
@@ -830,3 +841,35 @@ export function useDeleteMemberMutation(baseOptions?: ApolloReactHooks.MutationH
 export type DeleteMemberMutationHookResult = ReturnType<typeof useDeleteMemberMutation>;
 export type DeleteMemberMutationResult = ApolloReactCommon.MutationResult<DeleteMemberMutation>;
 export type DeleteMemberMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteMemberMutation, DeleteMemberMutationVariables>;
+export const SuperUserDocument = gql`
+    query superUser {
+  me {
+    isSuperAdmin
+  }
+}
+    `;
+
+/**
+ * __useSuperUserQuery__
+ *
+ * To run a query within a React component, call `useSuperUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSuperUserQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSuperUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSuperUserQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<SuperUserQuery, SuperUserQueryVariables>) {
+        return ApolloReactHooks.useQuery<SuperUserQuery, SuperUserQueryVariables>(SuperUserDocument, baseOptions);
+      }
+export function useSuperUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SuperUserQuery, SuperUserQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<SuperUserQuery, SuperUserQueryVariables>(SuperUserDocument, baseOptions);
+        }
+export type SuperUserQueryHookResult = ReturnType<typeof useSuperUserQuery>;
+export type SuperUserLazyQueryHookResult = ReturnType<typeof useSuperUserLazyQuery>;
+export type SuperUserQueryResult = ApolloReactCommon.QueryResult<SuperUserQuery, SuperUserQueryVariables>;
