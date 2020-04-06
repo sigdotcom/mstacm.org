@@ -160,11 +160,11 @@ const SIGDetailPane: React.FC<ISIGDetailPaneProps> = (props: any): any => {
           <ButtonRow>
             <SIGWebsite href={sig.website}>
               Website
-              <ExternalIconWebsite id="child" src="https://cdn.mstacm.org/static/external-link.svg" />
+              <ExternalIconWebsite id="child" alt="external link icon" src={`${config.CDN_URI}/static/external-link.svg`}/>
             </SIGWebsite>
             <SIGDiscord href={sig.discord}>
               Discord
-              <ExternalIconDiscord src="https://cdn.mstacm.org/static/external-link.svg" />
+              <ExternalIconDiscord alt="external link icon" src={`${config.CDN_URI}/static/external-link.svg`} />
             </SIGDiscord>
           </ButtonRow>
         </Row>
