@@ -106,6 +106,9 @@ export type Mutation = {
   startProductTransaction: TransactionPayload,
   addUserToGroups: User,
   addPermissionsToUser: User,
+  updateExpirationDate: User,
+  updateShirtReceived: User,
+  resetShirtReceived: Array<User>,
 };
 
 
@@ -202,6 +205,18 @@ export type MutationAddUserToGroupsArgs = {
 
 export type MutationAddPermissionsToUserArgs = {
   permissionIds: Array<Scalars['String']>,
+  userId: Scalars['String']
+};
+
+
+export type MutationUpdateExpirationDateArgs = {
+  newExpirationDate: Scalars['DateTime'],
+  userId: Scalars['String']
+};
+
+
+export type MutationUpdateShirtReceivedArgs = {
+  updatedShirtStatus: Scalars['Boolean'],
   userId: Scalars['String']
 };
 
@@ -350,6 +365,7 @@ export type User = {
   emailVerified: Scalars['Boolean'],
   profilePictureUrl: Scalars['String'],
   graduationDate?: Maybe<Scalars['DateTime']>,
+  shirtReceived?: Maybe<Scalars['Boolean']>,
   isSuperAdmin?: Maybe<Scalars['Boolean']>,
   dateJoined: Scalars['DateTime'],
   membershipExpiration?: Maybe<Scalars['DateTime']>,

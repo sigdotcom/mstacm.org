@@ -12,12 +12,12 @@ import { Resume, User } from "./utils/types";
 
 import {
   FavoritesContext,
-  IFavoriteContextProps
+  IFavoriteContextProps,
 } from "./context/FavoritesContext";
 
 import {
   IPaginationContextProps,
-  PaginationContext
+  PaginationContext,
 } from "./context/PaginationContext";
 
 type Favorites = {
@@ -53,7 +53,7 @@ const App: React.FC = () => {
     loading,
     isAuthenticated,
     loginWithRedirect,
-    getTokenSilently
+    getTokenSilently,
   } = useAuth0();
   const path = "/";
 
@@ -73,10 +73,28 @@ const App: React.FC = () => {
     } else {
       const fn = async () => {
         await loginWithRedirect({
-          appState: { targetUrl: path }
+          appState: { targetUrl: path },
         });
       };
       fn();
+    }
+
+    if (localStorage.getItem(config.ACCESS_TOKEN_KEY)) {
+      if (gqlLoading) {
+        return;
+      } else if (error && !forbidden) {
+        setForbidden(error.graphQLErrors[0].message.includes("Access denied!"));
+      } else if (gqlLoading === false && !fetched && data) {
+        setFetched(true);
+        setUsers(
+          data.resumes.map((resume: Resume) => {
+            const user = resume.user;
+            (user as User).resume = resume;
+
+            return user as User;
+          })
+        );
+      }
     }
   }, [
     loading,
@@ -84,24 +102,10 @@ const App: React.FC = () => {
     loginWithRedirect,
     path,
     getTokenSilently,
-    refetch
+    refetch,
+    gqlLoading,
+    error,
   ]);
-
-  if (localStorage.getItem(config.ACCESS_TOKEN_KEY)) {
-    if (error && !forbidden) {
-      setForbidden(error.graphQLErrors[0].message.includes("Access denied!"));
-    } else if (gqlLoading === false && !fetched && data) {
-      setFetched(true);
-      setUsers(
-        data.resumes.map((resume: Resume) => {
-          const user = resume.user;
-          (user as User).resume = resume;
-
-          return user as User;
-        })
-      );
-    }
-  }
 
   const favoritesContext: IFavoriteContextProps = {
     users,
@@ -113,16 +117,16 @@ const App: React.FC = () => {
     flipFavorite: (id: string): void => {
       setFavorites({
         ...favorites,
-        [id]: !(favorites[id] || false)
+        [id]: !(favorites[id] || false),
       });
-    }
+    },
   };
 
   const paginationContext: IPaginationContextProps = {
     curPage,
     displayPerPage,
     setCurPage,
-    setDisplayPerPage
+    setDisplayPerPage,
   };
 
   if (loading || !isAuthenticated) {
