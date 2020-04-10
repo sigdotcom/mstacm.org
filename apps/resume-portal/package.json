@@ -16,7 +16,7 @@
     "react-apollo": "^3.1.1",
     "react-dom": "^16.8.6",
     "react-eva-icons": "^0.0.8",
-    "react-scripts": "^3.1.2",
+    "react-scripts": "^3.4.1",
     "react-use": "^12.2.0",
     "serialize-javascript": "^2.1.2",
     "styled-components": "^4.3.2"

@@ -9,11 +9,14 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
   DateTime: any;
+  /** The `Upload` scalar type represents a file upload. */
   Upload: any;
 };
 
 
+/** The potential errors codes that will be sent to a user. */
 export enum ErrorCodes {
   InternalServerError = 'INTERNAL_SERVER_ERROR',
   ResourceNotFound = 'RESOURCE_NOT_FOUND',
@@ -81,6 +84,7 @@ export type MembershipProduct = {
   tag: MembershipTypes;
 };
 
+/** Different types of ACM memberships one can have. */
 export enum MembershipTypes {
   Yearly = 'YEARLY',
   Semesterly = 'SEMESTERLY'
@@ -536,7 +540,7 @@ export const GetCurrentEventsDocument = gql`
  * __useGetCurrentEventsQuery__
  *
  * To run a query within a React component, call `useGetCurrentEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetCurrentEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useGetCurrentEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -568,7 +572,7 @@ export const MeExpirationDocument = gql`
  * __useMeExpirationQuery__
  *
  * To run a query within a React component, call `useMeExpirationQuery` and pass it any options that fit your needs.
- * When your component renders, `useMeExpirationQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useMeExpirationQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
