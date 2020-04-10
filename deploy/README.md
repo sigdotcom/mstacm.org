@@ -46,12 +46,12 @@ machine. If you have a Windows computer, please use a linux jumpbox such as
    DigitalOcean (See [prerequisites](#prerequisites) for more details).
 
 
-3. Navigate to the `deploy` directory in the repo:
+4. Navigate to the `deploy` directory in the repo:
     ```bash
     cd ./mstacm.org/deploy
     ```
 
-3. Copy the `secrets.examples.tfvars` into `secrets.auto.tfvars`:
+5. Copy the `secrets.examples.tfvars` into `secrets.auto.tfvars`:
     ```bash
     cp secrets.examples.tfvars secrets.auto.tfvars
     ```
@@ -59,46 +59,46 @@ machine. If you have a Windows computer, please use a linux jumpbox such as
    The `*.auto.tfvars` is used to automatically apply the variables to any run
    of terraform
 
-4. Populate the `secrets.auto.tfvars` with the appropriate values.
+6. Populate the `secrets.auto.tfvars` with the appropriate values.
 
-5. Copy the `digital_ocean.examples.ini` into `digital_ocean.ini`:
+7. Copy the `digital_ocean.examples.ini` into `digital_ocean.ini`:
     ```bash
     cp digital_ocean.examples.tfvars digital_ocean.ini
     ```
 
-6. Populate the `digital_ocean.ini` with the appropriate values.
+8. Populate the `digital_ocean.ini` with the appropriate values.
 
-7. (if you deploy the application) Generate a ssh key with the following path
+9. (if you deploy the application) Generate a ssh key with the following path
    `./.keys/digitalocean-mstacm` (or your own ssh key, but make sure to add it
    to the terraform file):
     ```bash
     ssh-keygen -t rsa -b 4096 -m PEM -f ./.keys/digitalocean-mstacm
     ```
-7. (if you deploy the application) Generate a ssh key with the following path
+10. (if you deploy the application) Generate a ssh key with the following path
    `./.keys/deploy-master-mstacm` (or your own ssh key, but make sure to add it
    to the terraform file):
     ```bash
     ssh-keygen -t rsa -b 4096 -m PEM -f ./.keys/deploy-master-mstacm
     ```
 
-8. (if you deploy the application) Add this SSH Key to the [Github
+11. (if you deploy the application) Add this SSH Key to the [Github
    Secrets](https://github.com/sigdotcom/mstacm.org/settings/secrets) under
    `DEPLOY_SSH_PRIV_KEY`
 
-11. Request access to the [mstacm organization](https://app.terraform.io/app/mstacm/workspaces) 
+12. Request access to the [mstacm organization](https://app.terraform.io/app/mstacm/workspaces) 
     on [Terraform Cloud](https://app.terraform.io)
 
-12. Generate a terraform cloud access token using their CLI:
+13. Generate a terraform cloud access token using their CLI:
     ```bash
     terraform login
     ```
 
-13. Initialize terraform:
+14. Initialize terraform:
     ```bash
     terraform init
     ```
 
-14. Switch to the `development` terraform workspace:
+15. Switch to the `development` terraform workspace:
     ```bash
     terraform workspace select development
     ```
