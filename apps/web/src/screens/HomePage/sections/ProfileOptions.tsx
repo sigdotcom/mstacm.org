@@ -7,7 +7,7 @@ import { Options } from "./Options";
 
 const DropdownWrapper = styled.div`
   position: relative;
-`
+`;
 
 const Name = styled.div`
   border: none;
@@ -16,7 +16,7 @@ const Name = styled.div`
   background: none;
   color: black;
   margin-right: 1em;
-  margin-left: .5em;
+  margin-left: 0.5em;
 
   &:hover {
     cursor: pointer;
@@ -29,7 +29,7 @@ const Picture = styled.img`
   min-height: 30px;
   max-height: 30px;
   border-radius: 50%;
-`
+`;
 
 const ProfileDisplay = styled.button`
   display: flex;
@@ -37,7 +37,7 @@ const ProfileDisplay = styled.button`
   justify-content: center;
   background: transparent;
   border: none;
-`
+`;
 
 const TriangleDown = styled.div`
   height: 0;
@@ -45,7 +45,7 @@ const TriangleDown = styled.div`
   border-top: 4px solid black;
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
-`
+`;
 
 const TriangleRight = styled.div`
   height: 0;
@@ -54,7 +54,7 @@ const TriangleRight = styled.div`
   border-top: 4px solid transparent;
   border-left: 4px solid black;
   border-bottom: 4px solid transparent;
-`
+`;
 
 const ProfileOptions: React.FC<{}> = (): JSX.Element => {
   const { loading, user } = useAuth0();
@@ -63,12 +63,20 @@ const ProfileOptions: React.FC<{}> = (): JSX.Element => {
 
   return (
     <DropdownWrapper>
-      <ProfileDisplay onClick={() => {if (down) {setDown(false)} else {setDown(true)}}}>
-	{ !loading && <Picture src={user.picture} alt="Profile"></ Picture> }
-	{ !loading && <Name>{user.name}</ Name> }
-	{ down ? <TriangleDown /> : <TriangleRight /> }
-      </ ProfileDisplay>
-      { down && <Options /> }
+      <ProfileDisplay
+        onClick={() => {
+          if (down) {
+            setDown(false);
+          } else {
+            setDown(true);
+          }
+        }}
+      >
+        {!loading && <Picture src={user.picture} alt="Profile"></Picture>}
+        {!loading && <Name>{user.name}</Name>}
+        {down ? <TriangleRight /> : <TriangleDown />}
+      </ProfileDisplay>
+      {down && <Options />}
     </DropdownWrapper>
   );
 };

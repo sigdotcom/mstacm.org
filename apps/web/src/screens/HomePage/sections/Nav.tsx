@@ -94,9 +94,11 @@ const Nav: React.FC<{}> = (): JSX.Element => {
               </Link>
             </MenuItems>
           </NavRow>
-	  {isAuthenticated ?
-	  <ProfileOptions /> :
-	  <SignIn onClick={onClick}>Sign In</SignIn>}
+          {isAuthenticated ? (
+            <ProfileOptions />
+          ) : (
+            <SignIn onClick={onClick}>Sign In</SignIn>
+          )}
         </Wrapper>
       </PageConstraint>
     </BG>
