@@ -15,7 +15,7 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.2.0",
+    "react-scripts": "^3.4.1",
     "reactn": "^2.2.1",
     "serialize-javascript": "^2.1.2",
     "styled-components": "^4.1.3"
