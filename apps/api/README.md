@@ -88,7 +88,7 @@ To get a local copy up and running follow these simple steps.
 
 5. Start the docker containers using `docker-compose`:
     ```sh
-    docker-compose up
+    cd .. && docker-compose up
     ```
 
 6. If everything goes well, the last lines of output should look like:
