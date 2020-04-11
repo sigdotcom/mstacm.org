@@ -176,7 +176,7 @@ resource "digitalocean_database_cluster" "default" {
   name       = terraform.workspace == "production" ? "mstacm-postgres-cluster" : "develop-mstacm-postgres-cluster"
 
   engine     = "pg"
-  version    = "12"
+  version    = "11"
   size       = "db-s-1vcpu-1gb"
   region     = "nyc3"
   node_count = 1
