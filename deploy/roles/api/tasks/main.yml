@@ -47,6 +47,7 @@
     project_src: "{{ DOCKER_DIR }}"
     state: present
     pull: yes
+    remove_orphans: yes
     files:
       - docker-compose.yml
       - docker-compose.production.yml
