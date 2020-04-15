@@ -1,10 +1,11 @@
-import React, { setGlobal } from "reactn";
+import React, { useState } from "react";
 
 import styled, { AnyStyledComponent } from "styled-components";
 
 import { GET_EVENTS } from "./helpers";
 import { useDeleteEventMutation } from "../../generated/graphql";
 import { IEvent } from "./interfaces";
+import { EventFormModal } from "./EventFormModal";
 
 import { Button } from "antd";
 
@@ -48,6 +49,7 @@ const EventLowLevel: AnyStyledComponent = styled.div``;
 
 const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
   const [deleteEvent] = useDeleteEventMutation();
+  const [formVisible, setFormVisible] = useState(false);
 
   const formatDate: (date: string) => string = (date: string): string => {
     const options: any = {
@@ -63,10 +65,7 @@ const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
   };
 
   const handleEdit: () => void = (): void => {
-    setGlobal({
-      activeEvent: props.index,
-      eventFormVisible: true,
-    });
+    setFormVisible(true);
   };
 
   const handleDelete: () => void = (): void => {
@@ -116,6 +115,11 @@ const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
           <Button onClick={handleDelete}>Delete</Button>
         </div>
       </div>
+      <EventFormModal
+        formVisible={formVisible}
+        setFormVisible={setFormVisible}
+        event={event}
+      />
     </EventWrapper>
   );
 };

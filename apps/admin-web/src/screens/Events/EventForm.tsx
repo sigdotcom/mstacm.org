@@ -1,4 +1,4 @@
-import React, { useGlobal, useState } from "reactn";
+import React, { useState } from "react";
 
 import moment from "moment";
 
@@ -7,35 +7,25 @@ import {
   useCreateEventMutation,
   useUpdateEventMutation,
   useSigsQuery,
+  EventUpdateInput,
+  EventCreateInput,
 } from "../../generated/graphql";
 
-import {
-  Button,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Upload,
-  Select,
-} from "antd";
+import { Button, DatePicker, Form, Input, Upload, Select } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 
 import { IEvent, IHostSig } from "./interfaces";
-import { UploadFile, UploadProps } from "antd/lib/upload/interface";
 
 const { RangePicker }: any = DatePicker;
 const { TextArea }: any = Input;
 
-const EventForm: React.FC<{}> = (): JSX.Element => {
-  const [form] = Form.useForm();
+interface IEventFormProps {
+  eventBase: IEvent | undefined;
+}
 
-  const [events]: [IEvent[], any] = useGlobal("events");
-  const [activeEvent]: [number, any] = useGlobal("activeEvent");
-
-  const event: IEvent | undefined = events[activeEvent];
-  const editing: boolean = Boolean(event);
-  const newEvent: any = editing ? event : {};
-
+const EventForm: React.FC<IEventFormProps> = ({
+  eventBase,
+}: IEventFormProps): JSX.Element => {
   const [
     createEvent,
     { loading: createLoading, error: createError, data: createData },
@@ -44,8 +34,10 @@ const EventForm: React.FC<{}> = (): JSX.Element => {
     updateEvent,
     { loading: updateLoading, error: updateError, data: updateData },
   ]: any = useUpdateEventMutation();
-  const [files, setFiles] = useState<UploadFile[]>([]);
   const { loading, error, data } = useSigsQuery();
+  const [event, setEvent] = useState<any>(eventBase || {});
+  const [editing] = useState(Boolean(eventBase));
+  const [submitted, setSubmitted] = useState(false);
 
   const convertTimes: any = (data: any): any => {
     if (data.hasOwnProperty("dateRange") && data.dateRange) {
@@ -55,15 +47,15 @@ const EventForm: React.FC<{}> = (): JSX.Element => {
     }
   };
 
-  const Sigs: any = () => {
+  const Communities: any = () => {
     if (loading) return;
     // "Loading...";
     else if (error) return;
     // `Error! ${error.message}`;
     else if (data) {
-      return data.sigs.map((sig: IHostSig, index: number) => (
-        <Select.Option value={sig.name} key={index}>
-          {sig.name}
+      return data.sigs.map((community: IHostSig, index: number) => (
+        <Select.Option value={community.name} key={index}>
+          {community.name}
         </Select.Option>
       ));
     }
@@ -71,158 +63,182 @@ const EventForm: React.FC<{}> = (): JSX.Element => {
   };
 
   const handleSubmit: any = (values: any): any => {
+    console.log("VALUES", values);
     convertTimes(values);
-    delete values.flier;
     if (editing) {
-      const id: number = Number(values.id);
       delete values.id;
-      console.log("VALUES", values);
+      const payload: EventUpdateInput = {
+        description: values.description,
+        hostSig: values.community,
+        location: values.location,
+        eventLink: values.link,
+        eventTitle: values.title,
+        dateHosted: values.dateHosted,
+        dateExpire: values.dateExpire,
+      };
       updateEvent({
         refetchQueries: [{ query: GET_EVENTS }],
         variables: {
-          flier: files.length > 0 ? files[0] : undefined,
-          data: values,
-          id,
+          flier: values.flier?.file,
+          data: payload,
+          id: Number((eventBase as IEvent).id),
         },
       });
       // UPDATE THE NEW EVENT (values);
     } else {
+      const payload: EventCreateInput = {
+        description: values.description,
+        hostSig: values.community,
+        location: values.location,
+        eventLink: values.link,
+        eventTitle: values.title,
+        dateHosted: values.dateHosted,
+        dateExpire: values.dateExpire,
+      };
       createEvent({
         refetchQueries: [{ query: GET_EVENTS }],
-        variables: { data: values, flier: files[0] },
+        variables: { data: payload, flier: values.flier?.file },
       });
       // CREATE THE NEW EVENT (values);
     }
+    setSubmitted(true);
   };
 
-  const { getFieldDecorator }: any = form;
-  const params: UploadProps = {
-    accept: ".jpg",
-    multiple: false,
-    fileList: files,
-    onRemove: (): void => {
-      setFiles([]);
-    },
-    beforeUpload: (newFile: UploadFile): boolean => {
-      setFiles([newFile]);
-
-      // Uploading will be stopped with false or a rejected Promise returned.
-      return false;
-    },
-  };
-
-  if (createLoading || updateLoading) {
-    return <h1>Loading...</h1>;
-  } else if (createError || updateError) {
-    try {
-      console.log(createError);
-
-      return <h1>{createError.toString()}</h1>;
-    } catch {
-      console.log(updateError);
-
-      return <h1>{updateError.toString()}</h1>;
+  if (submitted) {
+    if (createLoading || updateLoading) {
+      return <h1>Loading...</h1>;
     }
-  } else if (createData || updateData) {
-    return <h1>Success</h1>;
+    setTimeout(() => {
+      setSubmitted(false);
+    }, 3000);
+    if (createError || updateError) {
+      try {
+        console.log(createError);
+
+        return <h1>{createError.toString()}</h1>;
+      } catch {
+        console.log(updateError);
+
+        return <h1>{updateError.toString()}</h1>;
+      }
+    } else if (createData || updateData) {
+      return <h1>Success</h1>;
+    }
   }
 
+  const handleChange = (values: any) => {
+    setEvent({
+      description: values.description,
+      hostSig: { name: values.community },
+      location: values.location,
+      eventLink: values.link,
+      eventTitle: values.title,
+      dateHosted: values.dateHosted,
+      dateExpire: values.dateExpire,
+    });
+  };
+
   return (
-    <Form onFinish={handleSubmit}>
-      {editing && (
-        <Form.Item label="ID">
-          {getFieldDecorator("id", {
-            initialValue: newEvent.id,
-            rules: [
-              {
-                required: !editing,
-              },
-            ],
-          })(<InputNumber />)}
-        </Form.Item>
-      )}
-      <Form.Item label="Host Community">
-        {getFieldDecorator("hostSig", {
-          initialValue: editing ? newEvent.hostSig.name : undefined,
-          rules: [
-            {
-              required: !editing,
-              message: "Please choose a host community's name!",
-            },
-          ],
-        })(<Select>{Sigs()}</Select>)}
-      </Form.Item>
-      <Form.Item label="Name">
-        {getFieldDecorator("eventTitle", {
-          initialValue: newEvent.eventTitle,
-          rules: [
-            {
-              required: !editing,
-              message: "Please input the event's name!",
-            },
-          ],
-        })(<Input />)}
-      </Form.Item>
-      <Form.Item label="Description">
-        {getFieldDecorator("description", {
-          initialValue: newEvent.description,
-          rules: [
-            {
-              required: !editing,
-              message: "Please input the event's description!",
-            },
-          ],
-        })(<TextArea autoSize={{ minRows: 2, maxRows: 6 }} />)}
-      </Form.Item>
-      <Form.Item label="Location">
-        {getFieldDecorator("location", {
-          initialValue: newEvent.location,
-          rules: [
-            {
-              required: !editing,
-              message: "Please input the event's location!",
-            },
-          ],
-        })(<Input />)}
+    <Form
+      onFinish={handleSubmit}
+      onValuesChange={handleChange}
+      initialValues={{
+        community: event?.hostSig?.name,
+        title: event?.eventTitle,
+        description: event?.description,
+        location: event?.location,
+        link: event?.eventLink,
+        dateRange: [moment(event?.dateHosted), moment(event?.dateExpire)],
+      }}
+    >
+      <Form.Item
+        name="community"
+        label="Host Community"
+        rules={[
+          {
+            required: !editing,
+            message: "Please choose a host community's name!",
+          },
+        ]}
+      >
+        <Select>{Communities()}</Select>
       </Form.Item>
       <Form.Item
+        name="title"
+        label="Name"
+        rules={[
+          {
+            required: !editing,
+            message: "Please input the event's name!",
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name="description"
+        label="Description"
+        rules={[
+          {
+            required: !editing,
+            message: "Please input the event's description!",
+          },
+        ]}
+      >
+        <TextArea
+          value={event?.description}
+          autoSize={{ minRows: 2, maxRows: 6 }}
+        />
+      </Form.Item>
+      <Form.Item
+        name="location"
+        label="Location"
+        rules={[
+          {
+            required: !editing,
+            message: "Please input the event's location!",
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name="link"
         label="Event Link"
         extra="Website, form, or other link to event."
+        rules={[
+          {
+            type: "url",
+            message: "The input is not a valid URL.",
+          },
+        ]}
       >
-        {getFieldDecorator("eventLink", {
-          initialValue: newEvent.eventLink,
-          rules: [
-            {
-              type: "url",
-              message: "The input is not a valid URL.",
-            },
-          ],
-        })(<Input />)}
+        <Input />
       </Form.Item>
+
       <Form.Item label="Event Flier">
-        {getFieldDecorator("flier", {
-          valuePropName: "file",
-        })(
-          <Upload.Dragger {...params}>
+        <Form.Item name="flier" noStyle>
+          <Upload.Dragger
+            accept=".jpg"
+            multiple={false}
+            beforeUpload={() => false}
+          >
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
             </p>
             <p className="ant-upload-text">
               Click or drag file to this area to upload
             </p>
-            <p className="ant-upload-hint">Support for a single file upload.</p>
           </Upload.Dragger>
-        )}
+        </Form.Item>
       </Form.Item>
 
-      <Form.Item label="Date and Time">
-        {getFieldDecorator("dateRange", {
-          initialValue: [
-            moment(newEvent.dateHosted),
-            moment(newEvent.dateExpire),
-          ],
-          rules: [{ type: "array", required: !editing }],
-        })(<RangePicker showTime={true} format="MMMM Do h:mm" />)}
+      <Form.Item
+        name="dateRange"
+        label="Date and Time"
+        rules={[{ type: "array", required: !editing }]}
+      >
+        <RangePicker showTime={true} format="MMMM Do h:mm" />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
