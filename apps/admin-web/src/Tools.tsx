@@ -12,6 +12,9 @@ const ToolList: React.SFC<{}> = (): JSX.Element => {
         <li>
           <Link to="/membership">Membership</Link>
         </li>
+        <li>
+          <Link to="/redemption">Redemption Codes</Link>
+        </li>
       </ul>
     </div>
   );

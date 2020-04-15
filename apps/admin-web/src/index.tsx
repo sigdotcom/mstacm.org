@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { setGlobal } from "reactn";
 
 import { ApolloProvider } from "@apollo/react-hooks";
 
@@ -11,12 +10,6 @@ import { config } from "./config";
 
 import { client } from "./utils/apollo";
 import { Auth0Provider, onRedirectCallback } from "./utils/react-auth0-wrapper";
-
-setGlobal({
-  events: [],
-  eventFormVisible: false,
-  activeEvent: undefined
-});
 
 ReactDOM.render(
   <Auth0Provider
