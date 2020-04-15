@@ -1,4 +1,4 @@
-import React, { setGlobal } from "reactn";
+import React from "react";
 
 import styled, { AnyStyledComponent } from "styled-components";
 
@@ -34,9 +34,6 @@ const EventList: React.SFC<{}> = (): JSX.Element => {
       </PageWrapper>
     );
   } else {
-    setGlobal({
-      events: data.events,
-    });
     const events: IEvent[] = data.events;
     const listElements: JSX.Element[] = events.map(
       (event: IEvent, index: number) => (

@@ -303,7 +303,7 @@ export type RedemptionCode = {
   id: Scalars['ID'];
   redeemed?: Maybe<Scalars['Boolean']>;
   expirationDate: Scalars['DateTime'];
-  transaction: Transaction;
+  transaction?: Maybe<Transaction>;
   permissions: Array<Permission>;
   groups: Array<Group>;
 };
@@ -528,6 +528,31 @@ export type DeleteMemberMutation = (
   & { deleteUser: (
     { __typename?: 'UserDeletePayload' }
     & Pick<UserDeletePayload, 'firstName'>
+  ) }
+);
+
+export type CreateCodeMutationVariables = {
+  groups?: Maybe<Array<Scalars['String']>>;
+  permissions?: Maybe<Array<Scalars['String']>>;
+  products?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type CreateCodeMutation = (
+  { __typename?: 'Mutation' }
+  & { createRedemptionCode: (
+    { __typename?: 'RedemptionCode' }
+    & Pick<RedemptionCode, 'id' | 'expirationDate'>
+    & { groups: Array<(
+      { __typename?: 'Group' }
+      & Pick<Group, 'name'>
+    )>, permissions: Array<(
+      { __typename?: 'Permission' }
+      & Pick<Permission, 'name'>
+    )>, transaction?: Maybe<(
+      { __typename?: 'Transaction' }
+      & Pick<Transaction, 'id'>
+    )> }
   ) }
 );
 
@@ -877,3 +902,47 @@ export function useDeleteMemberMutation(baseOptions?: ApolloReactHooks.MutationH
 export type DeleteMemberMutationHookResult = ReturnType<typeof useDeleteMemberMutation>;
 export type DeleteMemberMutationResult = ApolloReactCommon.MutationResult<DeleteMemberMutation>;
 export type DeleteMemberMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteMemberMutation, DeleteMemberMutationVariables>;
+export const CreateCodeDocument = gql`
+    mutation CreateCode($groups: [String!], $permissions: [String!], $products: [String!]) {
+  createRedemptionCode(groupIds: $groups, permissionIds: $permissions, productTags: $products) {
+    id
+    expirationDate
+    groups {
+      name
+    }
+    permissions {
+      name
+    }
+    transaction {
+      id
+    }
+  }
+}
+    `;
+export type CreateCodeMutationFn = ApolloReactCommon.MutationFunction<CreateCodeMutation, CreateCodeMutationVariables>;
+
+/**
+ * __useCreateCodeMutation__
+ *
+ * To run a mutation, you first call `useCreateCodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCodeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCodeMutation, { data, loading, error }] = useCreateCodeMutation({
+ *   variables: {
+ *      groups: // value for 'groups'
+ *      permissions: // value for 'permissions'
+ *      products: // value for 'products'
+ *   },
+ * });
+ */
+export function useCreateCodeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateCodeMutation, CreateCodeMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateCodeMutation, CreateCodeMutationVariables>(CreateCodeDocument, baseOptions);
+      }
+export type CreateCodeMutationHookResult = ReturnType<typeof useCreateCodeMutation>;
+export type CreateCodeMutationResult = ApolloReactCommon.MutationResult<CreateCodeMutation>;
+export type CreateCodeMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateCodeMutation, CreateCodeMutationVariables>;

@@ -15,7 +15,6 @@
     "react-highlight-words": "^0.16.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.1",
-    "reactn": "^2.2.1",
     "serialize-javascript": "^2.1.2",
     "styled-components": "^4.1.3"
   },
