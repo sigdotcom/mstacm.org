@@ -25,3 +25,25 @@ export const CREATE_CODE: any = gql`
     }
   }
 `;
+
+export const GET_GROUPS: any = gql`
+  query GetGroups {
+    groups {
+      name
+    }
+  }
+`;
+export const GET_PERMISSIONS: any = gql`
+  query GetPermissions {
+    permissions {
+      name
+    }
+  }
+`;
+export const GET_PRODUCTS: any = gql`
+  query GetProducts {
+    products {
+      displayName
+    }
+  }
+`;

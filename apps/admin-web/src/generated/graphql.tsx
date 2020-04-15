@@ -101,6 +101,7 @@ export type Mutation = {
   deleteEvent: EventDeletePayload;
   updateEvent: Event;
   createEvent: Event;
+  createGroup: Group;
   createPermission: Permission;
   createRedemptionCode: RedemptionCode;
   redeemRedemptionCode: RedemptionCode;
@@ -163,6 +164,12 @@ export type MutationUpdateEventArgs = {
 export type MutationCreateEventArgs = {
   flier?: Maybe<Scalars['Upload']>;
   data: EventCreateInput;
+};
+
+
+export type MutationCreateGroupArgs = {
+  permissionIds: Array<Scalars['String']>;
+  name: Scalars['String'];
 };
 
 
@@ -275,6 +282,7 @@ export type Query = {
   events: Array<Event>;
   currentEvents: Array<Event>;
   event: Event;
+  groups: Array<Group>;
   permissions: Array<Permission>;
   products: Array<Product>;
   redemptionCodes: Array<RedemptionCode>;
@@ -554,6 +562,39 @@ export type CreateCodeMutation = (
       & Pick<Transaction, 'id'>
     )> }
   ) }
+);
+
+export type GetGroupsQueryVariables = {};
+
+
+export type GetGroupsQuery = (
+  { __typename?: 'Query' }
+  & { groups: Array<(
+    { __typename?: 'Group' }
+    & Pick<Group, 'name'>
+  )> }
+);
+
+export type GetPermissionsQueryVariables = {};
+
+
+export type GetPermissionsQuery = (
+  { __typename?: 'Query' }
+  & { permissions: Array<(
+    { __typename?: 'Permission' }
+    & Pick<Permission, 'name'>
+  )> }
+);
+
+export type GetProductsQueryVariables = {};
+
+
+export type GetProductsQuery = (
+  { __typename?: 'Query' }
+  & { products: Array<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'displayName'>
+  )> }
 );
 
 
@@ -946,3 +987,99 @@ export function useCreateCodeMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type CreateCodeMutationHookResult = ReturnType<typeof useCreateCodeMutation>;
 export type CreateCodeMutationResult = ApolloReactCommon.MutationResult<CreateCodeMutation>;
 export type CreateCodeMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateCodeMutation, CreateCodeMutationVariables>;
+export const GetGroupsDocument = gql`
+    query GetGroups {
+  groups {
+    name
+  }
+}
+    `;
+
+/**
+ * __useGetGroupsQuery__
+ *
+ * To run a query within a React component, call `useGetGroupsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetGroupsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetGroupsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetGroupsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetGroupsQuery, GetGroupsQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetGroupsQuery, GetGroupsQueryVariables>(GetGroupsDocument, baseOptions);
+      }
+export function useGetGroupsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetGroupsQuery, GetGroupsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetGroupsQuery, GetGroupsQueryVariables>(GetGroupsDocument, baseOptions);
+        }
+export type GetGroupsQueryHookResult = ReturnType<typeof useGetGroupsQuery>;
+export type GetGroupsLazyQueryHookResult = ReturnType<typeof useGetGroupsLazyQuery>;
+export type GetGroupsQueryResult = ApolloReactCommon.QueryResult<GetGroupsQuery, GetGroupsQueryVariables>;
+export const GetPermissionsDocument = gql`
+    query GetPermissions {
+  permissions {
+    name
+  }
+}
+    `;
+
+/**
+ * __useGetPermissionsQuery__
+ *
+ * To run a query within a React component, call `useGetPermissionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPermissionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPermissionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPermissionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetPermissionsQuery, GetPermissionsQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetPermissionsQuery, GetPermissionsQueryVariables>(GetPermissionsDocument, baseOptions);
+      }
+export function useGetPermissionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetPermissionsQuery, GetPermissionsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetPermissionsQuery, GetPermissionsQueryVariables>(GetPermissionsDocument, baseOptions);
+        }
+export type GetPermissionsQueryHookResult = ReturnType<typeof useGetPermissionsQuery>;
+export type GetPermissionsLazyQueryHookResult = ReturnType<typeof useGetPermissionsLazyQuery>;
+export type GetPermissionsQueryResult = ApolloReactCommon.QueryResult<GetPermissionsQuery, GetPermissionsQueryVariables>;
+export const GetProductsDocument = gql`
+    query GetProducts {
+  products {
+    displayName
+  }
+}
+    `;
+
+/**
+ * __useGetProductsQuery__
+ *
+ * To run a query within a React component, call `useGetProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProductsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetProductsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetProductsQuery, GetProductsQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetProductsQuery, GetProductsQueryVariables>(GetProductsDocument, baseOptions);
+      }
+export function useGetProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetProductsQuery, GetProductsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetProductsQuery, GetProductsQueryVariables>(GetProductsDocument, baseOptions);
+        }
+export type GetProductsQueryHookResult = ReturnType<typeof useGetProductsQuery>;
+export type GetProductsLazyQueryHookResult = ReturnType<typeof useGetProductsLazyQuery>;
+export type GetProductsQueryResult = ApolloReactCommon.QueryResult<GetProductsQuery, GetProductsQueryVariables>;

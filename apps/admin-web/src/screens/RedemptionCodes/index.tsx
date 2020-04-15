@@ -2,69 +2,79 @@ import React from "react";
 
 import { Form, Select, Button } from "antd";
 
-import { useCreateCodeMutation } from "../../generated/graphql";
+import {
+  useCreateCodeMutation,
+  useGetGroupsQuery,
+  useGetProductsQuery,
+  useGetPermissionsQuery,
+} from "../../generated/graphql";
 
 const { Option } = Select;
 
 const RedemptionCodes: React.FC<{}> = () => {
-  const [func] = useCreateCodeMutation();
-  const onFinish = () => {
-    console.log("stuff");
-    func({
+  const { data: gd } = useGetGroupsQuery();
+  const { data: ped } = useGetPermissionsQuery();
+  const { data: prd } = useGetProductsQuery();
+  const [createCode, { loading, error, data }] = useCreateCodeMutation();
+
+  const onFinish = (values: any) => {
+    createCode({
       variables: {
-        permissions: ["view:resumes"],
+        permissions: values.permissions,
+        groups: values.groups,
+        products: values.product ? [values.product] : null, // currently we only support one product but could be more in the future
       },
     });
   };
   return (
     <>
-      <Form name="validate_other" onFinish={onFinish}>
-        <Form.Item label="Plain Text">
-          <span className="ant-form-text">China</span>
+      <Form name="redemption-codes" onFinish={onFinish}>
+        <Form.Item name="groups" label="Permission Groups">
+          <Select
+            mode="multiple"
+            placeholder="Please select permission groups to apply"
+          >
+            {gd?.groups.map(({ name: group }: { name: string }) => (
+              <Option value={group}>{group}</Option>
+            ))}
+          </Select>
         </Form.Item>
-        <Form.Item
-          name="select"
-          label="Select"
-          hasFeedback
-          rules={[{ required: true, message: "Please select your country!" }]}
-        >
-          <Select placeholder="Please select a country">
-            <Option value="china">China</Option>
-            <Option value="usa">U.S.A</Option>
+        <Form.Item name="permissions" label="Permissions">
+          <Select
+            mode="multiple"
+            placeholder="Please select permissions to apply"
+          >
+            {ped?.permissions.map(({ name: permission }: { name: string }) => (
+              <Option value={permission}>{permission}</Option>
+            ))}
           </Select>
         </Form.Item>
 
-        <Form.Item
-          name="select-multiple"
-          label="Select[multiple]"
-          rules={[
-            {
-              required: true,
-              message: "Please select your favourite colors!",
-              type: "array",
-            },
-          ]}
-        >
-          <Select mode="multiple" placeholder="Please select favourite colors">
-            <Option value="red">Red</Option>
-            <Option value="green">Green</Option>
-            <Option value="blue">Blue</Option>
+        <Form.Item name="product" label="Product">
+          <Select placeholder="Please select a product">
+            {prd?.products.map(
+              ({ displayName: product }: { displayName: string }) => (
+                <Option value={product}>{product}</Option>
+              )
+            )}
           </Select>
         </Form.Item>
-        <Form.Item
-          wrapperCol={{
-            span: 12,
-            offset: 6,
-          }}
-        >
+
+        <Form.Item>
           <Button type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>
       </Form>
+      <p>
+        {(loading && "Loading") || // If loading
+        (error && error.toString()) || // If error
+          (data &&
+            `https://mstacm.org/?redeem=${data.createRedemptionCode.id}`) // If success
+        }
+      </p>
     </>
   );
-  return <h1>bees</h1>;
 };
 
 export { RedemptionCodes };
