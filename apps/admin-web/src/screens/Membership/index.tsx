@@ -14,7 +14,7 @@ import {
   useResetShirtReceivedMutation,
   useDeleteMemberMutation,
   User,
-} from "../../../../generated/graphql";
+} from "../../generated/graphql";
 
 const btnStyles: IStyles = {
   display: "inline-block",
