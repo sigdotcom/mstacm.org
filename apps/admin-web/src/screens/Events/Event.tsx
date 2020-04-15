@@ -3,7 +3,7 @@ import React, { setGlobal } from "reactn";
 import styled, { AnyStyledComponent } from "styled-components";
 
 import { GET_EVENTS } from "./helpers";
-import { useDeleteEventMutation } from "../../../../generated/graphql";
+import { useDeleteEventMutation } from "../../generated/graphql";
 import { IEvent } from "./interfaces";
 
 import { Button } from "antd";
@@ -55,7 +55,7 @@ const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
       month: "long",
       day: "numeric",
       hour: "numeric",
-      minute: "numeric"
+      minute: "numeric",
     };
     const d: Date = new Date(date);
 
@@ -65,14 +65,14 @@ const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
   const handleEdit: () => void = (): void => {
     setGlobal({
       activeEvent: props.index,
-      eventFormVisible: true
+      eventFormVisible: true,
     });
   };
 
   const handleDelete: () => void = (): void => {
     deleteEvent({
       refetchQueries: [{ query: GET_EVENTS }],
-      variables: { id: Number(props.event.id) }
+      variables: { id: Number(props.event.id) },
     });
   };
 
