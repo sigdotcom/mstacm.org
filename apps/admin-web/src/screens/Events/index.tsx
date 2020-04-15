@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { AnyStyledComponent } from "styled-components";
 
-import { EventFormModal } from "./EventFormModal";
 import { EventList } from "./EventList";
 import { Header } from "./Header";
 
@@ -16,7 +15,6 @@ const Events: React.SFC<{}> = (): JSX.Element => {
     <PageWrapper>
       <Header />
       <EventList />
-      <EventFormModal />
     </PageWrapper>
   );
 };

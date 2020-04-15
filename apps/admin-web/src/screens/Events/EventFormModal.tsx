@@ -1,25 +1,34 @@
+import React from "react";
 import { Modal } from "antd";
-import React, { useGlobal } from "reactn";
 
 import { EventForm } from "./EventForm";
+import { IEvent } from "./interfaces";
 
-const EventFormModal: React.FC<{}> = (): JSX.Element => {
-  const [eventFormVisible, setEventFormVisible] = useGlobal("eventFormVisible");
+interface IEventFormModalProps {
+  formVisible: boolean;
+  setFormVisible: (arg: boolean) => void;
+  event?: IEvent;
+}
 
+const EventFormModal: React.FC<IEventFormModalProps> = ({
+  formVisible,
+  setFormVisible,
+  event,
+}: IEventFormModalProps): JSX.Element => {
   const handleCancel: () => void = (): void => {
-    setEventFormVisible(false);
+    setFormVisible(false);
   };
 
-  const action: string = `${eventFormVisible ? "Edit" : "Add"} Event`;
+  const action: string = `${event ? "Edit" : "Add"} Event`;
 
   return (
     <Modal
       title={action}
-      visible={eventFormVisible}
+      visible={formVisible}
       footer={null}
       onCancel={handleCancel}
     >
-      <EventForm />
+      <EventForm eventBase={event} />
     </Modal>
   );
 };
