@@ -16,9 +16,9 @@ import {
   Input,
   InputNumber,
   Upload,
-  Icon,
   Select,
 } from "antd";
+import { InboxOutlined } from "@ant-design/icons";
 
 import { IEvent, IHostSig } from "./interfaces";
 import { UploadFile, UploadProps } from "antd/lib/upload/interface";
@@ -26,7 +26,9 @@ import { UploadFile, UploadProps } from "antd/lib/upload/interface";
 const { RangePicker }: any = DatePicker;
 const { TextArea }: any = Input;
 
-const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
+const EventForm: React.FC<{}> = (): JSX.Element => {
+  const [form] = Form.useForm();
+
   const [events]: [IEvent[], any] = useGlobal("events");
   const [activeEvent]: [number, any] = useGlobal("activeEvent");
 
@@ -68,38 +70,32 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
     return;
   };
 
-  const handleSubmit: any = (e: any): any => {
-    e.preventDefault();
-
-    props.form.validateFields((err: any, values: any) => {
-      if (!err) {
-        convertTimes(values);
-        delete values.flier;
-        if (editing) {
-          const id: number = Number(values.id);
-          delete values.id;
-          console.log("VALUES", values);
-          updateEvent({
-            refetchQueries: [{ query: GET_EVENTS }],
-            variables: {
-              flier: files.length > 0 ? files[0] : undefined,
-              data: values,
-              id,
-            },
-          });
-          // UPDATE THE NEW EVENT (values);
-        } else {
-          createEvent({
-            refetchQueries: [{ query: GET_EVENTS }],
-            variables: { data: values, flier: files[0] },
-          });
-          // CREATE THE NEW EVENT (values);
-        }
-      }
-    });
+  const handleSubmit: any = (values: any): any => {
+    convertTimes(values);
+    delete values.flier;
+    if (editing) {
+      const id: number = Number(values.id);
+      delete values.id;
+      console.log("VALUES", values);
+      updateEvent({
+        refetchQueries: [{ query: GET_EVENTS }],
+        variables: {
+          flier: files.length > 0 ? files[0] : undefined,
+          data: values,
+          id,
+        },
+      });
+      // UPDATE THE NEW EVENT (values);
+    } else {
+      createEvent({
+        refetchQueries: [{ query: GET_EVENTS }],
+        variables: { data: values, flier: files[0] },
+      });
+      // CREATE THE NEW EVENT (values);
+    }
   };
 
-  const { getFieldDecorator }: any = props.form;
+  const { getFieldDecorator }: any = form;
   const params: UploadProps = {
     accept: ".jpg",
     multiple: false,
@@ -132,7 +128,7 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onFinish={handleSubmit}>
       {editing && (
         <Form.Item label="ID">
           {getFieldDecorator("id", {
@@ -209,7 +205,7 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
         })(
           <Upload.Dragger {...params}>
             <p className="ant-upload-drag-icon">
-              <Icon type="inbox" />
+              <InboxOutlined />
             </p>
             <p className="ant-upload-text">
               Click or drag file to this area to upload
@@ -236,7 +232,5 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
     </Form>
   );
 };
-
-const EventForm: any = Form.create({ name: "add" })(EventFormBase);
 
 export { EventForm };
