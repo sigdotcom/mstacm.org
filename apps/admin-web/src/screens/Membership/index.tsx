@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import { Table, Input, Button, Icon, Modal, DatePicker, message } from "antd";
+import { Table, Input, Button, Modal, DatePicker, message } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import moment from "moment";
 import styled, { AnyStyledComponent } from "styled-components";
@@ -370,7 +371,7 @@ const Membership: React.FC<{}> = () => {
       </div>
     ),
     filterIcon: (filtered: boolean) => (
-      <Icon type="search" style={{ color: filtered ? "#1890ff" : undefined }} />
+      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
     ),
     onFilter: (value: any, record: any) =>
       record[dataIndex]
@@ -525,4 +526,3 @@ const Membership: React.FC<{}> = () => {
 };
 
 export { Membership };
-
