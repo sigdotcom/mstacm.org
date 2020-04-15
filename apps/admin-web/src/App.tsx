@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import { Layout, Menu, PageHeader, Spin } from "antd";
 
-import { ToolList } from "./components/pages";
-import { Events } from "./components/pages/tools";
-import { Membership } from "./components/pages/tools/Membership";
+import { ToolList } from "./Tools";
+import { Events } from "./screens/Events";
+import { Membership } from "./screens/Membership";
 import { config } from "./config";
 import "./static/css/App.css";
 

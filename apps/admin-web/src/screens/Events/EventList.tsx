@@ -4,7 +4,7 @@ import styled, { AnyStyledComponent } from "styled-components";
 
 import { Event } from "./Event";
 
-import { useEventsQuery } from "../../../../generated/graphql";
+import { useEventsQuery } from "../../generated/graphql";
 
 import { IEvent } from "./interfaces";
 
@@ -35,7 +35,7 @@ const EventList: React.SFC<{}> = (): JSX.Element => {
     );
   } else {
     setGlobal({
-      events: data.events
+      events: data.events,
     });
     const events: IEvent[] = data.events;
     const listElements: JSX.Element[] = events.map(

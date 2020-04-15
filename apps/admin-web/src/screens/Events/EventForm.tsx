@@ -6,8 +6,8 @@ import { GET_EVENTS } from "./helpers";
 import {
   useCreateEventMutation,
   useUpdateEventMutation,
-  useSigsQuery
-} from "../../../../generated/graphql";
+  useSigsQuery,
+} from "../../generated/graphql";
 
 import {
   Button,
@@ -17,7 +17,7 @@ import {
   InputNumber,
   Upload,
   Icon,
-  Select
+  Select,
 } from "antd";
 
 import { IEvent, IHostSig } from "./interfaces";
@@ -36,11 +36,11 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
 
   const [
     createEvent,
-    { loading: createLoading, error: createError, data: createData }
+    { loading: createLoading, error: createError, data: createData },
   ]: any = useCreateEventMutation();
   const [
     updateEvent,
-    { loading: updateLoading, error: updateError, data: updateData }
+    { loading: updateLoading, error: updateError, data: updateData },
   ]: any = useUpdateEventMutation();
   const [files, setFiles] = useState<UploadFile[]>([]);
   const { loading, error, data } = useSigsQuery();
@@ -84,14 +84,14 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
             variables: {
               flier: files.length > 0 ? files[0] : undefined,
               data: values,
-              id
-            }
+              id,
+            },
           });
           // UPDATE THE NEW EVENT (values);
         } else {
           createEvent({
             refetchQueries: [{ query: GET_EVENTS }],
-            variables: { data: values, flier: files[0] }
+            variables: { data: values, flier: files[0] },
           });
           // CREATE THE NEW EVENT (values);
         }
@@ -112,7 +112,7 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
 
       // Uploading will be stopped with false or a rejected Promise returned.
       return false;
-    }
+    },
   };
 
   if (createLoading || updateLoading) {
@@ -139,9 +139,9 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
             initialValue: newEvent.id,
             rules: [
               {
-                required: !editing
-              }
-            ]
+                required: !editing,
+              },
+            ],
           })(<InputNumber />)}
         </Form.Item>
       )}
@@ -151,9 +151,9 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
           rules: [
             {
               required: !editing,
-              message: "Please choose a host community's name!"
-            }
-          ]
+              message: "Please choose a host community's name!",
+            },
+          ],
         })(<Select>{Sigs()}</Select>)}
       </Form.Item>
       <Form.Item label="Name">
@@ -162,9 +162,9 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
           rules: [
             {
               required: !editing,
-              message: "Please input the event's name!"
-            }
-          ]
+              message: "Please input the event's name!",
+            },
+          ],
         })(<Input />)}
       </Form.Item>
       <Form.Item label="Description">
@@ -173,9 +173,9 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
           rules: [
             {
               required: !editing,
-              message: "Please input the event's description!"
-            }
-          ]
+              message: "Please input the event's description!",
+            },
+          ],
         })(<TextArea autoSize={{ minRows: 2, maxRows: 6 }} />)}
       </Form.Item>
       <Form.Item label="Location">
@@ -184,9 +184,9 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
           rules: [
             {
               required: !editing,
-              message: "Please input the event's location!"
-            }
-          ]
+              message: "Please input the event's location!",
+            },
+          ],
         })(<Input />)}
       </Form.Item>
       <Form.Item
@@ -198,14 +198,14 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
           rules: [
             {
               type: "url",
-              message: "The input is not a valid URL."
-            }
-          ]
+              message: "The input is not a valid URL.",
+            },
+          ],
         })(<Input />)}
       </Form.Item>
       <Form.Item label="Event Flier">
         {getFieldDecorator("flier", {
-          valuePropName: "file"
+          valuePropName: "file",
         })(
           <Upload.Dragger {...params}>
             <p className="ant-upload-drag-icon">
@@ -223,9 +223,9 @@ const EventFormBase: React.FC<any> = (props: any): JSX.Element => {
         {getFieldDecorator("dateRange", {
           initialValue: [
             moment(newEvent.dateHosted),
-            moment(newEvent.dateExpire)
+            moment(newEvent.dateExpire),
           ],
-          rules: [{ type: "array", required: !editing }]
+          rules: [{ type: "array", required: !editing }],
         })(<RangePicker showTime={true} format="MMMM Do h:mm" />)}
       </Form.Item>
       <Form.Item>
