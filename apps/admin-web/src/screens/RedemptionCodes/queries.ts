@@ -44,6 +44,7 @@ export const GET_PRODUCTS: any = gql`
   query GetProducts {
     products {
       displayName
+      tag
     }
   }
 `;
