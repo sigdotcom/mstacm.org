@@ -53,8 +53,14 @@ const RedemptionCodes: React.FC<{}> = () => {
         <Form.Item name="product" label="Product">
           <Select placeholder="Please select a product">
             {prd?.products.map(
-              ({ displayName: product }: { displayName: string }) => (
-                <Option value={product}>{product}</Option>
+              ({
+                displayName: product,
+                tag,
+              }: {
+                displayName: string;
+                tag: string;
+              }) => (
+                <Option value={tag}>{product}</Option>
               )
             )}
           </Select>
@@ -66,13 +72,14 @@ const RedemptionCodes: React.FC<{}> = () => {
           </Button>
         </Form.Item>
       </Form>
-      <p>
-        {(loading && "Loading") || // If loading
-        (error && error.toString()) || // If error
-          (data &&
-            `https://mstacm.org/?redeem=${data.createRedemptionCode.id}`) // If success
-        }
-      </p>
+      {(loading && "Loading") || // If loading
+      (error && error.toString()) || // If error
+        (data && ( // If success
+          <>
+            <h3>Redemtion Code Created:</h3>
+            <p>{`https://mstacm.org/?redeem=${data.createRedemptionCode.id}`}</p>
+          </>
+        ))}
     </>
   );
 };

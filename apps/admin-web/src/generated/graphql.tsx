@@ -593,7 +593,7 @@ export type GetProductsQuery = (
   { __typename?: 'Query' }
   & { products: Array<(
     { __typename?: 'Product' }
-    & Pick<Product, 'displayName'>
+    & Pick<Product, 'displayName' | 'tag'>
   )> }
 );
 
@@ -1055,6 +1055,7 @@ export const GetProductsDocument = gql`
     query GetProducts {
   products {
     displayName
+    tag
   }
 }
     `;
