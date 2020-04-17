@@ -14,7 +14,7 @@ export class GroupResolver {
     return this.repository.find();
   }
 
-  @Authorized("create:group")
+  @Authorized("create:groups")
   @Mutation(() => Group)
   public async createGroup(
     @Arg("name", () => String)
