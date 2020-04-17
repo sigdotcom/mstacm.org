@@ -6,9 +6,10 @@ When making changes to the schema for the database, we must generate what are
 called "migrations". These allow current rows in the database to be modified
 into the shape of the new schema.
 
-## How to make migrations 
+## How to make migrations
 
 1. Purge your development database and turn off the api.
+
     **If you are using `docker`:**
 
     ```bash
@@ -16,6 +17,7 @@ into the shape of the new schema.
     ```
 
     **If you are running a local `PostgreSQL` database:**
+
     Drop the database.
 
 2. Recreate the database and start `api` in "production" mode.
@@ -28,19 +30,23 @@ into the shape of the new schema.
 
         ```yaml
         phoenix_web:
-            # This line runs the api in development mode
-            command: yarn start:dev
+            # command: bash -c "yarn build && yarn start:prod"
+            command: yarn start:dev # <--- This line
         ```
+
+        > The line runs the api in development mode
 
     2. Uncomment [the next line in docker-compose.override.yml](docker-compose.override.yml#L15)
 
         ```yaml
         phoenix_web:
-            # This line builds and runs in production mode instead
-            command: bash -c "yarn build && yarn start:prod"
+            command: bash -c "yarn build && yarn start:prod" # <--- This line
+            # command: yarn start:dev
         ```
 
-    3. Start it:
+        > The line builds and runs `api` in production mode instead
+
+    3. Start `api` and the database with `docker-compose`:
 
         ```bash
         docker-compose up
@@ -55,14 +61,17 @@ into the shape of the new schema.
         ```
 
     ----
-    What these changes do is skip [three lines](api/src/main.ts#L24) which cause
-    the synchronization each time the `api` starts by setting the `NODE_ENV`
-    environment variable to "production".
+    What these changes do is skip [three lines in main.ts](api/src/main.ts#L24)
+    which cause the synchronization each time the `api` starts by setting the
+    `NODE_ENV` environment variable to "production".
 
 3. Your database is now out of sync with your code, which is good.
 
     **Verify that the changes you have made to the database schema are not
-    present in the database now**.
+    present in the database now.**
+
+    > You can either query using `psql` from the command line or use a gui like
+    `postico` for macOS or `pgadmin` for windows.
 
 4. Generate the automatic migration using `typeorm`
 
@@ -70,7 +79,7 @@ into the shape of the new schema.
     yarn typeorm migration:generate -n <feature-name>
     ```
 
-    where `<feature-name>` is the nice name for what changed.
+    where `<feature-name>` is a simple name for what changed.
     (Ex. UserShirts for a feature where users now have shirts in the database)
 
 5. Check that the database now looks as it should, and edit the migration file
