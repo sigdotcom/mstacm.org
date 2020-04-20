@@ -1,26 +1,37 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
-import { Layout, Menu, PageHeader, Spin } from "antd";
+//import { BrowserRouter } from "react-router-dom";
+import { Spin } from "antd";
 
-import { ToolList } from "./components/pages";
-import { Events } from "./components/pages/tools";
-import { Membership } from "./components/pages/tools/Membership";
+// import { ToolList } from "./components/pages";
+// import { Events } from "./components/pages/tools";
+// import { Membership } from "./components/pages/tools/Membership";
+import styled, { AnyStyledComponent } from "styled-components";
 import { config } from "./config";
 import "./static/css/App.css";
-
 import { useAuth0 } from "./utils/react-auth0-wrapper";
+import Head from "./redo/header";
+import Sidebar from "./redo/sidebar";
+import Main from "./redo/main";
 
-const { Header, Content, Footer, Sider } = Layout;
+const Grid: AnyStyledComponent = styled.div`
+  height: 100vh;
+  display: grid;
 
-const MainContent: React.SFC<{}> = (): JSX.Element => {
-  return (
-    <Switch>
-      <Route exact={true} path="/" component={ToolList} />
-      <Route path="/events" component={Events} />
-      <Route path="/membership" component={Membership} />
-    </Switch>
-  );
-};
+  width: 1200px;
+  margin: auto;
+  grid-template-columns: repeat(16, 1fr);
+  grid-template-rows: auto;
+  grid-template-areas: "m m c c c c c c c c c c c c c c";
+`;
+// const Header: AnyStyledComponent = styled.div`
+//   grid-area: h;
+// `;
+const Content: AnyStyledComponent = styled.div`
+  grid-area: c;
+`;
+const Menu: AnyStyledComponent = styled.div`
+  grid-area: m;
+`;
 
 const App: React.SFC<{}> = (): JSX.Element => {
   const {
@@ -28,8 +39,7 @@ const App: React.SFC<{}> = (): JSX.Element => {
     isAuthenticated,
     getTokenSilently,
     loginWithRedirect,
-    logout,
-    user,
+    // logout,
   } = useAuth0();
 
   useEffect(() => {
@@ -55,54 +65,27 @@ const App: React.SFC<{}> = (): JSX.Element => {
     }
   }, [loading, isAuthenticated, getTokenSilently]);
 
-  const onLogoutClick: () => void = (): void => {
-    logout({ returnTo: config.REDIRECT_PAGE_URI });
-  };
+  // const onLogoutClick: () => void = (): void => {
+  //   logout({ returnTo: config.REDIRECT_PAGE_URI });
+  // };
 
   if (loading || !isAuthenticated) {
     return <Spin size="large" className="load-page" tip="Loading..." />;
   }
 
   return (
-    <BrowserRouter>
-      <Layout>
-        <Sider
-          breakpoint="md"
-          collapsedWidth="0"
-          onBreakpoint={undefined}
-          onCollapse={undefined}
-        >
-          <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={["events"]}>
-            <Menu.Item key="events">
-              <Link to="/events">
-                <span className="nav-text">Events</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="membership">
-              <Link to="/membership">
-                <span className="nav-text">Membership Tool</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item onClick={onLogoutClick} key="signOut">
-              <span className="nav-text">Sign Out</span>
-            </Menu.Item>
-          </Menu>
-        </Sider>
-        <Layout>
-          <Header style={{ background: "#fff", padding: 0 }}>
-            <PageHeader
-              backIcon={false}
-              title={`Hello, ${user.name}. Welcome to your Admin Dashboard`}
-            />
-          </Header>
-          <Content style={{ margin: "24px 16px 0" }}>
-            <MainContent />
-            <Footer style={{ textAlign: "center" }}>S&T ACM 2019</Footer>
-          </Content>
-        </Layout>
-      </Layout>
-    </BrowserRouter>
+    <div>
+      <Head />
+
+      <Grid>
+        <Content>
+          <Main />
+        </Content>
+        <Menu>
+          <Sidebar />
+        </Menu>
+      </Grid>
+    </div>
   );
 };
 
