@@ -6,6 +6,7 @@ import {
   JoinColumn,
   JoinTable,
   ManyToOne,
+  ManyToMany,
   PrimaryGeneratedColumn
 } from "typeorm";
 
@@ -81,4 +82,10 @@ export class Event extends BaseEntity {
     nullable: true
   })
   public eventLink?: string;
+
+  @ManyToMany(() => User, (user: User) => user.eventsAttended, {
+    lazy: true,
+    nullable: true
+  })
+  public attendees: Lazy<User[]>;
 }
