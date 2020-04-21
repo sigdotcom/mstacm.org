@@ -60,9 +60,9 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
           onCancel={() => {
             setResumeFull(false);
           }}
-          width="90%"
+          width="60%"
           style={{ top: 20 }}
-          bodyStyle={{ height: "90vh", padding: 40 }}
+          bodyStyle={{ height: "95vh", padding: 40 }}
         >
           <object
             data={PDF_URL}
