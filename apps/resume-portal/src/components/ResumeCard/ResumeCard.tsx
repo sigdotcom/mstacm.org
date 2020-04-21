@@ -1,6 +1,7 @@
 // import { Icon, Spin } from "antd";
-import React from "react";
+import React, { useState } from "react";
 
+import { Modal } from "antd";
 import { timeSince, toSemester } from "../../utils/time";
 import { User } from "../../utils/types";
 import { ActionBar } from "../ActionBar";
@@ -9,10 +10,11 @@ interface IResumeCardProps {
   user: User;
 }
 
-const ResumeCard: React.FC<IResumeCardProps> = props => {
+const ResumeCard: React.FC<IResumeCardProps> = (props) => {
   const user = props.user;
   const firstName = user.firstName || "Unknown";
   const lastName = user.lastName || "Unknown";
+  const [resumeFull, setResumeFull] = useState(false);
 
   if (!user.resume) {
     throw new Error("Passed invalid added time.");
@@ -52,6 +54,25 @@ const ResumeCard: React.FC<IResumeCardProps> = props => {
         >
           <a href={PDF_URL}>Resume URL</a>
         </object>
+        <Modal
+          visible={resumeFull}
+          footer={null}
+          onCancel={() => {
+            setResumeFull(false);
+          }}
+          width="90%"
+          style={{ top: 20 }}
+          bodyStyle={{ height: "90vh", padding: 40 }}
+        >
+          <object
+            data={PDF_URL}
+            type="application/pdf"
+            width="100%"
+            height="100%"
+          >
+            <a href={PDF_URL}>Resume URL</a>
+          </object>
+        </Modal>
       </div>
       <div className="px-6 py-1 flex">
         <div className="w-2/12 flex flex-col items-center z-50 -my-12">
@@ -61,6 +82,9 @@ const ResumeCard: React.FC<IResumeCardProps> = props => {
             className="rounded-full"
             src={PROFILE_URL}
             alt="Avatar"
+            onClick={() => {
+              setResumeFull(true);
+            }}
           />
         </div>
         <div className="w-8/12 text-xl flex justify-center content-center leading-normal">
