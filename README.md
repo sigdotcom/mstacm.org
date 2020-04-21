@@ -136,7 +136,7 @@ We use a pattern known as [Github Flow](https://guides.github.com/introduction/f
     git add file1 file2 ... # only add relevant files
     git commit -m 'Add some great specific and well described features' # After the "-m" goes the commit message
     ```
-  > Read [this article about good commit messages](https://chris.beams.io/posts/git-commit/) to maintain good quality commits
+    > Read [this article about good commit messages](https://chris.beams.io/posts/git-commit/) to maintain good quality commits
 4. Push to the remote branch
     ```bash
     git push origin feature/<feature-name>
