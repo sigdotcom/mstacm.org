@@ -102,8 +102,8 @@ We use a pattern known as [Github Flow](https://guides.github.com/introduction/f
   ```bash
   git switch -c feature/<feature-name>
   ```
-  > where <feature-name> is replaced with a short description of
-  your feature (ex. admin-permission-tool for a feature adding a new tool to admin-web)
+  > where `<feature-name>` is replaced with a short description of
+  your feature (ex. `admin-permission-tool` for a feature adding a new tool to admin-web)
   
   Name your commits with `feature/` or `hotfix/` at the beginning depending on the content of the branch. (ex. `feature/new-icons`, `hotfix/icon-render-glitch`)
   
