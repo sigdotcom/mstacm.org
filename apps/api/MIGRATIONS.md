@@ -20,7 +20,15 @@ into the shape of the new schema.
 
     Drop the database.
 
-2. Recreate the database and start `api` in "production" mode.
+2. Remove SSL support from TypeORM in "production" mode
+
+   Comment out [this line in ormconfig.js](ormconfig.js#L29)
+   
+   ```js
+     // ssl: IS_PROD ? true : false
+   ```
+
+3. Recreate the database and start `api` in "production" mode.
     You must start `api` in "production mode" so that you will not have database
     synchronization enabled, which ensures the database is always the same as
     the schema and is useful for debugging.
@@ -65,7 +73,7 @@ into the shape of the new schema.
     which cause the synchronization each time the `api` starts by setting the
     `NODE_ENV` environment variable to "production".
 
-3. Your database is now out of sync with your code, which is good.
+4. Your database is now out of sync with your code, which is good.
 
     **Verify that the changes you have made to the database schema are not
     present in the database now.**
@@ -73,7 +81,7 @@ into the shape of the new schema.
     > You can either query using `psql` from the command line or use a gui like
     `postico` for macOS or `pgadmin` for windows.
 
-4. Generate the automatic migration using `typeorm`
+5. Generate the automatic migration using `typeorm`
 
     ```bash
     yarn typeorm migration:generate -n <feature-name>
@@ -82,7 +90,7 @@ into the shape of the new schema.
     where `<feature-name>` is a simple name for what changed.
     (Ex. UserShirts for a feature where users now have shirts in the database)
 
-5. Check that the database now looks as it should, and edit the migration file
+6. Check that the database now looks as it should, and edit the migration file
     located in [the migrations folder](src/migrations) to make sure that
     only the parts of the schema **you changed** are being modified.
 
@@ -94,7 +102,7 @@ into the shape of the new schema.
     If the migration is wrong it is up to you to amend the SQL queries to make
     the migration work as it needs to.
 
-6. Test your migration
+7. Test your migration
 
     Rerun the steps to delete and rebuild the database by hand and make sure
     that the default entries are all looking as expected and no errors occur.
