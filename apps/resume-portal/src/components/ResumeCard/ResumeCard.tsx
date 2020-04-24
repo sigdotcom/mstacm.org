@@ -12,11 +12,12 @@ interface IResumeCardProps {
   user: User;
 }
 
-const ProfileIcon: AnyStyledComponent = styled.img`
-  width="96";
-  height="96";
-  alt="Avatar";
-  
+const ResumeClickArea: AnyStyledComponent = styled.div`
+  position: "absolute";
+  width: 615;
+  height: 465;
+  background: "transparent";
+
   &:hover {
     cursor: pointer;
   }
@@ -28,8 +29,8 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
   const lastName = user.lastName || "Unknown";
   const [resumeFull, setResumeFull] = useState(false);
 
-  const handleResume = (fullScreen: boolean): void => {
-    setResumeFull(fullScreen);
+  const toggleResumePreview = (): void => {
+    setResumeFull(resumeFull !== true);
   };
 
   if (!user.resume) {
@@ -62,6 +63,17 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
         className="flex items-center content-center justify-center"
         style={{ width: PDF_WIDTH, height: PDF_HEIGHT }}
       >
+        <Tooltip title="Preview Resume" placement="leftTop">
+          <ResumeClickArea
+            style={{
+              position: "absolute",
+              width: 615,
+              height: 465,
+              background: "transparent",
+            }}
+            onClick={toggleResumePreview}
+          />
+        </Tooltip>
         <object
           data={PDF_URL}
           type="application/pdf"
@@ -70,12 +82,11 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
         >
           <a href={PDF_URL}>Resume URL</a>
         </object>
+
         <Modal
           visible={resumeFull}
           footer={null}
-          onCancel={() => {
-            handleResume(false);
-          }}
+          onCancel={toggleResumePreview}
           width="60%"
           style={{ top: 20 }}
           bodyStyle={{ height: "95vh", padding: 40 }}
@@ -92,15 +103,7 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
       </div>
       <div className="px-6 py-1 flex">
         <div className="w-2/12 flex flex-col items-center z-50 -my-12">
-          <Tooltip title="Preview Resume">
-            <ProfileIcon
-              className="rounded-full"
-              src={PROFILE_URL}
-              onClick={() => {
-                handleResume(true);
-              }}
-            />
-          </Tooltip>
+          <img className="rounded-full" src={PROFILE_URL} />
         </div>
         <div className="w-8/12 text-xl flex justify-center content-center leading-normal">
           <p style={{ textAlign: "center" }} className="my-2">
