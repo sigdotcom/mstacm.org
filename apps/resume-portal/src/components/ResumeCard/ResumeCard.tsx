@@ -1,5 +1,7 @@
 // import { Icon, Spin } from "antd";
+import { Tooltip } from "antd";
 import React, { useState } from "react";
+import styled, { AnyStyledComponent } from "styled-components";
 
 import { Modal } from "antd";
 import { timeSince, toSemester } from "../../utils/time";
@@ -10,11 +12,25 @@ interface IResumeCardProps {
   user: User;
 }
 
+const ProfileIcon: AnyStyledComponent = styled.img`
+  width="96";
+  height="96";
+  alt="Avatar";
+  
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 const ResumeCard: React.FC<IResumeCardProps> = (props) => {
   const user = props.user;
   const firstName = user.firstName || "Unknown";
   const lastName = user.lastName || "Unknown";
   const [resumeFull, setResumeFull] = useState(false);
+
+  const handleResume = (fullScreen: boolean): void => {
+    setResumeFull(fullScreen);
+  };
 
   if (!user.resume) {
     throw new Error("Passed invalid added time.");
@@ -58,7 +74,7 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
           visible={resumeFull}
           footer={null}
           onCancel={() => {
-            setResumeFull(false);
+            handleResume(false);
           }}
           width="60%"
           style={{ top: 20 }}
@@ -76,16 +92,15 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
       </div>
       <div className="px-6 py-1 flex">
         <div className="w-2/12 flex flex-col items-center z-50 -my-12">
-          <img
-            width="96"
-            height="96"
-            className="rounded-full"
-            src={PROFILE_URL}
-            alt="Avatar"
-            onClick={() => {
-              setResumeFull(true);
-            }}
-          />
+          <Tooltip title="Preview Resume">
+            <ProfileIcon
+              className="rounded-full"
+              src={PROFILE_URL}
+              onClick={() => {
+                handleResume(true);
+              }}
+            />
+          </Tooltip>
         </div>
         <div className="w-8/12 text-xl flex justify-center content-center leading-normal">
           <p style={{ textAlign: "center" }} className="my-2">
