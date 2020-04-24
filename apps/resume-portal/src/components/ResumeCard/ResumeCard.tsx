@@ -13,11 +13,6 @@ interface IResumeCardProps {
 }
 
 const ResumeClickArea: AnyStyledComponent = styled.div`
-  position: "absolute";
-  width: 615;
-  height: 465;
-  background: "transparent";
-
   &:hover {
     cursor: pointer;
   }
@@ -69,7 +64,7 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
               position: "absolute",
               width: 615,
               height: 465,
-              background: "transparent",
+              background: "transparent"
             }}
             onClick={toggleResumePreview}
           />
