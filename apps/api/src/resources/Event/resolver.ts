@@ -155,6 +155,17 @@ export class EventResolver {
     return newResource.save();
   }
 
+  @Authorized("update:event_attendees")
+  @Mutation((_: void) => Event)
+  public async updateAttendees(
+    @Arg("eventId") eventId: string,
+    @Arg("userId") userId: string,
+  ): Promise<Event> {
+    const event: Event = await Event.findOneOrFail({ id: eventId });
+    event.attendees.push(user);
+    return event.save();
+  }
+
   @Query(() => [Event])
   protected async events(): Promise<Event[]> {
     return this.repository.find();

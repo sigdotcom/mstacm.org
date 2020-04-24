@@ -143,6 +143,17 @@ export class UserResolver extends ResourceResolver<resourceType>(
     return users;
   }
 
+  @Authorized("update:user_events_attended")
+  @Mutation((_: void) => User)
+  public async updateEventsAttended(
+    @Arg("userId") userId: string,
+    @Arg("eventId") eventId: string,
+  ): Promise<User> {
+    const user: User = await User.findOneOrFail({ id: userId });
+    user.eventsAttended.push(eventId);
+    return user.save();
+  }
+
   @Query((_: void) => resource, { nullable: true })
   protected async me(@Ctx() context: IContext) {
     const user: User | undefined = context.state.user;
