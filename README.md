@@ -51,23 +51,20 @@ To get a local copy up and running follow these simple steps.
 ### Installation
  
 1. Clone the mstacm.org repository using Git Bash:
-```sh
-# Make sure to setup ssh keys on your github account
-# https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account
-git clone git@github.com:sigdotcom/mstacm.org.git
-```
+    ```bash
+    git clone https://github.com/sigdotcom/mstacm.org.git
+    ```
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
 Since this repository is a monorepo, the best way to use its various
-functionality is by exploring the directories containing each project. These
-include:
-+ ``api`` - The GraphQL backend that powers all of our database interactions.
-+ ``apps`` - All of the frontend react applications that users (companies, ACM
-  Executives, etc.) interact with.
+functionality is by exploring the directories containing each project.
 
-Each project will contain its own installation / setup instructions to follow.
+Find these projects in the `apps` directory, where we store all of the
+applications we have built for our web services
+
+Each project will contain its own installation / setup instructions to follow in their respective `README.md`.
 
 
 <!-- ROADMAP -->
@@ -85,20 +82,67 @@ Contributions are what make the open source community such an amazing place to
 be learn, inspire, and create. Any contributions you make are **greatly
 appreciated**.
 
-If you **are** apart of ACM Web:
+We use a pattern known as [Github Flow](https://guides.github.com/introduction/flow/). Click that link to learn more.
+
+### ACM Web Members
+**One-time set up:**
 1. Ask the Chair of ACM Web to add you to the [sigdotcom
    organization][sigdotcom-organization]
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+2. Clone the mstacm.org repository
+    ```bash
+    git clone https://github.com/sigdotcom/mstacm.org.git
+    ```
+**Every feature:**
+1. Update your local master branch 
+    ```bash
+    git switch master # "git checkout master" if git < 2.23
+    git pull master
+    ```
+2. Create your branch
+    ```bash
+    git switch -c feature/<feature-name>
+    ```
+    > where `<feature-name>` is replaced with a short description of
+    your feature (ex. `admin-permission-tool` for a feature adding a new tool to admin-web)
 
-If you **are not** apart of ACM Web:
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+    Name your commits with `feature/` or `hotfix/` at the beginning depending on the content of the branch. (ex. `feature/new-icons`, `hotfix/icon-render-glitch`)
+  
+3. Add and commit your Changes 
+    ```bash
+    git add file1 file2 ... # only add relevant files
+    git commit -m 'Add some great specific and well described features' # After the "-m" goes the commit message
+    ```
+    > Read [this article about good commit messages](https://chris.beams.io/posts/git-commit/) to maintain good quality commits
+4. Push to the remote branch
+    ```bash
+    git push origin feature/<feature-name>
+    ```
+5. [Open a Pull Request on Github](https://github.com/sigdotcom/mstacm.org/compare)
+6. Grab a new issue to work on and start from the top!
+
+### Outside Contributors
+1. Fork the mstacm.org repository
+2. Create your branch
+    ```bash
+    git switch -c feature/<feature-name>
+    ```
+    > where <feature-name> is replaced with a short description of
+    your feature (ex. admin-permission-tool for a feature adding a new tool to admin-web)
+
+    Name your commits with `feature/` or `hotfix/` at the beginning depending on the content of the branch. (ex. `feature/new-icons`, `hotfix/icon-render-glitch`)
+  
+3. Add and commit your Changes 
+    ```bash
+    git add file1 file2 ... # only add relevant files
+    git commit -m 'Add some great specific and well described features' # After the "-m" goes the commit message
+    ```
+    > Read [this article about good commit messages](https://chris.beams.io/posts/git-commit/) to maintain good quality commits
+4. Push to the remote branch
+    ```bash
+    git push origin feature/<feature-name>
+    ```
+5. [Open a Pull Request on Github](https://github.com/sigdotcom/mstacm.org/compare)
+6. Grab a new issue to work on and start from the top!
 
 
 
