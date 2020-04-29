@@ -25,7 +25,7 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
   const [resumeFull, setResumeFull] = useState(false);
 
   const toggleResumePreview = (): void => {
-    setResumeFull(resumeFull !== true);
+    setResumeFull(!resumeFull);
   };
 
   if (!user.resume) {
@@ -64,7 +64,7 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
               position: "absolute",
               width: 615,
               height: 465,
-              background: "transparent"
+              background: "transparent",
             }}
             onClick={toggleResumePreview}
           />
@@ -83,8 +83,8 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
           footer={null}
           onCancel={toggleResumePreview}
           width="60%"
-          style={{ top: 20 }}
-          bodyStyle={{ height: "95vh", padding: 40 }}
+          style={{ top: "5vh", padding: 0 }}
+          bodyStyle={{ height: "90vh", padding: 40 }}
         >
           <object
             data={PDF_URL}
