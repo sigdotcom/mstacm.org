@@ -1,8 +1,8 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { AnyStyledComponent } from "styled-components";
 
 import { useAuth0 } from "../utils/react-auth0-wrapper";
-import { Options } from "./option";
+import { Options } from "./Option";
 
 const DropdownWrapper = styled.div`
   position: relative;
@@ -13,7 +13,7 @@ const Name = styled.div`
   font-size: 17px;
   font-weight: bold;
   background: none;
-  color: black;
+  color: white;
   margin-right: 1em;
   margin-left: 0.5em;
   &:hover {
@@ -36,45 +36,22 @@ const ProfileDisplay = styled.button`
   background: transparent;
   border: none;
 `;
-
-const TriangleDown = styled.div`
-  height: 0;
-  width: 0;
-  border-top: 4px solid black;
-  border-right: 4px solid transparent;
-  border-left: 4px solid transparent;
+const Move: AnyStyledComponent = styled.div`
+  padding-left: 45px;
+  padding-top: 2px;
 `;
-
-const TriangleRight = styled.div`
-  height: 0;
-  width: 0;
-  margin-right: 4px;
-  border-top: 4px solid transparent;
-  border-left: 4px solid black;
-  border-bottom: 4px solid transparent;
-`;
-
 const ProfileOptions: React.FC<{}> = (): JSX.Element => {
   const { loading, user } = useAuth0();
 
-  const [down, setDown] = React.useState(false);
-
   return (
     <DropdownWrapper>
-      <ProfileDisplay
-        onClick={() => {
-          if (down) {
-            setDown(false);
-          } else {
-            setDown(true);
-          }
-        }}
-      >
+      <ProfileDisplay>
         {!loading && <Picture src={user.picture} alt="Profile"></Picture>}
         {!loading && <Name>{user.name}</Name>}
-        {down ? <TriangleRight /> : <TriangleDown />}
       </ProfileDisplay>
-      {down && <Options />}
+      <Move>
+        <Options />
+      </Move>
     </DropdownWrapper>
   );
 };

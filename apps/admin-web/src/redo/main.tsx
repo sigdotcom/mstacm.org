@@ -1,15 +1,22 @@
 import React from "react";
-import styled, { AnyStyledComponent } from "styled-components";
-// import { ProfileOptions } from "../redo/profile";
-const Test: AnyStyledComponent = styled.div`
-  width: 100%;
-  background-color: red;
-  height: 100%;
-  overflow: hidden;
-`;
+import { Route, Switch } from "react-router-dom";
+import { Events } from "src/components/pages/tools/Events";
+import { Membership } from "src/components/pages/tools/Membership";
 
-function Main() {
-  return <Test>g</Test>;
-}
+const NotFound: React.FC<{}> = (): JSX.Element => {
+  return <h1>You are lost!</h1>;
+};
+
+const Main: React.SFC<{}> = (): JSX.Element => {
+  return (
+    <Switch>
+      <Route exact={true} path="/" component={Events} />
+      <Route path="/events" component={Events} />
+      <Route path="/membership" component={Membership} />
+      {/* <Route path="/redemption" component={RedemptionCodes} /> */}
+      <Route component={NotFound} />
+    </Switch>
+  );
+};
 
 export default Main;

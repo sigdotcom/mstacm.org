@@ -1,7 +1,8 @@
 import React from "react";
 import styled, { AnyStyledComponent } from "styled-components";
-import { ProfileOptions } from "../redo/profile";
+
 import Logo1 from "./logo.png";
+import { ProfileOptions } from "./Profile";
 
 const Nav: AnyStyledComponent = styled.nav`
   background-color: #fff;
