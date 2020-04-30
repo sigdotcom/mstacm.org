@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 //import { BrowserRouter } from "react-router-dom";
 import { Spin } from "antd";
-
+import { BrowserRouter } from "react-router-dom";
 // import { ToolList } from "./components/pages";
 // import { Events } from "./components/pages/tools";
 // import { Membership } from "./components/pages/tools/Membership";
@@ -9,15 +9,13 @@ import styled, { AnyStyledComponent } from "styled-components";
 import { config } from "./config";
 import "./static/css/App.css";
 import { useAuth0 } from "./utils/react-auth0-wrapper";
-import Head from "./redo/header";
-import Sidebar from "./redo/sidebar";
-import Main from "./redo/main";
+import Sidebar from "./redo/Sidebar";
+import Main from "./redo/Main";
 
 const Grid: AnyStyledComponent = styled.div`
   height: 100vh;
   display: grid;
-
-  width: 1200px;
+  width: 100vw;
   margin: auto;
   grid-template-columns: repeat(16, 1fr);
   grid-template-rows: auto;
@@ -74,9 +72,7 @@ const App: React.SFC<{}> = (): JSX.Element => {
   }
 
   return (
-    <div>
-      <Head />
-
+    <BrowserRouter>
       <Grid>
         <Content>
           <Main />
@@ -85,7 +81,7 @@ const App: React.SFC<{}> = (): JSX.Element => {
           <Sidebar />
         </Menu>
       </Grid>
-    </div>
+    </BrowserRouter>
   );
 };
 
