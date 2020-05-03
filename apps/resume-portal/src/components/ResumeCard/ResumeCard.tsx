@@ -1,5 +1,4 @@
 // import { Icon, Spin } from "antd";
-import { Tooltip } from "antd";
 import React, { useState } from "react";
 import styled, { AnyStyledComponent } from "styled-components";
 
@@ -58,17 +57,15 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
         className="flex items-center content-center justify-center"
         style={{ width: PDF_WIDTH, height: PDF_HEIGHT }}
       >
-        <Tooltip title="Preview Resume" placement="leftTop">
-          <ResumeClickArea
-            style={{
-              position: "absolute",
-              width: 615,
-              height: 465,
-              background: "transparent",
-            }}
-            onClick={toggleResumePreview}
-          />
-        </Tooltip>
+        <ResumeClickArea
+          style={{
+            position: "absolute",
+            width: 615,
+            height: 465,
+            background: "transparent",
+          }}
+          onClick={toggleResumePreview}
+        />
         <object
           data={PDF_URL}
           type="application/pdf"
