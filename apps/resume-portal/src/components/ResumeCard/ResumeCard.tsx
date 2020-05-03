@@ -35,6 +35,8 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
   const PDF_HEIGHT = 550;
 
   const PDF_URL = user.resume.url;
+  const PDF_URL_DISABLED =
+    user.resume.url + "#toolbar=0&navpanes=0&scrollbar=0&statusbar=0";
   const PROFILE_URL = user.profilePictureUrl;
 
   const FULL_NAME = `${firstName} ${lastName}`;
@@ -60,14 +62,14 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
         <ResumeClickArea
           style={{
             position: "absolute",
-            width: 615,
-            height: 465,
+            width: PDF_WIDTH,
+            height: PDF_HEIGHT,
             background: "transparent",
           }}
           onClick={toggleResumePreview}
         />
         <object
-          data={PDF_URL}
+          data={PDF_URL_DISABLED}
           type="application/pdf"
           width="100%"
           height="100%"
