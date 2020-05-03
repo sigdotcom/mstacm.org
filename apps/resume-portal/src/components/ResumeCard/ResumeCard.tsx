@@ -11,8 +11,31 @@ interface IResumeCardProps {
   user: User;
 }
 
+const ResumeHover: AnyStyledComponent = styled.div`
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  color: black;
+`;
+
 const ResumeClickArea: AnyStyledComponent = styled.div`
-  &:hover {
+  transition: 0.5s ease;
+`;
+
+const Container: AnyStyledComponent = styled.div`
+  &:hover ${ResumeClickArea} {
+    background-color: black;
+    opacity: 0.2;
+    cursor: pointer;
+  }
+
+  &:hover ${ResumeHover} {
+    opacity: 1;
     cursor: pointer;
   }
 `;
@@ -55,7 +78,7 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
       style={{ width: PDF_WIDTH }}
       className="rounded overflow-hidden shadow-lg m-6 bg-white text-2xl"
     >
-      <div
+      <Container
         className="flex items-center content-center justify-center"
         style={{ width: PDF_WIDTH, height: PDF_HEIGHT }}
       >
@@ -64,10 +87,11 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
             position: "absolute",
             width: PDF_WIDTH,
             height: PDF_HEIGHT,
-            background: "transparent",
+            backgroundColor: "",
           }}
           onClick={toggleResumePreview}
         />
+        <ResumeHover>Click to expand</ResumeHover>
         <object
           data={PDF_URL_DISABLED}
           type="application/pdf"
@@ -76,7 +100,6 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
         >
           <a href={PDF_URL}>Resume URL</a>
         </object>
-
         <Modal
           visible={resumeFull}
           footer={null}
@@ -94,7 +117,7 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
             <a href={PDF_URL}>Resume URL</a>
           </object>
         </Modal>
-      </div>
+      </Container>
       <div className="px-6 py-1 flex">
         <div className="w-2/12 flex flex-col items-center z-50 -my-12">
           <img className="rounded-full" src={PROFILE_URL} />
