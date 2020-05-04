@@ -34,6 +34,7 @@ export type Event = {
   location: Scalars['String'],
   flierLink?: Maybe<Scalars['String']>,
   eventLink?: Maybe<Scalars['String']>,
+  attendees?: Maybe<Array<User>>,
 };
 
 export type EventCreateInput = {
@@ -97,6 +98,7 @@ export type Mutation = {
   deleteEvent: EventDeletePayload,
   updateEvent: Event,
   createEvent: Event,
+  addAttendee: Event,
   createPermission: Permission,
   createRedemptionCode: RedemptionCode,
   redeemRedemptionCode: RedemptionCode,
@@ -159,6 +161,12 @@ export type MutationUpdateEventArgs = {
 export type MutationCreateEventArgs = {
   flier?: Maybe<Scalars['Upload']>,
   data: EventCreateInput
+};
+
+
+export type MutationAddAttendeeArgs = {
+  userId: Scalars['String'],
+  eventId: Scalars['Float']
 };
 
 
@@ -373,6 +381,7 @@ export type User = {
   resume?: Maybe<Resume>,
   permissions?: Maybe<Array<Permission>>,
   groups: Array<Group>,
+  eventsAttended?: Maybe<Array<Event>>,
 };
 
 export type UserCreateInput = {

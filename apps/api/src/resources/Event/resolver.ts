@@ -155,14 +155,16 @@ export class EventResolver {
     return newResource.save();
   }
 
-  @Authorized("update:event_attendees")
+  @Authorized()
   @Mutation((_: void) => Event)
-  public async updateAttendees(
-    @Arg("eventId") eventId: string,
+  public async addAttendee(
+    @Arg("eventId") eventId: number,
     @Arg("userId") userId: string,
   ): Promise<Event> {
     const event: Event = await Event.findOneOrFail({ id: eventId });
-    event.attendees.push(user);
+    let users: User[] = await event.attendees;
+    users.push(await User.findOneOrFail({ id: userId }));
+    event.attendees = users;
     return event.save();
   }
 

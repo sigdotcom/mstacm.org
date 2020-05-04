@@ -6,7 +6,7 @@ import {
   FieldResolver,
   Query,
   Resolver,
-  Root
+  Root,
 } from "type-graphql";
 import { getRepository } from "typeorm";
 import { BadUserInputError } from "../../lib/errors";
@@ -143,16 +143,18 @@ export class UserResolver extends ResourceResolver<resourceType>(
     return users;
   }
 
-  @Authorized("update:user_events_attended")
-  @Mutation((_: void) => User)
-  public async updateEventsAttended(
-    @Arg("userId") userId: string,
-    @Arg("eventId") eventId: string,
-  ): Promise<User> {
-    const user: User = await User.findOneOrFail({ id: userId });
-    user.eventsAttended.push(eventId);
-    return user.save();
-  }
+  // @Authorized("update:user_events_attended")
+  // @Mutation((_: void) => User)
+  // public async updateEventsAttended(
+  //   @Arg("userId") userId: string,
+  //   @Arg("eventId") eventId: number,
+  // ): Promise<User> {
+  //   const user: User = await User.findOneOrFail({ id: userId });
+  //   let events: Event[] = await user.eventsAttended;
+  //   events.push(await Event.findOneOrFail({ id: eventId });
+  //   user.eventsAttended = events;
+  //   return user.save();
+  // }
 
   @Query((_: void) => resource, { nullable: true })
   protected async me(@Ctx() context: IContext) {

@@ -83,6 +83,7 @@ export class Event extends BaseEntity {
   })
   public eventLink?: string;
 
+  @Field(() => [User], { nullable: true })
   @ManyToMany(() => User, (user: User) => user.eventsAttended, {
     lazy: true,
     nullable: true
