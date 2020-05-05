@@ -93,7 +93,7 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
           onClick={toggleResumePreview}
         />
         <ResumeHover>Click to expand</ResumeHover>
-        <div style={{width: PDF_WIDTH, height: 1000, marginTop: 452, zIndex: -1}}>
+        <div style={{width: PDF_WIDTH, height: 14000, marginTop: 13450, zIndex: -1}}>
           <object
             data={PDF_URL_DISABLED}
             type="application/pdf"
