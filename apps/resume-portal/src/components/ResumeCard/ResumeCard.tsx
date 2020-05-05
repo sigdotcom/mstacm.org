@@ -76,12 +76,12 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
 
   return (
     <div
-      style={{ width: PDF_WIDTH }}
+      style={{ width: PDF_WIDTH, zIndex: 0 }}
       className="rounded overflow-hidden shadow-lg m-6 bg-white text-2xl"
     >
       <Container
         className="flex items-center content-center justify-center"
-        style={{ width: PDF_WIDTH, height: PDF_HEIGHT }}
+        style={{ width: PDF_WIDTH, height: PDF_HEIGHT, zIndex: -1 }}
       >
         <ResumeClickArea
           style={{
@@ -93,14 +93,16 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
           onClick={toggleResumePreview}
         />
         <ResumeHover>Click to expand</ResumeHover>
-        <object
-          data={PDF_URL_DISABLED}
-          type="application/pdf"
-          width="100%"
-          height="100%"
-        >
-          <a href={PDF_URL}>Resume URL</a>
-        </object>
+        <div style={{width: PDF_WIDTH, height: 1000, marginTop: 452, zIndex: -1}}>
+          <object
+            data={PDF_URL_DISABLED}
+            type="application/pdf"
+            width="100%"
+            height="100%"
+          >
+            <a href={PDF_URL}>Resume URL</a>
+          </object>
+        </div>
         <Modal
           visible={resumeFull}
           footer={null}
@@ -119,7 +121,7 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
           </object>
         </Modal>
       </Container>
-      <div className="px-6 py-1 flex">
+      <div className="px-6 py-1 flex" style={{zIndex: 1, backgroundColor: "white"}}>
         <div className="w-2/12 flex flex-col items-center z-50 -my-12">
           <img className="rounded-full" src={PROFILE_URL} />
         </div>
