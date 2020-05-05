@@ -12,19 +12,20 @@ interface IResumeCardProps {
 }
 
 const ResumeHover: AnyStyledComponent = styled.div`
-  transition: 0.5s ease;
+  transition: 0.3s;
   opacity: 0;
   position: absolute;
-  top: 50%;
+  top: 450px;
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   text-align: center;
   color: black;
+  user-select: none;
 `;
 
 const ResumeClickArea: AnyStyledComponent = styled.div`
-  transition: 0.5s ease;
+  transition: 0.3s;
 `;
 
 const Container: AnyStyledComponent = styled.div`
