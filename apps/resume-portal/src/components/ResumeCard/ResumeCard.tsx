@@ -61,7 +61,7 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
 
   const PDF_URL = user.resume.url;
   const PDF_URL_DISABLED =
-    user.resume.url + "#toolbar=0&navpanes=0&scrollbar=0&statusbar=0";
+    user.resume.url + "#toolbar=0&navpanes=0&scrollbar=0&statusbar=0&nozoom=1";
   const PROFILE_URL = user.profilePictureUrl;
 
   const FULL_NAME = `${firstName} ${lastName}`;
