@@ -22,6 +22,7 @@ const ResumeHover: AnyStyledComponent = styled.div`
   text-align: center;
   color: black;
   user-select: none;
+  font-weight: 500;
 `;
 
 const ResumeClickArea: AnyStyledComponent = styled.div`
@@ -81,19 +82,26 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
     >
       <Container
         className="flex items-center content-center justify-center"
-        style={{ width: PDF_WIDTH, height: PDF_HEIGHT, zIndex: -1 }}
+        style={{ width: PDF_WIDTH, height: PDF_HEIGHT }}
       >
         <ResumeClickArea
           style={{
             position: "absolute",
             width: PDF_WIDTH,
             height: PDF_HEIGHT,
-            backgroundColor: "",
+            backgroundColor: ""
           }}
           onClick={toggleResumePreview}
         />
         <ResumeHover>Click to expand</ResumeHover>
-        <div style={{width: PDF_WIDTH, height: 14000, marginTop: 13450, zIndex: -1}}>
+        <div
+          style={{
+            width: PDF_WIDTH,
+            height: 14000,
+            marginTop: 13450,
+            zIndex: -1
+          }}
+        >
           <object
             data={PDF_URL_DISABLED}
             type="application/pdf"
@@ -121,7 +129,7 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
           </object>
         </Modal>
       </Container>
-      <div className="px-6 py-1 flex" style={{zIndex: 1, backgroundColor: "white"}}>
+      <div className="px-6 py-1 flex" style={{ backgroundColor: "white" }}>
         <div className="w-2/12 flex flex-col items-center z-50 -my-12">
           <img className="rounded-full" src={PROFILE_URL} />
         </div>
