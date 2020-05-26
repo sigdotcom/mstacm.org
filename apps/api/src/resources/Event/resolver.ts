@@ -4,7 +4,8 @@ import {
   DeepPartial,
   getRepository,
   MoreThanOrEqual,
-  Repository
+  Repository,
+  Any
 } from "typeorm";
 
 import { GraphQLUpload } from "graphql-upload";
@@ -151,6 +152,12 @@ export class EventResolver {
       );
       newResource.flierLink = url;
     }
+    
+    let charPool: string = "0123456789abcdefghijklmnopqrstuvwxyz";
+    let keyPlaceholder: string = "";
+    for(let i = 0; i < 4; i++)
+      keyPlaceholder += charPool.charAt(Math.floor(Math.random() * 36));
+    newResource.key = keyPlaceholder;
 
     return newResource.save();
   }
@@ -185,5 +192,10 @@ export class EventResolver {
   @Query(() => Event)
   protected async event(@Arg("id", () => Number) id: number): Promise<Event> {
     return this.repository.findOneOrFail({ id });
+  }
+
+  @Query(() => [Event])
+  protected async eventsWithKey(@Arg("key", () => String) key: string): Promise<Event[]> {
+    return this.repository.find({ key });
   }
 }

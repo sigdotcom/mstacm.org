@@ -30,6 +30,7 @@ export type Event = {
   creator: User,
   hostSig: Sig,
   eventTitle: Scalars['String'],
+  key: Scalars['String'],
   description: Scalars['String'],
   location: Scalars['String'],
   flierLink?: Maybe<Scalars['String']>,

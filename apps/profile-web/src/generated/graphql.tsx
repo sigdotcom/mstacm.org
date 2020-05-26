@@ -34,6 +34,7 @@ export type Event = {
   location: Scalars['String'],
   flierLink?: Maybe<Scalars['String']>,
   eventLink?: Maybe<Scalars['String']>,
+  attendees?: Maybe<Array<User>>,
 };
 
 export type EventCreateInput = {
@@ -97,6 +98,7 @@ export type Mutation = {
   deleteEvent: EventDeletePayload,
   updateEvent: Event,
   createEvent: Event,
+  addAttendee: Event,
   createPermission: Permission,
   createRedemptionCode: RedemptionCode,
   redeemRedemptionCode: RedemptionCode,
@@ -106,6 +108,9 @@ export type Mutation = {
   startProductTransaction: TransactionPayload,
   addUserToGroups: User,
   addPermissionsToUser: User,
+  updateExpirationDate: User,
+  updateShirtReceived: User,
+  resetShirtReceived: Array<User>,
 };
 
 
@@ -159,6 +164,12 @@ export type MutationCreateEventArgs = {
 };
 
 
+export type MutationAddAttendeeArgs = {
+  userId: Scalars['String'],
+  eventId: Scalars['Float']
+};
+
+
 export type MutationCreatePermissionArgs = {
   data: PermissionCreateInput
 };
@@ -202,6 +213,18 @@ export type MutationAddUserToGroupsArgs = {
 
 export type MutationAddPermissionsToUserArgs = {
   permissionIds: Array<Scalars['String']>,
+  userId: Scalars['String']
+};
+
+
+export type MutationUpdateExpirationDateArgs = {
+  newExpirationDate: Scalars['DateTime'],
+  userId: Scalars['String']
+};
+
+
+export type MutationUpdateShirtReceivedArgs = {
+  updatedShirtStatus: Scalars['Boolean'],
   userId: Scalars['String']
 };
 
@@ -350,6 +373,7 @@ export type User = {
   emailVerified: Scalars['Boolean'],
   profilePictureUrl: Scalars['String'],
   graduationDate?: Maybe<Scalars['DateTime']>,
+  shirtReceived?: Maybe<Scalars['Boolean']>,
   isSuperAdmin?: Maybe<Scalars['Boolean']>,
   dateJoined: Scalars['DateTime'],
   membershipExpiration?: Maybe<Scalars['DateTime']>,
@@ -357,6 +381,7 @@ export type User = {
   resume?: Maybe<Resume>,
   permissions?: Maybe<Array<Permission>>,
   groups: Array<Group>,
+  eventsAttended?: Maybe<Array<Event>>,
 };
 
 export type UserCreateInput = {
