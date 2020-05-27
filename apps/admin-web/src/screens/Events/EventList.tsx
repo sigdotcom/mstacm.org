@@ -1,10 +1,10 @@
-import React, { setGlobal } from "reactn";
+import React from "react";
 
 import styled, { AnyStyledComponent } from "styled-components";
 
 import { Event } from "./Event";
 
-import { useEventsQuery } from "../../../../generated/graphql";
+import { useEventsQuery } from "../../generated/graphql";
 
 import { IEvent } from "./interfaces";
 
@@ -34,9 +34,6 @@ const EventList: React.SFC<{}> = (): JSX.Element => {
       </PageWrapper>
     );
   } else {
-    setGlobal({
-      events: data.events
-    });
     const events: IEvent[] = data.events;
     const listElements: JSX.Element[] = events.map(
       (event: IEvent, index: number) => (

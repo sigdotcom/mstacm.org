@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import { Table, Input, Button, Icon, Modal, DatePicker, message } from "antd";
+import { Table, Input, Button, Modal, DatePicker, message } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import moment from "moment";
 import styled, { AnyStyledComponent } from "styled-components";
@@ -14,7 +15,7 @@ import {
   useResetShirtReceivedMutation,
   useDeleteMemberMutation,
   User,
-} from "../../../../generated/graphql";
+} from "../../generated/graphql";
 
 const btnStyles: IStyles = {
   display: "inline-block",
@@ -252,7 +253,11 @@ const Membership: React.FC<{}> = () => {
       expirationDate === ""
     )
       return "N/A";
-    return new Date(expirationDate).toLocaleDateString("en-US");
+    try {
+      return new Date(expirationDate).toLocaleDateString("en-US");
+    } catch {
+      return "N/A";
+    }
   };
 
   const handleNo: Function = () => {
@@ -273,13 +278,18 @@ const Membership: React.FC<{}> = () => {
     _: moment.Moment,
     dateString: string
   ) => {
+    if (dateString === null) return;
+    try {
+      new Date(dateString);
+    } catch {
+      return;
+    }
     setCurExpDate(dateString);
   };
 
   const saveAction: Function = () => {
     for (let i = 0; i < users.length; i++) {
       if (users[i].id === userId.toString()) {
-        users[i].membershipExpiration = curExpDate;
         users[i].shirtReceived = curShirtStatus;
         updateShirtReceived({
           variables: {
@@ -287,9 +297,17 @@ const Membership: React.FC<{}> = () => {
             id: userId,
           },
         });
-        updateExpirationDate({
-          variables: { date: curExpDate, id: userId },
-        });
+        if (curExpDate) {
+          try {
+            new Date(curExpDate);
+            users[i].membershipExpiration = curExpDate;
+            updateExpirationDate({
+              variables: { date: curExpDate, id: userId },
+            });
+          } catch {
+            // means the date was invalid
+          }
+        }
         setUsers(users);
         break;
       }
@@ -370,7 +388,7 @@ const Membership: React.FC<{}> = () => {
       </div>
     ),
     filterIcon: (filtered: boolean) => (
-      <Icon type="search" style={{ color: filtered ? "#1890ff" : undefined }} />
+      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
     ),
     onFilter: (value: any, record: any) =>
       record[dataIndex]
@@ -486,14 +504,14 @@ const Membership: React.FC<{}> = () => {
             <EditInputs
               type="checkbox"
               checked={curShirtStatus}
-              onClick={changeShirtReceived}
+              onChange={changeShirtReceived}
             />
           </EditCol>
 
           <EditCol>
             <span>Membership Expiration Date: </span>
             <DatePicker
-              value={moment(curExpDate)}
+              value={curExpDate ? moment(curExpDate) : null}
               onChange={changeDate}
               placeholder="Select Expiration Date"
             />
@@ -525,4 +543,3 @@ const Membership: React.FC<{}> = () => {
 };
 
 export { Membership };
-

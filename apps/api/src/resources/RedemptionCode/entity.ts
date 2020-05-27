@@ -7,7 +7,7 @@ import {
   ManyToMany,
   JoinColumn,
   OneToOne,
-  PrimaryColumn
+  PrimaryColumn,
 } from "typeorm";
 
 import { Field, ID, ObjectType } from "type-graphql";
@@ -35,7 +35,7 @@ export class RedemptionCode extends BaseEntity {
   @Column()
   public expirationDate: Date;
 
-  @Field(() => Transaction)
+  @Field(() => Transaction, { nullable: true })
   @OneToOne(
     () => Transaction,
     (transaction: Transaction) => transaction.redemptionCode,
@@ -54,9 +54,13 @@ export class RedemptionCode extends BaseEntity {
   public permissions: Lazy<Permission[]>;
 
   @Field((_: void) => [Group])
-  @ManyToMany((_: void) => Group, (group: Group) => group.redemptionCodes, {
-    lazy: true
-  })
+  @ManyToMany(
+    (_: void) => Group,
+    (group: Group) => group.redemptionCodes,
+    {
+      lazy: true,
+    }
+  )
   @JoinTable()
   public groups: Lazy<Group[]>;
 }
