@@ -2,7 +2,6 @@ import React from "react";
 import styled, { AnyStyledComponent } from "styled-components";
 
 import { EventList } from "./EventList";
-import { Header } from "./Header";
 
 const PageWrapper: AnyStyledComponent = styled.div`
   margin: 0 auto;
@@ -13,7 +12,6 @@ const PageWrapper: AnyStyledComponent = styled.div`
 const Events: React.SFC<{}> = (): JSX.Element => {
   return (
     <PageWrapper>
-      <Header />
       <EventList />
     </PageWrapper>
   );
