@@ -6,9 +6,8 @@ import {
   CaretUpOutlined,
 } from "@ant-design/icons";
 import styled, { AnyStyledComponent } from "styled-components";
-import { testing } from "../EventList";
-
-const events: any = testing;
+import { useEventsQuery } from "../../../generated/graphql";
+import { errorData } from "../EventList";
 
 const Box: AnyStyledComponent = styled.div`
   height: 140px;
@@ -35,17 +34,14 @@ const Center: AnyStyledComponent = styled.div`
   justify-content: center;
   padding-bottom: 40px;
 `;
-
 const DropdownStyle: AnyStyledComponent = styled.div`
   padding-left: 20px;
   display: inline-block;
 `;
-// const Padding: AnyStyledComponent = styled.div``;
 const EventNumbersGroup: AnyStyledComponent = styled.div`
   display: flex;
   padding-top: 20px;
 `;
-
 const EventNumbers: AnyStyledComponent = styled.div`
   font-size: 30px;
   flex: 1;
@@ -79,74 +75,29 @@ const EventDifferenceNumber: AnyStyledComponent = styled.div`
   display: inline-block;
   padding-left: 20px;
 `;
-// const EventDifferenceGroup: AnyStyledComponent = styled.div`
-//
-// `;
+
 const todaysDate = new Date();
 const todaysISO = todaysDate.toISOString();
 
-function ThisWeekData() {
-  const thisWeekFilter = events.filter(
-    (a: any) =>
-      new Date(a.dateHosted.split("T")[0]).getTime() -
-        new Date(a.dateHosted.split("T")[0]).getDay() * 86400000 ===
-      new Date(todaysISO.split("T")[0]).getTime() -
-        new Date(todaysISO.split("T")[0]).getDay() * 86400000
-  );
-
-  const lastWeekFilter = events.filter(
-    (a: any) =>
-      new Date(a.dateHosted.split("T")[0]).getTime() -
-        new Date(a.dateHosted.split("T")[0]).getDay() * 86400000 ===
-      new Date(todaysISO.split("T")[0]).getTime() -
-        new Date(todaysISO.split("T")[0]).getDay() * 86400000 -
-        7 * 86400000
-  );
-
-  const amountOfThisWeekEvents = thisWeekFilter.length;
-  const thisWeekDifference = amountOfThisWeekEvents - lastWeekFilter.length;
-
-  return [amountOfThisWeekEvents, thisWeekDifference];
-}
-
-function thisMonthData() {
-  const thisMonthFilter = events.filter(
-    (c: any) =>
-      new Date(c.dateHosted.split("T")[0]).getTime() <
-      new Date(todaysISO.split("T")[0]).getTime() + 30 * 86400000
-  );
-  const thisMonthPreviousFilter = thisMonthFilter.filter(
-    (c: any) =>
-      new Date(c.dateHosted.split("T")[0]).getTime() -
-        new Date(todaysISO.split("T")[0]).getTime() >
-      0
-  );
-  const lastMonthFilter = events.filter(
-    (c: any) =>
-      new Date(c.dateHosted.split("T")[0]).getTime() >
-      new Date(todaysISO.split("T")[0]).getTime() - 30 * 86400000
-  );
-  const lastMonthPreviousFilter = lastMonthFilter.filter(
-    (c: any) =>
-      new Date(c.dateHosted.split("T")[0]).getTime() -
-        new Date(todaysISO.split("T")[0]).getTime() <
-      0
-  );
-  const amountOfThisMonthEvents = thisMonthPreviousFilter.length;
-  const thisMonthDifference =
-    amountOfThisMonthEvents - lastMonthPreviousFilter.length;
-
-  return [amountOfThisMonthEvents, thisMonthDifference];
-}
-
 const NumberOfEventCard: React.SFC<{}> = (): JSX.Element => {
+  const { loading, error, data }: any = useEventsQuery();
+  let events: any;
+  if (loading) {
+    events = errorData;
+  } else if (error) {
+    events = errorData;
+  } else {
+    events = data.events;
+  }
+
   const [title, setTitle] = useState("This week ");
   let [eventNumber, difference] = ThisWeekData();
-  let carrot;
-  let fromLast;
+  let carrot, fromLast;
+
   const greenRed = {
     color: "#59595a",
   };
+
   const menu = (
     <Menu>
       <Menu.Item>
@@ -160,6 +111,60 @@ const NumberOfEventCard: React.SFC<{}> = (): JSX.Element => {
       </Menu.Item> */}
     </Menu>
   );
+
+  function ThisWeekData() {
+    const thisWeekFilter = events.filter(
+      (a: any) =>
+        new Date(a.dateHosted.split("T")[0]).getTime() -
+          new Date(a.dateHosted.split("T")[0]).getDay() * 86400000 ===
+        new Date(todaysISO.split("T")[0]).getTime() -
+          new Date(todaysISO.split("T")[0]).getDay() * 86400000
+    );
+
+    const lastWeekFilter = events.filter(
+      (a: any) =>
+        new Date(a.dateHosted.split("T")[0]).getTime() -
+          new Date(a.dateHosted.split("T")[0]).getDay() * 86400000 ===
+        new Date(todaysISO.split("T")[0]).getTime() -
+          new Date(todaysISO.split("T")[0]).getDay() * 86400000 -
+          7 * 86400000
+    );
+
+    const amountOfThisWeekEvents = thisWeekFilter.length;
+    const thisWeekDifference = amountOfThisWeekEvents - lastWeekFilter.length;
+
+    return [amountOfThisWeekEvents, thisWeekDifference];
+  }
+
+  function thisMonthData() {
+    const thisMonthFilter = events.filter(
+      (c: any) =>
+        new Date(c.dateHosted.split("T")[0]).getTime() <
+        new Date(todaysISO.split("T")[0]).getTime() + 30 * 86400000
+    );
+    const thisMonthPreviousFilter = thisMonthFilter.filter(
+      (c: any) =>
+        new Date(c.dateHosted.split("T")[0]).getTime() -
+          new Date(todaysISO.split("T")[0]).getTime() >
+        0
+    );
+    const lastMonthFilter = events.filter(
+      (c: any) =>
+        new Date(c.dateHosted.split("T")[0]).getTime() >
+        new Date(todaysISO.split("T")[0]).getTime() - 30 * 86400000
+    );
+    const lastMonthPreviousFilter = lastMonthFilter.filter(
+      (c: any) =>
+        new Date(c.dateHosted.split("T")[0]).getTime() -
+          new Date(todaysISO.split("T")[0]).getTime() <
+        0
+    );
+    const amountOfThisMonthEvents = thisMonthPreviousFilter.length;
+    const thisMonthDifference =
+      amountOfThisMonthEvents - lastMonthPreviousFilter.length;
+
+    return [amountOfThisMonthEvents, thisMonthDifference];
+  }
 
   if (title === "This week ") {
     [eventNumber, difference] = ThisWeekData();

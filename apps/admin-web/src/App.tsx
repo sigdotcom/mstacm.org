@@ -9,8 +9,9 @@ import styled, { AnyStyledComponent } from "styled-components";
 import { config } from "./config";
 import "./static/css/App.css";
 import { useAuth0 } from "./utils/react-auth0-wrapper";
-import Sidebar from "./redo/Sidebar";
-import Main from "./redo/Main";
+import Sidebar from "./screens/redo/Sidebar";
+
+import Main from "./screens/redo/Main";
 
 const Grid: AnyStyledComponent = styled.div`
   height: 100vh;

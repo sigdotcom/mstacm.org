@@ -112,8 +112,8 @@ function Sidebar() {
     transition: "all 0.17s ease-in-out",
   };
   if (
-    location.pathname == "/events/upcoming" ||
-    location.pathname == "/events/previous"
+    location.pathname === "/events/upcoming" ||
+    location.pathname === "/events/previous"
   ) {
     eventStyle.backgroundColor = "#f4f5f8";
     eventStyle.color = "#087abb";
@@ -121,17 +121,17 @@ function Sidebar() {
     color.color = "#0D5D8B";
   }
 
-  if (location.pathname == "/membership") {
+  if (location.pathname === "/membership") {
     membershipStyle.backgroundColor = "#f4f5f8";
     membershipStyle.color = "#087abb";
   }
-  if (location.pathname == "/events/upcoming") {
+  if (location.pathname === "/events/upcoming") {
     upcoming.color = "#000";
   }
-  if (location.pathname == "/events/previous") {
+  if (location.pathname === "/events/previous") {
     previous.color = "#000";
   }
-  if (location.pathname == "/redemption") {
+  if (location.pathname === "/redemption") {
     redemptionStyle.backgroundColor = "#f4f5f8";
     redemptionStyle.color = "#087abb";
   }

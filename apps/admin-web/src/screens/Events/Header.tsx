@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { ProfileOptions } from "../../redo/Profile";
+import { ProfileOptions } from "../redo/Profile";
 import { EventFormModal } from "./EventFormModal";
 
 const Wrapper: any = styled.div`
