@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { useAuth0 } from "../utils/react-auth0-wrapper";
+import { useAuth0 } from "../../utils/react-auth0-wrapper";
 import { Options } from "./Option";
 
 const DropdownWrapper = styled.div`

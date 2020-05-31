@@ -1,11 +1,11 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { Upcoming } from "src/screens/Events/Upcoming";
-import { Previous } from "src/screens/Events/Previous";
-import { Membership } from "src/screens/Membership";
-import { ToolList } from "src/Tools";
+import { Upcoming } from "../Events/Upcoming";
+import { Previous } from "../Events/Previous";
+import { Membership } from "../Membership";
+import { ToolList } from "../../Tools";
 // import { Event } from "./Eventss";
-import { RedemptionCodes } from "src/screens/RedemptionCodes";
+import { RedemptionCodes } from "../RedemptionCodes";
 
 const NotFound: React.FC<{}> = (): JSX.Element => {
   return <h1>You are lost!</h1>;
