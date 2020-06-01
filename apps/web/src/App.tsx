@@ -37,7 +37,7 @@ const App: React.FC<{}> = (): JSX.Element => {
     <BrowserRouter>
       <Switch>
         <Route exact={true} path="/" component={HomePage} />
-        <Route path="/event/:eventId" component={EventRegistration} />
+        <Route path="/e/:eventId" component={EventRegistration} />
         <Route component={NotFoundPage} />
       </Switch>
     </BrowserRouter>

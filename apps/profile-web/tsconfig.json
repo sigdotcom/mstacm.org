@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "incremental": true,
+    //"incremental": true,
     "target": "es5",
     "module": "esnext",
     "jsx": "preserve",
     "outDir": "./build",
-    "tsBuildInfoFile": "./build/.tsbuildinfo",
+    //"tsBuildInfoFile": "./build/.tsbuildinfo",
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,

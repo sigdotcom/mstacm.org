@@ -61,10 +61,6 @@ export class Event extends BaseEntity {
   @Column()
   public description: string;
 
-  // @Field()
-  // @Column()
-  // public category: string;
-
   @Field()
   @Column()
   public location: string;
@@ -74,6 +70,10 @@ export class Event extends BaseEntity {
     nullable: true
   })
   public product: Product;*/
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  public category: string;
 
   @Field({ nullable: true })
   @Column({
@@ -89,7 +89,7 @@ export class Event extends BaseEntity {
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  public key: string;
+  public urlKey: string;
 
   @Field(() => [User], { nullable: true })
   @ManyToMany(() => User, (user: User) => user.eventsAttended, {

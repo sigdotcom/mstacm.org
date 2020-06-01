@@ -34,6 +34,7 @@ export type Event = {
   location: Scalars['String'],
   flierLink?: Maybe<Scalars['String']>,
   eventLink?: Maybe<Scalars['String']>,
+  urlKey?: Maybe<Scalars['String']>,
   attendees?: Maybe<Array<User>>,
 };
 
@@ -279,6 +280,7 @@ export type Query = {
   events: Array<Event>,
   currentEvents: Array<Event>,
   event: Event,
+  eventsWithKey: Array<Event>,
   permissions: Array<Permission>,
   products: Array<Product>,
   redemptionCodes: Array<RedemptionCode>,
@@ -300,6 +302,11 @@ export type QuerySigArgs = {
 
 export type QueryEventArgs = {
   id: Scalars['Float']
+};
+
+
+export type QueryEventsWithKeyArgs = {
+  urlKey: Scalars['String']
 };
 
 export type RedemptionCode = {
@@ -402,6 +409,21 @@ export type UserUpdateInput = {
   email?: Maybe<Scalars['String']>,
 };
 
+export type GetCurrentEventsQueryVariables = {};
+
+
+export type GetCurrentEventsQuery = (
+  { __typename?: 'Query' }
+  & { currentEvents: Array<(
+    { __typename?: 'Event' }
+    & Pick<Event, 'id' | 'dateCreated' | 'dateHosted' | 'dateExpire' | 'eventTitle' | 'description' | 'location' | 'flierLink' | 'eventLink' | 'urlKey'>
+    & { hostSig: (
+      { __typename?: 'Sig' }
+      & Pick<Sig, 'name'>
+    ) }
+  )> }
+);
+
 export type UploadResumeMutationVariables = {
   resume: Scalars['Upload'],
   grad: Scalars['DateTime'],
@@ -430,6 +452,50 @@ export type MeQuery = (
 );
 
 
+export const GetCurrentEventsDocument = gql`
+    query getCurrentEvents {
+  currentEvents {
+    id
+    dateCreated
+    dateHosted
+    dateExpire
+    hostSig {
+      name
+    }
+    eventTitle
+    description
+    location
+    flierLink
+    eventLink
+    urlKey
+  }
+}
+    `;
+
+/**
+ * __useGetCurrentEventsQuery__
+ *
+ * To run a query within a React component, call `useGetCurrentEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCurrentEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCurrentEventsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCurrentEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
+      }
+export function useGetCurrentEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
+        }
+export type GetCurrentEventsQueryHookResult = ReturnType<typeof useGetCurrentEventsQuery>;
+export type GetCurrentEventsLazyQueryHookResult = ReturnType<typeof useGetCurrentEventsLazyQuery>;
+export type GetCurrentEventsQueryResult = ApolloReactCommon.QueryResult<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>;
 export const UploadResumeDocument = gql`
     mutation uploadResume($resume: Upload!, $grad: DateTime!, $fname: String!, $lname: String!) {
   uploadResume(resume: $resume, graduationDate: $grad, firstName: $fname, lastName: $lname) {

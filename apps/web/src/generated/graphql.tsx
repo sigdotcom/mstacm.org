@@ -34,6 +34,7 @@ export type Event = {
   location: Scalars['String'],
   flierLink?: Maybe<Scalars['String']>,
   eventLink?: Maybe<Scalars['String']>,
+  urlKey?: Maybe<Scalars['String']>,
   attendees?: Maybe<Array<User>>,
 };
 
@@ -279,6 +280,7 @@ export type Query = {
   events: Array<Event>,
   currentEvents: Array<Event>,
   event: Event,
+  eventsWithKey: Array<Event>,
   permissions: Array<Permission>,
   products: Array<Product>,
   redemptionCodes: Array<RedemptionCode>,
@@ -300,6 +302,11 @@ export type QuerySigArgs = {
 
 export type QueryEventArgs = {
   id: Scalars['Float']
+};
+
+
+export type QueryEventsWithKeyArgs = {
+  urlKey: Scalars['String']
 };
 
 export type RedemptionCode = {
@@ -435,7 +442,7 @@ export type GetCurrentEventsQuery = (
   { __typename?: 'Query' }
   & { currentEvents: Array<(
     { __typename?: 'Event' }
-    & Pick<Event, 'id' | 'dateCreated' | 'dateHosted' | 'dateExpire' | 'eventTitle' | 'description' | 'location' | 'flierLink' | 'eventLink'>
+    & Pick<Event, 'id' | 'dateCreated' | 'dateHosted' | 'dateExpire' | 'eventTitle' | 'description' | 'location' | 'flierLink' | 'eventLink' | 'urlKey'>
     & { hostSig: (
       { __typename?: 'Sig' }
       & Pick<Sig, 'name'>
@@ -537,6 +544,7 @@ export const GetCurrentEventsDocument = gql`
     location
     flierLink
     eventLink
+    urlKey
   }
 }
     `;

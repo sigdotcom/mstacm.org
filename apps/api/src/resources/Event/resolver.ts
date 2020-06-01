@@ -5,7 +5,6 @@ import {
   getRepository,
   MoreThanOrEqual,
   Repository,
-  Any
 } from "typeorm";
 
 import { GraphQLUpload } from "graphql-upload";
@@ -157,7 +156,7 @@ export class EventResolver {
     let keyPlaceholder: string = "";
     for(let i = 0; i < 4; i++)
       keyPlaceholder += charPool.charAt(Math.floor(Math.random() * 36));
-    newResource.key = keyPlaceholder;
+    newResource.urlKey = keyPlaceholder;
 
     return newResource.save();
   }
@@ -195,7 +194,7 @@ export class EventResolver {
   }
 
   @Query(() => [Event])
-  protected async eventsWithKey(@Arg("key", () => String) key: string): Promise<Event[]> {
-    return this.repository.find({ key });
+  protected async eventsWithKey(@Arg("urlKey", () => String) urlKey: string): Promise<Event[]> {
+    return this.repository.find({ urlKey });
   }
 }

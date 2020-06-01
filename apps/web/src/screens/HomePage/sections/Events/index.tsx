@@ -30,6 +30,7 @@ export const GET_CURRENT_EVENTS_QUERY: any = gql`
       location
       flierLink
       eventLink
+      urlKey
     }
   }
 `;

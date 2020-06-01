@@ -172,6 +172,7 @@ const Membership: React.FC<{}> = () => {
   useEffect(() => {
     getShirtStatus();
     getExpirationDate();
+    //eslint-disable-next-line
   }, [userId]);
 
   const handleVisibility: () => void = (): void => {

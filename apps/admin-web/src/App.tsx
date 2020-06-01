@@ -53,6 +53,7 @@ const App: React.SFC<{}> = (): JSX.Element => {
 
       setToken();
     }
+    //eslint-disable-next-line
   }, [loading, isAuthenticated, getTokenSilently]);
 
   const onLogoutClick: () => void = (): void => {

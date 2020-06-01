@@ -30,11 +30,11 @@ export type Event = {
   creator: User,
   hostSig: Sig,
   eventTitle: Scalars['String'],
-  key: Scalars['String'],
   description: Scalars['String'],
   location: Scalars['String'],
   flierLink?: Maybe<Scalars['String']>,
   eventLink?: Maybe<Scalars['String']>,
+  urlKey?: Maybe<Scalars['String']>,
   attendees?: Maybe<Array<User>>,
 };
 
@@ -280,6 +280,7 @@ export type Query = {
   events: Array<Event>,
   currentEvents: Array<Event>,
   event: Event,
+  eventsWithKey: Array<Event>,
   permissions: Array<Permission>,
   products: Array<Product>,
   redemptionCodes: Array<RedemptionCode>,
@@ -301,6 +302,11 @@ export type QuerySigArgs = {
 
 export type QueryEventArgs = {
   id: Scalars['Float']
+};
+
+
+export type QueryEventsWithKeyArgs = {
+  urlKey: Scalars['String']
 };
 
 export type RedemptionCode = {

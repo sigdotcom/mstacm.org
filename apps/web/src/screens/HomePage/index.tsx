@@ -125,6 +125,7 @@ const HomePage: React.FC<RouteComponentProps> = ({
     // Because of the !code && !storedCode, we know at least one must
     // be valid
     runRedeemCode(redemptionCode || (storedCode as string));
+    // eslint-disable-next-line
   }, [loading, isAuthenticated, loginWithRedirect, redeemCode]);
 
   return (
