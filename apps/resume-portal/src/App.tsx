@@ -1,6 +1,6 @@
 import "./App.css";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, setGlobal } from "reactn";
 import { useLocalStorage } from "react-use";
 
 import { Loader } from "./components/Loader";
@@ -8,7 +8,10 @@ import { config } from "./config";
 import { useResumeCardsQuery } from "./generated/graphql";
 import { ResumesPage } from "./screens/ResumesPage";
 import { useAuth0 } from "./utils/react-auth0-wrapper";
-import { Resume, User } from "./utils/types";
+import { User, Community } from "./utils/types";
+import gql from "graphql-tag"
+
+import { useGetCommunitiesQuery } from "./generated/graphql"
 
 import {
   FavoritesContext,
@@ -23,6 +26,14 @@ import {
 type Favorites = {
   [id: string]: boolean | undefined;
 };
+
+export const GET_COMMUNITIES = gql`
+  query GetCommunities {
+    sigs {
+      name
+    }
+  }
+`
 
 const Forbidden: React.FC = () => {
   return (
@@ -40,6 +51,7 @@ const Forbidden: React.FC = () => {
 
 const App: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [selectedCommunities, setSelectedCommunities] = useState<string[]>(["Web", "Game"]);
   const [filterFavorites, setFilterFavorites] = useState<boolean>(false);
   const [curPage, setCurPage] = useState<number>(1);
   const [displayPerPage, setDisplayPerPage] = useState<number>(10);
@@ -58,6 +70,19 @@ const App: React.FC = () => {
   const path = "/";
 
   const { data, loading: gqlLoading, error, refetch } = useResumeCardsQuery();
+  const { data: cdata } = useGetCommunitiesQuery();
+
+
+  useEffect(() => {
+    if (cdata) {
+      setGlobal({
+        communityFilters: cdata.sigs.reduce((dict: any, x: Community) => {
+    dict[x.name] = false;
+    return dict;
+}, {})
+      });
+    }
+  }, [cdata])
 
   useEffect(() => {
     if (loading) {
@@ -86,14 +111,7 @@ const App: React.FC = () => {
         setForbidden(error.graphQLErrors[0].message.includes("Access denied!"));
       } else if (gqlLoading === false && !fetched && data) {
         setFetched(true);
-        setUsers(
-          data.resumes.map((resume: Resume) => {
-            const user = resume.user;
-            (user as User).resume = resume;
-
-            return user as User;
-          })
-        );
+        setUsers(data.users);
       }
     }
   }, [
@@ -109,6 +127,7 @@ const App: React.FC = () => {
 
   const favoritesContext: IFavoriteContextProps = {
     users,
+    selectedCommunities,
     filterFavorites,
     setFilterFavorites,
     isFavorite: (id: string): boolean => {
@@ -120,6 +139,9 @@ const App: React.FC = () => {
         [id]: !(favorites[id] || false),
       });
     },
+    changeCommunities: (selected: string[]): void => {
+      setSelectedCommunities(selected);
+    }
   };
 
   const paginationContext: IPaginationContextProps = {

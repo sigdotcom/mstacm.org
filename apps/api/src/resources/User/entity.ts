@@ -127,6 +127,7 @@ export class User extends BaseEntity {
   @JoinTable()
   public transactions: Lazy<Transaction[]>;
 
+  @Field((_: void) => [Sig], { nullable: true })
   @ManyToMany(() => Sig, (sig: Sig) => sig.users, {
     lazy: true,
     nullable: true

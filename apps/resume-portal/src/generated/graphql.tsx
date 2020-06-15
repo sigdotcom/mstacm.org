@@ -101,6 +101,7 @@ export type Mutation = {
   deleteEvent: EventDeletePayload;
   updateEvent: Event;
   createEvent: Event;
+  createGroup: Group;
   createPermission: Permission;
   createRedemptionCode: RedemptionCode;
   redeemRedemptionCode: RedemptionCode;
@@ -163,6 +164,12 @@ export type MutationUpdateEventArgs = {
 export type MutationCreateEventArgs = {
   flier?: Maybe<Scalars['Upload']>;
   data: EventCreateInput;
+};
+
+
+export type MutationCreateGroupArgs = {
+  permissionIds: Array<Scalars['String']>;
+  name: Scalars['String'];
 };
 
 
@@ -275,6 +282,7 @@ export type Query = {
   events: Array<Event>;
   currentEvents: Array<Event>;
   event: Event;
+  groups: Array<Group>;
   permissions: Array<Permission>;
   products: Array<Product>;
   redemptionCodes: Array<RedemptionCode>;
@@ -303,7 +311,7 @@ export type RedemptionCode = {
   id: Scalars['ID'];
   redeemed?: Maybe<Scalars['Boolean']>;
   expirationDate: Scalars['DateTime'];
-  transaction: Transaction;
+  transaction?: Maybe<Transaction>;
   permissions: Array<Permission>;
   groups: Array<Group>;
 };
@@ -377,6 +385,7 @@ export type User = {
   resume?: Maybe<Resume>;
   permissions?: Maybe<Array<Permission>>;
   groups: Array<Group>;
+  sigs?: Maybe<Array<Sig>>;
 };
 
 export type UserCreateInput = {
@@ -397,34 +406,83 @@ export type UserUpdateInput = {
   email?: Maybe<Scalars['String']>;
 };
 
+export type GetCommunitiesQueryVariables = {};
+
+
+export type GetCommunitiesQuery = (
+  { __typename?: 'Query' }
+  & { sigs: Array<(
+    { __typename?: 'Sig' }
+    & Pick<Sig, 'name'>
+  )> }
+);
+
 export type ResumeCardsQueryVariables = {};
 
 
 export type ResumeCardsQuery = (
   { __typename?: 'Query' }
-  & { resumes: Array<(
-    { __typename?: 'Resume' }
-    & Pick<Resume, 'url' | 'added'>
-    & { user: (
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'firstName' | 'lastName' | 'email' | 'profilePictureUrl' | 'graduationDate'>
-    ) }
+  & { users: Array<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'firstName' | 'lastName' | 'email' | 'profilePictureUrl' | 'graduationDate'>
+    & { sigs?: Maybe<Array<(
+      { __typename?: 'Sig' }
+      & Pick<Sig, 'name'>
+    )>>, resume?: Maybe<(
+      { __typename?: 'Resume' }
+      & Pick<Resume, 'url' | 'added'>
+    )> }
   )> }
 );
 
 
+export const GetCommunitiesDocument = gql`
+    query GetCommunities {
+  sigs {
+    name
+  }
+}
+    `;
+
+/**
+ * __useGetCommunitiesQuery__
+ *
+ * To run a query within a React component, call `useGetCommunitiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCommunitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCommunitiesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCommunitiesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCommunitiesQuery, GetCommunitiesQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetCommunitiesQuery, GetCommunitiesQueryVariables>(GetCommunitiesDocument, baseOptions);
+      }
+export function useGetCommunitiesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCommunitiesQuery, GetCommunitiesQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetCommunitiesQuery, GetCommunitiesQueryVariables>(GetCommunitiesDocument, baseOptions);
+        }
+export type GetCommunitiesQueryHookResult = ReturnType<typeof useGetCommunitiesQuery>;
+export type GetCommunitiesLazyQueryHookResult = ReturnType<typeof useGetCommunitiesLazyQuery>;
+export type GetCommunitiesQueryResult = ApolloReactCommon.QueryResult<GetCommunitiesQuery, GetCommunitiesQueryVariables>;
 export const ResumeCardsDocument = gql`
     query ResumeCards {
-  resumes {
-    url
-    added
-    user {
-      id
-      firstName
-      lastName
-      email
-      profilePictureUrl
-      graduationDate
+  users {
+    id
+    firstName
+    lastName
+    sigs {
+      name
+    }
+    email
+    profilePictureUrl
+    graduationDate
+    resume {
+      url
+      added
     }
   }
 }

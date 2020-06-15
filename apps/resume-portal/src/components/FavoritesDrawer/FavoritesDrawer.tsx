@@ -6,6 +6,8 @@ import { FavoritesContext } from "../../context/FavoritesContext";
 import { downloadFile } from "../../utils/files";
 import { FavoritesCard } from "../FavoritesCard";
 
+import { User } from "../../utils/types";
+
 export interface IFavoritesDrawerProps {
   visible: boolean;
   closeDrawer(): void;
@@ -13,12 +15,12 @@ export interface IFavoritesDrawerProps {
 
 export const FavoritesDrawer: React.FC<IFavoritesDrawerProps> = props => {
   const { users, isFavorite } = useContext(FavoritesContext);
-  const favorites = users.filter(user => isFavorite(user.id));
-  const seperatedFavorites = favorites.map(user => user.email).join(";");
-  const mailtoString = `mailto:${seperatedFavorites}`;
+  const favorites: User[] = users.filter(user => isFavorite(user.id));
+  const seperatedFavorites: string = favorites.map(user => user.email).join(";");
+  const mailtoString: string = `mailto:${seperatedFavorites}`;
 
-  const favoritesCards = favorites.map(item => {
-    return <FavoritesCard user={item} key={item.id} />;
+  const favoritesCards = favorites.map((user: User) => {
+    return <FavoritesCard user={user} key={user.id} />;
   });
 
   const downloadAll = async () => {

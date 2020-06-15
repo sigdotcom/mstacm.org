@@ -8,9 +8,7 @@ export interface IFavoritesCardProps {
   user: User;
 }
 
-export const FavoritesCard: React.FC<IFavoritesCardProps> = props => {
-  const user = props.user;
-
+export const FavoritesCard: React.FC<IFavoritesCardProps> = ({ user }: IFavoritesCardProps) => {
   const PROFILE_URL: string = user.profilePictureUrl;
   const FULL_NAME: string = `${user.firstName} ${user.lastName}`;
   const GRADUATION_DATE: string = toSemester(new Date(user.graduationDate));

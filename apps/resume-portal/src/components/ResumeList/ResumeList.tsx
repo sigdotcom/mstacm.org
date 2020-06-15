@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import React, { useContext } from "react";
+import React, { useContext, useGlobal } from "reactn";
 import { useWindowSize } from "react-use";
 
 import { FavoritesContext } from "../../context/FavoritesContext";
@@ -7,18 +7,23 @@ import { PaginationContext } from "../../context/PaginationContext";
 import { FavoritesCard } from "../FavoritesCard";
 import { ResumeCard } from "../ResumeCard";
 
+import { Community } from "../../utils/types";
+
 export const GET_RESUME_CARDS = gql`
   query ResumeCards {
-    resumes {
-      url
-      added
-      user {
-        id
-        firstName
-        lastName
-        email
-        profilePictureUrl
-        graduationDate
+    users {
+      id
+      firstName
+      lastName
+      sigs {
+        name
+      }
+      email
+      profilePictureUrl
+      graduationDate
+      resume {
+        url
+        added
       }
     }
   }
@@ -34,6 +39,8 @@ const ResumeList: React.FC<IResumeListProps> = props => {
   const { users, isFavorite, filterFavorites } = useContext(FavoritesContext);
   const { curPage, displayPerPage } = useContext(PaginationContext);
 
+  const [communityFilters] = useGlobal("communityFilters");
+
   const resumes = [];
 
   for (const user of users) {
@@ -41,7 +48,10 @@ const ResumeList: React.FC<IResumeListProps> = props => {
     const lowerLastName = (user.lastName || "Unknown").toLowerCase();
     const lowerFullName = `${lowerFirstName} ${lowerLastName}`;
     const filterStrMatch = lowerFullName.includes(filterString.toLowerCase());
-    if (user.resume && filterStrMatch) {
+    const filterCommunityMatch = user.sigs && user.sigs?.filter((community: Community) => 
+      communityFilters[community.name] == true
+    ).length > 0;
+    if (user.resume && filterStrMatch && filterCommunityMatch) {
       if (!filterFavorites || (filterFavorites && isFavorite(user.id))) {
         resumes.push(user);
       }
@@ -62,7 +72,7 @@ const ResumeList: React.FC<IResumeListProps> = props => {
         })}
       </div>
     );
-  } else {
+  } 
     return (
       <div className="flex flex-col p-2">
         {filtered_resumes.map(item => {
@@ -70,7 +80,7 @@ const ResumeList: React.FC<IResumeListProps> = props => {
         })}
       </div>
     );
-  }
+  
 };
 
 export { ResumeList };

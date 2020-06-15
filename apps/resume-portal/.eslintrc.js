@@ -20,6 +20,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [
+    'prettier',
     'react',
     '@typescript-eslint',
   ],

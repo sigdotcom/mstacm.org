@@ -1,4 +1,5 @@
 import { ResumeCardsQuery } from "../generated/graphql";
 
-export type Resume = ResumeCardsQuery["resumes"][number];
-export type User = Resume["user"] & { resume: Resume };
+export type User = ResumeCardsQuery["users"][number];
+export type Resume = User["resume"];
+export type Community = {name: string;};

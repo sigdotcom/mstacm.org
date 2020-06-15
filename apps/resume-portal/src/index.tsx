@@ -1,7 +1,7 @@
 import "./index.css";
 
 import { ApolloProvider } from "@apollo/react-hooks";
-import React from "react";
+import React, { setGlobal } from "reactn";
 import ReactDOM from "react-dom";
 
 import { App } from "./App";
@@ -10,6 +10,14 @@ import * as serviceWorker from "./serviceWorker";
 import { config } from "./config";
 import { client } from "./utils/apollo";
 import { Auth0Provider, onRedirectCallback } from "./utils/react-auth0-wrapper";
+
+setGlobal({
+  communityFilters: {},
+  users: [],
+  filterFavorites: false,
+  curPage: 1,
+  displayPerPage: 10,
+})
 
 ReactDOM.render(
   <Auth0Provider
