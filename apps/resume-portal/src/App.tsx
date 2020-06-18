@@ -1,27 +1,18 @@
 import "./App.css";
 
 import React, { useEffect, useState, setGlobal } from "reactn";
-import { useLocalStorage } from "react-use";
 
-import { Loader } from "./components/Loader";
-import { config } from "./config";
-import { useResumeCardsQuery } from "./generated/graphql";
-import { ResumesPage } from "./screens/ResumesPage";
-import { useAuth0 } from "./utils/react-auth0-wrapper";
-import { User, Community } from "./utils/types";
+import { useLocalStorage } from "react-use";
 import gql from "graphql-tag"
 
-import { useGetCommunitiesQuery } from "./generated/graphql"
+import { config } from "./config";
+import { useAuth0 } from "./utils/react-auth0-wrapper";
+import { Community } from "./utils/types";
 
-import {
-  FavoritesContext,
-  IFavoriteContextProps,
-} from "./context/FavoritesContext";
+import { ResumesPage } from "./screens/ResumesPage";
+import { Loader } from "./components/Loader";
 
-import {
-  IPaginationContextProps,
-  PaginationContext,
-} from "./context/PaginationContext";
+import { useGetUsersLazyQuery, useGetCommunitiesLazyQuery } from "./generated/graphql";
 
 type Favorites = {
   [id: string]: boolean | undefined;
@@ -34,6 +25,27 @@ export const GET_COMMUNITIES = gql`
     }
   }
 `
+
+export const GET_USERS = gql`
+  query GetUsers {
+    users {
+      id
+      firstName
+      lastName
+      sigs {
+        name
+      }
+      email
+      profilePictureUrl
+      graduationDate
+      resume {
+        url
+        added
+      }
+    }
+  }
+`;
+
 
 const Forbidden: React.FC = () => {
   return (
@@ -50,86 +62,81 @@ const Forbidden: React.FC = () => {
 };
 
 const App: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [selectedCommunities, setSelectedCommunities] = useState<string[]>(["Web", "Game"]);
-  const [filterFavorites, setFilterFavorites] = useState<boolean>(false);
-  const [curPage, setCurPage] = useState<number>(1);
-  const [displayPerPage, setDisplayPerPage] = useState<number>(10);
   const [forbidden, setForbidden] = useState<boolean>(false);
-  const [fetched, setFetched] = useState<boolean>(false);
+  const [tokenStored, setTokenStored] = useState<boolean>(false);
+
   const [favorites, setFavorites]: [Favorites, any] = useLocalStorage(
     "favorites",
     {}
   );
+
+  const [getUsers, { data: usersData, error: usersError }] = useGetUsersLazyQuery();
+  const [getCommunities, { data: communitiesData }] = useGetCommunitiesLazyQuery();
+
   const {
-    loading,
+    loading: loginLoading,
     isAuthenticated,
     loginWithRedirect,
     getTokenSilently,
   } = useAuth0();
-  const path = "/";
 
-  const { data, loading: gqlLoading, error, refetch } = useResumeCardsQuery();
-  const { data: cdata } = useGetCommunitiesQuery();
-
-
+  // Once community data has been retrieved, populates communityFilters
   useEffect(() => {
-    if (cdata) {
+    if (communitiesData) {
       setGlobal({
-        communityFilters: cdata.sigs.reduce((dict: any, x: Community) => {
-    dict[x.name] = false;
-    return dict;
-}, {})
+        communityFilters: communitiesData.sigs.reduce((dict: any, x: Community) => {
+          dict[x.name] = true;
+          return dict;
+        }, {})
       });
     }
-  }, [cdata])
+  }, [communitiesData]);
 
+
+  // Handles filling of userdata if authorized
   useEffect(() => {
-    if (loading) {
+    if (loginLoading) {
       return;
     } else if (isAuthenticated) {
       const setToken: () => void = async (): Promise<void> => {
         const token: string = (await getTokenSilently()) || "";
         localStorage.setItem(config.ACCESS_TOKEN_KEY, token);
-        await refetch();
+        setTokenStored(true);
       };
-
       setToken();
     } else {
       const fn = async () => {
-        await loginWithRedirect({
-          appState: { targetUrl: path },
-        });
+        await loginWithRedirect({});
       };
       fn();
+      return;
     }
+  }, [loginLoading, isAuthenticated, loginWithRedirect]);
 
+  useEffect(()=>{
+    if (tokenStored) {
+      getUsers();
+      getCommunities();
+    }
+  }, [tokenStored])
+
+  useEffect(()=>{
     if (localStorage.getItem(config.ACCESS_TOKEN_KEY)) {
-      if (gqlLoading) {
-        return;
-      } else if (error && !forbidden) {
-        setForbidden(error.graphQLErrors[0].message.includes("Access denied!"));
-      } else if (gqlLoading === false && !fetched && data) {
-        setFetched(true);
-        setUsers(data.users);
+      if (usersError && !forbidden) {
+        setForbidden(usersError.graphQLErrors[0].message.includes("Access denied!"));
+      } else if (usersData) {
+        setGlobal({
+          users: usersData.users
+        });
       }
     }
   }, [
-    loading,
-    isAuthenticated,
-    loginWithRedirect,
-    path,
-    getTokenSilently,
-    refetch,
-    gqlLoading,
-    error,
+    usersError,
+    usersData,
+    forbidden
   ]);
 
-  const favoritesContext: IFavoriteContextProps = {
-    users,
-    selectedCommunities,
-    filterFavorites,
-    setFilterFavorites,
+  setGlobal({
     isFavorite: (id: string): boolean => {
       return favorites[id] || false;
     },
@@ -138,20 +145,12 @@ const App: React.FC = () => {
         ...favorites,
         [id]: !(favorites[id] || false),
       });
-    },
-    changeCommunities: (selected: string[]): void => {
-      setSelectedCommunities(selected);
     }
-  };
+  })
 
-  const paginationContext: IPaginationContextProps = {
-    curPage,
-    displayPerPage,
-    setCurPage,
-    setDisplayPerPage,
-  };
+  // No more hooks left!
 
-  if (loading || !isAuthenticated) {
+  if (loginLoading || !usersData || !isAuthenticated) {
     return (
       <div style={{ backgroundColor: "#F4F5F8", minHeight: "100vh" }}>
         <div className="h-screen w-full flex content-center justify-center items-center">
@@ -164,11 +163,7 @@ const App: React.FC = () => {
 
   return (
     <div style={{ backgroundColor: "#F4F5F8", minHeight: "100vh" }}>
-      <FavoritesContext.Provider value={favoritesContext}>
-        <PaginationContext.Provider value={paginationContext}>
-          {forbidden ? <Forbidden /> : <ResumesPage />}
-        </PaginationContext.Provider>
-      </FavoritesContext.Provider>
+      {forbidden ? <Forbidden /> : <ResumesPage />}
     </div>
   );
 };

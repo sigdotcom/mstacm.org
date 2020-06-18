@@ -1,17 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useGlobal, useState } from "reactn";
 
 import { FavoritesButton } from "../../components/FavoritesButton";
 import { FavoritesDrawer } from "../../components/FavoritesDrawer";
 import { ResumeList } from "../../components/ResumeList";
 import { ResumePagination } from "../../components/ResumePagination";
 import { SearchBar } from "../../components/SearchBar";
-
-import { FavoritesContext } from "../../context/FavoritesContext";
+import { CommunitiesFilters } from "../../components/CommunitiesFilters"
 
 const ResumesPage: React.FC = () => {
   const [search, setSearch] = useState<string>("");
   const [visible, setVisible] = useState<boolean>(false);
-  const { filterFavorites, setFilterFavorites } = useContext(FavoritesContext);
+  const [filterFavorites, setFilterFavorites] = useGlobal("filterFavorites");
 
   const openDrawer = (): void => {
     setVisible(true);
@@ -41,6 +40,7 @@ const ResumesPage: React.FC = () => {
         </div>
         <div className="w-full mx-32 md:w-8/12 md:mx-16 lg:w-6/12">
           <SearchBar onSearch={onSearch} onClick={onFilterFavorites} />
+          <CommunitiesFilters />
         </div>
         <div className="w-2/12 lg:w-3/12 mr-8 lg:mr-0 hidden md:flex lg:block jcontent-center justify-center items-center">
           <FavoritesButton onClick={openDrawerOnClick} />

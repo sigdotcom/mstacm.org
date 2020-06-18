@@ -1,7 +1,6 @@
 import { Tooltip } from "antd";
-import React, { useContext } from "react";
+import React, { useGlobal } from "reactn";
 
-import { FavoritesContext } from "../../context/FavoritesContext";
 import { downloadFile } from "../../utils/files";
 import { User } from "../../utils/types";
 import { CenteredIcon } from "../CenteredIcon";
@@ -22,7 +21,7 @@ export const ActionBar: React.FC<IActionBarProps> = props => {
   const lastName = user.lastName || "Unknown";
   const EMAIL = user.email;
   const blue_icon_classes = `fill-current text-black focus:text-blue-500 focus:outline-none hover:text-blue-500`;
-  const { flipFavorite } = useContext(FavoritesContext);
+  const [flipFavorite] = useGlobal("flipFavorite");
   const PDF_URL = user.resume.url;
 
   const onClick = () => {

@@ -1,14 +1,11 @@
 import { Pagination } from "antd";
-import React, { useContext } from "react";
+import React, { useGlobal } from "reactn";
 
-import { FavoritesContext } from "../../context/FavoritesContext";
-import { PaginationContext } from "../../context/PaginationContext";
 
 export const ResumePagination: React.FC = () => {
-  const { users } = useContext(FavoritesContext);
-  const { curPage, displayPerPage, setCurPage, setDisplayPerPage } = useContext(
-    PaginationContext
-  );
+  const [curPage, setCurPage] = useGlobal("curPage");
+  const [displayPerPage, setDisplayPerPage] = useGlobal("displayPerPage");
+  const [users] = useGlobal("users");
 
   const onChange = (page: number): void => {
     setCurPage(page);

@@ -1,8 +1,7 @@
 import { Drawer } from "antd";
-import React, { useContext } from "react";
+import React, { useGlobal } from "reactn";
 import { CenteredIcon } from "../CenteredIcon";
 
-import { FavoritesContext } from "../../context/FavoritesContext";
 import { downloadFile } from "../../utils/files";
 import { FavoritesCard } from "../FavoritesCard";
 
@@ -14,7 +13,10 @@ export interface IFavoritesDrawerProps {
 }
 
 export const FavoritesDrawer: React.FC<IFavoritesDrawerProps> = props => {
-  const { users, isFavorite } = useContext(FavoritesContext);
+
+  const [users] = useGlobal("users");
+  const [isFavorite] = useGlobal("isFavorite");
+
   const favorites: User[] = users.filter(user => isFavorite(user.id));
   const seperatedFavorites: string = favorites.map(user => user.email).join(";");
   const mailtoString: string = `mailto:${seperatedFavorites}`;

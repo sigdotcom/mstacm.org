@@ -1,5 +1,5 @@
 import { Tooltip } from "antd";
-import React, { useGlobal, useState } from "reactn";
+import React, { useState } from "react";
 import { CenteredIcon } from "../CenteredIcon";
 
 
@@ -10,8 +10,6 @@ interface ISearchBarProps {
 
 export const SearchBar: React.FC<ISearchBarProps> = props => {
   const [active, setActive] = useState<Boolean>(false);
-  const [communityFilters, setCommunityFilters] = useGlobal("communityFilters");
-  console.log(communityFilters)
 
   const SVG_COLOR_CLASSES = active ? "text-red-500" : "";
 
@@ -21,11 +19,6 @@ export const SearchBar: React.FC<ISearchBarProps> = props => {
       props.onClick(e);
     }
   };
-
-  const flipCommunity = (name: string) => {
-      communityFilters[name] = !communityFilters[name]
-      setCommunityFilters(communityFilters);
-  }
 
   return (
     <div className="flex align-center items-center bg-white shadow rounded-full p-4 text-grey-400">
@@ -49,18 +42,6 @@ export const SearchBar: React.FC<ISearchBarProps> = props => {
             />
           </button>
         </Tooltip>
-      </div>
-      <div>
-        {Object.entries(communityFilters).map(([name, enabled]: [string, boolean]) => {
-        return (
-        <label className="md:w-2/3 block text-gray-500 font-bold" key={name} >
-          <input className="mr-2 leading-tight" type="checkbox" onClick={()=>flipCommunity(name)} checked={enabled}/>
-          <span className="text-sm">
-            {name}
-          </span>
-            </label>
-              );
-        })}
       </div>
     </div>
   );

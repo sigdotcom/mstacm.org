@@ -1,9 +1,7 @@
 import gql from "graphql-tag";
-import React, { useContext, useGlobal } from "reactn";
+import React, { useGlobal } from "reactn";
 import { useWindowSize } from "react-use";
 
-import { FavoritesContext } from "../../context/FavoritesContext";
-import { PaginationContext } from "../../context/PaginationContext";
 import { FavoritesCard } from "../FavoritesCard";
 import { ResumeCard } from "../ResumeCard";
 
@@ -36,10 +34,13 @@ interface IResumeListProps {
 const ResumeList: React.FC<IResumeListProps> = props => {
   const { width } = useWindowSize();
   const filterString = props.filterString || "";
-  const { users, isFavorite, filterFavorites } = useContext(FavoritesContext);
-  const { curPage, displayPerPage } = useContext(PaginationContext);
 
   const [communityFilters] = useGlobal("communityFilters");
+  const [curPage] = useGlobal("curPage");
+  const [displayPerPage] = useGlobal("displayPerPage");
+  const [filterFavorites] = useGlobal("filterFavorites");
+  const [isFavorite] = useGlobal("isFavorite");
+  const [users] = useGlobal("users");
 
   const resumes = [];
 
@@ -49,7 +50,7 @@ const ResumeList: React.FC<IResumeListProps> = props => {
     const lowerFullName = `${lowerFirstName} ${lowerLastName}`;
     const filterStrMatch = lowerFullName.includes(filterString.toLowerCase());
     const filterCommunityMatch = user.sigs && user.sigs?.filter((community: Community) => 
-      communityFilters[community.name] == true
+      communityFilters[community.name] === true
     ).length > 0;
     if (user.resume && filterStrMatch && filterCommunityMatch) {
       if (!filterFavorites || (filterFavorites && isFavorite(user.id))) {

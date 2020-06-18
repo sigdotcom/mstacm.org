@@ -9,5 +9,7 @@ declare module 'reactn/default' {
     filterFavorites: boolean,
     curPage: number,
     displayPerPage: number,
+    isFavorite(id: string): boolean,
+    flipFavorite(id: string): void
   }
 }
