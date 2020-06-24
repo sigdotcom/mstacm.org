@@ -7,11 +7,11 @@ import { Community } from "../../utils/types";
 import { FavoritesCard } from "../FavoritesCard";
 import { ResumeCard } from "../ResumeCard";
 
-interface IResumeListProps {
+interface ResumeListProps {
   filterString?: string;
 }
 
-const ResumeList: React.FC<IResumeListProps> = props => {
+const ResumeList: React.FC<ResumeListProps> = (props: ResumeListProps) => {
   const { width } = useWindowSize();
   const filterString = props.filterString || "";
 
@@ -42,7 +42,7 @@ const ResumeList: React.FC<IResumeListProps> = props => {
   }
 
   const startingPage = (curPage - 1) * displayPerPage;
-  const filtered_resumes = resumes.slice(
+  const filteredResumes = resumes.slice(
     startingPage,
     startingPage + displayPerPage
   );
@@ -50,7 +50,7 @@ const ResumeList: React.FC<IResumeListProps> = props => {
   if (width > 698) {
     return (
       <div className="flex flex-wrap justify-center">
-        {filtered_resumes.map(item => {
+        {filteredResumes.map(item => {
           return <ResumeCard user={item} key={item.id} />;
         })}
       </div>
@@ -58,7 +58,7 @@ const ResumeList: React.FC<IResumeListProps> = props => {
   }
   return (
     <div className="flex flex-col p-2">
-      {filtered_resumes.map(item => {
+      {filteredResumes.map(item => {
         return <FavoritesCard user={item} key={item.id} />;
       })}
     </div>

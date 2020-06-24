@@ -4,13 +4,13 @@ import { toSemester } from "../../utils/time";
 import { User } from "../../utils/types";
 import { ActionBar } from "../ActionBar";
 
-export interface IFavoritesCardProps {
+export interface FavoritesCardProps {
   user: User;
 }
 
-export const FavoritesCard: React.FC<IFavoritesCardProps> = ({
+export const FavoritesCard: React.FC<FavoritesCardProps> = ({
   user
-}: IFavoritesCardProps) => {
+}: FavoritesCardProps) => {
   const PROFILE_URL: string = user.profilePictureUrl;
   const FULL_NAME = `${user.firstName} ${user.lastName}`;
   const GRADUATION_DATE: string = toSemester(new Date(user.graduationDate));

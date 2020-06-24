@@ -12,14 +12,14 @@ export const IconContainer: AnyStyledComponent = styled.span`
   }
 `;
 
-export interface ICenteredIconProps {
+export interface CenteredIconProps {
   name: string;
   size: "small" | "medium" | "large" | "xlarge";
   fill?: string;
 }
 
-export const CenteredIcon: React.FC<ICenteredIconProps> = (
-  props: ICenteredIconProps
+export const CenteredIcon: React.FC<CenteredIconProps> = (
+  props: CenteredIconProps
 ) => {
   return (
     <IconContainer>

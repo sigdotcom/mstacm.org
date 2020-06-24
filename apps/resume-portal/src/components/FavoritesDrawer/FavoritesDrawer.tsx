@@ -7,12 +7,14 @@ import { FavoritesCard } from "../FavoritesCard";
 
 import { User } from "../../utils/types";
 
-export interface IFavoritesDrawerProps {
+export interface FavoritesDrawerProps {
   visible: boolean;
   closeDrawer(): void;
 }
 
-export const FavoritesDrawer: React.FC<IFavoritesDrawerProps> = props => {
+export const FavoritesDrawer: React.FC<FavoritesDrawerProps> = (
+  props: FavoritesDrawerProps
+) => {
   const [users] = useGlobal("users");
   const [isFavorite] = useGlobal("isFavorite");
 
@@ -26,7 +28,7 @@ export const FavoritesDrawer: React.FC<IFavoritesDrawerProps> = props => {
     return <FavoritesCard user={user} key={user.id} />;
   });
 
-  const downloadAll = async () => {
+  const downloadAll = async (): Promise<void> => {
     Promise.all(
       favorites.map(async user => {
         if (!user.resume) {

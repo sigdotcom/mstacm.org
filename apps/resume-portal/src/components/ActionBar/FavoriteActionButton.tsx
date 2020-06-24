@@ -2,12 +2,14 @@ import React, { useGlobal } from "reactn";
 
 import { CenteredIcon } from "../CenteredIcon";
 
-export interface IFavoriteActionButtonProps {
+export interface FavoriteActionButtonProps {
   userId: string;
   onClick?(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
 }
 
-export const FavoriteActionButton: React.FC<IFavoriteActionButtonProps> = props => {
+export const FavoriteActionButton: React.FC<FavoriteActionButtonProps> = (
+  props: FavoriteActionButtonProps
+) => {
   const [isFavorite] = useGlobal("isFavorite");
 
   const { userId, ...buttonProps } = props;

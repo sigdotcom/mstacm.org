@@ -2,17 +2,19 @@ import { Tooltip } from "antd";
 import React, { useState } from "react";
 import { CenteredIcon } from "../CenteredIcon";
 
-interface ISearchBarProps {
+interface SearchBarProps {
   onSearch?(e: React.ChangeEvent<HTMLInputElement>): void;
   onClick?(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
 }
 
-export const SearchBar: React.FC<ISearchBarProps> = props => {
+export const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
   const [active, setActive] = useState<boolean>(false);
 
   const SVG_COLOR_CLASSES = active ? "text-red-500" : "";
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
     setActive(!active);
     if (props.onClick) {
       props.onClick(e);

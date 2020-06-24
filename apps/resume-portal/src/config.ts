@@ -1,4 +1,4 @@
-export interface IConfig {
+export interface Config {
   ACCESS_TOKEN_KEY: string;
   API_URI: string;
   AUTH0_AUDIENCE: string;
@@ -8,7 +8,7 @@ export interface IConfig {
 
 const IS_PROD: boolean = process.env.NODE_ENV === "production";
 
-export const config: IConfig = {
+export const config: Config = {
   ACCESS_TOKEN_KEY: "auth0_access_token",
   API_URI: IS_PROD
     ? "https://api.mstacm.org/graphql"

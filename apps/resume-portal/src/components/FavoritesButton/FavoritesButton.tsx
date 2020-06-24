@@ -2,15 +2,17 @@ import React from "react";
 
 import { CenteredIcon } from "../CenteredIcon";
 
-interface IFavoritesButtonProps {
+interface FavoritesButtonProps {
   onClick?(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
 }
 
-export const FavoritesButton: React.FC<IFavoritesButtonProps> = props => {
+export const FavoritesButton: React.FC<FavoritesButtonProps> = ({
+  onClick
+}: FavoritesButtonProps): JSX.Element => {
   return (
     <button
       className="inline-flex items-center rounded-full px-4 py-3 text-red-500 text-xl border-solid border-2 border-red-500 hover:text-white hover:bg-red-500"
-      onClick={props.onClick}
+      onClick={onClick}
     >
       <div className="outline-none fill-current">
         <CenteredIcon name="heart-outline" size="large" fill="currentColor" />

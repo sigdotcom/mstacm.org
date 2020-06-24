@@ -5,11 +5,13 @@ import { timeSince, toSemester } from "../../utils/time";
 import { User } from "../../utils/types";
 import { ActionBar } from "../ActionBar";
 
-interface IResumeCardProps {
+interface ResumeCardProps {
   user: User;
 }
 
-const ResumeCard: React.FC<IResumeCardProps> = props => {
+const ResumeCard: React.FC<ResumeCardProps> = (
+  props: ResumeCardProps
+): JSX.Element => {
   const { user } = props;
   const firstName = user.firstName || "Unknown";
   const lastName = user.lastName || "Unknown";
