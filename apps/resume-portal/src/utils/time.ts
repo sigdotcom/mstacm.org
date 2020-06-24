@@ -13,7 +13,7 @@ export const toSemester = (date: Date) => {
 
   const month = date.getMonth() > 6 ? "FS" : "SP";
 
-  return month + " " + year;
+  return `${month} ${year}`;
 };
 
 export const timeSince = (date: Date) => {
@@ -23,23 +23,23 @@ export const timeSince = (date: Date) => {
   let interval = Math.floor(delta / YEAR_IN_MILLISECONDS);
 
   if (interval > 1) {
-    return interval + " years";
+    return `${interval} years`;
   }
   interval = Math.floor(delta / MONTH_IN_MILLISECONDS);
   if (interval > 1) {
-    return interval + " months";
+    return `${interval} months`;
   }
   interval = Math.floor(delta / DAY_IN_MILLISECONDS);
   if (interval > 1) {
-    return interval + " days";
+    return `${interval} days`;
   }
   interval = Math.floor(delta / HOUR_IN_MILLISECONDS);
   if (interval > 1) {
-    return interval + " hours";
+    return `${interval} hours`;
   }
   interval = Math.floor(delta / MIN_IN_MILLISECONDS);
   if (interval > 1) {
-    return interval + " minutes";
+    return `${interval} minutes`;
   }
-  return Math.floor(delta / SEC_IN_MILLISECONDS) + " seconds";
+  return `${Math.floor(delta / SEC_IN_MILLISECONDS)} seconds`;
 };

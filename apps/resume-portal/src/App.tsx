@@ -3,7 +3,7 @@ import "./App.css";
 import React, { useEffect, useState, setGlobal } from "reactn";
 
 import { useLocalStorage } from "react-use";
-import gql from "graphql-tag"
+import gql from "graphql-tag";
 
 import { config } from "./config";
 import { useAuth0 } from "./utils/react-auth0-wrapper";
@@ -12,7 +12,10 @@ import { Community } from "./utils/types";
 import { ResumesPage } from "./screens/ResumesPage";
 import { Loader } from "./components/Loader";
 
-import { useGetUsersLazyQuery, useGetCommunitiesLazyQuery } from "./generated/graphql";
+import {
+  useGetUsersLazyQuery,
+  useGetCommunitiesLazyQuery
+} from "./generated/graphql";
 
 type Favorites = {
   [id: string]: boolean | undefined;
@@ -24,7 +27,7 @@ export const GET_COMMUNITIES = gql`
       name
     }
   }
-`
+`;
 
 export const GET_USERS = gql`
   query GetUsers {
@@ -46,7 +49,6 @@ export const GET_USERS = gql`
   }
 `;
 
-
 const Forbidden: React.FC = () => {
   return (
     <div className="h-screen w-full flex content-center justify-center items-center flex-col">
@@ -54,8 +56,9 @@ const Forbidden: React.FC = () => {
       <p style={{ textAlign: "center" }} className="text-xl">
         It appears your permissions prevent me from letting you pass.
         <br />
-        Please contact <a href="mailto:acm@mst.edu">acm@mst.edu</a> if you
-        believe this is a mistake.
+        Please contact
+        <a href="mailto:acm@mst.edu">acm@mst.edu</a> if you believe this is a
+        mistake.
       </p>
     </div>
   );
@@ -70,33 +73,40 @@ const App: React.FC = () => {
     {}
   );
 
-  const [getUsers, { data: usersData, error: usersError }] = useGetUsersLazyQuery();
-  const [getCommunities, { data: communitiesData }] = useGetCommunitiesLazyQuery();
+  const [
+    getUsers,
+    { data: usersData, error: usersError }
+  ] = useGetUsersLazyQuery();
+  const [
+    getCommunities,
+    { data: communitiesData }
+  ] = useGetCommunitiesLazyQuery();
 
   const {
     loading: loginLoading,
     isAuthenticated,
     loginWithRedirect,
-    getTokenSilently,
+    getTokenSilently
   } = useAuth0();
 
   // Once community data has been retrieved, populates communityFilters
   useEffect(() => {
     if (communitiesData) {
       setGlobal({
-        communityFilters: communitiesData.sigs.reduce((dict: any, x: Community) => {
-          dict[x.name] = true;
-          return dict;
-        }, {})
+        communityFilters: communitiesData.sigs.reduce(
+          (dict: any, x: Community) => {
+            dict[x.name] = true;
+            return dict;
+          },
+          {}
+        )
       });
     }
   }, [communitiesData]);
 
-
   // Handles filling of userdata if authorized
   useEffect(() => {
     if (loginLoading) {
-      return;
     } else if (isAuthenticated) {
       const setToken: () => void = async (): Promise<void> => {
         const token: string = (await getTokenSilently()) || "";
@@ -109,32 +119,29 @@ const App: React.FC = () => {
         await loginWithRedirect({});
       };
       fn();
-      return;
     }
   }, [loginLoading, isAuthenticated, loginWithRedirect]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (tokenStored) {
       getUsers();
       getCommunities();
     }
-  }, [tokenStored])
+  }, [tokenStored]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (localStorage.getItem(config.ACCESS_TOKEN_KEY)) {
       if (usersError && !forbidden) {
-        setForbidden(usersError.graphQLErrors[0].message.includes("Access denied!"));
+        setForbidden(
+          usersError.graphQLErrors[0].message.includes("Access denied!")
+        );
       } else if (usersData) {
         setGlobal({
           users: usersData.users
         });
       }
     }
-  }, [
-    usersError,
-    usersData,
-    forbidden
-  ]);
+  }, [usersError, usersData, forbidden]);
 
   setGlobal({
     isFavorite: (id: string): boolean => {
@@ -143,10 +150,10 @@ const App: React.FC = () => {
     flipFavorite: (id: string): void => {
       setFavorites({
         ...favorites,
-        [id]: !(favorites[id] || false),
+        [id]: !(favorites[id] || false)
       });
     }
-  })
+  });
 
   // No more hooks left!
 

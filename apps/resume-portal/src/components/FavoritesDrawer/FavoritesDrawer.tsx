@@ -13,13 +13,14 @@ export interface IFavoritesDrawerProps {
 }
 
 export const FavoritesDrawer: React.FC<IFavoritesDrawerProps> = props => {
-
   const [users] = useGlobal("users");
   const [isFavorite] = useGlobal("isFavorite");
 
   const favorites: User[] = users.filter(user => isFavorite(user.id));
-  const seperatedFavorites: string = favorites.map(user => user.email).join(";");
-  const mailtoString: string = `mailto:${seperatedFavorites}`;
+  const seperatedFavorites: string = favorites
+    .map(user => user.email)
+    .join(";");
+  const mailtoString = `mailto:${seperatedFavorites}`;
 
   const favoritesCards = favorites.map((user: User) => {
     return <FavoritesCard user={user} key={user.id} />;

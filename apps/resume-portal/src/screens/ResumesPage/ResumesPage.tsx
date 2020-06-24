@@ -5,7 +5,7 @@ import { FavoritesDrawer } from "../../components/FavoritesDrawer";
 import { ResumeList } from "../../components/ResumeList";
 import { ResumePagination } from "../../components/ResumePagination";
 import { SearchBar } from "../../components/SearchBar";
-import { CommunitiesFilters } from "../../components/CommunitiesFilters"
+import { CommunitiesFilters } from "../../components/CommunitiesFilters";
 
 const ResumesPage: React.FC = () => {
   const [search, setSearch] = useState<string>("");

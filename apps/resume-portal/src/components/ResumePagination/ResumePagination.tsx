@@ -1,7 +1,6 @@
 import { Pagination } from "antd";
 import React, { useGlobal } from "reactn";
 
-
 export const ResumePagination: React.FC = () => {
   const [curPage, setCurPage] = useGlobal("curPage");
   const [displayPerPage, setDisplayPerPage] = useGlobal("displayPerPage");

@@ -16,8 +16,8 @@ setGlobal({
   users: [],
   filterFavorites: false,
   curPage: 1,
-  displayPerPage: 10,
-})
+  displayPerPage: 10
+});
 
 ReactDOM.render(
   <Auth0Provider

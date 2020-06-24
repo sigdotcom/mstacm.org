@@ -10,7 +10,7 @@ interface IResumeCardProps {
 }
 
 const ResumeCard: React.FC<IResumeCardProps> = props => {
-  const user = props.user;
+  const { user } = props;
   const firstName = user.firstName || "Unknown";
   const lastName = user.lastName || "Unknown";
 

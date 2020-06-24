@@ -8,9 +8,11 @@ export interface IFavoritesCardProps {
   user: User;
 }
 
-export const FavoritesCard: React.FC<IFavoritesCardProps> = ({ user }: IFavoritesCardProps) => {
+export const FavoritesCard: React.FC<IFavoritesCardProps> = ({
+  user
+}: IFavoritesCardProps) => {
   const PROFILE_URL: string = user.profilePictureUrl;
-  const FULL_NAME: string = `${user.firstName} ${user.lastName}`;
+  const FULL_NAME = `${user.firstName} ${user.lastName}`;
   const GRADUATION_DATE: string = toSemester(new Date(user.graduationDate));
 
   return (
@@ -28,7 +30,7 @@ export const FavoritesCard: React.FC<IFavoritesCardProps> = ({ user }: IFavorite
           <span className="font-bold">{GRADUATION_DATE}</span>
         </div>
       </div>
-      <ActionBar user={user} padding={"pr-4"} />
+      <ActionBar user={user} padding="pr-4" />
     </div>
   );
 };

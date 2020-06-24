@@ -12,7 +12,7 @@ export interface IActionBarProps {
 }
 
 export const ActionBar: React.FC<IActionBarProps> = props => {
-  const user = props.user;
+  const { user } = props;
 
   if (!user.resume) {
     throw Error("User does not have resume");

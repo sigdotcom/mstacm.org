@@ -7,10 +7,7 @@ export interface IFavoriteActionButtonProps {
   onClick?(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
 }
 
-export const FavoriteActionButton: React.FC<
-  IFavoriteActionButtonProps
-> = props => {
-
+export const FavoriteActionButton: React.FC<IFavoriteActionButtonProps> = props => {
   const [isFavorite] = useGlobal("isFavorite");
 
   const { userId, ...buttonProps } = props;

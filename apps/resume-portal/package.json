@@ -31,7 +31,9 @@
     "start": "npm-run-all -p watch:css watch:types run",
     "build": "yarn build:css; yarn build:types; react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -68,7 +70,6 @@
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "jest-watch-typeahead": "^0.4.0",
