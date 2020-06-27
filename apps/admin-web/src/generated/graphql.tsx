@@ -32,6 +32,7 @@ export type Event = {
   eventTitle: Scalars['String'],
   description: Scalars['String'],
   location: Scalars['String'],
+  category: Scalars['String'],
   flierLink?: Maybe<Scalars['String']>,
   eventLink?: Maybe<Scalars['String']>,
   urlKey?: Maybe<Scalars['String']>,

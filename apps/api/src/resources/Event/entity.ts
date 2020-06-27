@@ -71,8 +71,8 @@ export class Event extends BaseEntity {
   })
   public product: Product;*/
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Field()
+  @Column({ default: "Event" })
   public category: string;
 
   @Field({ nullable: true })

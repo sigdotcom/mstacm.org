@@ -32,6 +32,7 @@ export type Event = {
   eventTitle: Scalars['String'],
   description: Scalars['String'],
   location: Scalars['String'],
+  category: Scalars['String'],
   flierLink?: Maybe<Scalars['String']>,
   eventLink?: Maybe<Scalars['String']>,
   urlKey?: Maybe<Scalars['String']>,
@@ -424,6 +425,20 @@ export type GetCurrentEventsQuery = (
   )> }
 );
 
+export type AddAttendeeMutationVariables = {
+  eventId: Scalars['Float'],
+  userId: Scalars['String']
+};
+
+
+export type AddAttendeeMutation = (
+  { __typename?: 'Mutation' }
+  & { addAttendee: (
+    { __typename?: 'Event' }
+    & Pick<Event, 'id'>
+  ) }
+);
+
 export type UploadResumeMutationVariables = {
   resume: Scalars['Upload'],
   grad: Scalars['DateTime'],
@@ -496,6 +511,39 @@ export function useGetCurrentEventsLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type GetCurrentEventsQueryHookResult = ReturnType<typeof useGetCurrentEventsQuery>;
 export type GetCurrentEventsLazyQueryHookResult = ReturnType<typeof useGetCurrentEventsLazyQuery>;
 export type GetCurrentEventsQueryResult = ApolloReactCommon.QueryResult<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>;
+export const AddAttendeeDocument = gql`
+    mutation AddAttendee($eventId: Float!, $userId: String!) {
+  addAttendee(eventId: $eventId, userId: $userId) {
+    id
+  }
+}
+    `;
+export type AddAttendeeMutationFn = ApolloReactCommon.MutationFunction<AddAttendeeMutation, AddAttendeeMutationVariables>;
+
+/**
+ * __useAddAttendeeMutation__
+ *
+ * To run a mutation, you first call `useAddAttendeeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddAttendeeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addAttendeeMutation, { data, loading, error }] = useAddAttendeeMutation({
+ *   variables: {
+ *      eventId: // value for 'eventId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useAddAttendeeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddAttendeeMutation, AddAttendeeMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddAttendeeMutation, AddAttendeeMutationVariables>(AddAttendeeDocument, baseOptions);
+      }
+export type AddAttendeeMutationHookResult = ReturnType<typeof useAddAttendeeMutation>;
+export type AddAttendeeMutationResult = ApolloReactCommon.MutationResult<AddAttendeeMutation>;
+export type AddAttendeeMutationOptions = ApolloReactCommon.BaseMutationOptions<AddAttendeeMutation, AddAttendeeMutationVariables>;
 export const UploadResumeDocument = gql`
     mutation uploadResume($resume: Upload!, $grad: DateTime!, $fname: String!, $lname: String!) {
   uploadResume(resume: $resume, graduationDate: $grad, firstName: $fname, lastName: $lname) {

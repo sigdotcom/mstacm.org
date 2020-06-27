@@ -169,6 +169,11 @@ export class EventResolver {
   ): Promise<Event> {
     const event: Event = await Event.findOneOrFail({ id: eventId });
     let users: User[] = await event.attendees;
+
+    for(let i = 0; i < users.length; i++)
+      if(users[i].id == userId)
+        return event;
+
     users.push(await User.findOneOrFail({ id: userId }));
     event.attendees = users;
     return event.save();
