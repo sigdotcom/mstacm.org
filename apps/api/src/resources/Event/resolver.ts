@@ -152,7 +152,31 @@ export class EventResolver {
       newResource.flierLink = url;
     }
 
+    let charPool: string = "0123456789abcdefghijklmnopqrstuvwxyz";
+    let keyPlaceholder: string = "";
+    for(let i = 0; i < 4; i++)
+      keyPlaceholder += charPool.charAt(Math.floor(Math.random() * 36));
+    newResource.urlKey = keyPlaceholder;
+
     return newResource.save();
+  }
+
+  @Authorized()
+  @Mutation((_: void) => Event)
+  public async addAttendee(
+    @Arg("eventId") eventId: number,
+    @Arg("userId") userId: string,
+  ): Promise<Event> {
+    const event: Event = await Event.findOneOrFail({ id: eventId });
+    let users: User[] = await event.attendees;
+
+    for(let i = 0; i < users.length; i++)
+      if(users[i].id == userId)
+        return event;
+
+    users.push(await User.findOneOrFail({ id: userId }));
+    event.attendees = users;
+    return event.save();
   }
 
   @Query(() => [Event])
@@ -172,5 +196,10 @@ export class EventResolver {
   @Query(() => Event)
   protected async event(@Arg("id", () => Number) id: number): Promise<Event> {
     return this.repository.findOneOrFail({ id });
+  }
+
+  @Query(() => [Event])
+  protected async eventsWithKey(@Arg("urlKey", () => String) urlKey: string): Promise<Event[]> {
+    return this.repository.find({ urlKey });
   }
 }
