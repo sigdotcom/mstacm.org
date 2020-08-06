@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
-export const GET_CURRENT_EVENTS_QUERY: any = gql`
-  query getCurrentEvents {
-    currentEvents {
+export const GET_EVENTS: any = gql`
+  query events {
+    events {
       id
       dateCreated
       dateHosted
@@ -21,9 +21,11 @@ export const GET_CURRENT_EVENTS_QUERY: any = gql`
 `;
 
 export const ADD_ATTENDEE: any = gql`
-  mutation AddAttendee($eventId: Float!, $userId: String!) {
-    addAttendee(eventId: $eventId, userId: $userId) {
-      id
+  mutation addAttendee($userId: String!, $eventId: Float!) {
+    addAttendee(userId: $userId, eventId: $eventId) {
+      attendees {
+        id
+      }
     }
   }
 `;

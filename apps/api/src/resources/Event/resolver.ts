@@ -164,8 +164,8 @@ export class EventResolver {
   @Authorized()
   @Mutation((_: void) => Event)
   public async addAttendee(
-    @Arg("eventId") eventId: number,
     @Arg("userId") userId: string,
+    @Arg("eventId") eventId: number,
   ): Promise<Event> {
     const event: Event = await Event.findOneOrFail({ id: eventId });
     let users: User[] = await event.attendees;

@@ -172,8 +172,8 @@ export type MutationCreateEventArgs = {
 
 
 export type MutationAddAttendeeArgs = {
-  userId: Scalars['String'];
   eventId: Scalars['Float'];
+  userId: Scalars['String'];
 };
 
 
@@ -422,12 +422,12 @@ export type UserUpdateInput = {
   email?: Maybe<Scalars['String']>;
 };
 
-export type GetCurrentEventsQueryVariables = Exact<{ [key: string]: never; }>;
+export type EventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCurrentEventsQuery = (
+export type EventsQuery = (
   { __typename?: 'Query' }
-  & { currentEvents: Array<(
+  & { events: Array<(
     { __typename?: 'Event' }
     & Pick<Event, 'id' | 'dateCreated' | 'dateHosted' | 'dateExpire' | 'eventTitle' | 'description' | 'location' | 'flierLink' | 'eventLink' | 'urlKey'>
     & { hostSig: (
@@ -438,8 +438,8 @@ export type GetCurrentEventsQuery = (
 );
 
 export type AddAttendeeMutationVariables = Exact<{
-  eventId: Scalars['Float'];
   userId: Scalars['String'];
+  eventId: Scalars['Float'];
 }>;
 
 
@@ -447,7 +447,10 @@ export type AddAttendeeMutation = (
   { __typename?: 'Mutation' }
   & { addAttendee: (
     { __typename?: 'Event' }
-    & Pick<Event, 'id'>
+    & { attendees?: Maybe<Array<(
+      { __typename?: 'User' }
+      & Pick<User, 'id'>
+    )>> }
   ) }
 );
 
@@ -474,14 +477,14 @@ export type MeQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'firstName' | 'lastName'>
+    & Pick<User, 'firstName' | 'lastName' | 'id'>
   )> }
 );
 
 
-export const GetCurrentEventsDocument = gql`
-    query getCurrentEvents {
-  currentEvents {
+export const EventsDocument = gql`
+    query events {
+  events {
     id
     dateCreated
     dateHosted
@@ -500,33 +503,35 @@ export const GetCurrentEventsDocument = gql`
     `;
 
 /**
- * __useGetCurrentEventsQuery__
+ * __useEventsQuery__
  *
- * To run a query within a React component, call `useGetCurrentEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetCurrentEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetCurrentEventsQuery({
+ * const { data, loading, error } = useEventsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGetCurrentEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
+export function useEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<EventsQuery, EventsQueryVariables>) {
+        return ApolloReactHooks.useQuery<EventsQuery, EventsQueryVariables>(EventsDocument, baseOptions);
       }
-export function useGetCurrentEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
+export function useEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<EventsQuery, EventsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<EventsQuery, EventsQueryVariables>(EventsDocument, baseOptions);
         }
-export type GetCurrentEventsQueryHookResult = ReturnType<typeof useGetCurrentEventsQuery>;
-export type GetCurrentEventsLazyQueryHookResult = ReturnType<typeof useGetCurrentEventsLazyQuery>;
-export type GetCurrentEventsQueryResult = ApolloReactCommon.QueryResult<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>;
+export type EventsQueryHookResult = ReturnType<typeof useEventsQuery>;
+export type EventsLazyQueryHookResult = ReturnType<typeof useEventsLazyQuery>;
+export type EventsQueryResult = ApolloReactCommon.QueryResult<EventsQuery, EventsQueryVariables>;
 export const AddAttendeeDocument = gql`
-    mutation AddAttendee($eventId: Float!, $userId: String!) {
-  addAttendee(eventId: $eventId, userId: $userId) {
-    id
+    mutation addAttendee($userId: String!, $eventId: Float!) {
+  addAttendee(userId: $userId, eventId: $eventId) {
+    attendees {
+      id
+    }
   }
 }
     `;
@@ -545,8 +550,8 @@ export type AddAttendeeMutationFn = ApolloReactCommon.MutationFunction<AddAttend
  * @example
  * const [addAttendeeMutation, { data, loading, error }] = useAddAttendeeMutation({
  *   variables: {
- *      eventId: // value for 'eventId'
  *      userId: // value for 'userId'
+ *      eventId: // value for 'eventId'
  *   },
  * });
  */
@@ -596,6 +601,7 @@ export const MeDocument = gql`
   me {
     firstName
     lastName
+    id
   }
 }
     `;
