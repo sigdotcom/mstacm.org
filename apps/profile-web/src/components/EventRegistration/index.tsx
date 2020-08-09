@@ -3,19 +3,22 @@ import { message } from "antd";
 import { useMeQuery, 
          useEventsQuery,
          useAddAttendeeMutation,
-         Event as IEvent, 
-         /*User as IUser*/ } from "../../generated/graphql";
+         Event as IEvent } from "../../generated/graphql";
 
 const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
   //style sheets for output
+  const divStyle = {
+    margin: "auto",
+    justifyContent: "center",
+    textAlign: "center" as const,
+    marginTop: "25%",
+  }
+
   const errorStyle = {
     color: "red",
     fontSize: 32,
     margin: "auto",
     fontWeight: 100,
-    textAlign: "center",
-    position: "relative",
-    top: '45%',
   } as React.CSSProperties;
 
   const successStyle = {
@@ -23,15 +26,19 @@ const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
     fontSize: 32,
     margin: "auto",
     fontWeight: 100,
-    textAlign: "center",
-    position: "relative",
-    top: '45%',
+    marginBottom: "15%",
   } as React.CSSProperties;
+
+  const linkStyle = {
+    fontSize: 30,
+    margin: "auto",
+    fontWeight: 100,
+    fontStyle: "italic",
+  }
   
   const {
     loading: userLoading,
     error: userError,
-    //data: userData,
   }: any = useMeQuery();
   
   const {
@@ -71,7 +78,12 @@ const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
     if(curEvents && addAttendee && result.data) {
       if(result.data.me.id != null)
         if(getEventId(eventUrlKey) != -1) {
-          addAttendee(result.data.me.id, Number(getEventId(eventUrlKey))); //attendance tracked
+          addAttendee({
+            variables: {
+              userId: result.data.me.id,
+              eventId: Number(getEventId(eventUrlKey))
+            }
+          });
         }
         else
           message.error("Event does with URL key {" + eventUrlKey + "} does not exist.");
@@ -94,12 +106,20 @@ const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
     return <p>Loading...</p>
 
   if(result.data == null || getEventId(eventUrlKey) == -1 || !addAttendee)
-    return <p style={errorStyle}>An error has occured.</p>
+    return (
+      <div style={divStyle}>
+        <p style={errorStyle}>An error has occured.</p>
+        <a style={linkStyle} href="https://www.mstacm.org/">Return to homepage</a>
+      </div>
+    );
 
   //this default return statement can only be reached with
   //  the same conditions under which the attendance is tracked
   return (
-    <p style={successStyle}>Attendance has been successfully recorded!</p>
+    <div style={divStyle}>
+      <p style={successStyle}>Attendance has been successfully recorded!</p>
+      <a style={linkStyle} href="https://www.mstacm.org/">Return to homepage</a>
+    </div>
   );
 };
 
