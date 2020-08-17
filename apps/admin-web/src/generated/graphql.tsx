@@ -172,8 +172,8 @@ export type MutationCreateEventArgs = {
 
 
 export type MutationAddAttendeeArgs = {
-  userId: Scalars['String'];
   eventId: Scalars['Float'];
+  userId: Scalars['String'];
 };
 
 
@@ -440,7 +440,7 @@ export type EventsQuery = (
   { __typename?: 'Query' }
   & { events: Array<(
     { __typename?: 'Event' }
-    & Pick<Event, 'id' | 'dateCreated' | 'dateHosted' | 'dateExpire' | 'eventTitle' | 'description' | 'location' | 'flierLink' | 'eventLink'>
+    & Pick<Event, 'id' | 'dateCreated' | 'dateHosted' | 'dateExpire' | 'eventTitle' | 'description' | 'location' | 'flierLink' | 'eventLink' | 'urlKey'>
     & { creator: (
       { __typename?: 'User' }
       & Pick<User, 'firstName' | 'lastName'>
@@ -666,6 +666,7 @@ export const EventsDocument = gql`
     hostSig {
       name
     }
+    urlKey
   }
 }
     `;
