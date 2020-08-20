@@ -172,8 +172,8 @@ export type MutationCreateEventArgs = {
 
 
 export type MutationAddAttendeeArgs = {
-  userId: Scalars['String'];
   eventId: Scalars['Float'];
+  userId: Scalars['String'];
 };
 
 

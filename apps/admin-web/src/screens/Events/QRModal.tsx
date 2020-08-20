@@ -1,4 +1,5 @@
 import React from "react";
+import { message } from "antd";
 
 import { IEvent } from "./interfaces";
 import Modal from "antd/lib/modal/Modal";
@@ -15,12 +16,17 @@ const QRModal: React.FC<IQRModalProps> = ({
   visible,
   setVisible,
   event,
-}: IQRModalProps): JSX.Element => {
+}: IQRModalProps): JSX.Element | null => {
   const handleCancel: () => void = (): void => {
     setVisible(false);
   };
 
   const registrationLink: string = "https://mstacm.org/e/" + event?.urlKey; 
+
+  if(event?.urlKey == null) {
+    message.error("No registration URL key exists for this event. ");
+    return null;
+  }
 
   return (
     <Modal

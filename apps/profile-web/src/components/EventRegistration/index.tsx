@@ -11,7 +11,7 @@ const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
     margin: "auto",
     justifyContent: "center",
     textAlign: "center" as const,
-    marginTop: "25%",
+    marginTop: "10%",
   }
 
   const errorStyle = {
@@ -19,6 +19,7 @@ const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
     fontSize: 32,
     margin: "auto",
     fontWeight: 100,
+    marginBottom: "10%",
   } as React.CSSProperties;
 
   const successStyle = {
@@ -26,7 +27,7 @@ const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
     fontSize: 32,
     margin: "auto",
     fontWeight: 100,
-    marginBottom: "15%",
+    marginBottom: "10%",
   } as React.CSSProperties;
 
   const linkStyle = {

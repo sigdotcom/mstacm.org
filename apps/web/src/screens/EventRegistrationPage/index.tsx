@@ -1,16 +1,20 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useEffect }  from 'react';
 
 const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
+  useEffect(() => {
+    console.log(redirectUrl);
+    window.location.replace(redirectUrl);
+  }, []);
+
   const eventID: string | null = match.params.eventId;
 
-  const redirectUrl: string = "profile.mstacm.org/attend/" + eventID;
+  const redirectUrl: string = "https://profile.mstacm.org/attend/" + eventID;
 
   if(eventID === null)
-    return <p>Something went wrong while redirecting to your event.</p>
+    return <p>Something went wrong while redirecting to your event.</p>;
 
   return (
-    <Redirect to={redirectUrl} />
+    null
   );
 };
 
