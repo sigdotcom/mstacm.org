@@ -28,7 +28,7 @@
     "react-scroll": "^1.7.12",
     "react-stripe-elements": "^5.0.0",
     "react-toastify": "^5.4.0",
-    "serialize-javascript": "^2.1.2",
+    "serialize-javascript": "^4.0.0",
     "styled-components": "^4.4.0"
   },
   "scripts": {

@@ -101,6 +101,7 @@ export type Mutation = {
   deleteEvent: EventDeletePayload;
   updateEvent: Event;
   createEvent: Event;
+  createGroup: Group;
   createPermission: Permission;
   createRedemptionCode: RedemptionCode;
   redeemRedemptionCode: RedemptionCode;
@@ -163,6 +164,12 @@ export type MutationUpdateEventArgs = {
 export type MutationCreateEventArgs = {
   flier?: Maybe<Scalars['Upload']>;
   data: EventCreateInput;
+};
+
+
+export type MutationCreateGroupArgs = {
+  permissionIds: Array<Scalars['String']>;
+  name: Scalars['String'];
 };
 
 
@@ -275,6 +282,7 @@ export type Query = {
   events: Array<Event>;
   currentEvents: Array<Event>;
   event: Event;
+  groups: Array<Group>;
   permissions: Array<Permission>;
   products: Array<Product>;
   redemptionCodes: Array<RedemptionCode>;
@@ -303,7 +311,7 @@ export type RedemptionCode = {
   id: Scalars['ID'];
   redeemed?: Maybe<Scalars['Boolean']>;
   expirationDate: Scalars['DateTime'];
-  transaction: Transaction;
+  transaction?: Maybe<Transaction>;
   permissions: Array<Permission>;
   groups: Array<Group>;
 };
