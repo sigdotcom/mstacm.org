@@ -118,6 +118,7 @@ export type Mutation = {
   updateExpirationDate: User;
   updateShirtReceived: User;
   resetShirtReceived: Array<User>;
+  attendEvent: Event;
 };
 
 
@@ -239,6 +240,11 @@ export type MutationUpdateExpirationDateArgs = {
 export type MutationUpdateShirtReceivedArgs = {
   updatedShirtStatus: Scalars['Boolean'];
   userId: Scalars['String'];
+};
+
+
+export type MutationAttendEventArgs = {
+  eventId: Scalars['Float'];
 };
 
 export type Permission = {

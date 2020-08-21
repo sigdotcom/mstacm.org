@@ -118,6 +118,7 @@ export type Mutation = {
   updateExpirationDate: User;
   updateShirtReceived: User;
   resetShirtReceived: Array<User>;
+  attendEvent: Event;
 };
 
 
@@ -239,6 +240,11 @@ export type MutationUpdateExpirationDateArgs = {
 export type MutationUpdateShirtReceivedArgs = {
   updatedShirtStatus: Scalars['Boolean'];
   userId: Scalars['String'];
+};
+
+
+export type MutationAttendEventArgs = {
+  eventId: Scalars['Float'];
 };
 
 export type Permission = {
@@ -437,15 +443,14 @@ export type EventsQuery = (
   )> }
 );
 
-export type AddAttendeeMutationVariables = Exact<{
-  userId: Scalars['String'];
+export type AttendEventMutationVariables = Exact<{
   eventId: Scalars['Float'];
 }>;
 
 
-export type AddAttendeeMutation = (
+export type AttendEventMutation = (
   { __typename?: 'Mutation' }
-  & { addAttendee: (
+  & { attendEvent: (
     { __typename?: 'Event' }
     & { attendees?: Maybe<Array<(
       { __typename?: 'User' }
@@ -526,41 +531,40 @@ export function useEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookO
 export type EventsQueryHookResult = ReturnType<typeof useEventsQuery>;
 export type EventsLazyQueryHookResult = ReturnType<typeof useEventsLazyQuery>;
 export type EventsQueryResult = ApolloReactCommon.QueryResult<EventsQuery, EventsQueryVariables>;
-export const AddAttendeeDocument = gql`
-    mutation addAttendee($userId: String!, $eventId: Float!) {
-  addAttendee(userId: $userId, eventId: $eventId) {
+export const AttendEventDocument = gql`
+    mutation attendEvent($eventId: Float!) {
+  attendEvent(eventId: $eventId) {
     attendees {
       id
     }
   }
 }
     `;
-export type AddAttendeeMutationFn = ApolloReactCommon.MutationFunction<AddAttendeeMutation, AddAttendeeMutationVariables>;
+export type AttendEventMutationFn = ApolloReactCommon.MutationFunction<AttendEventMutation, AttendEventMutationVariables>;
 
 /**
- * __useAddAttendeeMutation__
+ * __useAttendEventMutation__
  *
- * To run a mutation, you first call `useAddAttendeeMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddAttendeeMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useAttendEventMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAttendEventMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [addAttendeeMutation, { data, loading, error }] = useAddAttendeeMutation({
+ * const [attendEventMutation, { data, loading, error }] = useAttendEventMutation({
  *   variables: {
- *      userId: // value for 'userId'
  *      eventId: // value for 'eventId'
  *   },
  * });
  */
-export function useAddAttendeeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddAttendeeMutation, AddAttendeeMutationVariables>) {
-        return ApolloReactHooks.useMutation<AddAttendeeMutation, AddAttendeeMutationVariables>(AddAttendeeDocument, baseOptions);
+export function useAttendEventMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AttendEventMutation, AttendEventMutationVariables>) {
+        return ApolloReactHooks.useMutation<AttendEventMutation, AttendEventMutationVariables>(AttendEventDocument, baseOptions);
       }
-export type AddAttendeeMutationHookResult = ReturnType<typeof useAddAttendeeMutation>;
-export type AddAttendeeMutationResult = ApolloReactCommon.MutationResult<AddAttendeeMutation>;
-export type AddAttendeeMutationOptions = ApolloReactCommon.BaseMutationOptions<AddAttendeeMutation, AddAttendeeMutationVariables>;
+export type AttendEventMutationHookResult = ReturnType<typeof useAttendEventMutation>;
+export type AttendEventMutationResult = ApolloReactCommon.MutationResult<AttendEventMutation>;
+export type AttendEventMutationOptions = ApolloReactCommon.BaseMutationOptions<AttendEventMutation, AttendEventMutationVariables>;
 export const UploadResumeDocument = gql`
     mutation uploadResume($resume: Upload!, $grad: DateTime!, $fname: String!, $lname: String!) {
   uploadResume(resume: $resume, graduationDate: $grad, firstName: $fname, lastName: $lname) {

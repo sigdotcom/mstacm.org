@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { message } from "antd";
 import { useMeQuery, 
          useEventsQuery,
-         useAddAttendeeMutation,
+         useAttendEventMutation,
          Event as IEvent } from "../../generated/graphql";
 
 const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
@@ -48,7 +48,7 @@ const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
     data: eventData,
   }: any = useEventsQuery();
 
-  const [addAttendee]: any = useAddAttendeeMutation();
+  const [attendEvent]: any = useAttendEventMutation();
 
   const [curEvents, setCurEvents] = useState<IEvent[]>([]);
 
@@ -76,12 +76,11 @@ const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
 
   //once all mutations/queries are loaded, the actual attendance is tracked
   useEffect(() => {
-    if(curEvents && addAttendee && result.data) {
+    if(curEvents && attendEvent && result.data) {
       if(result.data.me.id != null)
         if(getEventId(eventUrlKey) != -1) {
-          addAttendee({
+          attendEvent({
             variables: {
-              userId: result.data.me.id,
               eventId: Number(getEventId(eventUrlKey))
             }
           });
@@ -91,7 +90,7 @@ const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
       else
         message.error("User ID is null.");
     }
-  }, [curEvents, addAttendee]);
+  }, [curEvents, attendEvent]);
 
   const eventUrlKey: string | null = match.params.eventId;
 
@@ -106,7 +105,7 @@ const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
   if(eventLoading || eventError || userLoading || userError)
     return <p>Loading...</p>
 
-  if(result.data == null || getEventId(eventUrlKey) == -1 || !addAttendee)
+  if(result.data == null || getEventId(eventUrlKey) == -1 || !attendEvent)
     return (
       <div style={divStyle}>
         <p style={errorStyle}>An error has occured.</p>

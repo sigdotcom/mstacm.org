@@ -20,9 +20,9 @@ export const GET_EVENTS: any = gql`
   }
 `;
 
-export const ADD_ATTENDEE: any = gql`
-  mutation addAttendee($userId: String!, $eventId: Float!) {
-    addAttendee(userId: $userId, eventId: $eventId) {
+export const ATTEND_EVENT: any = gql`
+  mutation attendEvent($eventId: Float!) {
+    attendEvent(eventId: $eventId) {
       attendees {
         id
       }

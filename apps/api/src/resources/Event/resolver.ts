@@ -115,6 +115,8 @@ export class EventResolver {
   ): Promise<Event> {
     const creator: User | undefined = context.state.user;
 
+    const charPool: string = "0123456789abcdefghijklmnopqrstuvwxyz";
+
     if (!creator) {
       throw new AuthenticationError("Please login to access this resource.");
     }
@@ -152,16 +154,16 @@ export class EventResolver {
       newResource.flierLink = url;
     }
 
-    let charPool: string = "0123456789abcdefghijklmnopqrstuvwxyz";
     let keyPlaceholder: string = "";
     for(let i = 0; i < 4; i++)
       keyPlaceholder += charPool.charAt(Math.floor(Math.random() * 36));
+
     newResource.urlKey = keyPlaceholder;
 
     return newResource.save();
   }
 
-  @Authorized()
+  @Authorized("update:attendee")
   @Mutation((_: void) => Event)
   public async addAttendee(
     @Arg("userId") userId: string,
