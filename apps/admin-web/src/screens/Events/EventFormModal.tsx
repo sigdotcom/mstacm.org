@@ -28,7 +28,7 @@ const EventFormModal: React.FC<IEventFormModalProps> = ({
       footer={null}
       onCancel={handleCancel}
     >
-      <EventForm eventBase={event} />
+      <EventForm eventBase={event}/>
     </Modal>
   );
 };

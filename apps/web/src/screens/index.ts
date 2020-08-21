@@ -1,3 +1,4 @@
 import { HomePage } from "./HomePage";
 import { NotFoundPage } from "./NotFoundPage";
-export { HomePage, NotFoundPage };
+import { EventRegistration } from "./EventRegistrationPage";
+export { HomePage, NotFoundPage, EventRegistration };
