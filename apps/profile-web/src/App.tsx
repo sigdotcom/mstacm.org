@@ -34,21 +34,44 @@ const App: React.FC = (): JSX.Element => {
   useEffect(() => {
     if (loading) {
       return;
-    } else if (isAuthenticated) {
+    }
+
+    if (!isAuthenticated) {
+      const fn: any = async (): Promise<void> => {
+        await loginWithRedirect({
+          appState: { targetUrl: window.location.href },
+        });
+      };
+
+      fn();
+    } else {
       const setToken: () => void = async (): Promise<void> => {
         const token: string = (await getTokenSilently()) || "";
         localStorage.setItem(config.ACCESS_TOKEN_KEY, token);
       };
+
       setToken();
-    } else {
-      const fn: any = async (): Promise<void> => {
-        await loginWithRedirect({
-          appState: { targetUrl: window.location.origin }
-        });
-      };
-      fn();
     }
-  }, [loading, isAuthenticated, loginWithRedirect, getTokenSilently]);
+  }, [loading, isAuthenticated, getTokenSilently]);
+
+  // useEffect(() => {
+  //   if (loading) {
+  //     return;
+  //   } else if (isAuthenticated) {
+  //     const setToken: () => void = async (): Promise<void> => {
+  //       const token: string = (await getTokenSilently()) || "";
+  //       localStorage.setItem(config.ACCESS_TOKEN_KEY, token);
+  //     };
+  //     setToken();
+  //   } else {
+  //     const fn: any = async (): Promise<void> => {
+  //       await loginWithRedirect({
+  //         appState: { targetUrl: window.location.origin }
+  //       });
+  //     };
+  //     fn();
+  //   }
+  // }, [loading, isAuthenticated, loginWithRedirect, getTokenSilently]);
 
   const onLogoutClick: () => void = (): void => {
     logout({ returnTo: config.REDIRECT_PAGE_URI });

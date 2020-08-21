@@ -2,7 +2,6 @@ import React, { useEffect }  from 'react';
 
 const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
   useEffect(() => {
-    console.log(redirectUrl);
     window.location.replace(redirectUrl);
   }, []);
 
