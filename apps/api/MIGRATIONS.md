@@ -90,6 +90,12 @@ into the shape of the new schema.
     where `<feature-name>` is a simple name for what changed.
     (Ex. UserShirts for a feature where users now have shirts in the database)
 
+6. Run new migrations
+   
+   ```bash
+    yarn typeorm migration:run
+    ```
+
 6. Check that the database now looks as it should, and edit the migration file
     located in [the migrations folder](src/migrations) to make sure that
     only the parts of the schema **you changed** are being modified.
