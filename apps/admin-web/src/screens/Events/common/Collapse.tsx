@@ -13,9 +13,11 @@ const SubTitle: AnyStyledComponent = styled.div`
 const CollapseButton: AnyStyledComponent = styled.button`
   display: inline-block;
   color: #696969;
+  cursor: pointer;
   font-size: 17px;
   border: none;
   border-radius: 40px;
+  outline: 0;
   background-color: #f4f5f8;
   width: 120px;
   height: 34px;
@@ -29,6 +31,7 @@ const CollapseButton: AnyStyledComponent = styled.button`
 const Group: AnyStyledComponent = styled.div`
   display: flex;
   user-select: none;
+
   align-items: center;
 `;
 

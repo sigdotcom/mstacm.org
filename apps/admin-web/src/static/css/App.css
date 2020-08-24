@@ -37,10 +37,22 @@ body {
   left: 20px;
   top: 20px;
 }
-@media (max-width: 450px) {
+@media (max-width: 600px) {
+  .bm-burger-button {
+    width: 28px;
+    height: 20px;
+  }
+}
+@media (max-width: 500px) {
   .bm-burger-button {
     width: 26px;
     height: 20px;
+  }
+}
+@media (max-width: 500px) {
+  .bm-burger-button {
+    left: 15px;
+    top: 15px;
   }
 }
 @media (max-width: 380px) {
@@ -62,6 +74,7 @@ body {
 .bm-menu {
   height: 100vh;
 }
+
 /* Morph shape necessary with bubble or elastic */
 
 /* Wrapper for item list */

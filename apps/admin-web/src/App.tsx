@@ -1,17 +1,12 @@
 import React, { useEffect } from "react";
-//import { BrowserRouter } from "react-router-dom";
 import { Spin } from "antd";
 import { BrowserRouter } from "react-router-dom";
-// import { ToolList } from "./components/pages";
-// import { Events } from "./components/pages/tools";
-// import { Membership } from "./components/pages/tools/Membership";
 import styled, { AnyStyledComponent } from "styled-components";
 import { config } from "./config";
 import "./static/css/App.css";
 import { useAuth0 } from "./utils/react-auth0-wrapper";
-import Sidebar from "./screens/redo/Sidebar";
-
-import Main from "./screens/redo/Main";
+import Sidebar from "./screens/Dashboard/Sidebar";
+import Main from "./screens/Dashboard/Main";
 
 const Grid: AnyStyledComponent = styled.div`
   height: 100vh;
@@ -21,6 +16,14 @@ const Grid: AnyStyledComponent = styled.div`
   grid-template-columns: repeat(16, 1fr);
   grid-template-rows: auto;
   grid-template-areas: "m m c c c c c c c c c c c c c c";
+  @media (max-width:  1530px) {
+    grid-template-columns: 1fr
+    grid-template-areas: 
+            "m"
+            "c";
+    grid-template-rows: repeat(2, 1fr);
+    
+  }
 `;
 // const Header: AnyStyledComponent = styled.div`
 //   grid-area: h;
@@ -38,7 +41,6 @@ const App: React.SFC<{}> = (): JSX.Element => {
     isAuthenticated,
     getTokenSilently,
     loginWithRedirect,
-    // logout,
   } = useAuth0();
 
   useEffect(() => {
@@ -63,10 +65,6 @@ const App: React.SFC<{}> = (): JSX.Element => {
       setToken();
     }
   }, [loading, isAuthenticated, getTokenSilently]);
-
-  // const onLogoutClick: () => void = (): void => {
-  //   logout({ returnTo: config.REDIRECT_PAGE_URI });
-  // };
 
   if (loading || !isAuthenticated) {
     return <Spin size="large" className="load-page" tip="Loading..." />;

@@ -26,7 +26,10 @@ const btnStyles: IStyles = {
 const EditInputs: AnyStyledComponent = styled.input`
   margin-left: 20px;
 `;
-
+const MembershipFix: AnyStyledComponent = styled.div`
+  padding: 30px;
+  padding-top: 60px;
+`;
 const EditCol: AnyStyledComponent = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
@@ -483,61 +486,63 @@ const Membership: React.FC<{}> = () => {
 
   return (
     <div>
-      <ShirtResetButton style={btnStyles} onClick={() => resetAllShirts()}>
-        Reset Shirt Status
-      </ShirtResetButton>
+      <MembershipFix>
+        <ShirtResetButton style={btnStyles} onClick={() => resetAllShirts()}>
+          Reset Shirt Status
+        </ShirtResetButton>
 
-      <Table dataSource={users} columns={columns} />
-      <Modal
-        visible={editMembershipVisible}
-        footer={null}
-        onCancel={handleCancel}
-      >
-        <div>
-          <strong>{name(userId)}</strong>
-        </div>
-        <div>{email(userId)}</div>
-        <hr />
-        <div>
-          <EditCol>
-            <span>Picked Up Shirt:</span>
-            <EditInputs
-              type="checkbox"
-              checked={curShirtStatus}
-              onChange={changeShirtReceived}
-            />
-          </EditCol>
-
-          <EditCol>
-            <span>Membership Expiration Date: </span>
-            <DatePicker
-              value={curExpDate ? moment(curExpDate) : null}
-              onChange={changeDate}
-              placeholder="Select Expiration Date"
-            />
-          </EditCol>
-
+        <Table dataSource={users} columns={columns} />
+        <Modal
+          visible={editMembershipVisible}
+          footer={null}
+          onCancel={handleCancel}
+        >
+          <div>
+            <strong>{name(userId)}</strong>
+          </div>
+          <div>{email(userId)}</div>
           <hr />
+          <div>
+            <EditCol>
+              <span>Picked Up Shirt:</span>
+              <EditInputs
+                type="checkbox"
+                checked={curShirtStatus}
+                onChange={changeShirtReceived}
+              />
+            </EditCol>
 
-          <button style={btnStyles} onClick={deleteAction()}>
-            Delete
-          </button>
-          <ConfirmButton style={btnStyles} onClick={saveAction}>
-            Confirm
-          </ConfirmButton>
-        </div>
-      </Modal>
-      <Modal
-        visible={editMembershipVisibleDelete}
-        footer={null}
-        onCancel={handleCancelDelete}
-      >
-        <div>Are you sure you want to delete this user?</div>
-        <DeleteConfirmation>
-          <DeleteYes onClick={deleteUser(userId)}>Yes</DeleteYes>
-          <button onClick={handleNo()}>No</button>
-        </DeleteConfirmation>
-      </Modal>
+            <EditCol>
+              <span>Membership Expiration Date: </span>
+              <DatePicker
+                value={curExpDate ? moment(curExpDate) : null}
+                onChange={changeDate}
+                placeholder="Select Expiration Date"
+              />
+            </EditCol>
+
+            <hr />
+
+            <button style={btnStyles} onClick={deleteAction()}>
+              Delete
+            </button>
+            <ConfirmButton style={btnStyles} onClick={saveAction}>
+              Confirm
+            </ConfirmButton>
+          </div>
+        </Modal>
+        <Modal
+          visible={editMembershipVisibleDelete}
+          footer={null}
+          onCancel={handleCancelDelete}
+        >
+          <div>Are you sure you want to delete this user?</div>
+          <DeleteConfirmation>
+            <DeleteYes onClick={deleteUser(userId)}>Yes</DeleteYes>
+            <button onClick={handleNo()}>No</button>
+          </DeleteConfirmation>
+        </Modal>
+      </MembershipFix>
     </div>
   );
 };

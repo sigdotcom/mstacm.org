@@ -61,10 +61,7 @@ const AttendeeText: AnyStyledComponent = styled.div`
   padding-left: 10px;
   margin-top: -15px;
 `;
-// const AttendeeIcon: AnyStyledComponent = styled.div`
-//   display: inline-block;
-//   padding-left: 20px;
-// `;
+
 const AttendeePercentage: AnyStyledComponent = styled.div`
   font-size: 40px;
   font-weight: bold;
@@ -73,14 +70,20 @@ const AttendeePercentage: AnyStyledComponent = styled.div`
 const AttendeeGroup: AnyStyledComponent = styled.div`
   padding-top: 10px;
 `;
+const DropdownButton: AnyStyledComponent = styled.button`
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  background: none;
+`;
 const NumberOfParts: React.SFC<{}> = (): JSX.Element => {
   const menu = (
     <Menu>
       <Menu.Item>
-        <a>N/A</a>
+        <DropdownButton>Last week</DropdownButton>
       </Menu.Item>
       <Menu.Item>
-        <a>N/A</a>
+        <DropdownButton>Last month</DropdownButton>
       </Menu.Item>
     </Menu>
   );
@@ -96,13 +99,13 @@ const NumberOfParts: React.SFC<{}> = (): JSX.Element => {
         <GroupTwo>
           <DropdownStyle>
             <Dropdown overlay={menu}>
-              <a
+              <DropdownButton
                 className="ant-dropdown-link"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e: any) => e.preventDefault()}
               >
-                This week
+                Last week
                 <DownOutlined />
-              </a>
+              </DropdownButton>
             </Dropdown>
           </DropdownStyle>
           <AttendeeGroup>

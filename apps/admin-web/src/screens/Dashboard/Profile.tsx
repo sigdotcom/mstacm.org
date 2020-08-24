@@ -36,6 +36,7 @@ const ProfileDisplay = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  outline: 0;
   background: transparent;
   border: none;
 `;

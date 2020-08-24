@@ -41,6 +41,7 @@ const DropdownStyle: AnyStyledComponent = styled.div`
 const EventNumbersGroup: AnyStyledComponent = styled.div`
   display: flex;
   padding-top: 20px;
+  margin-left: -20px;
 `;
 const EventNumbers: AnyStyledComponent = styled.div`
   font-size: 30px;
@@ -75,7 +76,12 @@ const EventDifferenceNumber: AnyStyledComponent = styled.div`
   display: inline-block;
   padding-left: 20px;
 `;
-
+const DropdownButton: AnyStyledComponent = styled.button`
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  background: none;
+`;
 const todaysDate = new Date();
 const todaysISO = todaysDate.toISOString();
 
@@ -91,28 +97,33 @@ const NumberOfEventCard: React.SFC<{}> = (): JSX.Element => {
   }
 
   const [title, setTitle] = useState("This week ");
-  let [eventNumber, difference] = ThisWeekData();
+  let [eventNumber, difference] = thisWeekData();
   let carrot, fromLast;
 
   const greenRed = {
     color: "#59595a",
   };
 
+  function handleClick(time: string) {
+    setTitle(time);
+  }
+
   const menu = (
     <Menu>
       <Menu.Item>
-        <a onClick={() => setTitle("This week ")}>This week</a>
+        <DropdownButton onClick={() => handleClick("This week ")}>
+          This week
+        </DropdownButton>
       </Menu.Item>
       <Menu.Item>
-        <a onClick={() => setTitle("This month ")}>This month</a>
+        <DropdownButton onClick={() => handleClick("This month ")}>
+          This month
+        </DropdownButton>
       </Menu.Item>
-      {/* <Menu.Item>
-        <a onClick={() => setTitle("6 months ")}>6 months</a>
-      </Menu.Item> */}
     </Menu>
   );
 
-  function ThisWeekData() {
+  function thisWeekData() {
     const thisWeekFilter = events.filter(
       (a: any) =>
         new Date(a.dateHosted.split("T")[0]).getTime() -
@@ -167,7 +178,7 @@ const NumberOfEventCard: React.SFC<{}> = (): JSX.Element => {
   }
 
   if (title === "This week ") {
-    [eventNumber, difference] = ThisWeekData();
+    [eventNumber, difference] = thisWeekData();
     fromLast = "From last week";
   } else if (title === "This month ") {
     [eventNumber, difference] = thisMonthData();
@@ -191,14 +202,14 @@ const NumberOfEventCard: React.SFC<{}> = (): JSX.Element => {
           <Title>Number of Events</Title>
           <DropdownStyle>
             <Dropdown overlay={menu}>
-              <a
+              <DropdownButton
                 className="ant-dropdown-link"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e: any) => e.preventDefault()}
               >
                 {title}
 
                 <DownOutlined />
-              </a>
+              </DropdownButton>
             </Dropdown>
           </DropdownStyle>
         </Group>

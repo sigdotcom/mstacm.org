@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { AnyStyledComponent } from "styled-components";
-
+import { useEventsQuery } from "../../generated/graphql";
 import { PrevioustList } from "./EventList";
 
 import { PreviousHeader } from "./Header";
@@ -21,12 +21,13 @@ const Center: AnyStyledComponent = styled.div`
 `;
 
 const Previous: React.SFC<{}> = (): JSX.Element => {
+  const { loading, error, data }: any = useEventsQuery();
   return (
     <PageWrapper>
       <Center>
         <PreviousHeader />
       </Center>
-      <PrevioustList />
+      <PrevioustList loading={loading} error={error} data={data} />
     </PageWrapper>
   );
 };

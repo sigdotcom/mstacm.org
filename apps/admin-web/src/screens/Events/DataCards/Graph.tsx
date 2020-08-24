@@ -2,11 +2,12 @@ import React from "react";
 import { Line } from "react-chartjs-2";
 
 const state = {
-  labels: ["January", "February", "March"],
+  labels: [""], //temp placeholder data
   datasets: [
     {
       label: "",
       fill: false,
+
       lineTension: 0.5,
       backgroundColor: "rgba(75,192,192,1)",
       borderColor: "rgba(0,0,0,1)",
@@ -22,6 +23,15 @@ const Graph: React.SFC<{}> = (): JSX.Element => {
       <Line
         data={state}
         options={{
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                },
+              },
+            ],
+          },
           title: {
             display: true,
           },
