@@ -39,14 +39,21 @@ const GraphStyles: AnyStyledComponent = styled.div`
   margin-top: -20px;
 `;
 
+const DropdownButton: AnyStyledComponent = styled.button`
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  background: none;
+`;
+
 const EventPartGraph: React.SFC<{}> = (): JSX.Element => {
   const menu = (
     <Menu>
       <Menu.Item>
-        <a>N/A</a>
+        <DropdownButton>N/A</DropdownButton>
       </Menu.Item>
       <Menu.Item>
-        <a>N/A</a>
+        <DropdownButton>N/A</DropdownButton>
       </Menu.Item>
     </Menu>
   );
@@ -58,13 +65,13 @@ const EventPartGraph: React.SFC<{}> = (): JSX.Element => {
 
           <DropdownStyle>
             <Dropdown overlay={menu}>
-              <a
+              <DropdownButton
                 className="ant-dropdown-link"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e: any) => e.preventDefault()}
               >
                 6 months
                 <DownOutlined />
-              </a>
+              </DropdownButton>
             </Dropdown>
           </DropdownStyle>
           <GraphStyles>

@@ -3,8 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { Upcoming } from "../Events/Upcoming";
 import { Previous } from "../Events/Previous";
 import { Membership } from "../Membership";
-import { ToolList } from "../../Tools";
-// import { Event } from "./Eventss";
+import { ToolList } from "../../tools/Tools";
 import { RedemptionCodes } from "../RedemptionCodes";
 
 const NotFound: React.FC<{}> = (): JSX.Element => {

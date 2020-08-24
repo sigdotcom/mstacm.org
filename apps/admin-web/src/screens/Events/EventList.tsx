@@ -1,10 +1,6 @@
 import React from "react";
-
 import styled, { AnyStyledComponent } from "styled-components";
-
 import { Event } from "./Event";
-
-import { useEventsQuery } from "../../generated/graphql";
 
 import { IEvent } from "./interfaces";
 
@@ -19,10 +15,15 @@ const List: AnyStyledComponent = styled.ul`
   padding: 0;
   margin: 0;
 `;
-
+interface IQueryProps {
+  loading: any;
+  error: any;
+  data: any;
+}
 const todaysDate = new Date();
 const todaysISO = todaysDate.toISOString();
 const errorData = [
+  //This allows Event data to error to this if it cannot fetch
   {
     id: 4,
     dateCreated: "2019-10-03T18:59:21.955Z",
@@ -39,47 +40,12 @@ const errorData = [
     eventLink: null,
   },
 ];
-const EventList: React.SFC<{}> = (): JSX.Element => {
-  const { loading, error, data }: any = useEventsQuery();
 
-  if (loading) {
-    return (
-      <PageWrapper>
-        <h3>Loading...</h3>
-      </PageWrapper>
-    );
-  } else if (error) {
-    return (
-      <PageWrapper>
-        <h3>{error.toString()}</h3>
-      </PageWrapper>
-    );
-  } else {
-    const events: IEvent[] = data.events;
-    events
-      .sort(
-        (a: any, b: any) =>
-          new Date(a.dateHosted).getTime() - new Date(b.dateHosted).getTime()
-      )
-      .reverse();
-
-    const listElements: JSX.Element[] = events.map(
-      (event: IEvent, index: number) => (
-        <Event event={event} index={index} key={event.id} />
-      )
-    );
-
-    return (
-      <PageWrapper>
-        <List>{listElements}</List>
-      </PageWrapper>
-    );
-  }
-};
-
-const PrevioustList: React.SFC<{}> = (): JSX.Element => {
-  const { loading, error, data }: any = useEventsQuery();
-
+const PrevioustList: React.SFC<IQueryProps> = ({
+  loading,
+  error,
+  data,
+}): JSX.Element => {
   if (loading) {
     return (
       <PageWrapper>
@@ -115,15 +81,19 @@ const PrevioustList: React.SFC<{}> = (): JSX.Element => {
 
     return (
       <PageWrapper>
-        <List>{listElements}</List>
+        <List>
+          {listElements.length < 1 ? "No previous events" : listElements}
+        </List>
       </PageWrapper>
     );
   }
 };
 
-const ThisWeekList: React.SFC<{}> = (): JSX.Element => {
-  const { loading, error, data }: any = useEventsQuery();
-
+const ThisWeekList: React.SFC<IQueryProps> = ({
+  loading,
+  error,
+  data,
+}): JSX.Element => {
   if (loading) {
     return (
       <PageWrapper>
@@ -165,14 +135,20 @@ const ThisWeekList: React.SFC<{}> = (): JSX.Element => {
 
     return (
       <PageWrapper>
-        <List>{listElements}</List>
+        <List>
+          {listElements.length < 1
+            ? "No upcoming events this week"
+            : listElements}
+        </List>
       </PageWrapper>
     );
   }
 };
-const NextWeekList: React.SFC<{}> = (): JSX.Element => {
-  const { loading, error, data }: any = useEventsQuery();
-
+const NextWeekList: React.SFC<IQueryProps> = ({
+  loading,
+  error,
+  data,
+}): JSX.Element => {
   if (loading) {
     return (
       <PageWrapper>
@@ -215,15 +191,21 @@ const NextWeekList: React.SFC<{}> = (): JSX.Element => {
 
     return (
       <PageWrapper>
-        <List>{listElements}</List>
+        <List>
+          {listElements.length < 1
+            ? "No upcoming events next week"
+            : listElements}
+        </List>
       </PageWrapper>
     );
   }
 };
 
-const Future: React.SFC<{}> = (): JSX.Element => {
-  const { loading, error, data }: any = useEventsQuery();
-
+const Future: React.SFC<IQueryProps> = ({
+  loading,
+  error,
+  data,
+}): JSX.Element => {
   if (loading) {
     return (
       <PageWrapper>
@@ -243,7 +225,7 @@ const Future: React.SFC<{}> = (): JSX.Element => {
         new Date(a.dateHosted).getTime() - new Date(b.dateHosted).getTime() //sorts by new dates to old dates
     );
 
-    const futureEventFilte = events.filter(
+    const futureEventFilter = events.filter(
       (c: any) =>
         new Date(c.dateHosted.split("T")[0]).getTime() >
         new Date(todaysISO.split("T")[0]).getTime() +
@@ -251,7 +233,7 @@ const Future: React.SFC<{}> = (): JSX.Element => {
           new Date(todaysISO.split("T")[0]).getDay() * 86400000 //Filters outs previous, this week, and next week dates
     );
 
-    const listElements: JSX.Element[] = futureEventFilte.map(
+    const listElements: JSX.Element[] = futureEventFilter.map(
       (event: IEvent, index: number) => (
         <Event event={event} index={index} key={event.id} />
       )
@@ -259,16 +241,11 @@ const Future: React.SFC<{}> = (): JSX.Element => {
 
     return (
       <PageWrapper>
-        <List>{listElements}</List>
+        <List>
+          {listElements.length < 1 ? "No upcoming future events" : listElements}
+        </List>
       </PageWrapper>
     );
   }
 };
-export {
-  EventList,
-  PrevioustList,
-  ThisWeekList,
-  NextWeekList,
-  Future,
-  errorData,
-};
+export { PrevioustList, ThisWeekList, NextWeekList, Future, errorData };

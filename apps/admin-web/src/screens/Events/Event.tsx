@@ -108,6 +108,8 @@ const Edit = styled.button`
   font-weight: bold;
   font-size: 17px;
   border: none;
+  cursor: pointer;
+  outline: 0;
   border-radius: 40px;
   color: #ffffff;
   margin-right: 50px;
@@ -126,6 +128,8 @@ const Remove = styled.button`
   border-radius: 40px;
   background-color: white;
   width: 120px;
+  cursor: pointer;
+  outline: 0;
   height: 34px;
   @media (max-width: 500px) {
     width: 100px;
@@ -146,6 +150,60 @@ const Fly = styled.img`
   }
   @media (max-width: 760px) {
     display: none;
+  }
+`;
+const TooltipText = styled.div`
+  visibility: hidden;
+  width: 160px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 7;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -80px;
+  font-size: 15px;
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+  }
+  @media (max-width: 900px) {
+    font-size: 5px;
+    width: 80px;
+    margin-left: -40px;
+  }
+`;
+const Tooltip = styled.div`
+  position: relative;
+  display: inline-block;
+
+  &: hover ${TooltipText}{
+    visibility: visible;
+  }
+
+
+`;
+const Link = styled.a`
+  display: inline-block;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 12px;
+  font-family: Nunito Sans;
+  border-radius: 50px;
+  color: white;
+  background-color: #0392ce;
+  margin-left: 20px;
+  &:hover {
+    color: white;
   }
 `;
 
@@ -206,33 +264,69 @@ const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
 
     backgroundColor: "",
   };
+
   if (event.hostSig.name === "Women") {
-    branch.backgroundColor = "#e8bff6";
+    branch.backgroundColor = "#f5deb3";
   } else if (event.hostSig.name === "Security") {
-    branch.backgroundColor = "#db532d";
+    branch.backgroundColor = "#ffa500";
   } else if (event.hostSig.name === "Hack") {
-    branch.backgroundColor = "#dba72d";
+    branch.backgroundColor = "#7fffd4";
   } else if (event.hostSig.name === "Competition") {
-    branch.backgroundColor = "#db2db0";
+    branch.backgroundColor = "#ff8888";
   } else if (event.hostSig.name === "Web") {
-    branch.backgroundColor = "#2ddbca";
+    branch.backgroundColor = "#87ceeb";
   } else if (event.hostSig.name === "Data") {
-    branch.backgroundColor = "#2d78db";
+    branch.backgroundColor = "#e6e6fa";
   } else if (event.hostSig.name === "Game") {
-    branch.backgroundColor = "#9bdb2d";
+    branch.backgroundColor = "#ffc0cb";
   }
 
   return (
     <Space>
       <Box>
-        <Fly src={event.flierLink} alt={"Flier"}></Fly>
+        {event.flierLink === null ? (
+          ""
+        ) : (
+          <a rel="noopener noreferrer" target="_blank" href={event.flierLink}>
+            <Fly src={event.flierLink} alt={"Flier"} />
+          </a>
+        )}
+
         <Constraint>
           <Group>
-            <Title>{event.eventTitle}</Title>
+            <Title>
+              {event.eventTitle.length <= 25 ? (
+                event.eventTitle
+              ) : (
+                <Tooltip>
+                  {truncate(event.eventTitle, 25, true)}
+                  <TooltipText>{event.eventTitle}</TooltipText>
+                </Tooltip>
+              )}
+            </Title>
             <div style={branch}>{event.hostSig.name}</div>
+            {event.eventLink === null ? (
+              ""
+            ) : (
+              <Link
+                rel="noopener noreferrer"
+                target="_blank"
+                href={event.eventLink}
+              >
+                Link
+              </Link>
+            )}
           </Group>
           <Time>
-            {start} - {end} @ {event.location}
+            {start} - {end} @{" "}
+            {event.location.length <= 15 ? (
+              event.location
+            ) : (
+              <Tooltip>
+                {truncate(event.location, 15, true)}
+                <TooltipText>{event.location}</TooltipText>
+              </Tooltip>
+            )}
           </Time>
           <Description>{truncate(event.description, 128, true)}</Description>
           <ButtonGroup>
