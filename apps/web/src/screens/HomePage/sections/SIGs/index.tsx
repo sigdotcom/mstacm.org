@@ -1,10 +1,10 @@
 import React from "react";
 import { Element } from "react-scroll";
 import styled, { AnyStyledComponent } from "styled-components";
+import Icon from "react-eva-icons";
 import { ISIG } from "./interfaces";
 import { SIGsDisplay } from "./SIGsDisplay";
 
-import Icon from "react-eva-icons";
 
 import { PageConstraint } from "../../../../components/PageConstraint";
 
@@ -12,7 +12,7 @@ const SIGsData: ISIG[] = [
   {
     color: "skyblue",
     desc:
-      "Interested in software engineering, web development, or development operations? In ACM Web, we attempt to build production-grade websites using software engineering skills and development patterns with weekly development meetings.  Currently, ACM Web is developing the https://acm.mst.edu/ website. Moreover, we host workshops on various foundational skills such as Python, Git, HTML, CSS, and many others.",
+      "Interested in software engineering, web development, or development operations? In ACM Web, we build industry-grade websites using top software engineering practices. ACM Web is developing the https://mstacm.org/ website and much more. Moreover, we host workshops on various skills in web development, Typescript, and Git.",
     discord: "https://discord.gg/eKtkR4k",
     email: "acm@mst.edu",
     logoLink: "web.png",
@@ -23,13 +23,13 @@ const SIGsData: ISIG[] = [
   {
     color: "#ff8888",
     desc:
-      "ACM Competition focuses primarily on competitive programming. With weekly lectures from Dr. Morales we tackle challenge problems from many online judge websites such as Kattis (https://open.kattis.com/) and UVA (https://uva.onlinejudge.org/).  We also hold our own programming contests on campus where people can win the admiration of their peers and some great prizes.",
+      "ACM Competition focuses on competitive programming, a mind-sport in which computer science problems are solved as quickly as possible. If you are interested in sharpening your algorithmic problem-solving skills, then this is the community for you.",
     discord: "https://discord.gg/4t954Ad",
     email: "acm@mst.edu",
     logoLink: "comp.png",
     logoLinkDark: "comp-dark.png",
     name: "Competition",
-    website: "https://acmcomp.mst.edu"
+    website: "https://comp.mstacm.org"
   },
   {
     color: "orange",
@@ -73,7 +73,7 @@ const SIGsData: ISIG[] = [
     logoLink: "acm-w.png",
     logoLinkDark: "acm-w-dark.png",
     name: "Women",
-    website: "https://acmw.mst.edu"
+    website: "https://women.mstacm.org"
   },
   {
     color: "aquamarine",
@@ -85,7 +85,19 @@ const SIGsData: ISIG[] = [
     logoLinkDark: "hack-dark.png",
     name: "Hack",
     website: "https://pickhacks.io"
+  },
+  {
+    color: "turquoise",
+    desc:
+      "Focuses on improving and utilizing technical, and soft skills to create a game for the community’s arcade machine(s) on campus every semester/year. This community will also host game jams, so non-members can experience the game development process.",
+    discord: "https://discord.gg/RZCYUpT",
+    email: "acm@mst.edu",
+    logoLink: "arcade.png",
+    logoLinkDark: "arcade-dark.png",
+    name: "Arcade",
+    website: "https://discord.gg/RZCYUpT"
   }
+
 ];
 
 const SIGsWrapper: AnyStyledComponent = styled.div`
@@ -125,7 +137,9 @@ const SIGs: React.FC = (): JSX.Element => {
       <PageConstraint>
         <SIGsWrapper>
           <Heading>
-            <Icon name="people" size="large" fill="#777" /> Our Communities
+            <Icon name="people" size="large" fill="#777" />
+            {' '}
+            Our Communities
           </Heading>
           <Description>
             Members of our communities (formerly known as SIGs) hone their
