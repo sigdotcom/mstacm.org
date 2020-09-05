@@ -14,6 +14,7 @@ import { Lazy } from "../../lib/helpers";
 import { IContext } from "../../lib/interfaces";
 import { Permission } from "../Permission";
 import { Group } from "../Group";
+import { Event } from "../Event";
 import { ResourceResolver } from "../Resource";
 import { User } from "./entity";
 import { UserCreateInput, UserDeletePayload, UserUpdateInput } from "./input";
@@ -141,6 +142,29 @@ export class UserResolver extends ResourceResolver<resourceType>(
     }
 
     return users;
+  }
+
+  @Authorized()
+  @Mutation((_: void) => Event)
+  public async attendEvent(
+    @Ctx() context: IContext,
+    @Arg("eventId") eventId: number,
+  ): Promise<Event> {
+    const curUser: User | undefined = context.state.user;
+
+    const event: Event = await Event.findOneOrFail({ id: eventId });
+    let users: User[] = await event.attendees;
+
+    if(curUser == null)
+      return event;
+
+    for(let i = 0; i < users.length; i++)
+      if(users[i].id == curUser.id)
+        return event;
+
+    users.push(await User.findOneOrFail({ id: curUser.id }));
+    event.attendees = users;
+    return event.save();
   }
 
   @Query((_: void) => resource, { nullable: true })

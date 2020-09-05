@@ -6,7 +6,7 @@ import { GET_EVENTS } from "./helpers";
 import { useDeleteEventMutation } from "../../generated/graphql";
 import { IEvent } from "./interfaces";
 import { EventFormModal } from "./EventFormModal";
-
+import { QRModal } from "./QRModal"
 import { Button } from "antd";
 
 interface IEventProps {
@@ -50,6 +50,7 @@ const EventLowLevel: AnyStyledComponent = styled.div``;
 const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
   const [deleteEvent] = useDeleteEventMutation();
   const [formVisible, setFormVisible] = useState(false);
+  const [QRVisible, setQRVisible] = useState(false);
 
   const formatDate: (date: string) => string = (date: string): string => {
     const options: any = {
@@ -73,6 +74,10 @@ const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
       refetchQueries: [{ query: GET_EVENTS }],
       variables: { id: Number(props.event.id) },
     });
+  };
+
+  const handleQR: () => void = (): void => {
+    setQRVisible(true);
   };
 
   // const handleAdvert: any = (): any => {};
@@ -113,11 +118,17 @@ const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
         <div>
           <Button onClick={handleEdit}>Edit</Button>
           <Button onClick={handleDelete}>Delete</Button>
+          <Button onClick={handleQR}>QR</Button>
         </div>
       </div>
       <EventFormModal
         formVisible={formVisible}
         setFormVisible={setFormVisible}
+        event={event}
+      />
+      <QRModal
+        visible={QRVisible}
+        setVisible={setQRVisible}
         event={event}
       />
     </EventWrapper>
@@ -128,7 +139,6 @@ const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
  * Buttons to be added
         <div>
           <Button onClick={handleAdvert}>Advert</Button>
-          <Button onClick={handleQR}>QR</Button>
         </div>
 */
 

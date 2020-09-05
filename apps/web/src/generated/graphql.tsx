@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/react-common';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 export type Maybe<T> = T | null;
+export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -25,7 +26,7 @@ export enum ErrorCodes {
 }
 
 export type Event = {
-   __typename?: 'Event';
+  __typename?: 'Event';
   id: Scalars['ID'];
   dateCreated: Scalars['DateTime'];
   dateHosted: Scalars['DateTime'];
@@ -37,6 +38,8 @@ export type Event = {
   location: Scalars['String'];
   flierLink?: Maybe<Scalars['String']>;
   eventLink?: Maybe<Scalars['String']>;
+  urlKey?: Maybe<Scalars['String']>;
+  attendees?: Maybe<Array<User>>;
 };
 
 export type EventCreateInput = {
@@ -51,7 +54,7 @@ export type EventCreateInput = {
 };
 
 export type EventDeletePayload = {
-   __typename?: 'EventDeletePayload';
+  __typename?: 'EventDeletePayload';
   id?: Maybe<Scalars['Float']>;
 };
 
@@ -67,12 +70,12 @@ export type EventUpdateInput = {
 };
 
 export type Extension = {
-   __typename?: 'Extension';
+  __typename?: 'Extension';
   code: ErrorCodes;
 };
 
 export type Group = {
-   __typename?: 'Group';
+  __typename?: 'Group';
   name: Scalars['String'];
   users: Array<User>;
   permissions: Array<Permission>;
@@ -80,7 +83,7 @@ export type Group = {
 };
 
 export type MembershipProduct = {
-   __typename?: 'MembershipProduct';
+  __typename?: 'MembershipProduct';
   tag: MembershipTypes;
 };
 
@@ -91,7 +94,7 @@ export enum MembershipTypes {
 }
 
 export type Mutation = {
-   __typename?: 'Mutation';
+  __typename?: 'Mutation';
   createUser: User;
   updateUser: User;
   deleteUser: UserDeletePayload;
@@ -101,6 +104,8 @@ export type Mutation = {
   deleteEvent: EventDeletePayload;
   updateEvent: Event;
   createEvent: Event;
+  addAttendee: Event;
+  createGroup: Group;
   createPermission: Permission;
   createRedemptionCode: RedemptionCode;
   redeemRedemptionCode: RedemptionCode;
@@ -113,6 +118,7 @@ export type Mutation = {
   updateExpirationDate: User;
   updateShirtReceived: User;
   resetShirtReceived: Array<User>;
+  attendEvent: Event;
 };
 
 
@@ -163,6 +169,18 @@ export type MutationUpdateEventArgs = {
 export type MutationCreateEventArgs = {
   flier?: Maybe<Scalars['Upload']>;
   data: EventCreateInput;
+};
+
+
+export type MutationAddAttendeeArgs = {
+  eventId: Scalars['Float'];
+  userId: Scalars['String'];
+};
+
+
+export type MutationCreateGroupArgs = {
+  permissionIds: Array<Scalars['String']>;
+  name: Scalars['String'];
 };
 
 
@@ -224,8 +242,13 @@ export type MutationUpdateShirtReceivedArgs = {
   userId: Scalars['String'];
 };
 
+
+export type MutationAttendEventArgs = {
+  eventId: Scalars['Float'];
+};
+
 export type Permission = {
-   __typename?: 'Permission';
+  __typename?: 'Permission';
   name: Scalars['ID'];
   users: Array<User>;
   redemptionCodes: Array<RedemptionCode>;
@@ -236,7 +259,7 @@ export type PermissionCreateInput = {
 };
 
 export type PermissionDeletePayload = {
-   __typename?: 'PermissionDeletePayload';
+  __typename?: 'PermissionDeletePayload';
   name?: Maybe<Scalars['String']>;
 };
 
@@ -245,7 +268,7 @@ export type PermissionUpdateInput = {
 };
 
 export type Product = {
-   __typename?: 'Product';
+  __typename?: 'Product';
   tag: Scalars['ID'];
   displayName: Scalars['String'];
   description: Scalars['String'];
@@ -254,7 +277,7 @@ export type Product = {
 };
 
 export type Purchase = {
-   __typename?: 'Purchase';
+  __typename?: 'Purchase';
   id: Scalars['ID'];
   quantity: Scalars['Float'];
   product: Product;
@@ -267,7 +290,7 @@ export type PurchaseInput = {
 };
 
 export type Query = {
-   __typename?: 'Query';
+  __typename?: 'Query';
   user: User;
   users: Array<User>;
   sig: Sig;
@@ -275,6 +298,8 @@ export type Query = {
   events: Array<Event>;
   currentEvents: Array<Event>;
   event: Event;
+  eventsWithKey: Array<Event>;
+  groups: Array<Group>;
   permissions: Array<Permission>;
   products: Array<Product>;
   redemptionCodes: Array<RedemptionCode>;
@@ -298,18 +323,23 @@ export type QueryEventArgs = {
   id: Scalars['Float'];
 };
 
+
+export type QueryEventsWithKeyArgs = {
+  urlKey: Scalars['String'];
+};
+
 export type RedemptionCode = {
-   __typename?: 'RedemptionCode';
+  __typename?: 'RedemptionCode';
   id: Scalars['ID'];
   redeemed?: Maybe<Scalars['Boolean']>;
   expirationDate: Scalars['DateTime'];
-  transaction: Transaction;
+  transaction?: Maybe<Transaction>;
   permissions: Array<Permission>;
   groups: Array<Group>;
 };
 
 export type Resume = {
-   __typename?: 'Resume';
+  __typename?: 'Resume';
   id: Scalars['ID'];
   url: Scalars['String'];
   added: Scalars['DateTime'];
@@ -317,7 +347,7 @@ export type Resume = {
 };
 
 export type Sig = {
-   __typename?: 'Sig';
+  __typename?: 'Sig';
   name: Scalars['String'];
   dateFounded: Scalars['DateTime'];
   description: Scalars['String'];
@@ -331,7 +361,7 @@ export type SigCreateInput = {
 };
 
 export type SigDeletePayload = {
-   __typename?: 'SigDeletePayload';
+  __typename?: 'SigDeletePayload';
   name?: Maybe<Scalars['String']>;
 };
 
@@ -341,7 +371,7 @@ export type SigUpdateInput = {
 };
 
 export type Transaction = {
-   __typename?: 'Transaction';
+  __typename?: 'Transaction';
   id: Scalars['ID'];
   intent?: Maybe<Scalars['String']>;
   charged?: Maybe<Scalars['Float']>;
@@ -353,7 +383,7 @@ export type Transaction = {
 };
 
 export type TransactionPayload = {
-   __typename?: 'TransactionPayload';
+  __typename?: 'TransactionPayload';
   id: Scalars['String'];
   charged?: Maybe<Scalars['Float']>;
   clientSecret: Scalars['String'];
@@ -361,7 +391,7 @@ export type TransactionPayload = {
 
 
 export type User = {
-   __typename?: 'User';
+  __typename?: 'User';
   id: Scalars['ID'];
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
@@ -377,6 +407,7 @@ export type User = {
   resume?: Maybe<Resume>;
   permissions?: Maybe<Array<Permission>>;
   groups: Array<Group>;
+  eventsAttended?: Maybe<Array<Event>>;
 };
 
 export type UserCreateInput = {
@@ -387,7 +418,7 @@ export type UserCreateInput = {
 };
 
 export type UserDeletePayload = {
-   __typename?: 'UserDeletePayload';
+  __typename?: 'UserDeletePayload';
   firstName?: Maybe<Scalars['String']>;
 };
 
@@ -397,9 +428,9 @@ export type UserUpdateInput = {
   email?: Maybe<Scalars['String']>;
 };
 
-export type RedeemRedemptionCodeMutationVariables = {
+export type RedeemRedemptionCodeMutationVariables = Exact<{
   code: Scalars['String'];
-};
+}>;
 
 
 export type RedeemRedemptionCodeMutation = (
@@ -410,9 +441,9 @@ export type RedeemRedemptionCodeMutation = (
   ) }
 );
 
-export type GetMembershipMutationVariables = {
+export type GetMembershipMutationVariables = Exact<{
   membershipType: MembershipTypes;
-};
+}>;
 
 
 export type GetMembershipMutation = (
@@ -423,7 +454,7 @@ export type GetMembershipMutation = (
   ) }
 );
 
-export type GetCurrentEventsQueryVariables = {};
+export type GetCurrentEventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetCurrentEventsQuery = (
@@ -438,7 +469,7 @@ export type GetCurrentEventsQuery = (
   )> }
 );
 
-export type MeExpirationQueryVariables = {};
+export type MeExpirationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeExpirationQuery = (

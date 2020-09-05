@@ -1,5 +1,5 @@
 // Taken from https://github.com/auth0/auth0-spa-js/issues/135#issuecomment-518012692
-import createAuth0Client from "@auth0/auth0-spa-js";
+import createAuth0Client, { PopupLoginOptions, RedirectLoginResult, getIdTokenClaimsOptions, IdToken, RedirectLoginOptions, GetTokenSilentlyOptions, GetTokenWithPopupOptions, LogoutOptions, Auth0ClientOptions } from "@auth0/auth0-spa-js";
 import Auth0Client from "@auth0/auth0-spa-js/dist/typings/Auth0Client";
 import React, { useContext, useEffect, useState } from "react";
 

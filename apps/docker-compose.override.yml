@@ -14,7 +14,7 @@ services:
     # Testing migrations
     # command: bash -c "yarn build && yarn start:prod"
     command: yarn start:dev
-    build: ./api
+    build: api
     volumes:
       - ./api:/server
     environment:

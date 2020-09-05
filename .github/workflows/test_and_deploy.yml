@@ -151,7 +151,7 @@ jobs:
 
     env:
       working_directory: ./deploy
-      terraform_version: latest
+      terraform_version: 0.12.29
       terraform_workspace: production
 
     if: github.ref == 'refs/heads/master'
