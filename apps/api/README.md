@@ -33,14 +33,30 @@ all frontend clients. Primary features include but are not limited to:
 To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
-+ [Git](https://git-scm.com/download/)
-+ [Docker](https://docs.docker.com/install/)
-+ [Docker Compose](https://docs.docker.com/compose/install/)
-+ [NodeJS](https://nodejs.org/en/)
-+ [Yarn](https://yarnpkg.com/)
-+ (optional) [python](https://www.python.org/downloads/) - This will allow you
+#### Universal (All Platforms)
+  + [Git](https://git-scm.com/download/)
+  + [NodeJS](https://nodejs.org/en/)
+  + [Yarn](https://yarnpkg.com/)
+  + (optional) [python](https://www.python.org/downloads/) - This will allow you
   to more easily configure the environment variables, but I will show you how to
   do it manually.
+  
+#### Windows
+
+  **Versions that support [WSL 2](https://docs.microsoft.com/en-us/windows/wsl/wsl2-index) (currently Windows 10, Version 2004, Build 19041 or higher)**
+  * Install WSL 2
+  * Install [Docker Desktop and enable WSL 2 backend](https://docs.docker.com/docker-for-windows/wsl/)
+
+  **Other versions**
+  * Install [Virtualbox](https://www.virtualbox.org/)
+  * Install [Vagrant](https://www.vagrantup.com/)
+
+#### Linux
+* Install [Docker](https://docs.docker.com/install/)
+* Install [Docker Compose](https://docs.docker.com/compose/install/)
+
+#### MacOS
+* Install [Docker Desktop](https://docs.docker.com/docker-for-mac/install/)
 
 ### Installation
 1. Clone the mstacm.org repository using Git Bash:
@@ -85,10 +101,21 @@ To get a local copy up and running follow these simple steps.
         # Now edit the ./.docker/web.env with the appropriate values.
         # Instructions how are located in the file.
         ```
+5. Navigate back to the `apps` directory
+    ```bash
+    cd ..
+    ```
 
-5. Start the docker containers using `docker-compose`:
+5. Start the docker containers.
+    
+    **If using docker:**
     ```sh
-    cd .. && docker-compose up
+    docker-compose up
+    ```
+
+    **If using Vagrant**
+    ```bash
+    vagrant up
     ```
 
 6. If everything goes well, the last lines of output should look like:
@@ -99,6 +126,7 @@ To get a local copy up and running follow these simple steps.
     phoenix_web_1    |
     phoenix_web_1    |       http://localhost/graphql || http://localhost:4000/graphql
     ```
+    > To access these with **Vagrant** use `vagrant ssh` to log into the machine and `docker logs vagrant_phoenix_web_1` to view the logs. `docker logs -f vagrant_phoenix_web_1` will continously update if new logs come in.
     
 7. Navigate to [http://localhost/graphql](http://localhost/graphql). **NOTE**:
    if you are using Docker on Windows 10 Home, you need to put the IP of your
@@ -163,6 +191,17 @@ but the lessons apply to both clients.
 [![Insomnia First Query](images/insomnia-first-query.png)](images/insomnia-first-query.png)
 [![Insomnia Autocomplete](images/insomnia-autocomplete.png)](images/graphql-localhost-playground.png)
 
+### When you are done
+#### Docker
+Ctrl-C the terminal where docker-compose is running
+> Sometimes you need to run docker-compose up again and then Ctrl-C that. You should see "stopping".
+
+#### Vagrant
+Run the following:
+```bash
+vagrant halt
+```
+> This stops the virtual machine and the docker instance running within.
 
 <!-- ROADMAP -->
 ## Roadmap
