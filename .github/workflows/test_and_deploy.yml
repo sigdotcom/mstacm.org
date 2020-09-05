@@ -187,7 +187,7 @@ jobs:
       with:
         terraform_version: ${{ env.terraform_version }}
         cli_config_credentials_token: ${{ secrets.TF_CLOUD_TOKEN }}
-    - run: terraform init -input=false¬
+    - run: terraform init -input=false
     - run: terraform apply -auto-approve
 
     - name: Setup deployment SSH key
