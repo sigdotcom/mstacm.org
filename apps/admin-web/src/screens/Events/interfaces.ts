@@ -19,4 +19,5 @@ export interface IEvent {
   id: number;
   location: string;
   hostSig: ISig;
+  urlKey: string;
 }

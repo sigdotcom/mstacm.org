@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/react-common';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 export type Maybe<T> = T | null;
+export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -25,7 +26,7 @@ export enum ErrorCodes {
 }
 
 export type Event = {
-   __typename?: 'Event';
+  __typename?: 'Event';
   id: Scalars['ID'];
   dateCreated: Scalars['DateTime'];
   dateHosted: Scalars['DateTime'];
@@ -37,6 +38,8 @@ export type Event = {
   location: Scalars['String'];
   flierLink?: Maybe<Scalars['String']>;
   eventLink?: Maybe<Scalars['String']>;
+  urlKey?: Maybe<Scalars['String']>;
+  attendees?: Maybe<Array<User>>;
 };
 
 export type EventCreateInput = {
@@ -51,7 +54,7 @@ export type EventCreateInput = {
 };
 
 export type EventDeletePayload = {
-   __typename?: 'EventDeletePayload';
+  __typename?: 'EventDeletePayload';
   id?: Maybe<Scalars['Float']>;
 };
 
@@ -67,12 +70,12 @@ export type EventUpdateInput = {
 };
 
 export type Extension = {
-   __typename?: 'Extension';
+  __typename?: 'Extension';
   code: ErrorCodes;
 };
 
 export type Group = {
-   __typename?: 'Group';
+  __typename?: 'Group';
   name: Scalars['String'];
   users: Array<User>;
   permissions: Array<Permission>;
@@ -80,7 +83,7 @@ export type Group = {
 };
 
 export type MembershipProduct = {
-   __typename?: 'MembershipProduct';
+  __typename?: 'MembershipProduct';
   tag: MembershipTypes;
 };
 
@@ -91,7 +94,7 @@ export enum MembershipTypes {
 }
 
 export type Mutation = {
-   __typename?: 'Mutation';
+  __typename?: 'Mutation';
   createUser: User;
   updateUser: User;
   deleteUser: UserDeletePayload;
@@ -101,6 +104,8 @@ export type Mutation = {
   deleteEvent: EventDeletePayload;
   updateEvent: Event;
   createEvent: Event;
+  addAttendee: Event;
+  createGroup: Group;
   createPermission: Permission;
   createRedemptionCode: RedemptionCode;
   redeemRedemptionCode: RedemptionCode;
@@ -113,6 +118,7 @@ export type Mutation = {
   updateExpirationDate: User;
   updateShirtReceived: User;
   resetShirtReceived: Array<User>;
+  attendEvent: Event;
 };
 
 
@@ -163,6 +169,18 @@ export type MutationUpdateEventArgs = {
 export type MutationCreateEventArgs = {
   flier?: Maybe<Scalars['Upload']>;
   data: EventCreateInput;
+};
+
+
+export type MutationAddAttendeeArgs = {
+  eventId: Scalars['Float'];
+  userId: Scalars['String'];
+};
+
+
+export type MutationCreateGroupArgs = {
+  permissionIds: Array<Scalars['String']>;
+  name: Scalars['String'];
 };
 
 
@@ -224,8 +242,13 @@ export type MutationUpdateShirtReceivedArgs = {
   userId: Scalars['String'];
 };
 
+
+export type MutationAttendEventArgs = {
+  eventId: Scalars['Float'];
+};
+
 export type Permission = {
-   __typename?: 'Permission';
+  __typename?: 'Permission';
   name: Scalars['ID'];
   users: Array<User>;
   redemptionCodes: Array<RedemptionCode>;
@@ -236,7 +259,7 @@ export type PermissionCreateInput = {
 };
 
 export type PermissionDeletePayload = {
-   __typename?: 'PermissionDeletePayload';
+  __typename?: 'PermissionDeletePayload';
   name?: Maybe<Scalars['String']>;
 };
 
@@ -245,7 +268,7 @@ export type PermissionUpdateInput = {
 };
 
 export type Product = {
-   __typename?: 'Product';
+  __typename?: 'Product';
   tag: Scalars['ID'];
   displayName: Scalars['String'];
   description: Scalars['String'];
@@ -254,7 +277,7 @@ export type Product = {
 };
 
 export type Purchase = {
-   __typename?: 'Purchase';
+  __typename?: 'Purchase';
   id: Scalars['ID'];
   quantity: Scalars['Float'];
   product: Product;
@@ -267,7 +290,7 @@ export type PurchaseInput = {
 };
 
 export type Query = {
-   __typename?: 'Query';
+  __typename?: 'Query';
   user: User;
   users: Array<User>;
   sig: Sig;
@@ -275,6 +298,8 @@ export type Query = {
   events: Array<Event>;
   currentEvents: Array<Event>;
   event: Event;
+  eventsWithKey: Array<Event>;
+  groups: Array<Group>;
   permissions: Array<Permission>;
   products: Array<Product>;
   redemptionCodes: Array<RedemptionCode>;
@@ -298,18 +323,23 @@ export type QueryEventArgs = {
   id: Scalars['Float'];
 };
 
+
+export type QueryEventsWithKeyArgs = {
+  urlKey: Scalars['String'];
+};
+
 export type RedemptionCode = {
-   __typename?: 'RedemptionCode';
+  __typename?: 'RedemptionCode';
   id: Scalars['ID'];
   redeemed?: Maybe<Scalars['Boolean']>;
   expirationDate: Scalars['DateTime'];
-  transaction: Transaction;
+  transaction?: Maybe<Transaction>;
   permissions: Array<Permission>;
   groups: Array<Group>;
 };
 
 export type Resume = {
-   __typename?: 'Resume';
+  __typename?: 'Resume';
   id: Scalars['ID'];
   url: Scalars['String'];
   added: Scalars['DateTime'];
@@ -317,7 +347,7 @@ export type Resume = {
 };
 
 export type Sig = {
-   __typename?: 'Sig';
+  __typename?: 'Sig';
   name: Scalars['String'];
   dateFounded: Scalars['DateTime'];
   description: Scalars['String'];
@@ -331,7 +361,7 @@ export type SigCreateInput = {
 };
 
 export type SigDeletePayload = {
-   __typename?: 'SigDeletePayload';
+  __typename?: 'SigDeletePayload';
   name?: Maybe<Scalars['String']>;
 };
 
@@ -341,7 +371,7 @@ export type SigUpdateInput = {
 };
 
 export type Transaction = {
-   __typename?: 'Transaction';
+  __typename?: 'Transaction';
   id: Scalars['ID'];
   intent?: Maybe<Scalars['String']>;
   charged?: Maybe<Scalars['Float']>;
@@ -353,7 +383,7 @@ export type Transaction = {
 };
 
 export type TransactionPayload = {
-   __typename?: 'TransactionPayload';
+  __typename?: 'TransactionPayload';
   id: Scalars['String'];
   charged?: Maybe<Scalars['Float']>;
   clientSecret: Scalars['String'];
@@ -361,7 +391,7 @@ export type TransactionPayload = {
 
 
 export type User = {
-   __typename?: 'User';
+  __typename?: 'User';
   id: Scalars['ID'];
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
@@ -377,6 +407,7 @@ export type User = {
   resume?: Maybe<Resume>;
   permissions?: Maybe<Array<Permission>>;
   groups: Array<Group>;
+  eventsAttended?: Maybe<Array<Event>>;
 };
 
 export type UserCreateInput = {
@@ -387,7 +418,7 @@ export type UserCreateInput = {
 };
 
 export type UserDeletePayload = {
-   __typename?: 'UserDeletePayload';
+  __typename?: 'UserDeletePayload';
   firstName?: Maybe<Scalars['String']>;
 };
 
@@ -397,12 +428,43 @@ export type UserUpdateInput = {
   email?: Maybe<Scalars['String']>;
 };
 
-export type UploadResumeMutationVariables = {
+export type EventsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type EventsQuery = (
+  { __typename?: 'Query' }
+  & { events: Array<(
+    { __typename?: 'Event' }
+    & Pick<Event, 'id' | 'dateCreated' | 'dateHosted' | 'dateExpire' | 'eventTitle' | 'description' | 'location' | 'flierLink' | 'eventLink' | 'urlKey'>
+    & { hostSig: (
+      { __typename?: 'Sig' }
+      & Pick<Sig, 'name'>
+    ) }
+  )> }
+);
+
+export type AttendEventMutationVariables = Exact<{
+  eventId: Scalars['Float'];
+}>;
+
+
+export type AttendEventMutation = (
+  { __typename?: 'Mutation' }
+  & { attendEvent: (
+    { __typename?: 'Event' }
+    & { attendees?: Maybe<Array<(
+      { __typename?: 'User' }
+      & Pick<User, 'id'>
+    )>> }
+  ) }
+);
+
+export type UploadResumeMutationVariables = Exact<{
   resume: Scalars['Upload'];
   grad: Scalars['DateTime'];
   fname: Scalars['String'];
   lname: Scalars['String'];
-};
+}>;
 
 
 export type UploadResumeMutation = (
@@ -413,18 +475,96 @@ export type UploadResumeMutation = (
   ) }
 );
 
-export type MeQueryVariables = {};
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'firstName' | 'lastName'>
+    & Pick<User, 'firstName' | 'lastName' | 'id'>
   )> }
 );
 
 
+export const EventsDocument = gql`
+    query events {
+  events {
+    id
+    dateCreated
+    dateHosted
+    dateExpire
+    hostSig {
+      name
+    }
+    eventTitle
+    description
+    location
+    flierLink
+    eventLink
+    urlKey
+  }
+}
+    `;
+
+/**
+ * __useEventsQuery__
+ *
+ * To run a query within a React component, call `useEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEventsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<EventsQuery, EventsQueryVariables>) {
+        return ApolloReactHooks.useQuery<EventsQuery, EventsQueryVariables>(EventsDocument, baseOptions);
+      }
+export function useEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<EventsQuery, EventsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<EventsQuery, EventsQueryVariables>(EventsDocument, baseOptions);
+        }
+export type EventsQueryHookResult = ReturnType<typeof useEventsQuery>;
+export type EventsLazyQueryHookResult = ReturnType<typeof useEventsLazyQuery>;
+export type EventsQueryResult = ApolloReactCommon.QueryResult<EventsQuery, EventsQueryVariables>;
+export const AttendEventDocument = gql`
+    mutation attendEvent($eventId: Float!) {
+  attendEvent(eventId: $eventId) {
+    attendees {
+      id
+    }
+  }
+}
+    `;
+export type AttendEventMutationFn = ApolloReactCommon.MutationFunction<AttendEventMutation, AttendEventMutationVariables>;
+
+/**
+ * __useAttendEventMutation__
+ *
+ * To run a mutation, you first call `useAttendEventMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAttendEventMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [attendEventMutation, { data, loading, error }] = useAttendEventMutation({
+ *   variables: {
+ *      eventId: // value for 'eventId'
+ *   },
+ * });
+ */
+export function useAttendEventMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AttendEventMutation, AttendEventMutationVariables>) {
+        return ApolloReactHooks.useMutation<AttendEventMutation, AttendEventMutationVariables>(AttendEventDocument, baseOptions);
+      }
+export type AttendEventMutationHookResult = ReturnType<typeof useAttendEventMutation>;
+export type AttendEventMutationResult = ApolloReactCommon.MutationResult<AttendEventMutation>;
+export type AttendEventMutationOptions = ApolloReactCommon.BaseMutationOptions<AttendEventMutation, AttendEventMutationVariables>;
 export const UploadResumeDocument = gql`
     mutation uploadResume($resume: Upload!, $grad: DateTime!, $fname: String!, $lname: String!) {
   uploadResume(resume: $resume, graduationDate: $grad, firstName: $fname, lastName: $lname) {
@@ -465,6 +605,7 @@ export const MeDocument = gql`
   me {
     firstName
     lastName
+    id
   }
 }
     `;

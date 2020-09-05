@@ -139,4 +139,12 @@ export class User extends BaseEntity {
   })
   @JoinTable()
   public createdEvents: Lazy<Event[]>;
+
+  @Field(() => [Event], { nullable: true })
+  @ManyToMany(() => Event, (event: Event) => event.attendees, {
+    lazy: true,
+    nullable: true
+  })
+  @JoinTable()
+  public eventsAttended: Lazy<Event[]>;
 }

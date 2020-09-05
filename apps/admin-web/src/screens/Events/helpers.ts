@@ -27,6 +27,7 @@ export const GET_EVENTS: any = gql`
       hostSig {
         name
       }
+      urlKey
     }
   }
 `;
