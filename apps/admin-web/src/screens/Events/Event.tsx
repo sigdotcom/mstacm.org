@@ -47,6 +47,9 @@ const Constraint = styled.div`
 const Group = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 750px) {
+    justify-content: center;
+  }
 `;
 const ButtonGroup = styled.div`
   display: flex;

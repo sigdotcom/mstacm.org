@@ -84,12 +84,4 @@ const App: React.SFC<{}> = (): JSX.Element => {
   );
 };
 
-/*
- * Future Routes
-        <Route exact={true} path="/membership" component={Membership} />
-        <Route exact={true} path="/sigs" component={Sigs} />
-        <Route exact={true} path="/sponsors" component={Sponsors} />
-        <Route exact={true} path="/products" component={Products} />
-*/
-
 export { App };

@@ -1,4 +1,5 @@
 import React from "react";
+
 import { EventData } from "./EventData";
 import styled, { AnyStyledComponent } from "styled-components";
 import { Collapse } from "./common/Collapse";
@@ -6,7 +7,12 @@ import { NextWeekList } from "./EventList";
 import { ThisWeekList } from "./EventList";
 import { Future } from "./EventList";
 import { UpcomingHeader } from "./Header";
-import { useEventsQuery } from "../../generated/graphql";
+// import { useEventsQuery } from "../../generated/graphql";
+
+import {
+  GetCurrentEventsQueryHookResult,
+  useGetCurrentEventsQuery,
+} from "../../generated/graphql";
 
 const Grid: AnyStyledComponent = styled.div`
   height: 100vh;
@@ -55,7 +61,13 @@ const Content: AnyStyledComponent = styled.div`
 `;
 
 const Upcoming: React.SFC<{}> = (): JSX.Element => {
-  const { loading, error, data }: any = useEventsQuery();
+  // const { loading, error, data }: any = useEventsQuery();
+  const {
+    loading,
+    error,
+    data,
+  }: GetCurrentEventsQueryHookResult = useGetCurrentEventsQuery();
+
   return (
     <Grid>
       <Content>
