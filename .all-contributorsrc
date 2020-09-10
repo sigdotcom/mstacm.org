@@ -1,0 +1,93 @@
+{
+  "projectName": "mstacm.org",
+  "projectOwner": "sigdotcom",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "kevinschoonover",
+      "name": "Kevin Schoonover",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/17842707?v=4",
+      "profile": "https://github.com/kevinschoonover",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas",
+        "mentoring",
+        "projectManagement",
+        "review",
+        "infra"
+      ]
+    },
+    {
+      "login": "ClayMav",
+      "name": "Clay McGinnis",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/16675291?v=4",
+      "profile": "https://clay.sh/",
+      "contributions": [
+        "code",
+        "doc",
+        "design",
+        "ideas",
+        "mentoring",
+        "projectManagement",
+        "review"
+      ]
+    },
+    {
+      "login": "Andrew-Gibson42",
+      "name": "Andrew-Gibson42",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/42543554?v=4",
+      "profile": "https://github.com/Andrew-Gibson42",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "dmgardiner25",
+      "name": "David Gardiner",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/22037769?v=4",
+      "profile": "https://github.com/dmgardiner25",
+      "contributions": [
+        "code",
+        "ideas",
+        "mentoring",
+        "review"
+      ]
+    },
+    {
+      "login": "henrievjen",
+      "name": "Henri Evjen",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/46657460?v=4",
+      "profile": "https://github.com/henrievjen",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Preston-Daily",
+      "name": "Preston",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/17749631?v=4",
+      "profile": "https://github.com/Preston-Daily",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "KerimD",
+      "name": "Deniz",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/44935903?v=4",
+      "profile": "https://github.com/KerimD",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}

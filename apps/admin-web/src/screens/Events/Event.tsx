@@ -116,7 +116,6 @@ const Edit = styled.button`
   @media (max-width: 500px) {
     width: 100px;
     height: 29px;
-
     font-size: 13px;
   }
 `;
@@ -134,7 +133,6 @@ const Remove = styled.button`
   @media (max-width: 500px) {
     width: 100px;
     height: 29px;
-
     font-size: 13px;
   }
 `;
@@ -185,12 +183,9 @@ const TooltipText = styled.div`
 const Tooltip = styled.div`
   position: relative;
   display: inline-block;
-
   &: hover ${TooltipText}{
     visibility: visible;
   }
-
-
 `;
 const Link = styled.a`
   display: inline-block;

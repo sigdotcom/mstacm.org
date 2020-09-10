@@ -1,4 +1,7 @@
 # \*.mstacm.org
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 [View Live](https://mstacm.org) |
 [Report Bug](https://github.com/sigdotcom/mstacm.org/issues) |
 [Request Feature](https://github.com/sigdotcom/mstacm.org/issues)
@@ -175,3 +178,28 @@ Project Link: [https://github.com/sigdotcom/mstacm.org](https://github.com/sigdo
 [issues-url]: https://github.com/sigdotcom/mstacm.org/issues
 [license-shield]: https://img.shields.io/github/license/sigdotcom/mstacm.org?style=flat-square
 [license-url]: https://github.com/sigdotcom/mstacm.org/blob/master/LICENSE.txt
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/kevinschoonover"><img src="https://avatars3.githubusercontent.com/u/17842707?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kevin Schoonover</b></sub></a><br /><a href="https://github.com/sigdotcom/mstacm.org/commits?author=kevinschoonover" title="Code">💻</a> <a href="https://github.com/sigdotcom/mstacm.org/commits?author=kevinschoonover" title="Documentation">📖</a> <a href="#ideas-kevinschoonover" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-kevinschoonover" title="Mentoring">🧑‍🏫</a> <a href="#projectManagement-kevinschoonover" title="Project Management">📆</a> <a href="https://github.com/sigdotcom/mstacm.org/pulls?q=is%3Apr+reviewed-by%3Akevinschoonover" title="Reviewed Pull Requests">👀</a> <a href="#infra-kevinschoonover" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+    <td align="center"><a href="https://clay.sh/"><img src="https://avatars3.githubusercontent.com/u/16675291?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Clay McGinnis</b></sub></a><br /><a href="https://github.com/sigdotcom/mstacm.org/commits?author=ClayMav" title="Code">💻</a> <a href="https://github.com/sigdotcom/mstacm.org/commits?author=ClayMav" title="Documentation">📖</a> <a href="#design-ClayMav" title="Design">🎨</a> <a href="#ideas-ClayMav" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-ClayMav" title="Mentoring">🧑‍🏫</a> <a href="#projectManagement-ClayMav" title="Project Management">📆</a> <a href="https://github.com/sigdotcom/mstacm.org/pulls?q=is%3Apr+reviewed-by%3AClayMav" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/Andrew-Gibson42"><img src="https://avatars1.githubusercontent.com/u/42543554?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Andrew-Gibson42</b></sub></a><br /><a href="https://github.com/sigdotcom/mstacm.org/commits?author=Andrew-Gibson42" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/dmgardiner25"><img src="https://avatars0.githubusercontent.com/u/22037769?v=4?s=100" width="100px;" alt=""/><br /><sub><b>David Gardiner</b></sub></a><br /><a href="https://github.com/sigdotcom/mstacm.org/commits?author=dmgardiner25" title="Code">💻</a> <a href="#ideas-dmgardiner25" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-dmgardiner25" title="Mentoring">🧑‍🏫</a> <a href="https://github.com/sigdotcom/mstacm.org/pulls?q=is%3Apr+reviewed-by%3Admgardiner25" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/henrievjen"><img src="https://avatars3.githubusercontent.com/u/46657460?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Henri Evjen</b></sub></a><br /><a href="https://github.com/sigdotcom/mstacm.org/commits?author=henrievjen" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Preston-Daily"><img src="https://avatars2.githubusercontent.com/u/17749631?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Preston</b></sub></a><br /><a href="https://github.com/sigdotcom/mstacm.org/commits?author=Preston-Daily" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/KerimD"><img src="https://avatars1.githubusercontent.com/u/44935903?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Deniz</b></sub></a><br /><a href="https://github.com/sigdotcom/mstacm.org/commits?author=KerimD" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

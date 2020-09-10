@@ -2,6 +2,13 @@ name: Test and Deploy the Application
 
 on: [push]
 
+env:
+  terraform_version: 0.13.0
+  TF_WORKSPACE: production
+  TF_VAR_do_token: ${{ secrets.DO_ACCESS_TOKEN }}
+  TF_VAR_spaces_access_id: ${{ secrets.DO_SPACES_ACCESS_ID }}
+  TF_VAR_spaces_secret_key: ${{ secrets.DO_SPACES_SECRET_KEY }}
+
 jobs:
   ansible_lint:
     runs-on: ubuntu-latest
@@ -151,8 +158,6 @@ jobs:
 
     env:
       working_directory: ./deploy
-      terraform_version: latest
-      terraform_workspace: production
 
     if: github.ref == 'refs/heads/master'
     steps:
@@ -177,33 +182,15 @@ jobs:
     - name: Install dependencies with poetry
       run: poetry install
       working-directory: ${{ env.working_directory }}
-    - name: "Initialize terraform"
-      uses: hashicorp/terraform-github-actions@master
-      with:
-        tf_actions_version: ${{ env.terraform_version }}
-        tf_actions_subcommand: 'init'
-        tf_actions_working_dir: './deploy/'
-        tf_actions_cli_credentials_token: ${{ secrets.TF_CLOUD_TOKEN }}
-      env:
-        TF_WORKSPACE: ${{ env.terraform_workspace }}
-        # https://www.terraform.io/docs/commands/environment-variables.html#tf_var_name
-        TF_VAR_do_token: ${{ secrets.DO_ACCESS_TOKEN }}
-        TF_VAR_spaces_access_id: ${{ secrets.DO_SPACES_ACCESS_ID }}
-        TF_VAR_spaces_secret_key: ${{ secrets.DO_SPACES_SECRET_KEY }}
 
-    - name: 'Terraform Apply'
-      uses: hashicorp/terraform-github-actions@master
+    - uses: hashicorp/setup-terraform@v1.1.0
       with:
-        tf_actions_version: ${{ env.terraform_version }}
-        tf_actions_subcommand: 'apply'
-        tf_actions_working_dir: './deploy/'
-        tf_actions_cli_credentials_token: ${{ secrets.TF_CLOUD_TOKEN }}
-      env:
-        TF_WORKSPACE: ${{ env.terraform_workspace }}
-        # https://www.terraform.io/docs/commands/environment-variables.html#tf_var_name
-        TF_VAR_do_token: ${{ secrets.DO_ACCESS_TOKEN }}
-        TF_VAR_spaces_access_id: ${{ secrets.DO_SPACES_ACCESS_ID }}
-        TF_VAR_spaces_secret_key: ${{ secrets.DO_SPACES_SECRET_KEY }}
+        terraform_version: ${{ env.terraform_version }}
+        cli_config_credentials_token: ${{ secrets.TF_CLOUD_TOKEN }}
+    - run: terraform init -input=false
+      working-directory: ${{ env.working_directory }}
+    - run: terraform apply -auto-approve
+      working-directory: ${{ env.working_directory }}
 
     - name: Setup deployment SSH key
       uses: webfactory/ssh-agent@v0.2.0

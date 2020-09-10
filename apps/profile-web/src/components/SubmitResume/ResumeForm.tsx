@@ -41,6 +41,7 @@ export const GET_ME: any = gql`
     me {
       firstName
       lastName
+      id
     }
   }
 `;

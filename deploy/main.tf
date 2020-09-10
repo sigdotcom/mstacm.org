@@ -43,6 +43,13 @@ terraform {
       prefix = "mstacm_org-"
     }
   }
+  required_providers {
+    digitalocean = {
+      source = "terraform-providers/digitalocean"
+      version = "~> 1.22.2"
+    }
+  }
+  required_version = "= 0.13.0"
 }
 
 # Add local ssh key for accessing the various resources
