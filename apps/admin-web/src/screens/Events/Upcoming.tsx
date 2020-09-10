@@ -7,7 +7,6 @@ import { NextWeekList } from "./EventList";
 import { ThisWeekList } from "./EventList";
 import { Future } from "./EventList";
 import { UpcomingHeader } from "./Header";
-// import { useEventsQuery } from "../../generated/graphql";
 
 import {
   GetCurrentEventsQueryHookResult,
@@ -61,7 +60,6 @@ const Content: AnyStyledComponent = styled.div`
 `;
 
 const Upcoming: React.SFC<{}> = (): JSX.Element => {
-  // const { loading, error, data }: any = useEventsQuery();
   const {
     loading,
     error,

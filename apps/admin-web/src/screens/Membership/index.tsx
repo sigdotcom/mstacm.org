@@ -26,7 +26,7 @@ const btnStyles: IStyles = {
 const EditInputs: AnyStyledComponent = styled.input`
   margin-left: 20px;
 `;
-const MembershipFix: AnyStyledComponent = styled.div`
+const MembershipPadding: AnyStyledComponent = styled.div`
   padding: 30px;
   padding-top: 60px;
 `;
@@ -486,7 +486,7 @@ const Membership: React.FC<{}> = () => {
 
   return (
     <div>
-      <MembershipFix>
+      <MembershipPadding>
         <ShirtResetButton style={btnStyles} onClick={() => resetAllShirts()}>
           Reset Shirt Status
         </ShirtResetButton>
@@ -542,7 +542,7 @@ const Membership: React.FC<{}> = () => {
             <button onClick={handleNo()}>No</button>
           </DeleteConfirmation>
         </Modal>
-      </MembershipFix>
+      </MembershipPadding>
     </div>
   );
 };
