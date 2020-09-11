@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ISIG } from "./interfaces";
+import { Sig as ISIG } from "../../../../generated/graphql";
 
 import { config } from "../../../../config";
 

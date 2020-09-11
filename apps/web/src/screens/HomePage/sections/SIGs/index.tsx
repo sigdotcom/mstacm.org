@@ -1,104 +1,123 @@
+import gql from "graphql-tag";
 import React from "react";
 import { Element } from "react-scroll";
 import styled, { AnyStyledComponent } from "styled-components";
 import Icon from "react-eva-icons";
-import { ISIG } from "./interfaces";
+import { Sig as ISIG,
+         useGetSigsQuery,
+         GetSigsQueryHookResult } from "../../../../generated/graphql";
 import { SIGsDisplay } from "./SIGsDisplay";
 
 
 import { PageConstraint } from "../../../../components/PageConstraint";
 
-const SIGsData: ISIG[] = [
-  {
-    color: "skyblue",
-    desc:
-      "Interested in software engineering, web development, or development operations? In ACM Web, we build industry-grade websites using top software engineering practices. ACM Web is developing the https://mstacm.org/ website and much more. Moreover, we host workshops on various skills in web development, Typescript, and Git.",
-    discord: "https://discord.gg/eKtkR4k",
-    email: "acm@mst.edu",
-    logoLink: "web.png",
-    logoLinkDark: "web-dark.png",
-    name: "Web",
-    website: "https://mstacm.org"
-  },
-  {
-    color: "#ff8888",
-    desc:
-      "ACM Competition focuses on competitive programming, a mind-sport in which computer science problems are solved as quickly as possible. If you are interested in sharpening your algorithmic problem-solving skills, then this is the community for you.",
-    discord: "https://discord.gg/4t954Ad",
-    email: "acm@mst.edu",
-    logoLink: "comp.png",
-    logoLinkDark: "comp-dark.png",
-    name: "Competition",
-    website: "https://comp.mstacm.org"
-  },
-  {
-    color: "orange",
-    desc:
-      "ACM Security helps develop the cybersecurity profession for the student body of Missouri University of Science and Technology by sponsoring high-quality workshops and lectures from both local and natinal industry professionals, as well as hosting on campus security events and competitions.",
-    discord: "https://discord.gg/BfPyeHw",
-    email: "sigsec@mst.edu",
-    logoLink: "sec.png",
-    logoLinkDark: "sec-dark.png",
-    name: "Security",
-    website: "https://acmsigsec.mst.edu"
-  },
-  {
-    color: "pink",
-    desc:
-      "ACM Game develops and hosts artificial intelligence programming competitions on S&T's campus in Rolla, Missouri. We utilize many programming languages, tools and development strategies standard to the Computer Science Industry.  Our members gain valuable experience on one of our five development teams: Arena, Game, Public Relations, Visualizer, and Web. ACM Game offers experience working on a real team, with fellow students and mentors to learn and grow as a software developer. We accept new members of all skill levels and majors, so don't hesitate to contact us.",
-    discord: "https://discord.gg/xdXwxup",
-    email: "siggame@mst.edu",
-    logoLink: "game.png",
-    logoLinkDark: "game-dark.png",
-    name: "Game",
-    website: "http://siggame.io/"
-  },
-  {
-    color: "lavender",
-    desc:
-      "ACM Data is a data focused org covering topics like Data Science, Data Mining, Data Analytics, and Data Engineering. Data Science, commonly seen as a combination of most data professions, is a new field with an infinite landscape. Our goal is to catalyze a new era of Data Science by using our curiosity to explore this landscape and push new standards. In ACM Data, we participate in competition sites such as Kaggle, tell stories using data, learn what’s new in Data Science, and whatever is necessary to be cutting edge.",
-    discord: "https://discord.gg/pm2KJtt",
-    email: "acm@mst.edu",
-    logoLink: "data.png",
-    logoLinkDark: "data-dark.png",
-    name: "Data",
-    website: "https://modata.blog"
-  },
-  {
-    color: "wheat",
-    desc:
-      "ACM-W aims to facilitate a thriving community of women in computing through the organizing of great activities, networking, and mentorship programs. We aim to address the issue of retention of women in computer science by creating a support system for academic and professional pursuits and empowering our members to pursue their goals through knowledge and education about women's contribution to technology. This group is open to all students (male or female) that wish to promote women in computing.",
-    discord: "https://discord.gg/hh2wkmq",
-    email: "acmw@mst.edu",
-    logoLink: "acm-w.png",
-    logoLinkDark: "acm-w-dark.png",
-    name: "Women",
-    website: "https://women.mstacm.org"
-  },
-  {
-    color: "aquamarine",
-    desc:
-      "ACM Hack introduces students to the world of hackathons: weekend long events where students come together to turn ideas into reality. We organize travel and attendance to these events, which take place across the Midwest and the country.  We also run PickHacks, the annual student-run hackathon held at S&T in March. Alongside hackathons, we also host events about various design thinking concepts, hackathon preparation, and much more. Skill level and major doesn’t matter here — as long as you like building new things and meeting awesome people, ACM Hack is right for you.",
-    discord: "https://discord.gg/zkwtu9p",
-    email: "pickhacks@mst.edu",
-    logoLink: "hack.png",
-    logoLinkDark: "hack-dark.png",
-    name: "Hack",
-    website: "https://pickhacks.io"
-  },
-  {
-    color: "turquoise",
-    desc:
-      "Focuses on improving and utilizing technical, and soft skills to create a game for the community’s arcade machine(s) on campus every semester/year. This community will also host game jams, so non-members can experience the game development process.",
-    discord: "https://discord.gg/RZCYUpT",
-    email: "acm@mst.edu",
-    logoLink: "arcade.png",
-    logoLinkDark: "arcade-dark.png",
-    name: "Arcade",
-    website: "https://discord.gg/RZCYUpT"
-  }
+// const SIGsData: ISIG[] = [
+//   {
+//     color: "skyblue",
+//     description:
+//       "Interested in software engineering, web development, or development operations? In ACM Web, we build industry-grade websites using top software engineering practices. ACM Web is developing the https://mstacm.org/ website and much more. Moreover, we host workshops on various skills in web development, Typescript, and Git.",
+//     discordLink: "https://discord.gg/eKtkR4k",
+//     email: "acm@mst.edu",
+//     logoLink: "web.png",
+//     logoLinkDark: "web-dark.png",
+//     name: "Web",
+//     website: "https://mstacm.org"
+//   },
+//   {
+//     color: "#ff8888",
+//     description:
+//       "ACM Competition focuses on competitive programming, a mind-sport in which computer science problems are solved as quickly as possible. If you are interested in sharpening your algorithmic problem-solving skills, then this is the community for you.",
+//     discordLink: "https://discord.gg/4t954Ad",
+//     email: "acm@mst.edu",
+//     logoLink: "comp.png",
+//     logoLinkDark: "comp-dark.png",
+//     name: "Competition",
+//     website: "https://comp.mstacm.org"
+//   },
+//   {
+//     color: "orange",
+//     description:
+//       "ACM Security helps develop the cybersecurity profession for the student body of Missouri University of Science and Technology by sponsoring high-quality workshops and lectures from both local and natinal industry professionals, as well as hosting on campus security events and competitions.",
+//     discordLink: "https://discord.gg/BfPyeHw",
+//     email: "sigsec@mst.edu",
+//     logoLink: "sec.png",
+//     logoLinkDark: "sec-dark.png",
+//     name: "Security",
+//     website: "https://acmsigsec.mst.edu"
+//   },
+//   {
+//     color: "pink",
+//     description:
+//       "ACM Game develops and hosts artificial intelligence programming competitions on S&T's campus in Rolla, Missouri. We utilize many programming languages, tools and development strategies standard to the Computer Science Industry.  Our members gain valuable experience on one of our five development teams: Arena, Game, Public Relations, Visualizer, and Web. ACM Game offers experience working on a real team, with fellow students and mentors to learn and grow as a software developer. We accept new members of all skill levels and majors, so don't hesitate to contact us.",
+//     discordLink: "https://discord.gg/xdXwxup",
+//     email: "siggame@mst.edu",
+//     logoLink: "game.png",
+//     logoLinkDark: "game-dark.png",
+//     name: "Game",
+//     website: "http://siggame.io/"
+//   },
+//   {
+//     color: "lavender",
+//     description:
+//       "ACM Data is a data focused org covering topics like Data Science, Data Mining, Data Analytics, and Data Engineering. Data Science, commonly seen as a combination of most data professions, is a new field with an infinite landscape. Our goal is to catalyze a new era of Data Science by using our curiosity to explore this landscape and push new standards. In ACM Data, we participate in competition sites such as Kaggle, tell stories using data, learn what’s new in Data Science, and whatever is necessary to be cutting edge.",
+//     discordLink: "https://discord.gg/pm2KJtt",
+//     email: "acm@mst.edu",
+//     logoLink: "data.png",
+//     logoLinkDark: "data-dark.png",
+//     name: "Data",
+//     website: "https://modata.blog"
+//   },
+//   {
+//     color: "wheat",
+//     description:
+//       "ACM-W aims to facilitate a thriving community of women in computing through the organizing of great activities, networking, and mentorship programs. We aim to address the issue of retention of women in computer science by creating a support system for academic and professional pursuits and empowering our members to pursue their goals through knowledge and education about women's contribution to technology. This group is open to all students (male or female) that wish to promote women in computing.",
+//     discordLink: "https://discord.gg/hh2wkmq",
+//     email: "acmw@mst.edu",
+//     logoLink: "acm-w.png",
+//     logoLinkDark: "acm-w-dark.png",
+//     name: "Women",
+//     website: "https://women.mstacm.org"
+//   },
+//   {
+//     color: "aquamarine",
+//     description:
+//       "ACM Hack introduces students to the world of hackathons: weekend long events where students come together to turn ideas into reality. We organize travel and attendance to these events, which take place across the Midwest and the country.  We also run PickHacks, the annual student-run hackathon held at S&T in March. Alongside hackathons, we also host events about various design thinking concepts, hackathon preparation, and much more. Skill level and major doesn’t matter here — as long as you like building new things and meeting awesome people, ACM Hack is right for you.",
+//     discordLink: "https://discord.gg/zkwtu9p",
+//     email: "pickhacks@mst.edu",
+//     logoLink: "hack.png",
+//     logoLinkDark: "hack-dark.png",
+//     name: "Hack",
+//     website: "https://pickhacks.io"
+//   },
+//   {
+//     color: "turquoise",
+//     description:
+//       "Focuses on improving and utilizing technical, and soft skills to create a game for the community’s arcade machine(s) on campus every semester/year. This community will also host game jams, so non-members can experience the game development process.",
+//     discordLink: "https://discord.gg/RZCYUpT",
+//     email: "acm@mst.edu",
+//     logoLink: "arcade.png",
+//     logoLinkDark: "arcade-dark.png",
+//     name: "Arcade",
+//     website: null
+//   }
 
-];
+// ];
+
+export const GET_SIGS_QUERY: any = gql`
+  query getSigs {
+    sigs {
+      name
+      color
+      description
+      discordLink
+      email
+      logoLink
+      logoLinkDark
+      website
+      display
+    }
+  }
+`;
 
 const SIGsWrapper: AnyStyledComponent = styled.div`
   margin: auto;
@@ -131,29 +150,52 @@ const Line: AnyStyledComponent = styled.hr`
   margin: 100px 0;
 `;
 
-const SIGs: React.FC = (): JSX.Element => {
+const SIGs: React.FC<{}> = (): JSX.Element => {
+  const result: GetSigsQueryHookResult = useGetSigsQuery();
+  let SIGsData: ISIG[] = [];
+  var isLoading;
+  if (result.data && result.data.sigs) {
+    SIGsData = result.data.sigs.filter(sig => sig.display) as ISIG [];
+    SIGsData.sort(
+      (a: ISIG, b: ISIG) =>
+      {
+        let filterResult;
+        if(a.name.toLowerCase() > b.name.toLowerCase()) filterResult = 1;
+        else if(a.name.toLowerCase() < b.name.toLowerCase()) filterResult = -1;
+        else filterResult = 0;
+        return filterResult;
+      });
+    isLoading = false;
+  } else {
+    isLoading = true;
+  }
+
   return (
-    <Element name="communities">
-      <PageConstraint>
-        <SIGsWrapper>
-          <Heading>
-            <Icon name="people" size="large" fill="#777" />
-            {' '}
-            Our Communities
-          </Heading>
-          <Description>
-            Members of our communities (formerly known as SIGs) hone their
-            computing skills in special topics, listed below, and work towards
-            highly specialized goals in development and career-making. Click on
-            the topic to learn more about the community and find out how to get
-            involved!
-          </Description>
-          <SIGsDisplay sigs={SIGsData} />
-        </SIGsWrapper>
-        <Line />
-      </PageConstraint>
-    </Element>
-  );
+      <Element name="communities">
+        <PageConstraint>
+          <SIGsWrapper>
+            <Heading>
+              <Icon name="people" size="large" fill="#777" />
+              {' '}
+              Our Communities
+            </Heading>
+            <Description>
+              Members of our communities (formerly known as SIGs) hone their
+              computing skills in special topics, listed below, and work towards
+              highly specialized goals in development and career-making. Click on
+              the topic to learn more about the community and find out how to get
+              involved!
+            </Description>
+            { isLoading 
+              ? <div />
+              : <SIGsDisplay sigs={SIGsData}/>
+            }
+            
+          </SIGsWrapper>
+          <Line />
+        </PageConstraint>
+      </Element>
+    );
 };
 
 export { SIGs };
