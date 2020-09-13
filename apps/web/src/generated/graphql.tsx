@@ -350,6 +350,7 @@ export type Resume = {
 export type Sig = {
   __typename?: 'Sig';
   name: Scalars['String'];
+  topic?: Maybe<Scalars['String']>;
   dateFounded: Scalars['DateTime'];
   description: Scalars['String'];
   website?: Maybe<Scalars['String']>;
@@ -365,6 +366,7 @@ export type Sig = {
 
 export type SigCreateInput = {
   name: Scalars['String'];
+  topic?: Maybe<Scalars['String']>;
   description: Scalars['String'];
   website?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -382,6 +384,7 @@ export type SigDeletePayload = {
 
 export type SigUpdateInput = {
   name?: Maybe<Scalars['String']>;
+  topic?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
