@@ -1,21 +1,23 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 
-import { SubmitResume } from "./components/SubmitResume";
+import { ProfilePage } from "./components/ProfilePage";
 import { EventRegistration } from "./components/EventRegistration";
+import { QuickAccess } from "./components/QuickAccess";
 import { config } from "./config";
 import "./static/css/App.css";
 
 import { useAuth0 } from "./utils/react-auth0-wrapper";
 
-import { Layout, Menu, PageHeader, Spin } from "antd";
+import { Layout, Menu, Spin } from "antd";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 
-const MainContent: React.SFC = (): JSX.Element => {
+const MainContent: React.FC = (): JSX.Element => {
   return (
     <Switch>
-      <Route exact={true} path="/" component={SubmitResume} />
+      {/* <Route exact={true} path="/" component={SubmitResume} /> */}
+      <Route exact={true} path="/" component={ProfilePage} />
       <Route exact={true} path="/attend/:eventId" component={EventRegistration} />
     </Switch>
   );
@@ -27,8 +29,7 @@ const App: React.FC = (): JSX.Element => {
     isAuthenticated,
     getTokenSilently,
     loginWithRedirect,
-    logout,
-    user
+    logout
   } = useAuth0();
 
   useEffect(() => {
@@ -101,15 +102,16 @@ const App: React.FC = (): JSX.Element => {
               <span className="nav-text">Sign Out</span>
             </Menu.Item>
           </Menu>
+          <QuickAccess />
         </Sider>
         <Layout>
-          <Header style={{ background: "#fff", padding: 0 }}>
+          {/* <Header style={{ background: "#fff", padding: 0 }}>
             <PageHeader
               backIcon={false}
               title={`Hello, ${user.name}. Welcome to your Dashboard`}
             />
-          </Header>
-          <Content style={{ margin: "24px 16px 0" }}>
+          </Header> */}
+          <Content>
             <MainContent />
           </Content>
           <Footer style={{ textAlign: "center" }}>S&T ACM 2019</Footer>
