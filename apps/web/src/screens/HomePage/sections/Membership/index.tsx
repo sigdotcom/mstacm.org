@@ -155,26 +155,27 @@ const Membership: React.FC = (): JSX.Element => {
         </Modal>
         <PageConstraint>
           <Heading>
-            <Icon name="people" size="large" fill="#777" /> Become a Member
+            <Icon name="people" size="large" fill="#777" />
+            {' '}
+            Become a Member
           </Heading>
           <Description>
             Become a dues-paying member of S&T ACM and receive many benefits
             including:
           </Description>
           <BenefitList>{membershipBenefits}</BenefitList>
-          {!expirationDate && (
+          {expirationDate && new Date(expirationDate) > new Date() && (
+          <TierList>
+            <ConfirmationContainer date={expirationDate} />
+          </TierList>
+          ) || (
             <TierList>
-              <TierContainer onClick={setYearly} title={"Yearly"} cost={"20"} />
+              <TierContainer onClick={setYearly} title="Yearly" cost="20" />
               <TierContainer
                 onClick={setSemesterly}
-                title={"Semesterly"}
-                cost={"11"}
+                title="Semesterly"
+                cost="11"
               />
-            </TierList>
-          )}
-          {expirationDate && (
-            <TierList>
-              <ConfirmationContainer date={expirationDate} />
             </TierList>
           )}
         </PageConstraint>
