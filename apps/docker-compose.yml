@@ -1,7 +1,7 @@
 # See docker-compose.override.yml to see the
 # additional development configuration
 ---
-version: "3.0"
+version: "3"
 services:
   phoenix_traefik:
     image: "traefik:v2.1.0"
