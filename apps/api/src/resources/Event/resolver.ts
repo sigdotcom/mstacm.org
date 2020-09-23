@@ -204,4 +204,20 @@ export class EventResolver {
   protected async eventsWithKey(@Arg("urlKey", () => String) urlKey: string): Promise<Event[]> {
     return this.repository.find({ urlKey });
   }
+
+  @Query(() => [Event])
+  protected async getAttendees(@Arg("urlKey", () => String) urlKey: string): Promise<User[]> {
+    const event: Event = await Event.findOneOrFail({ urlKey: urlKey });
+    let users: User[] = await event.attendees;
+    
+    return users;
+  }
+
+  @Query(() => [Event])
+  protected async getInterestedUsers(@Arg("urlKey", () => String) urlKey: string): Promise<User[]> {
+    const event: Event = await Event.findOneOrFail({ urlKey: urlKey });
+    let users: User[] = await event.usersInterested;
+    
+    return users;
+  }
 }
