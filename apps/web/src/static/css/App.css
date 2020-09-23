@@ -45,3 +45,7 @@ body {
   padding: 0;
   font-family: "Nunito Sans", sans-serif;
 }
+
+:focus {
+  outline: none;
+}
