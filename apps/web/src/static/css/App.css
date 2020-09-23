@@ -46,6 +46,8 @@ body {
   font-family: "Nunito Sans", sans-serif;
 }
 
+/* Issue #289 - Outlines on buttons and textfields */
+/* TODO: Add back a visual focus indicator for accessibility's sake */
 :focus {
   outline: none;
 }
