@@ -93,4 +93,11 @@ export class Event extends BaseEntity {
     nullable: true
   })
   public attendees: Lazy<User[]>;
+
+  @Field(() => [User], { nullable: true })
+  @ManyToMany(() => User, (user: User) => user.interestedEvents, {
+    lazy: true,
+    nullable: true
+  })
+  public usersInterested: Lazy<User[]>;
 }
