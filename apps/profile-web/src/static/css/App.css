@@ -1,5 +1,28 @@
 @import "~antd/dist/antd.css";
 
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("../fonts/Nunito Sans/NunitoSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("../fonts/Nunito Sans/NunitoSans-SemiBold.ttf");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("../fonts/Nunito Sans/NunitoSans-Bold.ttf");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("../fonts/Nunito Sans/NunitoSans-ExtraBold.ttf");
+  font-weight: 800;
+}
+
 body {
   margin: 0;
   padding: 0;

@@ -1,19 +1,14 @@
 import React from "react";
 
-import styled, { AnyStyledComponent } from "styled-components";
+// import styled, { AnyStyledComponent } from "styled-components";
 
-const Box: AnyStyledComponent = styled.div`
-  background: #324177;
-
-  h1 {
-    color: white;
-  }
-`;
+// const Temp: AnyStyledComponent = styled.div`
+// `;
 
 export const QuickAccess: React.FC<{}> = () => {
   return (
-    <Box>
+    <div>
       <h1>Quick Access</h1>
-    </Box>
+    </div>
   );
 };
