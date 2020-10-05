@@ -18,9 +18,12 @@ export const REDEEM_MEMBERSHIP: any = gql`
   }
 `;
 
+if (process.env.NODE_ENV === "production") {
 
-ReactGA.initialize('UA-105827065-1');
-ReactGA.pageview(window.location.pathname + window.location.search);
+  ReactGA.initialize('UA-105827065-1');
+  ReactGA.pageview(window.location.pathname + window.location.search);
+}
+
 
 const App: React.FC<{}> = (): JSX.Element => {
   const { loading, isAuthenticated, getTokenSilently } = useAuth0();
