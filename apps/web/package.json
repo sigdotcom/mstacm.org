@@ -21,6 +21,7 @@
     "react-dom": "^16.10.2",
     "react-eva-icons": "^0.0.8",
     "react-fullscreen-image": "0.0.3",
+    "react-ga": "^3.1.2",
     "react-lines-ellipsis": "^0.14.1",
     "react-modal": "^3.8.1",
     "react-router-dom": "^5.1.2",
