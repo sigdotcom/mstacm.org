@@ -42,7 +42,7 @@ export const QuickAccess: React.FC<{}> = () => {
   return (
     <QAWrapper>
       <QAHeader>Quick Access</QAHeader>
-      <QAItem href="https://google.com">
+      <QAItem href="#">
         Edit Profile
         <IconWrapper>
           <Icon
@@ -52,7 +52,7 @@ export const QuickAccess: React.FC<{}> = () => {
           />
         </IconWrapper>
       </QAItem>
-      <QAItem href="https://google.com">
+      <QAItem href="#">
         Notification Settings
         <IconWrapper>
           <Icon
@@ -62,7 +62,7 @@ export const QuickAccess: React.FC<{}> = () => {
           />
         </IconWrapper>
       </QAItem>
-      <QAItem href="https://google.com">
+      <QAItem href="#">
         Link Discord
         <IconWrapper>
           <Icon
