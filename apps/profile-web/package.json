@@ -13,6 +13,7 @@
     "apollo-upload-client": "^11.0.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-eva-icons": "^0.0.8",
     "react-router-dom": "^5.1.2",
     "reactn": "^2.2.1",
     "styled-components": "^4.1.3"
