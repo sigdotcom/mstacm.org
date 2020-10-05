@@ -115,7 +115,7 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
           visible={resumeFull}
           footer={null}
           onCancel={toggleResumePreview}
-          width="60%"
+          width="90%"
           style={{ top: "5vh", padding: 0 }}
           bodyStyle={{ height: "90vh", padding: 40 }}
         >
