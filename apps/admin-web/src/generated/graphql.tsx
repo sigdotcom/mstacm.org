@@ -40,6 +40,7 @@ export type Event = {
   eventLink?: Maybe<Scalars['String']>;
   urlKey?: Maybe<Scalars['String']>;
   attendees?: Maybe<Array<User>>;
+  usersInterested?: Maybe<Array<User>>;
 };
 
 export type EventCreateInput = {
@@ -119,6 +120,7 @@ export type Mutation = {
   updateShirtReceived: User;
   resetShirtReceived: Array<User>;
   attendEvent: Event;
+  addEventInterested: Event;
 };
 
 
@@ -247,6 +249,11 @@ export type MutationAttendEventArgs = {
   eventId: Scalars['Float'];
 };
 
+
+export type MutationAddEventInterestedArgs = {
+  eventId: Scalars['Float'];
+};
+
 export type Permission = {
   __typename?: 'Permission';
   name: Scalars['ID'];
@@ -299,6 +306,8 @@ export type Query = {
   currentEvents: Array<Event>;
   event: Event;
   eventsWithKey: Array<Event>;
+  getAttendees: Array<User>;
+  getInterestedUsers: Array<User>;
   groups: Array<Group>;
   permissions: Array<Permission>;
   products: Array<Product>;
@@ -325,6 +334,16 @@ export type QueryEventArgs = {
 
 
 export type QueryEventsWithKeyArgs = {
+  urlKey: Scalars['String'];
+};
+
+
+export type QueryGetAttendeesArgs = {
+  urlKey: Scalars['String'];
+};
+
+
+export type QueryGetInterestedUsersArgs = {
   urlKey: Scalars['String'];
 };
 
@@ -408,6 +427,7 @@ export type User = {
   permissions?: Maybe<Array<Permission>>;
   groups: Array<Group>;
   eventsAttended?: Maybe<Array<Event>>;
+  interestedEvents?: Maybe<Array<Event>>;
 };
 
 export type UserCreateInput = {
@@ -427,6 +447,26 @@ export type UserUpdateInput = {
   lastName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
 };
+
+export type EventsWithKeyQueryVariables = Exact<{
+  urlKey: Scalars['String'];
+}>;
+
+
+export type EventsWithKeyQuery = (
+  { __typename?: 'Query' }
+  & { eventsWithKey: Array<(
+    { __typename?: 'Event' }
+    & Pick<Event, 'eventTitle'>
+    & { attendees?: Maybe<Array<(
+      { __typename?: 'User' }
+      & Pick<User, 'firstName' | 'lastName' | 'email'>
+    )>>, usersInterested?: Maybe<Array<(
+      { __typename?: 'User' }
+      & Pick<User, 'firstName' | 'lastName' | 'email'>
+    )>> }
+  )> }
+);
 
 export type SigsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -621,6 +661,49 @@ export type GetProductsQuery = (
 );
 
 
+export const EventsWithKeyDocument = gql`
+    query eventsWithKey($urlKey: String!) {
+  eventsWithKey(urlKey: $urlKey) {
+    eventTitle
+    attendees {
+      firstName
+      lastName
+      email
+    }
+    usersInterested {
+      firstName
+      lastName
+      email
+    }
+  }
+}
+    `;
+
+/**
+ * __useEventsWithKeyQuery__
+ *
+ * To run a query within a React component, call `useEventsWithKeyQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEventsWithKeyQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEventsWithKeyQuery({
+ *   variables: {
+ *      urlKey: // value for 'urlKey'
+ *   },
+ * });
+ */
+export function useEventsWithKeyQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<EventsWithKeyQuery, EventsWithKeyQueryVariables>) {
+        return ApolloReactHooks.useQuery<EventsWithKeyQuery, EventsWithKeyQueryVariables>(EventsWithKeyDocument, baseOptions);
+      }
+export function useEventsWithKeyLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<EventsWithKeyQuery, EventsWithKeyQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<EventsWithKeyQuery, EventsWithKeyQueryVariables>(EventsWithKeyDocument, baseOptions);
+        }
+export type EventsWithKeyQueryHookResult = ReturnType<typeof useEventsWithKeyQuery>;
+export type EventsWithKeyLazyQueryHookResult = ReturnType<typeof useEventsWithKeyLazyQuery>;
+export type EventsWithKeyQueryResult = ApolloReactCommon.QueryResult<EventsWithKeyQuery, EventsWithKeyQueryVariables>;
 export const SigsDocument = gql`
     query sigs {
   sigs {
