@@ -205,7 +205,7 @@ export class EventResolver {
     return this.repository.find({ urlKey });
   }
 
-  @Query(() => [Event])
+  @Query(() => [User])
   protected async getAttendees(@Arg("urlKey", () => String) urlKey: string): Promise<User[]> {
     const event: Event = await Event.findOneOrFail({ urlKey: urlKey });
     let users: User[] = await event.attendees;
@@ -213,7 +213,7 @@ export class EventResolver {
     return users;
   }
 
-  @Query(() => [Event])
+  @Query(() => [User])
   protected async getInterestedUsers(@Arg("urlKey", () => String) urlKey: string): Promise<User[]> {
     const event: Event = await Event.findOneOrFail({ urlKey: urlKey });
     let users: User[] = await event.usersInterested;
