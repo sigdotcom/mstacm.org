@@ -1,21 +1,145 @@
 @import "~antd/dist/antd.css";
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+	background-color: #f4f5f8;
 }
 
 .load-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
 }
 
 #root {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Change color on hover */
+.bm-item:hover {
+	color: white;
+}
+
+/* The rest copied directly from react-burger-menu docs */
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+	position: fixed;
+	width: 36px;
+	height: 30px;
+	transition: all 0.2s ease-in-out;
+	left: 20px;
+	top: 20px;
+}
+@media (max-width: 600px) {
+	.bm-burger-button {
+		width: 28px;
+		height: 20px;
+	}
+}
+@media (max-width: 500px) {
+	.bm-burger-button {
+		width: 26px;
+		height: 20px;
+	}
+}
+@media (max-width: 500px) {
+	.bm-burger-button {
+		left: 15px;
+		top: 15px;
+	}
+}
+@media (max-width: 380px) {
+	.bm-burger-button {
+		width: 16px;
+		height: 10px;
+	}
+}
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+	background: #373a47;
+}
+
+/* Position and sizing of clickable cross button */
+
+/* Color/shape of close button cross */
+
+/* General sidebar styles */
+
+/* Morph shape necessary with bubble or elastic */
+
+/* Wrapper for item list */
+.bm-item-list {
+	color: #b8b7ad;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+	background: rgba(0, 0, 0, 0.3);
+}
+.bm-cross-button {
+	height: 0px;
+	width: 0px;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+	background: #bdc3c7;
+}
+.bm-menu-wrap {
+	position: fixed;
+	height: 100vh;
+	width: 70%;
+}
+
+/* General sidebar styles */
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+	fill: #373a47;
+}
+/* Color/shape of close button cross */
+.bm-cross {
+	background: #bdc3c7;
+}
+.bm-menu-wrap {
+	position: fixed;
+	height: 100vh;
+}
+
+/* General sidebar styles */
+.bm-menu {
+	background: #373a47;
+	height: 100%;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+	fill: #373a47;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+	color: #b8b7ad;
+}
+
+/* Individual item */
+.bm-item {
+	display: inline-block;
+}
+
+/* Individual item */
+.bm-item {
+	display: inline-block;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+	background: #bdc3c7;
+	display: none;
 }
