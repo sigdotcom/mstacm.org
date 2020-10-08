@@ -21,67 +21,67 @@ const Grid: AnyStyledComponent = styled.div`
     grid-template-areas: 
             "m"
             "c";
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: 0px auto;
     
   }
 `;
-// const Header: AnyStyledComponent = styled.div`
-//   grid-area: h;
-// `;
 const Content: AnyStyledComponent = styled.div`
-  grid-area: c;
+	grid-area: c;
 `;
 const Menu: AnyStyledComponent = styled.div`
-  grid-area: m;
+	grid-area: m;
+	@media (max-width: 1530px) {
+		grid-area: m;
+	}
 `;
 
 const App: React.SFC<{}> = (): JSX.Element => {
-  const {
-    loading,
-    isAuthenticated,
-    getTokenSilently,
-    loginWithRedirect,
-  } = useAuth0();
+	const {
+		loading,
+		isAuthenticated,
+		getTokenSilently,
+		loginWithRedirect,
+	} = useAuth0();
 
-  useEffect(() => {
-    if (loading) {
-      return;
-    }
+	useEffect(() => {
+		if (loading) {
+			return;
+		}
 
-    if (!isAuthenticated) {
-      const fn: any = async (): Promise<void> => {
-        await loginWithRedirect({
-          appState: { targetUrl: window.location.href },
-        });
-      };
+		if (!isAuthenticated) {
+			const fn: any = async (): Promise<void> => {
+				await loginWithRedirect({
+					appState: { targetUrl: window.location.href },
+				});
+			};
 
-      fn();
-    } else {
-      const setToken: () => void = async (): Promise<void> => {
-        const token: string = (await getTokenSilently()) || "";
-        localStorage.setItem(config.ACCESS_TOKEN_KEY, token);
-      };
+			fn();
+		} else {
+			const setToken: () => void = async (): Promise<void> => {
+				const token: string = (await getTokenSilently()) || "";
+				localStorage.setItem(config.ACCESS_TOKEN_KEY, token);
+			};
 
-      setToken();
-    }
-  }, [loading, isAuthenticated, getTokenSilently]);
+			setToken();
+		}
+	}, [loading, isAuthenticated, getTokenSilently]);
 
-  if (loading || !isAuthenticated) {
-    return <Spin size="large" className="load-page" tip="Loading..." />;
-  }
+	if (loading || !isAuthenticated) {
+		return <Spin size="large" className="load-page" tip="Loading..." />;
+	}
 
-  return (
-    <BrowserRouter>
-      <Grid>
-        <Content>
-          <Main />
-        </Content>
-        <Menu>
-          <Sidebar />
-        </Menu>
-      </Grid>
-    </BrowserRouter>
-  );
+	return (
+		<BrowserRouter>
+			<Grid>
+				<Content>
+					<Main />
+				</Content>
+				<Menu>
+					<Sidebar />
+				</Menu>
+			</Grid>
+		</BrowserRouter>
+	);
 };
 
 export { App };
