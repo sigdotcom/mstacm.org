@@ -142,44 +142,46 @@ const Membership: React.FC = (): JSX.Element => {
 
   return (
     <Element name="membership">
-      <MembershipWrapper>
+      <PageConstraint>
         <Line id="membership" />
-        <Modal
-          isOpen={tag !== undefined}
-          onRequestClose={removeTag}
-          contentLabel="Example Modal"
-          style={modalStyle}
-        >
-          <Header>{tag}</Header>
-          <CheckoutForm tag={tag!} onSuccess={refetchMe} />
-        </Modal>
-        <PageConstraint>
-          <Heading>
-            <Icon name="people" size="large" fill="#777" />
-            {' '}
-            Become a Member
-          </Heading>
-          <Description>
-            Become a dues-paying member of S&T ACM and receive many benefits
-            including:
-          </Description>
-          <BenefitList>{membershipBenefits}</BenefitList>
-          {expirationDate && new Date(expirationDate) > new Date() && (
-          <TierList>
-            <ConfirmationContainer date={expirationDate} />
-          </TierList>
-          ) || (
+        <MembershipWrapper>
+          <Modal
+            isOpen={tag !== undefined}
+            onRequestClose={removeTag}
+            contentLabel="Example Modal"
+            style={modalStyle}
+          >
+            <Header>{tag}</Header>
+            <CheckoutForm tag={tag!} onSuccess={refetchMe} />
+          </Modal>
+          <PageConstraint>
+            <Heading>
+              <Icon name="people" size="large" fill="#777" />
+              {' '}
+              Become a Member
+            </Heading>
+            <Description>
+              Become a dues-paying member of S&T ACM and receive many benefits
+              including:
+            </Description>
+            <BenefitList>{membershipBenefits}</BenefitList>
+            {expirationDate && new Date(expirationDate) > new Date() && (
             <TierList>
-              <TierContainer onClick={setYearly} title="Yearly" cost="20" />
-              <TierContainer
-                onClick={setSemesterly}
-                title="Semesterly"
-                cost="11"
-              />
+              <ConfirmationContainer date={expirationDate} />
             </TierList>
-          )}
-        </PageConstraint>
-      </MembershipWrapper>
+            ) || (
+              <TierList>
+                <TierContainer onClick={setYearly} title="Yearly" cost="20" />
+                <TierContainer
+                  onClick={setSemesterly}
+                  title="Semesterly"
+                  cost="11"
+                />
+              </TierList>
+            )}
+          </PageConstraint>
+        </MembershipWrapper>
+      </PageConstraint>
     </Element>
   );
 };
