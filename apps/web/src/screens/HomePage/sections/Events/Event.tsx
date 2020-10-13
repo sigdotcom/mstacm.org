@@ -25,7 +25,7 @@ const EventWrapper = styled.div`
 
   @media all and (min-width: ${MOBILE_BREAKPOINT}) {
     flex-direction: row;
-    margin-left: 5px;
+    padding-left: 5px;
   }
 `;
 
