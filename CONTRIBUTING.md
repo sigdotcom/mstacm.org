@@ -68,3 +68,12 @@ We use a pattern known as [Github Flow](https://guides.github.com/introduction/f
 
 ## Coding Conventions
 We use [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) to format and style all of our code, please get those installed and configured in your preffered editor while working on code!
+
+## Keeping up with the main branch
+Before you merge your changes, and also after big changes go into the main branch, you will want to get up to date with main. To do this, we use a technique called rebasing. This is better explained [here](https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase) so please read up.
+
+When you want to get up to date, commit all of your changes, then use this command:
+```
+git pull --rebase origin master
+```
+which will pull any changes from the origin, and then rebase your changes on top of master. This starts a rebase, so complete the rebase by using the knowledge gained from the link above.
