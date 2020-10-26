@@ -41,6 +41,7 @@ export type Event = {
   urlKey?: Maybe<Scalars['String']>;
   attendees?: Maybe<Array<User>>;
   usersInterested?: Maybe<Array<User>>;
+  numAttendees?: Maybe<Scalars['Float']>;
 };
 
 export type EventCreateInput = {
@@ -308,6 +309,7 @@ export type Query = {
   eventsWithKey: Array<Event>;
   getAttendees: Array<User>;
   getInterestedUsers: Array<User>;
+  yearEvents: Array<Event>;
   groups: Array<Group>;
   permissions: Array<Permission>;
   products: Array<Product>;
@@ -465,6 +467,17 @@ export type EventsWithKeyQuery = (
       { __typename?: 'User' }
       & Pick<User, 'firstName' | 'lastName' | 'email'>
     )>> }
+  )> }
+);
+
+export type YearEventsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type YearEventsQuery = (
+  { __typename?: 'Query' }
+  & { yearEvents: Array<(
+    { __typename?: 'Event' }
+    & Pick<Event, 'urlKey' | 'numAttendees'>
   )> }
 );
 
@@ -704,6 +717,39 @@ export function useEventsWithKeyLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type EventsWithKeyQueryHookResult = ReturnType<typeof useEventsWithKeyQuery>;
 export type EventsWithKeyLazyQueryHookResult = ReturnType<typeof useEventsWithKeyLazyQuery>;
 export type EventsWithKeyQueryResult = ApolloReactCommon.QueryResult<EventsWithKeyQuery, EventsWithKeyQueryVariables>;
+export const YearEventsDocument = gql`
+    query yearEvents {
+  yearEvents {
+    urlKey
+    numAttendees
+  }
+}
+    `;
+
+/**
+ * __useYearEventsQuery__
+ *
+ * To run a query within a React component, call `useYearEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useYearEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useYearEventsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useYearEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<YearEventsQuery, YearEventsQueryVariables>) {
+        return ApolloReactHooks.useQuery<YearEventsQuery, YearEventsQueryVariables>(YearEventsDocument, baseOptions);
+      }
+export function useYearEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<YearEventsQuery, YearEventsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<YearEventsQuery, YearEventsQueryVariables>(YearEventsDocument, baseOptions);
+        }
+export type YearEventsQueryHookResult = ReturnType<typeof useYearEventsQuery>;
+export type YearEventsLazyQueryHookResult = ReturnType<typeof useYearEventsLazyQuery>;
+export type YearEventsQueryResult = ApolloReactCommon.QueryResult<YearEventsQuery, YearEventsQueryVariables>;
 export const SigsDocument = gql`
     query sigs {
   sigs {

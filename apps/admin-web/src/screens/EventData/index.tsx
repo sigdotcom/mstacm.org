@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Statistic, Row, Col, Table, message } from 'antd';
 import { ExportToCsv } from "export-to-csv";
-import { IEvent, IUser } from "./interfaces";
+import { IUser, IEvent, IYearEvent } from "./interfaces";
 import { QRModal } from "./QRModal"
-import { useEventsWithKeyQuery } from "../../generated/graphql";
+import { useEventsWithKeyQuery,
+         useYearEventsQuery } from "../../generated/graphql";
 
 const EventData: React.FC<{match: any}> = ({match}: any) => {
 //   const statStyle = {
@@ -16,6 +17,8 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
   const [event, setEvent] = useState<IEvent>();
   const [attendees, setAttendees] = useState<IUser[]>();
   const [usersInterested, setUsersInterested] = useState<IUser[]>();
+  const [yearEvents, setYearEvents] = useState<IYearEvent[]>();
+  const [attendancePlace, setAttendancePlace] = useState<number>();
   const [QRVisible, setQRVisible] = useState(false);
 
   let attendeeEmails: string[] = [];
@@ -40,6 +43,12 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
     data: eventData,
   }: any = useEventsWithKeyQuery({variables: { urlKey: eventUrlKey }});
 
+  const {
+    loading: yearEventsLoading,
+    error: yearEventsError,
+    data: yearEventsData,
+  }: any = useYearEventsQuery();
+
   useEffect(() => {
     if (eventLoading)
       message.info("Event data loading...");
@@ -52,6 +61,19 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
   }, [eventData, eventError, eventLoading]);
 
   useEffect(() => {
+    if (yearEventsLoading) {
+      //message.info("Year event data loading...");
+    }
+    else if (yearEventsError) {
+      message.info("An error occured loading year event data.");
+    }
+    else if (yearEventsData) {
+      setYearEvents(yearEventsData.yearEvents);
+      //message.success("Event data loading complete!");
+    }
+  }, [yearEventsData, yearEventsError, yearEventsLoading]);
+
+  useEffect(() => {
     if(event != undefined) {
         setAttendees(event.attendees);
         setUsersInterested(event.usersInterested);
@@ -61,9 +83,15 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
   useEffect(() => {
     if(attendees != undefined) {
       attendeeEmails = attendees?.map(attendees => attendees.email);
-      console.log(attendeeEmails)
     }
   }, [attendees]);
+
+  useEffect(() => {
+    if(yearEvents != undefined) {
+      setYearEvents(yearEvents.sort((a,b) => (a.numAttendees > b.numAttendees) ? -1 : ((b.numAttendees > a.numAttendees) ? 1 : 0)));
+      setAttendancePlace(yearEvents.map(function(e) { return e.urlKey }).indexOf(eventUrlKey) + 1);
+    }
+  }, [yearEvents]);
 
   if(eventUrlKey == null)
     return <p>This event does not exist.</p>
@@ -126,7 +154,7 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
           <Statistic title="Ratio Interested : Attended" value={get_ratio()} precision={2} suffix={"%"} />
         </Col>
         <Col span={6}>
-          <Statistic title="Attendance Ranking" value={4} suffix={ordinal_suffix(4)}/>
+          <Statistic title="Attendance Ranking" value={attendancePlace} suffix={ordinal_suffix(attendancePlace)}/>
         </Col>
       </Row>
 
