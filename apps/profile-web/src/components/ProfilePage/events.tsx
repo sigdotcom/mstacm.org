@@ -9,6 +9,10 @@ const EventsWrapper: AnyStyledComponent = styled.div`
   background: white;
   border-radius: 50px;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+
+  @media all and (min-width: 600px) {
+    display: none;
+  }
 `;
 
 const WrapperWrapper: AnyStyledComponent = styled.div`
