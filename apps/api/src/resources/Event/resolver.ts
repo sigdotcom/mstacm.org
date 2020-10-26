@@ -1,10 +1,10 @@
 import { AuthenticationError, UserInputError } from "apollo-server";
-import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Authorized, Ctx, Mutation, Query, Resolver, FieldResolver, Root } from "type-graphql";
 import {
   DeepPartial,
   getRepository,
   MoreThanOrEqual,
-  Repository
+  Repository,
 } from "typeorm";
 
 import { GraphQLUpload } from "graphql-upload";
@@ -219,5 +219,25 @@ export class EventResolver {
     let users: User[] = await event.usersInterested;
     
     return users;
+  }
+
+  @Query(() => [Event])
+  protected async yearEvents(): Promise<Event[]> {
+    const startDate: Date = new Date(Date.now());
+    startDate.setMonth(7);
+    startDate.setDate(0); //August 1st, {year}
+    return this.repository.find({
+      where: {
+        dateExpire: MoreThanOrEqual(startDate)
+      }
+    });
+  }
+
+  @FieldResolver((_: void) => Number, { nullable: false })
+  public async numAttendees(
+    @Root() event: Event,
+  ): Promise<number | undefined> {
+    const attendeeList: User[] = await event.attendees;
+    return attendeeList.length;
   }
 }

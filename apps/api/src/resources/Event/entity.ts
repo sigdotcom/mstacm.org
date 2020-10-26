@@ -100,4 +100,9 @@ export class Event extends BaseEntity {
     nullable: true
   })
   public usersInterested: Lazy<User[]>;
+
+  @Field({ defaultValue: 0 })
+  @Column({ default: 0 })
+  public numAttendees: number;
+
 }

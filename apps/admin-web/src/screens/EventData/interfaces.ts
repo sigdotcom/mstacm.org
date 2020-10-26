@@ -10,4 +10,9 @@ interface IEvent {
     usersInterested: IUser[];
 }
 
-export type { IUser, IEvent };
+interface IYearEvent {
+    urlKey: string;
+    numAttendees: number;
+}
+
+export type { IUser, IEvent, IYearEvent };
