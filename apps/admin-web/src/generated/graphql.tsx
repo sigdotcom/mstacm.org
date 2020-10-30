@@ -121,7 +121,7 @@ export type Mutation = {
   updateShirtReceived: User;
   resetShirtReceived: Array<User>;
   attendEvent: Event;
-  addEventInterested: Event;
+  recordInterest: Event;
 };
 
 
@@ -251,7 +251,7 @@ export type MutationAttendEventArgs = {
 };
 
 
-export type MutationAddEventInterestedArgs = {
+export type MutationRecordInterestArgs = {
   eventId: Scalars['Float'];
 };
 

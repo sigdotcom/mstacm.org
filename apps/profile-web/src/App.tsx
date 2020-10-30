@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 
 import { SubmitResume } from "./components/SubmitResume";
-import { EventRegistration } from "./components/EventRegistration";
+import { EventRegistration, EventInterest } from "./components/EventRegistration";
 import { config } from "./config";
 import "./static/css/App.css";
 
@@ -17,6 +17,7 @@ const MainContent: React.SFC = (): JSX.Element => {
     <Switch>
       <Route exact={true} path="/" component={SubmitResume} />
       <Route exact={true} path="/attend/:eventId" component={EventRegistration} />
+      <Route exact={true} path="/interest/:eventId" component={EventInterest} />
     </Switch>
   );
 };

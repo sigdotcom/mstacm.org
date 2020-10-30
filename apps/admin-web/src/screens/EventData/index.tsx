@@ -7,11 +7,6 @@ import { useEventsWithKeyQuery,
          useYearEventsQuery } from "../../generated/graphql";
 
 const EventData: React.FC<{match: any}> = ({match}: any) => {
-//   const statStyle = {
-//     fontSize: 35,
-//     fontWeight: 100,
-//   }
-
   const eventUrlKey: string = match.params.eventId;
 
   const [event, setEvent] = useState<IEvent>();

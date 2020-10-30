@@ -29,3 +29,13 @@ export const ATTEND_EVENT: any = gql`
     }
   }
 `;
+
+export const RECORD_INTEREST: any = gql`
+  mutation recordInterest($eventId: Float!) {
+    recordInterest(eventId: $eventId) {
+      usersInterested {
+        id
+      }
+    }
+  }
+`;

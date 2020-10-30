@@ -169,7 +169,7 @@ export class UserResolver extends ResourceResolver<resourceType>(
 
   @Authorized()
   @Mutation((_: void) => Event)
-  public async addEventInterested(
+  public async recordInterest(
     @Ctx() context: IContext,
     @Arg("eventId") eventId: number,
     //@Arg("userId") userId: string, //for testing purposes
