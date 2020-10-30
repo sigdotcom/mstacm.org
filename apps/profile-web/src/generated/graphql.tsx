@@ -40,6 +40,8 @@ export type Event = {
   eventLink?: Maybe<Scalars['String']>;
   urlKey?: Maybe<Scalars['String']>;
   attendees?: Maybe<Array<User>>;
+  usersInterested?: Maybe<Array<User>>;
+  numAttendees?: Maybe<Scalars['Float']>;
 };
 
 export type EventCreateInput = {
@@ -119,6 +121,7 @@ export type Mutation = {
   updateShirtReceived: User;
   resetShirtReceived: Array<User>;
   attendEvent: Event;
+  recordInterest: Event;
 };
 
 
@@ -247,6 +250,11 @@ export type MutationAttendEventArgs = {
   eventId: Scalars['Float'];
 };
 
+
+export type MutationRecordInterestArgs = {
+  eventId: Scalars['Float'];
+};
+
 export type Permission = {
   __typename?: 'Permission';
   name: Scalars['ID'];
@@ -299,6 +307,9 @@ export type Query = {
   currentEvents: Array<Event>;
   event: Event;
   eventsWithKey: Array<Event>;
+  getAttendees: Array<User>;
+  getInterestedUsers: Array<User>;
+  yearEvents: Array<Event>;
   groups: Array<Group>;
   permissions: Array<Permission>;
   products: Array<Product>;
@@ -325,6 +336,16 @@ export type QueryEventArgs = {
 
 
 export type QueryEventsWithKeyArgs = {
+  urlKey: Scalars['String'];
+};
+
+
+export type QueryGetAttendeesArgs = {
+  urlKey: Scalars['String'];
+};
+
+
+export type QueryGetInterestedUsersArgs = {
   urlKey: Scalars['String'];
 };
 
@@ -408,6 +429,7 @@ export type User = {
   permissions?: Maybe<Array<Permission>>;
   groups: Array<Group>;
   eventsAttended?: Maybe<Array<Event>>;
+  interestedEvents?: Maybe<Array<Event>>;
 };
 
 export type UserCreateInput = {
@@ -453,6 +475,22 @@ export type AttendEventMutation = (
   & { attendEvent: (
     { __typename?: 'Event' }
     & { attendees?: Maybe<Array<(
+      { __typename?: 'User' }
+      & Pick<User, 'id'>
+    )>> }
+  ) }
+);
+
+export type RecordInterestMutationVariables = Exact<{
+  eventId: Scalars['Float'];
+}>;
+
+
+export type RecordInterestMutation = (
+  { __typename?: 'Mutation' }
+  & { recordInterest: (
+    { __typename?: 'Event' }
+    & { usersInterested?: Maybe<Array<(
       { __typename?: 'User' }
       & Pick<User, 'id'>
     )>> }
@@ -565,6 +603,40 @@ export function useAttendEventMutation(baseOptions?: ApolloReactHooks.MutationHo
 export type AttendEventMutationHookResult = ReturnType<typeof useAttendEventMutation>;
 export type AttendEventMutationResult = ApolloReactCommon.MutationResult<AttendEventMutation>;
 export type AttendEventMutationOptions = ApolloReactCommon.BaseMutationOptions<AttendEventMutation, AttendEventMutationVariables>;
+export const RecordInterestDocument = gql`
+    mutation recordInterest($eventId: Float!) {
+  recordInterest(eventId: $eventId) {
+    usersInterested {
+      id
+    }
+  }
+}
+    `;
+export type RecordInterestMutationFn = ApolloReactCommon.MutationFunction<RecordInterestMutation, RecordInterestMutationVariables>;
+
+/**
+ * __useRecordInterestMutation__
+ *
+ * To run a mutation, you first call `useRecordInterestMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRecordInterestMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [recordInterestMutation, { data, loading, error }] = useRecordInterestMutation({
+ *   variables: {
+ *      eventId: // value for 'eventId'
+ *   },
+ * });
+ */
+export function useRecordInterestMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RecordInterestMutation, RecordInterestMutationVariables>) {
+        return ApolloReactHooks.useMutation<RecordInterestMutation, RecordInterestMutationVariables>(RecordInterestDocument, baseOptions);
+      }
+export type RecordInterestMutationHookResult = ReturnType<typeof useRecordInterestMutation>;
+export type RecordInterestMutationResult = ApolloReactCommon.MutationResult<RecordInterestMutation>;
+export type RecordInterestMutationOptions = ApolloReactCommon.BaseMutationOptions<RecordInterestMutation, RecordInterestMutationVariables>;
 export const UploadResumeDocument = gql`
     mutation uploadResume($resume: Upload!, $grad: DateTime!, $fname: String!, $lname: String!) {
   uploadResume(resume: $resume, graduationDate: $grad, firstName: $fname, lastName: $lname) {

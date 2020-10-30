@@ -40,6 +40,8 @@ export type Event = {
   eventLink?: Maybe<Scalars['String']>;
   urlKey?: Maybe<Scalars['String']>;
   attendees?: Maybe<Array<User>>;
+  usersInterested?: Maybe<Array<User>>;
+  numAttendees?: Maybe<Scalars['Float']>;
 };
 
 export type EventCreateInput = {
@@ -119,6 +121,7 @@ export type Mutation = {
   updateShirtReceived: User;
   resetShirtReceived: Array<User>;
   attendEvent: Event;
+  recordInterest: Event;
 };
 
 
@@ -247,6 +250,11 @@ export type MutationAttendEventArgs = {
   eventId: Scalars['Float'];
 };
 
+
+export type MutationRecordInterestArgs = {
+  eventId: Scalars['Float'];
+};
+
 export type Permission = {
   __typename?: 'Permission';
   name: Scalars['ID'];
@@ -299,6 +307,9 @@ export type Query = {
   currentEvents: Array<Event>;
   event: Event;
   eventsWithKey: Array<Event>;
+  getAttendees: Array<User>;
+  getInterestedUsers: Array<User>;
+  yearEvents: Array<Event>;
   groups: Array<Group>;
   permissions: Array<Permission>;
   products: Array<Product>;
@@ -325,6 +336,16 @@ export type QueryEventArgs = {
 
 
 export type QueryEventsWithKeyArgs = {
+  urlKey: Scalars['String'];
+};
+
+
+export type QueryGetAttendeesArgs = {
+  urlKey: Scalars['String'];
+};
+
+
+export type QueryGetInterestedUsersArgs = {
   urlKey: Scalars['String'];
 };
 
@@ -408,6 +429,7 @@ export type User = {
   permissions?: Maybe<Array<Permission>>;
   groups: Array<Group>;
   eventsAttended?: Maybe<Array<Event>>;
+  interestedEvents?: Maybe<Array<Event>>;
 };
 
 export type UserCreateInput = {

@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { config } from "./config";
-import { HomePage, NotFoundPage, EventRegistration } from "./screens";
+import { HomePage, NotFoundPage, EventRegistration, EventInterest } from "./screens";
 import { useAuth0 } from "./utils/react-auth0-wrapper";
 
 import "./static/css/App.css";
@@ -38,6 +38,7 @@ const App: React.FC<{}> = (): JSX.Element => {
       <Switch>
         <Route exact={true} path="/" component={HomePage} />
         <Route path="/e/:eventId" component={EventRegistration} />
+        <Route path="/i/:eventId" component={EventInterest} />
         <Route component={NotFoundPage} />
       </Switch>
     </BrowserRouter>
