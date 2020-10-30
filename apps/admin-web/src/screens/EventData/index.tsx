@@ -17,23 +17,27 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
   const [event, setEvent] = useState<IEvent>();
   const [attendees, setAttendees] = useState<IUser[]>();
   const [usersInterested, setUsersInterested] = useState<IUser[]>();
+
   const [yearEvents, setYearEvents] = useState<IYearEvent[]>();
   const [attendancePlace, setAttendancePlace] = useState<number>();
+
   const [QRVisible, setQRVisible] = useState(false);
 
-  let attendeeEmails: string[] = [];
+  const [attendeeEmails, setAttendeeEmails] = useState<string[]>();
+  const [interestEmails, setInterestEmails] = useState<string[]>();
 
   const csvOptions = { 
     filename: 'email addresses',
     fieldSeparator: ',',
-    quoteStrings: '"',
+    quoteStrings: '',
     decimalSeparator: '.',
     showLabels: true, 
     showTitle: true,
-    title: 'Attendee Emails',
+    title: 'Emails',
     useTextFile: false,
     useBom: true,
-    useKeysAsHeaders: true,
+    //useKeysAsHeaders: true,
+    headers: ['Emails']
     // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
   };
 
@@ -81,9 +85,13 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
   }, [event]);
 
   useEffect(() => {
-    if(attendees != undefined) {
-      attendeeEmails = attendees?.map(attendees => attendees.email);
-    }
+    if(usersInterested != undefined)
+      setInterestEmails(usersInterested?.map(usersInterested => usersInterested.email));
+  }, [usersInterested]);
+
+  useEffect(() => {
+    if(attendees != undefined)
+      setAttendeeEmails(attendees?.map(attendees => attendees.email));
   }, [attendees]);
 
   useEffect(() => {
@@ -134,9 +142,18 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
     setQRVisible(true);
   };
 
-  const downloadAttendeeCSV: () => void = (): void => {
+  const downloadInterestCSV: () => void = (): void => {
+    csvOptions.filename = "interest_emails";
+    csvOptions.title = "Interested Users";
     const csvExporter = new ExportToCsv(csvOptions);
-    csvExporter.generateCsv(attendeeEmails);
+    csvExporter.generateCsv(interestEmails?.map(interestEmails => ({ interestEmails })));
+  };
+
+  const downloadAttendeeCSV: () => void = (): void => {
+    csvOptions.filename = "attendee_emails";
+    csvOptions.title = "Attendees";
+    const csvExporter = new ExportToCsv(csvOptions);
+    csvExporter.generateCsv(attendeeEmails?.map(attendeeEmails => ({ attendeeEmails })));
   };
 
   return (
@@ -166,8 +183,10 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
           <h2 style={{fontSize: 20}}>Interested Users</h2>
         </Col>
         <Col span={3}>
+          
         </Col>
         <Col span={3}>
+          <a style={{fontSize: 16, textDecoration: "underline"}} onClick={downloadInterestCSV}>Download Email CSV</a>
         </Col>
       </Row>
 
