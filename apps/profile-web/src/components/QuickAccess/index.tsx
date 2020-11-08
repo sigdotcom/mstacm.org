@@ -6,7 +6,9 @@ import styled, { AnyStyledComponent } from "styled-components";
 const QAWrapper: AnyStyledComponent = styled.div`
   display: flex;
   flex-direction: column;
-  width: 280px;
+  width: 100%;
+  min-width: 220px;
+  max-width: 280px;
   height: 174px;
   border-radius: 12px;
   background: #113366;

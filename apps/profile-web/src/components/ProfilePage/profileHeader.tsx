@@ -29,6 +29,10 @@ const Header: AnyStyledComponent = styled.div`
   @media all and (min-width: 600px) {
     padding: 2rem 0;
   }
+
+  @media all and (min-width: 960px) {
+    max-width: 80rem;
+  }
 `;
 
 const ProfileInfo: AnyStyledComponent = styled.div`
@@ -197,13 +201,32 @@ const WhiteSpace: AnyStyledComponent = styled.div`
   }
 `;
 
-const groupColors = {
-  'Community Chair': '#C0F6BF',
-  'Event Manager': '#BFDCF6'
-}
+const ShortcutGroup: AnyStyledComponent = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: auto;
+`;
+
+const NotificationShortcut: AnyStyledComponent = styled.a`
+  position: absolute;
+  top: 16px;
+  right: 16px;
+
+  @media all and (min-width: 960px) {
+    position: initial;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0.625rem;
+    margin-right: .75rem;
+  }
+`;
 
 interface ProfileHeaderProps {
   meGroups: Group[];
+  numEvents: number;
 }
 
 export const ProfileHeader: React.FC<ProfileHeaderProps> = (
@@ -211,24 +234,15 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = (
 ): JSX.Element => {
   const { user } = useAuth0();
   const [groupComponents, setGroupComponents]: any = useState<any>(undefined);
-  console.log(user);
+
   useEffect(() => {
     setGroupComponents(props.meGroups.map((group: Group) =>
       <div
-        style={{ background: groupNameToColor(group.name) }}
+        style={{ background: "#C0F6BF" }}
         key={group.name}
       >{group.name}</div>
     ));
-  }, []);
-
-  const groupNameToColor = (groupName: string): string => {
-    if (groupName === 'Community Chair') {
-      return groupColors['Community Chair'];
-    } else if (groupName === 'Event Manager') {
-      return groupColors['Event Manager'];
-    }
-    return 'White';
-  }
+  }, [props]);
 
   return (
     <HeaderWrapper>
@@ -255,9 +269,20 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = (
           </UserInfo>
         </ProfileInfo>
         <WhiteSpace style={{ width: "100%" }}></WhiteSpace>
-        <ProfileOptions />
+        <ShortcutGroup>
+          <NotificationShortcut href="#">
+            <Icon
+              name="bell"
+              size="medium"
+              fill={
+                window.innerWidth < 960 ? "#087ABB" : "#333333"
+              }
+            />
+          </NotificationShortcut>
+          <ProfileOptions />
+        </ShortcutGroup>
       </Header>
-      <Events />
+      <Events numEvents={props.numEvents} />
     </HeaderWrapper>
   );
 };

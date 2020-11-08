@@ -37,11 +37,17 @@ const EventsAttended: AnyStyledComponent = styled.div`
   color: #333333;
 `;
 
-export const Events: React.FC<{}> = () => {
+interface EventsProps {
+  numEvents: number;
+}
+
+export const Events: React.FC<EventsProps> = (
+  props: EventsProps
+) => {
   return (
     <EventsWrapper>
       <WrapperWrapper>
-        <NumberAttended>35</NumberAttended>
+        <NumberAttended>{props.numEvents}</NumberAttended>
         <EventsAttended>Events attended</EventsAttended>
       </WrapperWrapper>
     </EventsWrapper>

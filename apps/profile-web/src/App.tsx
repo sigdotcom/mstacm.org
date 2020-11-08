@@ -11,7 +11,7 @@ import { useAuth0 } from "./utils/react-auth0-wrapper";
 
 import { Layout, Menu, Spin } from "antd";
 
-const { Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 const MainContent: React.FC = (): JSX.Element => {
   return (
@@ -114,7 +114,6 @@ const App: React.FC = (): JSX.Element => {
           <Content>
             <MainContent />
           </Content>
-          <Footer style={{ textAlign: "center" }}>S&T ACM 2019</Footer>
         </Layout>
       </Layout>
     </BrowserRouter>
