@@ -459,6 +459,28 @@ export type AttendEventMutation = (
   ) }
 );
 
+export type MeProfileQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeProfileQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'graduationDate' | 'dateJoined' | 'membershipExpiration'>
+    & { eventsAttended?: Maybe<Array<(
+      { __typename?: 'Event' }
+      & Pick<Event, 'dateHosted' | 'eventTitle' | 'description' | 'location'>
+      & { hostSig: (
+        { __typename?: 'Sig' }
+        & Pick<Sig, 'name'>
+      ) }
+    )>>, groups: Array<(
+      { __typename?: 'Group' }
+      & Pick<Group, 'name'>
+    )> }
+  )> }
+);
+
 export type UploadResumeMutationVariables = Exact<{
   resume: Scalars['Upload'];
   grad: Scalars['DateTime'];
@@ -565,6 +587,52 @@ export function useAttendEventMutation(baseOptions?: ApolloReactHooks.MutationHo
 export type AttendEventMutationHookResult = ReturnType<typeof useAttendEventMutation>;
 export type AttendEventMutationResult = ApolloReactCommon.MutationResult<AttendEventMutation>;
 export type AttendEventMutationOptions = ApolloReactCommon.BaseMutationOptions<AttendEventMutation, AttendEventMutationVariables>;
+export const MeProfileDocument = gql`
+    query MeProfile {
+  me {
+    graduationDate
+    dateJoined
+    membershipExpiration
+    eventsAttended {
+      dateHosted
+      hostSig {
+        name
+      }
+      eventTitle
+      description
+      location
+    }
+    groups {
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useMeProfileQuery__
+ *
+ * To run a query within a React component, call `useMeProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeProfileQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMeProfileQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeProfileQuery, MeProfileQueryVariables>) {
+        return ApolloReactHooks.useQuery<MeProfileQuery, MeProfileQueryVariables>(MeProfileDocument, baseOptions);
+      }
+export function useMeProfileLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeProfileQuery, MeProfileQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<MeProfileQuery, MeProfileQueryVariables>(MeProfileDocument, baseOptions);
+        }
+export type MeProfileQueryHookResult = ReturnType<typeof useMeProfileQuery>;
+export type MeProfileLazyQueryHookResult = ReturnType<typeof useMeProfileLazyQuery>;
+export type MeProfileQueryResult = ApolloReactCommon.QueryResult<MeProfileQuery, MeProfileQueryVariables>;
 export const UploadResumeDocument = gql`
     mutation uploadResume($resume: Upload!, $grad: DateTime!, $fname: String!, $lname: String!) {
   uploadResume(resume: $resume, graduationDate: $grad, firstName: $fname, lastName: $lname) {

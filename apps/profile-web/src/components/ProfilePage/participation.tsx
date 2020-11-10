@@ -175,7 +175,7 @@ const COLORS = [
 
 interface ParticipationProps {
   monthJoined: string;
-  eventsAttended: Event[];
+  eventsAttended: any;
 }
 
 export const Participation: React.FC<ParticipationProps> = (

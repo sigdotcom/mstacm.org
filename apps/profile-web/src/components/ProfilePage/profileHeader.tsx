@@ -225,7 +225,7 @@ const NotificationShortcut: AnyStyledComponent = styled.a`
 `;
 
 interface ProfileHeaderProps {
-  meGroups: Group[];
+  meGroups: any;
   numEvents: number;
 }
 

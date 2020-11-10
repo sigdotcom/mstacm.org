@@ -120,7 +120,7 @@ const FindEventsLink: AnyStyledComponent = styled.a`
 // ];
 
 interface RecentlyAttendedEventsProps {
-  eventsAttended: Event[];
+  eventsAttended: any;
 }
 
 export const RecentlyAttendedEvents: React.FC<RecentlyAttendedEventsProps> = (
@@ -133,7 +133,7 @@ export const RecentlyAttendedEvents: React.FC<RecentlyAttendedEventsProps> = (
       return;
     }
 
-    setEventBoxes(props.eventsAttended.map((event: Event, index) =>
+    setEventBoxes(props.eventsAttended.map((event: Event, index: number) =>
       <EventBox key={index}>
         <EventPoster></EventPoster>
         <EventContent>

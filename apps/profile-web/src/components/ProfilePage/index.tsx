@@ -7,10 +7,10 @@ import { Membership } from "./membership";
 import { Participation } from "./participation";
 import { RecentlyAttendedEvents } from "./recentlyAttendedEvents";
 import { QuickAccess } from "../QuickAccess";
-// import {
-//   useMeProfileQuery,
-//   MeProfileQueryHookResult
-// } from "../../generated/graphql"
+import {
+  useMeProfileQuery,
+  MeProfileQueryHookResult
+} from "../../generated/graphql"
 
 
 export const ME_PROFILE_QUERY: any = gql`
@@ -77,67 +77,17 @@ const QuickAccessMargins: AnyStyledComponent = styled.div`
 `;
 
 export const ProfilePage: React.FC<{}> = () => {
-  // const profileQuery: MeProfileQueryHookResult = useMeProfileQuery();
-  // const meProfileData = profileQuery.data;
-  const meProfileData: any = {
-    "me": {
-      "graduationDate": "May 2021",
-      "dateJoined": "August 2019",
-      "membershipExpiration": "May 2020",
-      "eventsAttended": [
-        {
-          "dateHosted": "September 25, 2019 10:00 - 12:00pm",
-          "hostSig": { "name": "Women" },
-          "eventTitle": "Dr. Katrina Ward Talk",
-          "description": "ACM-W is proud to welcome Dr. Katrina Ward from Sandia National Laboratories. She'll be offering insight on her career at Sandia...",
-          "location": "CS 202"
-        },
-        {
-          // "dateHosted": "September 25, 2019 5:00 - 6:00pm",
-          "hostSig": { "name": "Game" },
-          "eventTitle": "Deniz Kerim Unlucky Talk",
-          "description": "ACM-W is proud to welcome Dr. Katrina Ward from Sandia National Laboratories. She'll be offering insight on her career at Sandia...",
-          "location": "CS 202"
-        },
-        {
-          "dateHosted": "September 25, 2019 5:00 - 6:00pm",
-          "hostSig": { "name": "Web" },
-          "eventTitle": "Jeter Frog Talk",
-          "description": "ACM-W is proud to welcome Dr. Katrina Ward from Sandia National Laboratories. She'll be offering insight on her career at Sandia...",
-          // "location": "CS 202"
-        },
-        {
-          "dateHosted": "September 25, 2019 5:00 - 6:00pm",
-          "hostSig": { "name": "" },
-          "eventTitle": "Drasdfasdfasdfasdfasdfasdf. Katrina Ward Talk",
-          "description": "ACM-W is proud to welcome Dr. Katrina Ward from Sandia National Laboratories. She'll be offering insight on her career at Sandia and potato",
-          // "location": "CS 202"
-        },
-        { "hostSig": { "name": "Web" } },
-        { "hostSig": { "name": "Web" } },
-        { "hostSig": { "name": "Hack" } },
-        { "hostSig": { "name": "Data" } },
-        { "hostSig": { "name": "Data" } },
-        { "hostSig": { "name": "Web" } },
-        { "hostSig": { "name": "Hack" } },
-        { "hostSig": { "name": "Arcade" } },
-        { "hostSig": { "name": "Women" } },
-        { "hostSig": { "name": "Arcade" } },
-        { "hostSig": { "name": "Arcade" } },
-        { "hostSig": { "name": "Arcade" } },
-        { "hostSig": { "name": "Security" } },
-        { "hostSig": { "name": "Data" } }
-      ],
-      "groups": [
-        {
-          "name": "Community Chair"
-        },
-        {
-          "name": "Event Manager"
-        }
-      ]
-    }
-  }
+  const { data: meProfileData, loading, error }: MeProfileQueryHookResult = useMeProfileQuery();
+  console.log(meProfileData, loading, error);
+
+  if (!meProfileData || loading || error)
+    return (<div>That Sucks!</div>)
+
+  if (!meProfileData.me)
+    return (<div>That Sucks!</div>)
+
+  if (!meProfileData.me.eventsAttended)
+    return (<div>That Sucks!</div>)
 
   return (
     <ProfileWrapper>
@@ -166,3 +116,64 @@ export const ProfilePage: React.FC<{}> = () => {
     </ProfileWrapper>
   );
 };
+
+  //  const meProfileData: any = {
+  //    "me": {
+  //      "graduationDate": "May 2021",
+  //      "dateJoined": "August 2019",
+  //      "membershipExpiration": "May 2020",
+  //      "eventsAttended": [
+  //        {
+  //          "dateHosted": "September 25, 2019 10:00 - 12:00pm",
+  //          "hostSig": { "name": "Women" },
+  //          "eventTitle": "Dr. Katrina Ward Talk",
+  //          "description": "ACM-W is proud to welcome Dr. Katrina Ward from Sandia National Laboratories. She'll be offering insight on her career at Sandia...",
+  //          "location": "CS 202"
+  //        },
+  //        {
+  //          // "dateHosted": "September 25, 2019 5:00 - 6:00pm",
+  //          "hostSig": { "name": "Game" },
+  //          "eventTitle": "Deniz Kerim Unlucky Talk",
+  //          "description": "ACM-W is proud to welcome Dr. Katrina Ward from Sandia National Laboratories. She'll be offering insight on her career at Sandia...",
+  //          "location": "CS 202"
+  //        },
+  //        {
+  //          "dateHosted": "September 25, 2019 5:00 - 6:00pm",
+  //          "hostSig": { "name": "Web" },
+  //          "eventTitle": "Jeter Frog Talk",
+  //          "description": "ACM-W is proud to welcome Dr. Katrina Ward from Sandia National Laboratories. She'll be offering insight on her career at Sandia...",
+  //          // "location": "CS 202"
+  //        },
+  //        {
+  //          "dateHosted": "September 25, 2019 5:00 - 6:00pm",
+  //          "hostSig": { "name": "" },
+  //          "eventTitle": "Drasdfasdfasdfasdfasdfasdf. Katrina Ward Talk",
+  //          "description": "ACM-W is proud to welcome Dr. Katrina Ward from Sandia National Laboratories. She'll be offering insight on her career at Sandia and potato",
+  //          // "location": "CS 202"
+  //        },
+  //        { "hostSig": { "name": "Web" } },
+  //        { "hostSig": { "name": "Web" } },
+  //        { "hostSig": { "name": "Hack" } },
+  //        { "hostSig": { "name": "Data" } },
+  //        { "hostSig": { "name": "Data" } },
+  //        { "hostSig": { "name": "Web" } },
+  //        { "hostSig": { "name": "Hack" } },
+  //        { "hostSig": { "name": "Arcade" } },
+  //        { "hostSig": { "name": "Women" } },
+  //        { "hostSig": { "name": "Arcade" } },
+  //        { "hostSig": { "name": "Arcade" } },
+  //        { "hostSig": { "name": "Arcade" } },
+  //        { "hostSig": { "name": "Security" } },
+  //        { "hostSig": { "name": "Data" } }
+  //      ],
+  //      "groups": [
+  //        {
+  //          "name": "Community Chair"
+  //        },
+  //        {
+  //          "name": "Event Manager"
+  //        }
+  //      ]
+  //    }
+  //  }
+
