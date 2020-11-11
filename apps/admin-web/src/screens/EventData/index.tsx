@@ -21,6 +21,8 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
   const [attendeeEmails, setAttendeeEmails] = useState<string[]>();
   const [interestEmails, setInterestEmails] = useState<string[]>();
 
+  const [qrKey, setQrKey] = useState<string>();
+
   const csvOptions = { 
     filename: 'email addresses',
     fieldSeparator: ',',
@@ -133,7 +135,12 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
     }
   ];
 
-  const handleQR: () => void = (): void => {
+  const handleQR: Function = (choice: number) => {
+    if (choice == 0)
+      setQrKey("e/" + eventUrlKey);
+    else if (choice == 1)
+      setQrKey("i/" + eventUrlKey);
+
     setQRVisible(true);
   };
 
@@ -178,16 +185,12 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
           <h2 style={{fontSize: 20}}>Interested Users</h2>
         </Col>
         <Col span={3}>
-          
+          <a style={{fontSize: 16, textDecoration: "underline"}} onClick={() => handleQR(1)}>Interest Link / QR</a>
         </Col>
         <Col span={3}>
           <a style={{fontSize: 16, textDecoration: "underline"}} onClick={downloadInterestCSV}>Download Email CSV</a>
         </Col>
       </Row>
-
-      {/*<div style={{float: "left"}}><h2 style={{fontSize: 20}}>Interested Users</h2></div>*/}
-      {/*<div style={{float: "left", marginLeft: 50, marginTop: 5}}><a style={{fontSize: 16, textDecoration: "underline"}} onClick={handleQR}>Registration Link / QR</a></div> */}
-      {/*<div style={{float: "left", marginLeft: 50, marginTop: 5}}><Button onClick={handleQR}>QR</Button></div>*/}
 
       <Table columns={columns} dataSource={usersInterested} />
 
@@ -198,23 +201,19 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
           <h2 style={{fontSize: 20}}>Attendees</h2>
         </Col>
         <Col span={3}>
-          <a style={{fontSize: 16, textDecoration: "underline"}} onClick={handleQR}>Registration Link / QR</a>
+          <a style={{fontSize: 16, textDecoration: "underline"}} onClick={() => handleQR(0)}>Registration Link / QR</a>
         </Col>
         <Col span={3}>
           <a style={{fontSize: 16, textDecoration: "underline"}} onClick={downloadAttendeeCSV}>Download Email CSV</a>
         </Col>
       </Row>
 
-      {/* <div style={{float: "left"}}><h2 style={{fontSize: 20}}>Attendees</h2></div>
-      <div style={{float: "left", marginLeft: 50, marginTop: 2}}><a style={{fontSize: 16, textDecoration: "underline"}} onClick={handleQR}>Registration Link / QR</a></div> */}
-      {/*div style={{float: "left", marginLeft: 50, marginTop: 2}}><a style={{fontSize: 16, textDecoration: "underline"}} onClick={downloadAttendeeCSV}>Download Email CSV</a></div>*/}
-
       <Table columns={columns} dataSource={attendees} />
 
       <QRModal
         visible={QRVisible}
         setVisible={setQRVisible}
-        eventUrlKey={eventUrlKey}
+        eventUrlKey={qrKey}
       />
     </div>
   );
