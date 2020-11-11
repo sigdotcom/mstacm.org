@@ -18,7 +18,7 @@ const QRModal: React.FC<IQRModalProps> = ({
     setVisible(false);
   };
 
-  const registrationLink: string = "https://mstacm.org/e/" + eventUrlKey; 
+  const registrationLink: string = "https://mstacm.org/" + eventUrlKey; 
 
   if(eventUrlKey == null) {
     return (
