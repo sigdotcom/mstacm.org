@@ -117,63 +117,51 @@ export const ProfilePage: React.FC<{}> = () => {
   );
 };
 
-  //  const meProfileData: any = {
-  //    "me": {
-  //      "graduationDate": "May 2021",
-  //      "dateJoined": "August 2019",
-  //      "membershipExpiration": "May 2020",
-  //      "eventsAttended": [
-  //        {
-  //          "dateHosted": "September 25, 2019 10:00 - 12:00pm",
-  //          "hostSig": { "name": "Women" },
-  //          "eventTitle": "Dr. Katrina Ward Talk",
-  //          "description": "ACM-W is proud to welcome Dr. Katrina Ward from Sandia National Laboratories. She'll be offering insight on her career at Sandia...",
-  //          "location": "CS 202"
-  //        },
-  //        {
-  //          // "dateHosted": "September 25, 2019 5:00 - 6:00pm",
-  //          "hostSig": { "name": "Game" },
-  //          "eventTitle": "Deniz Kerim Unlucky Talk",
-  //          "description": "ACM-W is proud to welcome Dr. Katrina Ward from Sandia National Laboratories. She'll be offering insight on her career at Sandia...",
-  //          "location": "CS 202"
-  //        },
-  //        {
-  //          "dateHosted": "September 25, 2019 5:00 - 6:00pm",
-  //          "hostSig": { "name": "Web" },
-  //          "eventTitle": "Jeter Frog Talk",
-  //          "description": "ACM-W is proud to welcome Dr. Katrina Ward from Sandia National Laboratories. She'll be offering insight on her career at Sandia...",
-  //          // "location": "CS 202"
-  //        },
-  //        {
-  //          "dateHosted": "September 25, 2019 5:00 - 6:00pm",
-  //          "hostSig": { "name": "" },
-  //          "eventTitle": "Drasdfasdfasdfasdfasdfasdf. Katrina Ward Talk",
-  //          "description": "ACM-W is proud to welcome Dr. Katrina Ward from Sandia National Laboratories. She'll be offering insight on her career at Sandia and potato",
-  //          // "location": "CS 202"
-  //        },
-  //        { "hostSig": { "name": "Web" } },
-  //        { "hostSig": { "name": "Web" } },
-  //        { "hostSig": { "name": "Hack" } },
-  //        { "hostSig": { "name": "Data" } },
-  //        { "hostSig": { "name": "Data" } },
-  //        { "hostSig": { "name": "Web" } },
-  //        { "hostSig": { "name": "Hack" } },
-  //        { "hostSig": { "name": "Arcade" } },
-  //        { "hostSig": { "name": "Women" } },
-  //        { "hostSig": { "name": "Arcade" } },
-  //        { "hostSig": { "name": "Arcade" } },
-  //        { "hostSig": { "name": "Arcade" } },
-  //        { "hostSig": { "name": "Security" } },
-  //        { "hostSig": { "name": "Data" } }
-  //      ],
-  //      "groups": [
-  //        {
-  //          "name": "Community Chair"
-  //        },
-  //        {
-  //          "name": "Event Manager"
-  //        }
-  //      ]
-  //    }
-  //  }
-
+// meProfileData = {
+//   "me": {
+//     "graduationDate": "May 2021",
+//     "dateJoined": "August 2019",
+//     "membershipExpiration": "FebruaryA",
+//     "eventsAttended": [
+//       {
+//         "dateHosted": "September 25, 2019 10:00 - 12:00pm",
+//         "hostSig": { "name": "Women" },
+//         "eventTitle": "Dr. Katrina Ward Talk",
+//         "description": "ACM-W is proud to welcome Dr. Katrina Ward from Sandia National Laboratories. She'll be offering insight on her career at Sandia...",
+//         "location": "CS 202"
+//       },
+//       {
+//         "dateHosted": "",
+//         "hostSig": { "name": "Game" },
+//         "eventTitle": "Deniz Kerim Unlucky Talk",
+//         "description": "ACM-W is proud to welcome Dr. Katrina Ward from Sandia National Laboratories. She'll be offering insight on her career at Sandia...",
+//         "location": "CS 202"
+//       },
+//       {
+//         "dateHosted": "September 25, 2019 5:00 - 6:00pm",
+//         "hostSig": { "name": "Web" },
+//         "eventTitle": "Jeter Frog Talk",
+//         "description": "ACM-W is proud to welcome Dr. Katrina Ward from Sandia National Laboratories. She'll be offering insight on her career at Sandia...",
+//         "location": ""
+//       },
+//       {
+//         "dateHosted": "September 25, 2019 5:00 - 6:00pm",
+//         "hostSig": { "name": "" },
+//         "eventTitle": "",
+//         "description": "ACM-W is proud to welcome Dr. Katrina Ward from Sandia National Laboratories. She'll be offering insight on her career at Sandia and potato",
+//         "location": ""
+//       }
+//     ],
+//     "groups": [
+//       {
+//         "name": "Community Chair"
+//       },
+//       {
+//         "name": "Event Manager"
+//       },
+//       {
+//         "name": "Event Manager"
+//       },
+//     ]
+//   }
+// }

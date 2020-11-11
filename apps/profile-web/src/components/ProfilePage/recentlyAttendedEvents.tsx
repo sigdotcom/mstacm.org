@@ -19,11 +19,16 @@ const RecentlyAttendedEventsWrapper: AnyStyledComponent = styled.div`
 `;
 
 const Header: AnyStyledComponent = styled.div`
-  font-size: 1.5rem;
-  line-height: 1.5rem;
+  font-size: 1.25rem;
+  line-height: 1.25rem;
   font-weight: 800;
   color: black;
   margin-bottom: 1.5rem;
+
+  @media all and (min-width: 960px) {
+    line-height: 1.5rem;
+    font-size: 1.5rem;
+  }
 `;
 
 const EventBox: AnyStyledComponent = styled.div`

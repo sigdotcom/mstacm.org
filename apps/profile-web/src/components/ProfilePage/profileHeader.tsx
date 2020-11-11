@@ -192,30 +192,24 @@ const Groups: AnyStyledComponent = styled.div`
   }
 `;
 
-const WhiteSpace: AnyStyledComponent = styled.div`
-  width: 100%;
-  display: none;
-
-  @media all and (min-width: 960px) {
-    display: block;
-  }
-`;
-
 const ShortcutGroup: AnyStyledComponent = styled.div`
+  position: absolute;
+  top: 16px;
+  right: 16px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   margin-bottom: auto;
+
+  @media all and (min-width: 960px) {
+    top: 16px;
+    right: 32px;
+  }
 `;
 
 const NotificationShortcut: AnyStyledComponent = styled.a`
-  position: absolute;
-  top: 16px;
-  right: 16px;
-
   @media all and (min-width: 960px) {
-    position: initial;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -268,7 +262,6 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = (
             <Groups>{groupComponents}</Groups>
           </UserInfo>
         </ProfileInfo>
-        <WhiteSpace style={{ width: "100%" }}></WhiteSpace>
         <ShortcutGroup>
           <NotificationShortcut href="#">
             <Icon

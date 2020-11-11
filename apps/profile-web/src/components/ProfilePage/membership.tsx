@@ -7,9 +7,10 @@ const MembershipWrapper: AnyStyledComponent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  padding: 0 1.25rem;
-  margin-bottom: 2.5rem;
   width: 100%;
+  padding: 0 1.25rem;
+  min-width: 20rem;
+  margin-bottom: 2.5rem;
 
   @media all and (min-width: 960px) {
     padding: 0;
@@ -156,71 +157,58 @@ const LeavingInfoText: AnyStyledComponent = styled.div`
 const MembershipStatus: AnyStyledComponent = styled.div`
   background: #FF858C;
   border-radius: 12px;
+  margin: .75rem 1.5rem;
+  font-size: 1.25rem;
+  color: white;
   display: flex;
-  justify-content: space-evenly;
-  align-items: stretch;
-  margin: .5rem 0;
+  align-items: center;
 
-  @media all and (min-width: 340px) {
+  @media all and (min-width: 380px) {
     flex-direction: column;
     justify-content: center;
-    align-items: center;
   }
 
-  @media all and (min-width: 600px) {
+  @media all and (min-width: 530px) {
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-`;
-
-const MembershipExpirationMonth: AnyStyledComponent = styled.div`
-  color: white;
-  font-size: 1.125rem;
-  width: 9rem;
-
-  @media all and (min-width: 340px) {
-    display: flex;
-    width: 16rem;
-  }
-
-  @media all and (min-width: 600px) {
-    margin-right: 2rem;
   }
 
   @media all and (min-width: 1280px) {
     font-size: 1.375rem
-    width: 19rem;
+  }
+`;
 
-    div {
-      white-space: nowrap;
-    }
+const ExpirationContent: AnyStyledComponent = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-right: 1rem;
+  width: 70%;
+
+  @media all and (min-width: 380px) {
+    flex-direction: row;
+    width: auto;
+    margin-right: 0;
+  }
+
+  @media all and (min-width: 530px) {
+    margin-right: 2.5rem;
   }
 `;
 
 const ExpirationMonth: AnyStyledComponent = styled.div`
-  color: white;
   font-weight: 900;
 
-  @media all and (min-width: 340px) {
-    margin-left: .5rem;
+  @media all and (min-width: 380px) {
+    margin-left: .3rem;
   }
 `;
 
 const RenewLink: AnyStyledComponent = styled.a`
   color: #295FC9;
   font-weight: 900;
-  font-size: 1.25rem;
-  width: 4.25rem;
+  width: 30%;
 
-  @media all and (min-width: 340px) {
-    width: 8rem;
-  }
-
-  @media all and (min-width: 1280px) {
-    font-size: 1.375rem
-    white-space: nowrap;
-    width: 9rem;
+  @media all and (min-width: 380px) {
+    width: auto;
   }
 `;
 
@@ -257,10 +245,12 @@ export const Membership: React.FC<MembershipStatusProps> = (
           </EventsInfo>
         </JoinedInfo>
         <MembershipStatus>
-          <MembershipExpirationMonth>
+          <ExpirationContent>
             <div>ACM Member</div>
-            <ExpirationMonth>Until {props.membershipExpiration}</ExpirationMonth>
-          </MembershipExpirationMonth>
+            <ExpirationMonth>
+              Until {props.membershipExpiration}
+            </ExpirationMonth>
+          </ExpirationContent>
           <RenewLink href="#">Renew Now?</RenewLink>
         </MembershipStatus>
       </MembershipMain>

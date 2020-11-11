@@ -27,10 +27,10 @@ const ParticipationWrapper: AnyStyledComponent = styled.div`
 
 const ParticipationTitle: AnyStyledComponent = styled.div`
   font-size: 1.25rem;
+  line-height: 1.25rem;
   font-weight: 800;
   color: black;
   width: 100%;
-  line-height: 1.25rem;
   white-space: nowrap;
   margin-right: 1.5rem;
   padding-left: 1.25rem;
