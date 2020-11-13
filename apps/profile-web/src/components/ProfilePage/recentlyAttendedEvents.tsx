@@ -1,8 +1,28 @@
-import React, { useState, useEffect } from "react";
+import gql from "graphql-tag";
+import React from "react";
 
 import styled, { AnyStyledComponent } from "styled-components";
 
-import { Event } from "../../generated/graphql";
+import {
+  useMeEventsQuery,
+  MeEventsQueryHookResult
+} from "../../generated/graphql"
+
+export const ME_EVENTS_QUERY: any = gql`
+  query MeEvents {
+    me {
+      eventsAttended {
+        dateHosted
+        hostSig {
+          name
+        }
+        eventTitle
+        description
+        location
+      }
+    }
+  }
+`;
 
 const RecentlyAttendedEventsWrapper: AnyStyledComponent = styled.div`
   width: 100%;
@@ -124,21 +144,16 @@ const FindEventsLink: AnyStyledComponent = styled.a`
 //   "#F5F6BF", "#A9DEF9", "#F694C1", "#BCFFE2"
 // ];
 
-interface RecentlyAttendedEventsProps {
-  eventsAttended: any;
-}
 
-export const RecentlyAttendedEvents: React.FC<RecentlyAttendedEventsProps> = (
-  props: RecentlyAttendedEventsProps
-) => {
-  const [eventBoxes, setEventBoxes] = useState<any>(undefined);
+export const RecentlyAttendedEvents: React.FC<{}> = () => {
+  const { loading, error, data }: MeEventsQueryHookResult = useMeEventsQuery();
 
-  useEffect(() => {
-    if (!props.eventsAttended.length) {
-      return;
-    }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error!</p>;
 
-    setEventBoxes(props.eventsAttended.map((event: Event, index: number) =>
+  let eventBoxes: JSX.Element[] = [];
+  if (data && data.me && data.me.eventsAttended) {
+    eventBoxes = data.me.eventsAttended.map((event: any, index: number): JSX.Element =>
       <EventBox key={index}>
         <EventPoster></EventPoster>
         <EventContent>
@@ -152,13 +167,13 @@ export const RecentlyAttendedEvents: React.FC<RecentlyAttendedEventsProps> = (
           {event.description && <EventDescription>{event.description.slice(0, 130)}...</EventDescription>}
         </EventContent>
       </EventBox>
-    ));
-  }, [props]);
+    );
+  }
 
   return (
     <RecentlyAttendedEventsWrapper>
       <Header>Recently Attended Events</Header>
-      {eventBoxes ?
+      {eventBoxes.length ?
         eventBoxes :
         <FindEventsBox>
           <FindEventsLink href="#">

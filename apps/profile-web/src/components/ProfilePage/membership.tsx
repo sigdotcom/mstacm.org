@@ -1,6 +1,25 @@
+import gql from "graphql-tag";
 import React from "react";
 
 import styled, { AnyStyledComponent } from "styled-components";
+
+import {
+  useMeMembershipQuery,
+  MeMembershipQueryHookResult
+} from "../../generated/graphql"
+
+export const ME_MEMBERSHIP_QUERY: any = gql`
+  query MeMembership {
+    me {
+      graduationDate
+      dateJoined
+      membershipExpiration
+      eventsAttended {
+        eventTitle
+      }
+    }
+  }
+`;
 
 const MembershipWrapper: AnyStyledComponent = styled.div`
   display: flex;
@@ -212,16 +231,28 @@ const RenewLink: AnyStyledComponent = styled.a`
   }
 `;
 
-interface MembershipStatusProps {
-  dateJoined: string;
-  numEventsAttended: number;
-  graduationDate: string;
-  membershipExpiration: string;
-}
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
 
-export const Membership: React.FC<MembershipStatusProps> = (
-  props: MembershipStatusProps
-) => {
+export const Membership: React.FC<{}> = (): JSX.Element => {
+  const { loading, error, data }: MeMembershipQueryHookResult = useMeMembershipQuery();
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error!</p>;
+
+  let eventsAttended = 0, yearsSinceJoin = 0, dateJoined = "Unknown", graduationDate = "Unknown", membershipExpirationDate = "Unknown";
+  if (data && data.me && data.me.eventsAttended) {
+    eventsAttended = data.me.eventsAttended.length;
+    const me = data.me;
+    let tempDate = new Date(me.dateJoined);
+    yearsSinceJoin = new Date().getFullYear() - tempDate.getFullYear();
+    dateJoined = monthNames[tempDate.getMonth()] + " " + tempDate.getFullYear();
+    tempDate = new Date(me.graduationDate);
+    graduationDate = monthNames[tempDate.getMonth()] + " " + tempDate.getFullYear();
+    tempDate = new Date(me.membershipExpiration);
+    membershipExpirationDate = monthNames[tempDate.getMonth()];
+  }
+
   return (
     <MembershipWrapper>
       <MembershipTitle>Membership</MembershipTitle>
@@ -229,17 +260,17 @@ export const Membership: React.FC<MembershipStatusProps> = (
         <JoinedInfo>
           <JoinedInfoText>
             <div>Joined S&T ACM</div>
-            <div><NoBold>in</NoBold> {props.dateJoined}</div>
+            <div><NoBold>in</NoBold> {dateJoined}</div>
           </JoinedInfoText>
           <EventsInfo>
             <EventsInfoText>
-              <YearsPass>2 YEARS PASS</YearsPass>
-              <EventsLater>{props.numEventsAttended} EVENTS LATER</EventsLater>
+              <YearsPass>{yearsSinceJoin} YEARS PASS</YearsPass>
+              <EventsLater>{eventsAttended} EVENTS LATER</EventsLater>
             </EventsInfoText>
             <LeavingInfo>
               <LeavingInfoText>
                 <div>Leaving S&T ACM</div>
-                <div><NoBold>in</NoBold> {props.graduationDate}</div>
+                <div><NoBold>in</NoBold> {graduationDate}</div>
               </LeavingInfoText>
             </LeavingInfo>
           </EventsInfo>
@@ -248,7 +279,7 @@ export const Membership: React.FC<MembershipStatusProps> = (
           <ExpirationContent>
             <div>ACM Member</div>
             <ExpirationMonth>
-              Until {props.membershipExpiration}
+              Until {membershipExpirationDate}
             </ExpirationMonth>
           </ExpirationContent>
           <RenewLink href="#">Renew Now?</RenewLink>

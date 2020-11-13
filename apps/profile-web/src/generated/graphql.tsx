@@ -459,14 +459,29 @@ export type AttendEventMutation = (
   ) }
 );
 
-export type MeProfileQueryVariables = Exact<{ [key: string]: never; }>;
+export type MeMembershipQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeProfileQuery = (
+export type MeMembershipQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'graduationDate' | 'dateJoined' | 'membershipExpiration'>
+    & { eventsAttended?: Maybe<Array<(
+      { __typename?: 'Event' }
+      & Pick<Event, 'eventTitle'>
+    )>> }
+  )> }
+);
+
+export type MeParticipationQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeParticipationQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'dateJoined'>
     & { eventsAttended?: Maybe<Array<(
       { __typename?: 'Event' }
       & Pick<Event, 'dateHosted' | 'eventTitle' | 'description' | 'location'>
@@ -474,10 +489,42 @@ export type MeProfileQuery = (
         { __typename?: 'Sig' }
         & Pick<Sig, 'name'>
       ) }
+    )>> }
+  )> }
+);
+
+export type MeEventsGroupsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeEventsGroupsQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'User' }
+    & { eventsAttended?: Maybe<Array<(
+      { __typename?: 'Event' }
+      & Pick<Event, 'eventTitle'>
     )>>, groups: Array<(
       { __typename?: 'Group' }
       & Pick<Group, 'name'>
     )> }
+  )> }
+);
+
+export type MeEventsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeEventsQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'User' }
+    & { eventsAttended?: Maybe<Array<(
+      { __typename?: 'Event' }
+      & Pick<Event, 'dateHosted' | 'eventTitle' | 'description' | 'location'>
+      & { hostSig: (
+        { __typename?: 'Sig' }
+        & Pick<Sig, 'name'>
+      ) }
+    )>> }
   )> }
 );
 
@@ -587,12 +634,47 @@ export function useAttendEventMutation(baseOptions?: ApolloReactHooks.MutationHo
 export type AttendEventMutationHookResult = ReturnType<typeof useAttendEventMutation>;
 export type AttendEventMutationResult = ApolloReactCommon.MutationResult<AttendEventMutation>;
 export type AttendEventMutationOptions = ApolloReactCommon.BaseMutationOptions<AttendEventMutation, AttendEventMutationVariables>;
-export const MeProfileDocument = gql`
-    query MeProfile {
+export const MeMembershipDocument = gql`
+    query MeMembership {
   me {
     graduationDate
     dateJoined
     membershipExpiration
+    eventsAttended {
+      eventTitle
+    }
+  }
+}
+    `;
+
+/**
+ * __useMeMembershipQuery__
+ *
+ * To run a query within a React component, call `useMeMembershipQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeMembershipQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeMembershipQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMeMembershipQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeMembershipQuery, MeMembershipQueryVariables>) {
+        return ApolloReactHooks.useQuery<MeMembershipQuery, MeMembershipQueryVariables>(MeMembershipDocument, baseOptions);
+      }
+export function useMeMembershipLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeMembershipQuery, MeMembershipQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<MeMembershipQuery, MeMembershipQueryVariables>(MeMembershipDocument, baseOptions);
+        }
+export type MeMembershipQueryHookResult = ReturnType<typeof useMeMembershipQuery>;
+export type MeMembershipLazyQueryHookResult = ReturnType<typeof useMeMembershipLazyQuery>;
+export type MeMembershipQueryResult = ApolloReactCommon.QueryResult<MeMembershipQuery, MeMembershipQueryVariables>;
+export const MeParticipationDocument = gql`
+    query MeParticipation {
+  me {
+    dateJoined
     eventsAttended {
       dateHosted
       hostSig {
@@ -602,6 +684,40 @@ export const MeProfileDocument = gql`
       description
       location
     }
+  }
+}
+    `;
+
+/**
+ * __useMeParticipationQuery__
+ *
+ * To run a query within a React component, call `useMeParticipationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeParticipationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeParticipationQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMeParticipationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeParticipationQuery, MeParticipationQueryVariables>) {
+        return ApolloReactHooks.useQuery<MeParticipationQuery, MeParticipationQueryVariables>(MeParticipationDocument, baseOptions);
+      }
+export function useMeParticipationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeParticipationQuery, MeParticipationQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<MeParticipationQuery, MeParticipationQueryVariables>(MeParticipationDocument, baseOptions);
+        }
+export type MeParticipationQueryHookResult = ReturnType<typeof useMeParticipationQuery>;
+export type MeParticipationLazyQueryHookResult = ReturnType<typeof useMeParticipationLazyQuery>;
+export type MeParticipationQueryResult = ApolloReactCommon.QueryResult<MeParticipationQuery, MeParticipationQueryVariables>;
+export const MeEventsGroupsDocument = gql`
+    query MeEventsGroups {
+  me {
+    eventsAttended {
+      eventTitle
+    }
     groups {
       name
     }
@@ -610,29 +726,69 @@ export const MeProfileDocument = gql`
     `;
 
 /**
- * __useMeProfileQuery__
+ * __useMeEventsGroupsQuery__
  *
- * To run a query within a React component, call `useMeProfileQuery` and pass it any options that fit your needs.
- * When your component renders, `useMeProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useMeEventsGroupsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeEventsGroupsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useMeProfileQuery({
+ * const { data, loading, error } = useMeEventsGroupsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useMeProfileQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeProfileQuery, MeProfileQueryVariables>) {
-        return ApolloReactHooks.useQuery<MeProfileQuery, MeProfileQueryVariables>(MeProfileDocument, baseOptions);
+export function useMeEventsGroupsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeEventsGroupsQuery, MeEventsGroupsQueryVariables>) {
+        return ApolloReactHooks.useQuery<MeEventsGroupsQuery, MeEventsGroupsQueryVariables>(MeEventsGroupsDocument, baseOptions);
       }
-export function useMeProfileLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeProfileQuery, MeProfileQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<MeProfileQuery, MeProfileQueryVariables>(MeProfileDocument, baseOptions);
+export function useMeEventsGroupsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeEventsGroupsQuery, MeEventsGroupsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<MeEventsGroupsQuery, MeEventsGroupsQueryVariables>(MeEventsGroupsDocument, baseOptions);
         }
-export type MeProfileQueryHookResult = ReturnType<typeof useMeProfileQuery>;
-export type MeProfileLazyQueryHookResult = ReturnType<typeof useMeProfileLazyQuery>;
-export type MeProfileQueryResult = ApolloReactCommon.QueryResult<MeProfileQuery, MeProfileQueryVariables>;
+export type MeEventsGroupsQueryHookResult = ReturnType<typeof useMeEventsGroupsQuery>;
+export type MeEventsGroupsLazyQueryHookResult = ReturnType<typeof useMeEventsGroupsLazyQuery>;
+export type MeEventsGroupsQueryResult = ApolloReactCommon.QueryResult<MeEventsGroupsQuery, MeEventsGroupsQueryVariables>;
+export const MeEventsDocument = gql`
+    query MeEvents {
+  me {
+    eventsAttended {
+      dateHosted
+      hostSig {
+        name
+      }
+      eventTitle
+      description
+      location
+    }
+  }
+}
+    `;
+
+/**
+ * __useMeEventsQuery__
+ *
+ * To run a query within a React component, call `useMeEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeEventsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMeEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeEventsQuery, MeEventsQueryVariables>) {
+        return ApolloReactHooks.useQuery<MeEventsQuery, MeEventsQueryVariables>(MeEventsDocument, baseOptions);
+      }
+export function useMeEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeEventsQuery, MeEventsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<MeEventsQuery, MeEventsQueryVariables>(MeEventsDocument, baseOptions);
+        }
+export type MeEventsQueryHookResult = ReturnType<typeof useMeEventsQuery>;
+export type MeEventsLazyQueryHookResult = ReturnType<typeof useMeEventsLazyQuery>;
+export type MeEventsQueryResult = ApolloReactCommon.QueryResult<MeEventsQuery, MeEventsQueryVariables>;
 export const UploadResumeDocument = gql`
     mutation uploadResume($resume: Upload!, $grad: DateTime!, $fname: String!, $lname: String!) {
   uploadResume(resume: $resume, graduationDate: $grad, firstName: $fname, lastName: $lname) {

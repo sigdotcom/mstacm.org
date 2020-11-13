@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import gql from "graphql-tag";
+import React from "react";
 import styled, { AnyStyledComponent } from "styled-components";
 import Icon from "react-eva-icons";
 
@@ -6,7 +7,24 @@ import { useAuth0 } from "../../utils/react-auth0-wrapper";
 
 import { ProfileOptions } from "./Nav/profileOptions";
 import { Events } from "./events";
-import { Group } from "../../generated/graphql";
+import {
+  useMeEventsGroupsQuery,
+  MeEventsGroupsQueryHookResult
+} from "../../generated/graphql"
+
+
+export const ME_EVENTS_GROUPS_QUERY: any = gql`
+  query MeEventsGroups {
+    me {
+      eventsAttended {
+        eventTitle
+      }
+      groups {
+        name
+      }
+    }
+  }
+`;
 
 
 const HeaderWrapper: AnyStyledComponent = styled.div`
@@ -203,7 +221,7 @@ const ShortcutGroup: AnyStyledComponent = styled.div`
   margin-bottom: auto;
 
   @media all and (min-width: 960px) {
-    top: 16px;
+    top: 32px;
     right: 32px;
   }
 `;
@@ -218,25 +236,24 @@ const NotificationShortcut: AnyStyledComponent = styled.a`
   }
 `;
 
-interface ProfileHeaderProps {
-  meGroups: any;
-  numEvents: number;
-}
-
-export const ProfileHeader: React.FC<ProfileHeaderProps> = (
-  props: ProfileHeaderProps
-): JSX.Element => {
+export const ProfileHeader: React.FC<{}> = (): JSX.Element => {
   const { user } = useAuth0();
-  const [groupComponents, setGroupComponents]: any = useState<any>(undefined);
+  const { loading, error, data }: MeEventsGroupsQueryHookResult = useMeEventsGroupsQuery();
 
-  useEffect(() => {
-    setGroupComponents(props.meGroups.map((group: Group) =>
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error!</p>;
+
+  let groupComponents: JSX.Element[] = [];
+  let numEvents = 0;
+  if (data && data.me && data.me.eventsAttended) {
+    numEvents = data.me.eventsAttended.length;
+    groupComponents = data.me.groups.map((group): JSX.Element =>
       <div
         style={{ background: "#C0F6BF" }}
         key={group.name}
       >{group.name}</div>
-    ));
-  }, [props]);
+    );
+  }
 
   return (
     <HeaderWrapper>
@@ -275,7 +292,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = (
           <ProfileOptions />
         </ShortcutGroup>
       </Header>
-      <Events numEvents={props.numEvents} />
+      <Events numEvents={numEvents} />
     </HeaderWrapper>
   );
 };

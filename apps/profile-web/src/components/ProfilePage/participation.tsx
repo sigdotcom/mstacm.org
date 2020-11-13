@@ -1,8 +1,30 @@
-import React, { useState, useEffect } from "react";
+import gql from "graphql-tag";
+import React from "react";
 
 import styled, { AnyStyledComponent } from "styled-components";
 
-import { Event } from "../../generated/graphql";
+import {
+  useMeParticipationQuery,
+  MeParticipationQueryHookResult
+} from "../../generated/graphql"
+
+
+export const ME_PARTICIPATION_QUERY: any = gql`
+  query MeParticipation {
+    me {
+      dateJoined
+      eventsAttended {
+        dateHosted
+        hostSig {
+          name
+        }
+        eventTitle
+        description
+        location
+      }
+    }
+  }
+`;
 
 const ParticipationWrapper: AnyStyledComponent = styled.div`
   width: 100%;
@@ -173,20 +195,20 @@ const COLORS = [
   "#F5F6BF", "#A9DEF9", "#F694C1", "#BCFFE2"
 ];
 
-interface ParticipationProps {
-  monthJoined: string;
-  eventsAttended: any;
-}
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
 
-export const Participation: React.FC<ParticipationProps> = (
-  props: ParticipationProps
-) => {
-  const [clubBoxes, setClubBoxes] = useState<any>(undefined);
+export const Participation: React.FC<{}> = () => {
+  const { loading, error, data }: MeParticipationQueryHookResult = useMeParticipationQuery();
 
-  useEffect(() => {
-    if (!props.eventsAttended.length) {
-      return;
-    }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error!</p>;
+
+  let clubBoxes: JSX.Element[] = [];
+  let monthJoined = "";
+  if (data && data.me && data.me.eventsAttended) {
+    console.log(data.me);
+    monthJoined = monthNames[new Date(data.me.dateJoined).getMonth()];
 
     let clubEvents: {
       [key: string]: {
@@ -194,10 +216,9 @@ export const Participation: React.FC<ParticipationProps> = (
         color: string;
       }
     } = {};
-    let sigName = "";
+    let i = 0, sigName = "";
 
-    let i = 0;
-    props.eventsAttended.forEach((event: Event) => {
+    data.me.eventsAttended.forEach(event => {
       if (event.hostSig) {
         sigName = event.hostSig.name;
         if (sigName in clubEvents) {
@@ -212,7 +233,7 @@ export const Participation: React.FC<ParticipationProps> = (
       }
     });
 
-    let clubBoxList = [];
+    let clubBoxList: JSX.Element[] = [];
     for (const club in clubEvents) {
       clubBoxList.push(
         <ClubBox key={club} style={{ background: clubEvents[club].color }}>
@@ -221,14 +242,14 @@ export const Participation: React.FC<ParticipationProps> = (
         </ClubBox>
       )
     }
-    setClubBoxes(clubBoxList);
-  }, [props]);
+    clubBoxes = clubBoxList;
+  }
 
   return (
     <ParticipationWrapper>
       <ParticipationTitle>Community Participation</ParticipationTitle>
-      <MonthStart>events attended since {props.monthJoined}</MonthStart>
-      {clubBoxes ?
+      <MonthStart>events attended since {monthJoined}</MonthStart>
+      {clubBoxes.length ?
         <CarouselWrapper>
           {clubBoxes}
         </CarouselWrapper> :
