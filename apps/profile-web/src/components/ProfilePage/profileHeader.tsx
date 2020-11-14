@@ -5,7 +5,7 @@ import Icon from "react-eva-icons";
 
 import { useAuth0 } from "../../utils/react-auth0-wrapper";
 
-import { ProfileOptions } from "./Nav/profileOptions";
+import { ProfileOptions } from "../Navigation/profileOptions";
 import { Events } from "./events";
 import {
   useMeEventsGroupsQuery,

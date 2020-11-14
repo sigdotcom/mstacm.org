@@ -1,17 +1,24 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
+import Icon from "react-eva-icons";
 
+import { SideBar } from "./components/Navigation/sideBar";
 import { ProfilePage } from "./components/ProfilePage";
 import { EventRegistration } from "./components/EventRegistration";
-import { QuickAccess } from "./components/QuickAccess";
 import { config } from "./config";
 import "./static/css/App.css";
 
 import { useAuth0 } from "./utils/react-auth0-wrapper";
+import styled, { AnyStyledComponent } from "styled-components";
 
-import { Layout, Menu, Spin } from "antd";
-
-const { Content, Sider } = Layout;
+const Layout: AnyStyledComponent = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  background: white;
+  font-family: "Nunito Sans";
+`;
 
 const MainContent: React.FC = (): JSX.Element => {
   return (
@@ -29,7 +36,7 @@ const App: React.FC = (): JSX.Element => {
     isAuthenticated,
     getTokenSilently,
     loginWithRedirect,
-    logout
+    // logout
   } = useAuth0();
 
   useEffect(() => {
@@ -74,47 +81,38 @@ const App: React.FC = (): JSX.Element => {
   //   }
   // }, [loading, isAuthenticated, loginWithRedirect, getTokenSilently]);
 
-  const onLogoutClick: () => void = (): void => {
-    logout({ returnTo: config.REDIRECT_PAGE_URI });
-  };
+  // const onLogoutClick: () => void = (): void => {
+  //   logout({ returnTo: config.REDIRECT_PAGE_URI });
+  // };
 
   if (loading || !isAuthenticated) {
-    return <Spin size="large" className="load-page" tip="Loading..." />;
+    return <div>Loading...</div>;
   }
 
   return (
     <BrowserRouter>
       <Layout>
-        <Sider
-          breakpoint="md"
-          collapsedWidth="0"
-          onBreakpoint={undefined}
-          onCollapse={undefined}
-        >
-          <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={["resume"]}>
-            <Menu.Item key="resume">
-              <Link to="/">
-                <span className="nav-text">Submit Resume</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item onClick={onLogoutClick} key="signOut">
-              <span className="nav-text">Sign Out</span>
-            </Menu.Item>
-          </Menu>
-          <QuickAccess />
-        </Sider>
-        <Layout>
-          {/* <Header style={{ background: "#fff", padding: 0 }}>
-            <PageHeader
-              backIcon={false}
-              title={`Hello, ${user.name}. Welcome to your Dashboard`}
-            />
-          </Header> */}
-          <Content>
-            <MainContent />
-          </Content>
-        </Layout>
+        <SideBar>
+          <li>
+            <Link to="/">
+              <Icon
+                name="calendar-outline"
+                size="medium"
+              />
+              <span>Profile</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/">
+              <Icon
+                name="people-outline"
+                size="medium"
+              />
+              <span>Settings</span>
+            </Link>
+          </li>
+        </SideBar>
+        <MainContent />
       </Layout>
     </BrowserRouter>
   );

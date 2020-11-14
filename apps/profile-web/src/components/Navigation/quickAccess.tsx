@@ -7,9 +7,9 @@ const QAWrapper: AnyStyledComponent = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-width: 220px;
-  max-width: 280px;
-  height: 174px;
+  min-width: 13.75rem;
+  max-width: 17.5rem;
+  height: 11rem;
   border-radius: 12px;
   background: #113366;
 `;

@@ -5,7 +5,7 @@ import { ProfileHeader } from "./profileHeader";
 import { Membership } from "./membership";
 import { Participation } from "./participation";
 import { RecentlyAttendedEvents } from "./recentlyAttendedEvents";
-import { QuickAccess } from "../QuickAccess";
+import { QuickAccess } from "../Navigation/quickAccess";
 
 const ProfileWrapper: AnyStyledComponent = styled.div`
   background: white;
@@ -13,7 +13,7 @@ const ProfileWrapper: AnyStyledComponent = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100%;
-  font-family: "Nunito Sans";
+  width: 100%;
 `;
 
 const AttendedEventsWrapper: AnyStyledComponent = styled.div`
@@ -51,11 +51,11 @@ const QuickAccessMargins: AnyStyledComponent = styled.div`
 export const ProfilePage: React.FC<{}> = () => {
   return (
     <ProfileWrapper>
-      <ProfileHeader/>
-      <Membership/>
+      <ProfileHeader />
+      <Membership />
       <AttendedEventsWrapper>
-        <Participation/>
-        <RecentlyAttendedEvents/>
+        <Participation />
+        <RecentlyAttendedEvents />
       </AttendedEventsWrapper>
       <QuickAccessMargins>
         <QuickAccess />

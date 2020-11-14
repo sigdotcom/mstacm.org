@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import { useAuth0 } from "../../../utils/react-auth0-wrapper";
+import { config } from "../../config";
+
+import { useAuth0 } from "../../utils/react-auth0-wrapper";
 
 const Dropdown = styled.div`
   position: absolute;
@@ -40,14 +42,14 @@ const LogoutBtn = styled.a`
 const Options: React.FC<{}> = (): JSX.Element => {
   const { logout } = useAuth0();
 
-  const logoutClick = () => {
-    logout({ returnTo: window.location.origin });
+  const onLogoutClick: () => void = (): void => {
+    logout({ returnTo: config.REDIRECT_PAGE_URI });
   };
 
   return (
     <Dropdown>
       <Profile href={`https://profile.mstacm.org/`}>Profile</Profile>
-      <LogoutBtn onClick={logoutClick}>Log Out</LogoutBtn>
+      <LogoutBtn onClick={onLogoutClick}>Log Out</LogoutBtn>
     </ Dropdown>
   );
 };
