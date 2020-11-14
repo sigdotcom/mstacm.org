@@ -42,13 +42,13 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
     loading: eventLoading,
     error: eventError,
     data: eventData,
-  }: any = useEventsWithKeyQuery({variables: { urlKey: eventUrlKey }});
+  }: any = useEventsWithKeyQuery({pollInterval: 500, variables: { urlKey: eventUrlKey }});
 
   const {
     loading: yearEventsLoading,
     error: yearEventsError,
     data: yearEventsData,
-  }: any = useYearEventsQuery();
+  }: any = useYearEventsQuery({pollInterval: 500});
 
   useEffect(() => {
     if (eventLoading)
