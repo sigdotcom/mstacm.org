@@ -12,8 +12,12 @@ const ProfileWrapper: AnyStyledComponent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
-  width: 100%;
+  flex: 1;
+  margin-bottom: 2rem;
+
+  @media all and (min-width: 900px) {
+    padding-left: 20rem;
+  }
 `;
 
 const AttendedEventsWrapper: AnyStyledComponent = styled.div`
@@ -24,14 +28,14 @@ const AttendedEventsWrapper: AnyStyledComponent = styled.div`
   margin-bottom: 2.5rem;
 
   @media all and (min-width: 600px) {
-    padding: 0 1.25rem;
+    padding: 0 4rem;
+    margin-bottom: 0;
   }
 
   @media all and (min-width: 960px) {
     padding: 0;
     width: 86%
     max-width: 80rem;
-    margin-bottom: 0;
   }
 
   @media all and (min-width: 1280px) {
@@ -42,6 +46,8 @@ const AttendedEventsWrapper: AnyStyledComponent = styled.div`
 const QuickAccessMargins: AnyStyledComponent = styled.div`
   width: 100%;
   padding: 0 1.25rem;
+  display: flex;
+  justify-content: center;
 
   @media all and (min-width: 600px) {
     display: none;

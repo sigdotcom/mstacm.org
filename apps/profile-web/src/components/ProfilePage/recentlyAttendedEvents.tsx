@@ -24,10 +24,24 @@ export const ME_EVENTS_QUERY: any = gql`
   }
 `;
 
+const LoadingContent: AnyStyledComponent = styled.div`
+  width: 100%;
+
+  max-width: 40rem;
+  height: 11rem;
+  border-radius: 12px;
+  background: linear-gradient(
+    115deg, #E9EBEE 30%, #F6F7FA 80%
+  );
+
+  @media all and (min-width: 960px) {
+    height: 14rem;
+  }
+`;
+
 const RecentlyAttendedEventsWrapper: AnyStyledComponent = styled.div`
   width: 100%;
   display: none;
-  margin-bottom: 3rem;
 
   @media all and (min-width: 600px) {
     display: block;
@@ -123,7 +137,7 @@ const EventDescription: AnyStyledComponent = styled.div`
 `;
 
 const FindEventsBox: AnyStyledComponent = styled.div`
-  background: #CCCCCC;
+  background: #F4F5F8;
   width: 100%;
   max-width: 20rem;
   height: 7rem;
@@ -148,11 +162,18 @@ const FindEventsLink: AnyStyledComponent = styled.a`
 export const RecentlyAttendedEvents: React.FC<{}> = () => {
   const { loading, error, data }: MeEventsQueryHookResult = useMeEventsQuery();
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error!</p>;
+  let eventBoxes: JSX.Element[] | JSX.Element = [];
 
-  let eventBoxes: JSX.Element[] = [];
-  if (data && data.me && data.me.eventsAttended) {
+  if (loading) {
+    eventBoxes = <LoadingContent />
+  } else if (error) {
+    eventBoxes =
+      <FindEventsBox>
+        <FindEventsLink href="#">
+          Find our events here
+        </FindEventsLink>
+      </FindEventsBox>
+  } else if (data && data.me && data.me.eventsAttended) {
     eventBoxes = data.me.eventsAttended.map((event: any, index: number): JSX.Element =>
       <EventBox key={index}>
         <EventPoster></EventPoster>
@@ -173,14 +194,7 @@ export const RecentlyAttendedEvents: React.FC<{}> = () => {
   return (
     <RecentlyAttendedEventsWrapper>
       <Header>Recently Attended Events</Header>
-      {eventBoxes.length ?
-        eventBoxes :
-        <FindEventsBox>
-          <FindEventsLink href="#">
-            Find our events here
-          </FindEventsLink>
-        </FindEventsBox>
-      }
+      {eventBoxes}
     </RecentlyAttendedEventsWrapper>
   );
 };

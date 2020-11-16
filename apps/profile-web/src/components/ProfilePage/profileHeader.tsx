@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 import React from "react";
+// import React, { useState } from "react";
 import styled, { AnyStyledComponent } from "styled-components";
 import Icon from "react-eva-icons";
 
@@ -26,22 +27,28 @@ export const ME_EVENTS_GROUPS_QUERY: any = gql`
   }
 `;
 
+const LoadingContent: AnyStyledComponent = styled.div`
+  border-radius: 12px;
+  height: 1.875rem;
+  width: 11rem;
+  background: #E9EBEE;
+`;
 
 const HeaderWrapper: AnyStyledComponent = styled.div`
-  background: #F4F5F8;
   position: relative;
+  background: #F4F5F8;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
   width: 100%;
 `;
 
 const Header: AnyStyledComponent = styled.div`
+  position: relative;
   width: 86%;
   display: flex;
-  justify-content: space-between;
-  align-items: stretch;
+  justify-content: center;
   padding: 2rem 0 3rem;
 
   @media all and (min-width: 600px) {
@@ -56,12 +63,16 @@ const Header: AnyStyledComponent = styled.div`
 const ProfileInfo: AnyStyledComponent = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 100%;
 
   @media all and (min-width: 600px) {
     flex-direction: row;
-    justify-content: center;
+  }
+
+  @media all and (min-width: 960px) {
+    justify-content: flex-start;
   }
 `;
 
@@ -188,29 +199,27 @@ const Groups: AnyStyledComponent = styled.div`
   display: flex;
   margin: .5rem 0 .8rem;
 
-  div {
-    border-radius: 12px;
-    padding: .1rem 1rem;
-    margin-right: .56rem;
-    font-size: .75rem;
-    font-weight: 700;
-    color: black;
-    white-space: nowrap;
-  }
-
   div:last-child {
     margin-right: 0;
   }
+`;
+
+const Group: AnyStyledComponent = styled.div`
+  border-radius: 12px;
+  padding: .1rem 1rem;
+  margin-right: .56rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: black;
+  white-space: nowrap;
 
   @media all and (min-width: 1280px) {
-    div {
-      margin-right: 1.5rem;
-      font-size: 1.25rem;
-    }
+    margin-right: 1.5rem;
+    font-size: 1.25rem;
   }
 `;
 
-const ShortcutGroup: AnyStyledComponent = styled.div`
+const NavWrapper: AnyStyledComponent = styled.div`
   position: absolute;
   top: 16px;
   right: 16px;
@@ -240,18 +249,21 @@ export const ProfileHeader: React.FC<{}> = (): JSX.Element => {
   const { user } = useAuth0();
   const { loading, error, data }: MeEventsGroupsQueryHookResult = useMeEventsGroupsQuery();
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error!</p>;
-
-  let groupComponents: JSX.Element[] = [];
+  let groupComponents: JSX.Element[] | JSX.Element = [];
   let numEvents = 0;
-  if (data && data.me && data.me.eventsAttended) {
+
+  if (loading) {
+    groupComponents = <LoadingContent />
+  }
+
+  if (!loading && !error && data && data.me && data.me.eventsAttended) {
     numEvents = data.me.eventsAttended.length;
     groupComponents = data.me.groups.map((group): JSX.Element =>
-      <div
+      <Group
         style={{ background: "#C0F6BF" }}
         key={group.name}
-      >{group.name}</div>
+        children={group.name}
+      />
     );
   }
 
@@ -276,10 +288,10 @@ export const ProfileHeader: React.FC<{}> = (): JSX.Element => {
               <UserLastName>{user.family_name}</UserLastName>
             </Username>
             <UserEmail>{user.email}</UserEmail>
-            <Groups>{groupComponents}</Groups>
+            {!error && <Groups>{groupComponents}</Groups>}
           </UserInfo>
         </ProfileInfo>
-        <ShortcutGroup>
+        <NavWrapper>
           <NotificationShortcut href="#">
             <Icon
               name="bell"
@@ -290,7 +302,7 @@ export const ProfileHeader: React.FC<{}> = (): JSX.Element => {
             />
           </NotificationShortcut>
           <ProfileOptions />
-        </ShortcutGroup>
+        </NavWrapper>
       </Header>
       <Events numEvents={numEvents} />
     </HeaderWrapper>

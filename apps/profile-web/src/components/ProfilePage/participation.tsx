@@ -26,16 +26,21 @@ export const ME_PARTICIPATION_QUERY: any = gql`
   }
 `;
 
+const LoadingContent: AnyStyledComponent = styled.div`
+  width: 12.75rem;
+  height: 9.375rem;
+  border-radius: 12px;
+  background: linear-gradient(
+    115deg, #E9EBEE 0%, #F6F7FA 70%
+  );
+`;
+
 const ParticipationWrapper: AnyStyledComponent = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-right: .5rem;
-
-  @media all and (min-width: 600px) {
-    margin-bottom: 1rem;
-  }
+  margin-bottom: 3rem;
 
   @media all and (min-width: 1280px) {
     margin-bottom: 0;
@@ -43,7 +48,6 @@ const ParticipationWrapper: AnyStyledComponent = styled.div`
 
   @media all and (min-width: 1340px) {
     width: 80%;
-    margin-right: 1.5rem;
   }
 `;
 
@@ -54,7 +58,6 @@ const ParticipationTitle: AnyStyledComponent = styled.div`
   color: black;
   width: 100%;
   white-space: nowrap;
-  margin-right: 1.5rem;
   padding-left: 1.25rem;
 
   @media all and (min-width: 600px) {
@@ -95,10 +98,6 @@ const CarouselWrapper: AnyStyledComponent = styled.div`
     overflow: initial
     white-space: initial;
     padding: 0;
-  }
-
-  @media all and (min-width: 960px) {
-    margin-left: 0;
   }
 
   @media all and (min-width: 1280px) {
@@ -168,19 +167,22 @@ const ClubName: AnyStyledComponent = styled.div`
 `;
 
 const CommunitiesBox: AnyStyledComponent = styled.div`
-  background: #CCCCCC;
+  padding: 0 1.25rem;
   width: 100%;
-  max-width: 20rem;
-  height: 7rem;
-  border-radius: 0.75rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 1.25rem;
-  margin-bottom: 1.5rem;
+
+  div {
+    background: #F4F5F8;
+    width: 100%;
+    max-width: 20rem;
+    height: 7rem;
+    border-radius: 0.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   @media all and (min-width: 600px) {
-    margin-left: 0;
+    padding: 0;
   }
 `;
 
@@ -201,12 +203,27 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 export const Participation: React.FC<{}> = () => {
   const { loading, error, data }: MeParticipationQueryHookResult = useMeParticipationQuery();
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error!</p>;
-
-  let clubBoxes: JSX.Element[] = [];
+  let clubBoxes: JSX.Element[] | JSX.Element = [];
+  let carousel: JSX.Element = <div />;
   let monthJoined = "";
-  if (data && data.me && data.me.eventsAttended) {
+
+  if (loading) {
+    monthJoined = "joined";
+    carousel =
+      <CarouselWrapper>
+        <LoadingContent />;
+      </CarouselWrapper>;
+  } else if (error) {
+    monthJoined = "joined";
+    carousel =
+      <CommunitiesBox>
+        <div>
+          <CommunitiesLink href="#">
+            Find our communities here
+          </CommunitiesLink>
+        </div>
+      </CommunitiesBox>;
+  } else if (data && data.me && data.me.eventsAttended) {
     console.log(data.me);
     monthJoined = monthNames[new Date(data.me.dateJoined).getMonth()];
 
@@ -243,22 +260,17 @@ export const Participation: React.FC<{}> = () => {
       )
     }
     clubBoxes = clubBoxList;
+    carousel =
+      <CarouselWrapper>
+        {clubBoxes}
+      </CarouselWrapper>;
   }
 
   return (
     <ParticipationWrapper>
       <ParticipationTitle>Community Participation</ParticipationTitle>
       <MonthStart>events attended since {monthJoined}</MonthStart>
-      {clubBoxes.length ?
-        <CarouselWrapper>
-          {clubBoxes}
-        </CarouselWrapper> :
-        <CommunitiesBox>
-          <CommunitiesLink href="#">
-            Find our communities here
-          </CommunitiesLink>
-        </CommunitiesBox>
-      }
+      {carousel}
     </ParticipationWrapper>
   );
 };

@@ -21,6 +21,42 @@ export const ME_MEMBERSHIP_QUERY: any = gql`
   }
 `;
 
+const LoadingComponent: AnyStyledComponent = styled.div`
+  width: 100%;
+  padding: 0 1.25rem;
+
+  .content {
+    height: 6rem;
+    width: 100%;
+    min-width: 20rem;
+    margin: 1rem auto 2.5rem;
+    border-radius: 20px;
+    background: linear-gradient(
+      115deg, #E9EBEE 30%, #F6F7FA 80%
+    );
+  }
+
+  @media all and (min-width: 600px) {
+    padding: 0 4rem;
+  }
+
+  @media all and (min-width: 960px) {
+    padding: 0;
+
+    .content {
+      height: 9.375rem;
+      width: 86%
+      max-width: 80rem;
+    }
+  }
+
+  @media all and (min-width: 1280px) {
+    div {
+      margin-bottom: 4rem;
+    }
+  }
+`;
+
 const MembershipWrapper: AnyStyledComponent = styled.div`
   display: flex;
   flex-direction: column;
@@ -237,10 +273,21 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 export const Membership: React.FC<{}> = (): JSX.Element => {
   const { loading, error, data }: MeMembershipQueryHookResult = useMeMembershipQuery();
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error!</p>;
+  console.log(error, data, monthNames);
 
-  let eventsAttended = 0, yearsSinceJoin = 0, dateJoined = "Unknown", graduationDate = "Unknown", membershipExpirationDate = "Unknown";
+  if (loading) {
+    return (
+      <LoadingComponent>
+        <MembershipTitle>Membership</MembershipTitle>
+        <div className="content" />
+      </LoadingComponent>
+    );
+  }
+  if (error) return <div />;
+
+  let eventsAttended = 0, yearsSinceJoin = 0;
+  let dateJoined = "", graduationDate = "", membershipExpirationDate = "";
+
   if (data && data.me && data.me.eventsAttended) {
     eventsAttended = data.me.eventsAttended.length;
     const me = data.me;

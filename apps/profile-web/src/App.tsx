@@ -12,7 +12,6 @@ import { useAuth0 } from "./utils/react-auth0-wrapper";
 import styled, { AnyStyledComponent } from "styled-components";
 
 const Layout: AnyStyledComponent = styled.div`
-  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -36,7 +35,6 @@ const App: React.FC = (): JSX.Element => {
     isAuthenticated,
     getTokenSilently,
     loginWithRedirect,
-    // logout
   } = useAuth0();
 
   useEffect(() => {
