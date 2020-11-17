@@ -4,6 +4,7 @@ import { useEventsQuery } from "../../generated/graphql";
 import { PrevioustList } from "./EventList";
 
 import { PreviousHeader } from "./Header";
+import { IEvent } from "./interfaces";
 
 const PageWrapper: AnyStyledComponent = styled.div`
   padding-left: 70px;
@@ -21,7 +22,15 @@ const Center: AnyStyledComponent = styled.div`
 `;
 
 const Previous: React.SFC<{}> = (): JSX.Element => {
-  const { loading, error, data }: any = useEventsQuery();
+  const result: any = useEventsQuery();
+
+  let data: IEvent[] = [];
+  if (result.data && result.data.events) {
+    data = result.data.events as IEvent[];
+  }
+  const loading = result.loading;
+  const error = result.error;
+
   return (
     <PageWrapper>
       <Center>

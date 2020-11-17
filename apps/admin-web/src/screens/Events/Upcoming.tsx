@@ -9,6 +9,7 @@ import { Future } from "./EventList";
 import { UpcomingHeader } from "./Header";
 
 import {
+  Event as IEvent,
   GetCurrentEventsQueryHookResult,
   useGetCurrentEventsQuery,
 } from "../../generated/graphql";
@@ -60,11 +61,19 @@ const Content: AnyStyledComponent = styled.div`
 `;
 
 const Upcoming: React.SFC<{}> = (): JSX.Element => {
-  const {
-    loading,
-    error,
-    data,
-  }: GetCurrentEventsQueryHookResult = useGetCurrentEventsQuery();
+  // const {
+  //   loading,
+  //   error,
+  //   data,
+  // }: GetCurrentEventsQueryHookResult = useGetCurrentEventsQuery();
+
+  const result: GetCurrentEventsQueryHookResult = useGetCurrentEventsQuery();
+  let data: IEvent[] = [];
+  if (result.data && result.data.currentEvents) {
+    data = result.data.currentEvents as IEvent[];
+  }
+  const loading = result.loading;
+  const error = result.error;
 
   return (
     <Grid>
