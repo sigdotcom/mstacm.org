@@ -15,7 +15,7 @@ const ResumeHover: AnyStyledComponent = styled.div`
   transition: 0.3s;
   opacity: 0;
   position: absolute;
-  top: 450px;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -82,7 +82,7 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
     >
       <Container
         className="flex items-center content-center justify-center"
-        style={{ width: PDF_WIDTH, height: PDF_HEIGHT }}
+        style={{ position: "relative", width: PDF_WIDTH, height: PDF_HEIGHT }}
       >
         <ResumeClickArea
           style={{
