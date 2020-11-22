@@ -11,7 +11,9 @@ import {
   Radio,
   Row,
   Upload
+// @ts-ignore This module does exist, VS code. Stop complaining
 } from "antd";
+// @ts-ignore Module really does exist
 import { UploadFile } from "antd/lib/upload/interface";
 
 import gql from "graphql-tag";
