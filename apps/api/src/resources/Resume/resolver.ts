@@ -93,6 +93,33 @@ export class ResumeResolver {
   @Authorized("view:resumes")
   @Query(() => [Resume])
   public async resumes(): Promise<Resume[]> {
-    return this.resumeRepo.find();
+    const now = new Date();
+
+    // June 30 of last year and this year
+    const expirationDateLast = new Date(now.getFullYear() - 1, 6, 30);
+    const expirationDate = new Date(now.getFullYear(), 6, 30);
+    const resumes = await this.resumeRepo.find();
+    const filtered = [];
+
+    for (const resume of resumes) {
+      const user = await resume.user;
+
+      console.debug(now, user.graduationDate);
+
+      // The resume's owner hasn't graduated yet
+      if (user.graduationDate && now < user.graduationDate) {
+        // It is before this year's expiration date, and
+        //   the resume was added after the expiration date of last year
+        if (now < expirationDate && resume.added > expirationDateLast) {
+            filtered.push(resume);
+        // It is after this year's expiration date.
+        // If the resume was added after the expiration date of last year
+        } else if (resume.added > expirationDateLast) {
+            filtered.push(resume);
+          }
+        }
+    }
+
+    return filtered;
   }
 }
