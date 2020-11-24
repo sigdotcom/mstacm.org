@@ -26,15 +26,6 @@ export const ME_PARTICIPATION_QUERY: any = gql`
   }
 `;
 
-const LoadingContent: AnyStyledComponent = styled.div`
-  width: 12.75rem;
-  height: 9.375rem;
-  border-radius: 12px;
-  background: linear-gradient(
-    115deg, #E9EBEE 0%, #F6F7FA 70%
-  );
-`;
-
 const ParticipationWrapper: AnyStyledComponent = styled.div`
   width: 100%;
   display: flex;
@@ -166,29 +157,47 @@ const ClubName: AnyStyledComponent = styled.div`
   }
 `;
 
-const CommunitiesBox: AnyStyledComponent = styled.div`
-  padding: 0 1.25rem;
-  width: 100%;
+const LoadingWrapper: AnyStyledComponent = styled.div`
+  margin-bottom: 2.5rem;
 
-  div {
-    background: #F4F5F8;
-    width: 100%;
-    max-width: 20rem;
-    height: 7rem;
-    border-radius: 0.75rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  @media all and (min-width: 600px) {
-    padding: 0;
+  @media all and (min-width: 1280px) {
+    margin-bottom: 0;
+    margin-right: 4rem;
   }
 `;
 
-const CommunitiesLink: AnyStyledComponent = styled.a`
-  font-size: 1rem;
+const LoadingContent: AnyStyledComponent = styled.div`
+  width: 12.75rem;
+  height: 9.375rem;
+  border-radius: 12px;
+  background: linear-gradient(
+    115deg, #E9EBEE 0%, #F6F7FA 70%
+  );
 `;
+
+// const CommunitiesBox: AnyStyledComponent = styled.div`
+//   padding: 0 1.25rem;
+//   width: 100%;
+
+//   div {
+//     background: #F4F5F8;
+//     width: 100%;
+//     max-width: 20rem;
+//     height: 7rem;
+//     border-radius: 0.75rem;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//   }
+
+//   @media all and (min-width: 600px) {
+//     padding: 0;
+//   }
+// `;
+
+// const CommunitiesLink: AnyStyledComponent = styled.a`
+//   font-size: 1rem;
+// `;
 
 const COLORS = [
   "#F5DEB3", "#FFC0CB", "#C0F6BF", "#E8BFF6",
@@ -203,28 +212,35 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 export const Participation: React.FC<{}> = () => {
   const { loading, error, data }: MeParticipationQueryHookResult = useMeParticipationQuery();
 
-  let clubBoxes: JSX.Element[] | JSX.Element = [];
-  let carousel: JSX.Element = <div />;
+  let clubBoxes: JSX.Element[] = [];
   let monthJoined = "";
 
   if (loading) {
-    monthJoined = "joined";
-    carousel =
-      <CarouselWrapper>
-        <LoadingContent />;
-      </CarouselWrapper>;
+    return (
+      <LoadingWrapper>
+        <ParticipationTitle>Community Participation</ParticipationTitle>
+        <MonthStart>events attended since joined</MonthStart>
+        <LoadingContent />
+      </LoadingWrapper>
+    );
   } else if (error) {
-    monthJoined = "joined";
-    carousel =
-      <CommunitiesBox>
-        <div>
-          <CommunitiesLink href="#">
-            Find our communities here
-          </CommunitiesLink>
-        </div>
-      </CommunitiesBox>;
+    // return (
+    //   <CommunitiesBox>
+    //     <div>
+    //       <CommunitiesLink href="#">
+    //         Find our communities here
+    //       </CommunitiesLink>
+    //     </div>
+    //   </CommunitiesBox>
+    // );
+    return (
+      <LoadingWrapper>
+        <ParticipationTitle>Community Participation</ParticipationTitle>
+        <MonthStart>events attended since joined</MonthStart>
+        <LoadingContent />
+      </LoadingWrapper>
+    );
   } else if (data && data.me && data.me.eventsAttended) {
-    console.log(data.me);
     monthJoined = monthNames[new Date(data.me.dateJoined).getMonth()];
 
     let clubEvents: {
@@ -250,27 +266,23 @@ export const Participation: React.FC<{}> = () => {
       }
     });
 
-    let clubBoxList: JSX.Element[] = [];
     for (const club in clubEvents) {
-      clubBoxList.push(
+      clubBoxes.push(
         <ClubBox key={club} style={{ background: clubEvents[club].color }}>
           <NumEvents>{clubEvents[club].amountAttended}</NumEvents>
           <ClubName>ACM {club}</ClubName>
         </ClubBox>
       )
     }
-    clubBoxes = clubBoxList;
-    carousel =
-      <CarouselWrapper>
-        {clubBoxes}
-      </CarouselWrapper>;
   }
 
   return (
     <ParticipationWrapper>
       <ParticipationTitle>Community Participation</ParticipationTitle>
       <MonthStart>events attended since {monthJoined}</MonthStart>
-      {carousel}
+      <CarouselWrapper>
+        {clubBoxes}
+      </CarouselWrapper>
     </ParticipationWrapper>
   );
 };

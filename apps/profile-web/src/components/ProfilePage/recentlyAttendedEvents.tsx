@@ -24,21 +24,6 @@ export const ME_EVENTS_QUERY: any = gql`
   }
 `;
 
-const LoadingContent: AnyStyledComponent = styled.div`
-  width: 100%;
-
-  max-width: 40rem;
-  height: 11rem;
-  border-radius: 12px;
-  background: linear-gradient(
-    115deg, #E9EBEE 30%, #F6F7FA 80%
-  );
-
-  @media all and (min-width: 960px) {
-    height: 14rem;
-  }
-`;
-
 const RecentlyAttendedEventsWrapper: AnyStyledComponent = styled.div`
   width: 100%;
   display: none;
@@ -136,28 +121,46 @@ const EventDescription: AnyStyledComponent = styled.div`
   color: #555555;
 `;
 
-const FindEventsBox: AnyStyledComponent = styled.div`
-  background: #F4F5F8;
+const LoadingWrapperWrapper: AnyStyledComponent = styled.div`
   width: 100%;
-  max-width: 20rem;
-  height: 7rem;
-  border-radius: 0.75rem;
+`;
+
+const LoadingWrapper: AnyStyledComponent = styled.div`
+  max-width: 40rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+
+  @media all and (min-width: 1280px) {
+    margin-left: auto;
+  }
 `;
 
-const FindEventsLink: AnyStyledComponent = styled.a`
-  font-size: 1rem;
+const LoadingContent: AnyStyledComponent = styled.div`
+  height: 11rem;
+  border-radius: 12px;
+  background: linear-gradient(
+    115deg, #E9EBEE 30%, #F6F7FA 80%
+  );
+
+  @media all and (min-width: 960px) {
+    height: 14rem;
+  }
 `;
 
-// const COLORS = [
-//   "#F5DEB3", "#FFC0CB", "#C0F6BF", "#E8BFF6",
-//   "#F5F6BF", "#A9DEF9", "#F694C1", "#BCFFE2",
-//   "#F5DEB3", "#FFC0CB", "#C0F6BF", "#E8BFF6",
-//   "#F5F6BF", "#A9DEF9", "#F694C1", "#BCFFE2"
-// ];
+// const FindEventsBox: AnyStyledComponent = styled.div`
+//   background: #F4F5F8;
+//   width: 100%;
+//   max-width: 20rem;
+//   height: 7rem;
+//   border-radius: 0.75rem;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
+// const FindEventsLink: AnyStyledComponent = styled.a`
+//   font-size: 1rem;
+// `;
 
 export const RecentlyAttendedEvents: React.FC<{}> = () => {
   const { loading, error, data }: MeEventsQueryHookResult = useMeEventsQuery();
@@ -165,14 +168,30 @@ export const RecentlyAttendedEvents: React.FC<{}> = () => {
   let eventBoxes: JSX.Element[] | JSX.Element = [];
 
   if (loading) {
-    eventBoxes = <LoadingContent />
+    return (
+      <LoadingWrapperWrapper>
+        <LoadingWrapper>
+          <Header>Recently Attended Events</Header>
+          <LoadingContent />
+        </LoadingWrapper>
+      </LoadingWrapperWrapper>
+    );
   } else if (error) {
-    eventBoxes =
-      <FindEventsBox>
-        <FindEventsLink href="#">
-          Find our events here
-        </FindEventsLink>
-      </FindEventsBox>
+    // return (
+    //   <FindEventsBox>
+    //     <FindEventsLink href="#">
+    //       Find our events here
+    //     </FindEventsLink>
+    //   </FindEventsBox>
+    // );
+    return (
+      <LoadingWrapperWrapper>
+        <LoadingWrapper>
+          <Header>Recently Attended Events</Header>
+          <LoadingContent />
+        </LoadingWrapper>
+      </LoadingWrapperWrapper>
+    );
   } else if (data && data.me && data.me.eventsAttended) {
     eventBoxes = data.me.eventsAttended.map((event: any, index: number): JSX.Element =>
       <EventBox key={index}>
