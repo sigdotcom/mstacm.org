@@ -40,7 +40,7 @@ const SIGsData: ISIG[] = [
     logoLink: "sec.png",
     logoLinkDark: "sec-dark.png",
     name: "Security",
-    website: "https://acmsigsec.mst.edu"
+    website: "https://acmsec.mst.edu"
   },
   {
     color: "pink",
