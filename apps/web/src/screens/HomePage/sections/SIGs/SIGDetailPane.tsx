@@ -1,7 +1,7 @@
 import React from "react";
 import Icon from "react-eva-icons";
 import styled from "styled-components";
-import { ISIG } from "./interfaces";
+import { Sig as ISIG } from "../../../../generated/graphql";
 
 import { config } from "../../../../config";
 
@@ -23,6 +23,7 @@ const SIGName: any = styled.h1`
   font-size: 21px;
   margin: 0 0 0 10px;
 `;
+
 const SIGDesc: any = styled.p`
   margin-bottom: 20px;
   font-size: 17px;
@@ -67,7 +68,8 @@ const SIGDiscord = styled.a`
   font-family: "Nunito Sans", sans-serif;
   font-weight: bold;
   vertical-align: top;
-  transition: 0.2s ease-in-out all;
+  transition: 0.2s ease-in-out color;
+  transition: 0.2s ease-in-out background;
   cursor: pointer;
   width: 140px;
   height: 50px;
@@ -155,14 +157,16 @@ const SIGDetailPane: React.FC<ISIGDetailPaneProps> = (props: any): any => {
         </SIGEmail>
       </Header>
       <Row>
-        <SIGDesc>{sig.desc}</SIGDesc>
+        <SIGDesc>{sig.description}</SIGDesc>
         <Row>
           <ButtonRow>
-            <SIGWebsite href={sig.website}>
+            <SIGWebsite href={sig.website}
+                        style={{ display: sig.website ? "" : "none" }}>
               Website
               <ExternalIconWebsite id="child" alt="external link icon" src={`${config.CDN_URI}/static/external-link.svg`}/>
             </SIGWebsite>
-            <SIGDiscord href={sig.discord}>
+            <SIGDiscord href={sig.discordLink}
+                        style={{ margin: sig.website ? "" : "0px" }}>
               Discord
               <ExternalIconDiscord alt="external link icon" src={`${config.CDN_URI}/static/external-link.svg`} />
             </SIGDiscord>

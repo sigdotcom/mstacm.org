@@ -304,6 +304,7 @@ export type Query = {
   products: Array<Product>;
   redemptionCodes: Array<RedemptionCode>;
   resumes: Array<Resume>;
+  getSigs: Array<Sig>;
   transactions: Array<Transaction>;
   me?: Maybe<User>;
 };
@@ -349,15 +350,31 @@ export type Resume = {
 export type Sig = {
   __typename?: 'Sig';
   name: Scalars['String'];
+  topic?: Maybe<Scalars['String']>;
   dateFounded: Scalars['DateTime'];
   description: Scalars['String'];
+  website?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  discordLink?: Maybe<Scalars['String']>;
+  color?: Maybe<Scalars['String']>;
+  logoLink?: Maybe<Scalars['String']>;
+  logoLinkDark?: Maybe<Scalars['String']>;
+  display?: Maybe<Scalars['Boolean']>;
   users: Array<User>;
   hostedEvents: Array<Event>;
 };
 
 export type SigCreateInput = {
   name: Scalars['String'];
+  topic?: Maybe<Scalars['String']>;
   description: Scalars['String'];
+  website?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  discordLink?: Maybe<Scalars['String']>;
+  color?: Maybe<Scalars['String']>;
+  logoLink?: Maybe<Scalars['String']>;
+  logoLinkDark?: Maybe<Scalars['String']>;
+  display?: Maybe<Scalars['Boolean']>;
 };
 
 export type SigDeletePayload = {
@@ -367,7 +384,15 @@ export type SigDeletePayload = {
 
 export type SigUpdateInput = {
   name?: Maybe<Scalars['String']>;
+  topic?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  website?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  discordLink?: Maybe<Scalars['String']>;
+  color?: Maybe<Scalars['String']>;
+  logoLink?: Maybe<Scalars['String']>;
+  logoLinkDark?: Maybe<Scalars['String']>;
+  display?: Maybe<Scalars['Boolean']>;
 };
 
 export type Transaction = {
@@ -477,6 +502,17 @@ export type MeExpirationQuery = (
   & { me?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'membershipExpiration'>
+  )> }
+);
+
+export type GetSigsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSigsQuery = (
+  { __typename?: 'Query' }
+  & { sigs: Array<(
+    { __typename?: 'Sig' }
+    & Pick<Sig, 'name' | 'color' | 'description' | 'discordLink' | 'email' | 'logoLink' | 'logoLinkDark' | 'website' | 'display'>
   )> }
 );
 
@@ -623,3 +659,43 @@ export function useMeExpirationLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type MeExpirationQueryHookResult = ReturnType<typeof useMeExpirationQuery>;
 export type MeExpirationLazyQueryHookResult = ReturnType<typeof useMeExpirationLazyQuery>;
 export type MeExpirationQueryResult = ApolloReactCommon.QueryResult<MeExpirationQuery, MeExpirationQueryVariables>;
+export const GetSigsDocument = gql`
+    query getSigs {
+  sigs {
+    name
+    color
+    description
+    discordLink
+    email
+    logoLink
+    logoLinkDark
+    website
+    display
+  }
+}
+    `;
+
+/**
+ * __useGetSigsQuery__
+ *
+ * To run a query within a React component, call `useGetSigsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSigsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSigsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetSigsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetSigsQuery, GetSigsQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetSigsQuery, GetSigsQueryVariables>(GetSigsDocument, baseOptions);
+      }
+export function useGetSigsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetSigsQuery, GetSigsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetSigsQuery, GetSigsQueryVariables>(GetSigsDocument, baseOptions);
+        }
+export type GetSigsQueryHookResult = ReturnType<typeof useGetSigsQuery>;
+export type GetSigsLazyQueryHookResult = ReturnType<typeof useGetSigsLazyQuery>;
+export type GetSigsQueryResult = ApolloReactCommon.QueryResult<GetSigsQuery, GetSigsQueryVariables>;
