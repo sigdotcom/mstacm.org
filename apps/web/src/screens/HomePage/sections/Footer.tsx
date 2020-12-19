@@ -230,7 +230,7 @@ const Footer: React.FC<{}> = (): JSX.Element => {
                   ACM Hack
                 </a>
                 <a
-                  href="https://acmsigsec.mst.edu/"
+                  href="https://acmsec.mst.edu/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
