@@ -49,7 +49,7 @@ terraform {
       version = "~> 2.3.0"
     }
   }
-  required_version = "= 0.13.0"
+  required_version = "= 0.14.3"
 }
 
 # Add local ssh key for accessing the various resources
@@ -265,7 +265,7 @@ resource "digitalocean_spaces_bucket" "cdn" {
 resource "digitalocean_cdn" "cdn" {
   origin         = digitalocean_spaces_bucket.cdn.bucket_domain_name
   custom_domain  = local.cdn_url
-  certificate_id = digitalocean_certificate.cdn.id
+  certificate_name = digitalocean_certificate.cdn.name
 }
 
 #################
