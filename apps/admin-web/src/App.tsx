@@ -22,8 +22,8 @@ const MainContent: React.SFC<{}> = (): JSX.Element => {
   return (
     <Switch>
       <Route exact={true} path="/" component={ToolList} />
-      <Route path="/events" component={Events} />
-      <Route path="/data/:eventId" component={EventData} />
+      <Route path="/events/:eventId" component={EventData} />
+      <Route path="/events/" component={Events} />
       <Route path="/membership" component={Membership} />
       <Route path="/redemption" component={RedemptionCodes} />
       <Route component={NotFound} />

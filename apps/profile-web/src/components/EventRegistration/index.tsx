@@ -78,8 +78,8 @@ const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
   //once all mutations/queries are loaded, the actual attendance is tracked
   useEffect(() => {
     if(curEvents && attendEvent && result.data) {
-      if(result.data.me.id != null)
-        if(getEventId(eventUrlKey) != -1) {
+      if(result.data.me.id !== null)
+        if(getEventId(eventUrlKey) !== -1) {
           attendEvent({
             variables: {
               eventId: Number(getEventId(eventUrlKey))
@@ -173,6 +173,11 @@ const EventInterest: React.FC<{match: any}> = ({match}: any) => {
 
   const result: any = useMeQuery();
 
+  const onRecordInterestError: (e: Error) => void = (e: Error): void => {
+    message.error("Upload failed. Please try again.");
+    console.log(e);
+  };
+
   useEffect(() => {
     if (eventLoading) {
       //message.info("Event data loading...");
@@ -196,13 +201,18 @@ const EventInterest: React.FC<{match: any}> = ({match}: any) => {
   //once all mutations/queries are loaded, the actual attendance is tracked
   useEffect(() => {
     if(curEvents && recordInterest && result.data) {
-      if(result.data.me.id != null)
-        if(getEventId(eventUrlKey) != -1) {
-          recordInterest({
-            variables: {
-              eventId: Number(getEventId(eventUrlKey))
-            }
-          });
+      if(result.data.me.id !== null)
+        if(getEventId(eventUrlKey) !== -1) {
+          try {
+            recordInterest({
+              variables: {
+                eventId: Number(getEventId(eventUrlKey))
+              }
+            });
+          }
+          catch(e) {
+            onRecordInterestError(e);
+          }
         }
         else
           message.error("Event does with URL key {" + eventUrlKey + "} does not exist.");
