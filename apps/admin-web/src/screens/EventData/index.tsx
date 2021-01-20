@@ -3,11 +3,18 @@ import { Statistic, Row, Col, Table, message } from 'antd';
 import { ExportToCsv } from "export-to-csv";
 import { IUser, IEvent, IYearEvent } from "./interfaces";
 import { QRModal } from "./QRModal"
-import { useEventsWithKeyQuery,
-         useYearEventsQuery } from "../../generated/graphql";
+import { EventsWithKeyQueryHookResult,
+         useEventsWithKeyQuery,
+         useYearEventsQuery, 
+         YearEventsQueryHookResult} from "../../generated/graphql";
+import { RouteComponentProps } from "react-router-dom";
 
-const EventData: React.FC<{match: any}> = ({match}: any) => {
-  const eventUrlKey: string = match.params.eventId;
+interface IMatchParams {
+  eventId: string;
+}
+
+const EventData: React.FC<RouteComponentProps<IMatchParams>> = (props) => {
+  const eventUrlKey: string = props.match.params.eventId;
 
   const [event, setEvent] = useState<IEvent>();
   const [attendees, setAttendees] = useState<IUser[]>();
@@ -17,9 +24,6 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
   const [attendancePlace, setAttendancePlace] = useState<number>();
 
   const [QRVisible, setQRVisible] = useState(false);
-
-  const [attendeeEmails, setAttendeeEmails] = useState<string[]>();
-  const [interestEmails, setInterestEmails] = useState<string[]>();
 
   const [qrKey, setQrKey] = useState<string>();
 
@@ -33,22 +37,21 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
     title: 'Emails',
     useTextFile: false,
     useBom: true,
-    //useKeysAsHeaders: true,
+    useKeysAsHeaders: true,
     headers: ['Emails']
-    // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
   };
 
   const {
     loading: eventLoading,
     error: eventError,
     data: eventData,
-  }: any = useEventsWithKeyQuery({pollInterval: 500, variables: { urlKey: eventUrlKey }});
+  }: EventsWithKeyQueryHookResult = useEventsWithKeyQuery({pollInterval: 500, variables: { urlKey: eventUrlKey }});
 
   const {
     loading: yearEventsLoading,
     error: yearEventsError,
     data: yearEventsData,
-  }: any = useYearEventsQuery({pollInterval: 500});
+  }: YearEventsQueryHookResult = useYearEventsQuery({pollInterval: 500});
 
   useEffect(() => {
     if (eventLoading)
@@ -56,65 +59,50 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
     else if (eventError)
       message.info("An error occured loading event data.");
     else if (eventData) {
-      setEvent((eventData.eventsWithKey)[0]);
-      //message.success("Event data loading complete!");
+      setEvent((eventData.eventsWithKey)[0] as IEvent);
     }
   }, [eventData, eventError, eventLoading]);
 
   useEffect(() => {
-    if (yearEventsLoading) {
-      //message.info("Year event data loading...");
-    }
-    else if (yearEventsError) {
+    if (yearEventsError) {
       message.info("An error occured loading year event data.");
     }
     else if (yearEventsData) {
-      setYearEvents(yearEventsData.yearEvents);
-      //message.success("Event data loading complete!");
+      setYearEvents(yearEventsData.yearEvents as IYearEvent[]);
     }
   }, [yearEventsData, yearEventsError, yearEventsLoading]);
 
   useEffect(() => {
-    if(event != undefined) {
+    if(event !== undefined) {
         setAttendees(event.attendees);
         setUsersInterested(event.usersInterested);
     }
   }, [event]);
 
   useEffect(() => {
-    if(usersInterested != undefined)
-      setInterestEmails(usersInterested?.map(usersInterested => usersInterested.email));
-  }, [usersInterested]);
-
-  useEffect(() => {
-    if(attendees != undefined)
-      setAttendeeEmails(attendees?.map(attendees => attendees.email));
-  }, [attendees]);
-
-  useEffect(() => {
-    if(yearEvents != undefined) {
+    if(yearEvents !== undefined) {
       setYearEvents(yearEvents.sort((a,b) => (a.numAttendees > b.numAttendees) ? -1 : ((b.numAttendees > a.numAttendees) ? 1 : 0)));
       setAttendancePlace(yearEvents.map(function(e) { return e.urlKey }).indexOf(eventUrlKey) + 1);
     }
   }, [yearEvents]);
 
-  if(eventUrlKey == null)
+  if(eventUrlKey === null || !event)
     return <p>This event does not exist.</p>
 
   const get_ratio: Function = () => {
-    if(usersInterested != undefined && attendees != undefined && attendees.length != 0)
+    if(usersInterested !== undefined && attendees !== undefined && attendees.length !== 0)
       return (usersInterested.length / attendees.length) * 100
-    return null
+    return "N/A"
   };
 
   const ordinal_suffix: Function = (num: number) => {
     let j = num % 10,
         k = num % 100;
-    if (j == 1 && k != 11)
+    if (j === 1 && k !== 11)
         return "st";
-    if (j == 2 && k != 12)
+    if (j === 2 && k !== 12)
         return "nd";
-    if (j == 3 && k != 13)
+    if (j === 3 && k !== 13)
         return "rd";
 
     return "th";
@@ -136,9 +124,9 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
   ];
 
   const handleQR: Function = (choice: number) => {
-    if (choice == 0)
+    if (choice === 0)
       setQrKey("e/" + eventUrlKey);
-    else if (choice == 1)
+    else if (choice === 1)
       setQrKey("i/" + eventUrlKey);
 
     setQRVisible(true);
@@ -148,14 +136,16 @@ const EventData: React.FC<{match: any}> = ({match}: any) => {
     csvOptions.filename = "interest_emails";
     csvOptions.title = "Interested Users";
     const csvExporter = new ExportToCsv(csvOptions);
-    csvExporter.generateCsv(interestEmails?.map(interestEmails => ({ interestEmails })));
+    const columns: any = usersInterested?.map(obj => ({Email: obj.email, Name: obj.firstName + " " + obj.lastName}))
+    csvExporter.generateCsv(columns);
   };
 
   const downloadAttendeeCSV: () => void = (): void => {
     csvOptions.filename = "attendee_emails";
     csvOptions.title = "Attendees";
     const csvExporter = new ExportToCsv(csvOptions);
-    csvExporter.generateCsv(attendeeEmails?.map(attendeeEmails => ({ attendeeEmails })));
+    const columns: any = attendees?.map(obj => ({Email: obj.email, Name: obj.firstName + " " + obj.lastName}))
+    csvExporter.generateCsv(columns);
   };
 
   return (
