@@ -9,13 +9,12 @@ import styled, { AnyStyledComponent } from "styled-components";
 const modalStyle: any = {
   content: {
     background: "#F3F3F3",
-    padding: "1rem 4rem",
-    maxWidth: "480px",
+    padding: "2rem 3rem",
+    width: "340px",
     top: "50%",
-    left: "50%",
     right: "auto",
     bottom: "auto",
-    marginRight: "-50%",
+    left: "50%",
     transform: "translate(-50%, -50%)",
     borderRadius: "12px",
     overflow: "hidden",
@@ -26,91 +25,77 @@ const modalStyle: any = {
   }
 };
 
-const Circle: AnyStyledComponent = styled.div`
-  position: absolute;
-  right: -30%;
-  border-radius: 50%;
-`;
-
-const BigCircle: AnyStyledComponent = styled(Circle)`
-  top: -30px;
-  right: -130px;
-  background-color: #d3f0ff;
-  width: 450px;
-  height: 300px;
-  z-index: -9999;
-`;
-
-const SmallCircle: AnyStyledComponent = styled(Circle)`
-  top: -110px;
-  right: -100px;
-  background-color: #42c0fc;
-  width: 300px;
-  height: 180px;
-  z-index: -999;
-`;
-
 const ExitButton: AnyStyledComponent = styled.button`
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  height: 2.5rem;
-  width: 2.5rem;
+  top: -9px;
+  right: -9px;
+  height: 40px;
+  width: 40px;
   border: none;
   outline: none;
   cursor: pointer;
-  background: #42c0fc;
+  background: #F3F3F3;
   border-radius: 50%;
   transition: 0.2s ease-in-out all;
 
   &:hover {
-    background: #0080bd;
+    background: #D6D6D6;
     color: #fff;
   }
 `;
 
 const XBar: AnyStyledComponent = styled.div`
   position: absolute;
-  display: flex;
-  top: 5px;
-  left: 18px;
-  background: black;
-  width: 4px;
-  height: 30px;
-  border-radius: 20px;
+  background: #909090;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 28px;
+  border-radius: 30px;
 `;
 
 const LeftX: AnyStyledComponent = styled(XBar)`
-  transform: rotate(45deg);
+  transform: translate(-50%, -50%) rotate(45deg);
 `;
 
 const RightX: AnyStyledComponent = styled(XBar)`
-  transform: rotate(-45deg);
+  transform: translate(-50%, -50%) rotate(-45deg);
 `;
+
+type setString = React.Dispatch<React.SetStateAction<string>>;
+type voidFunction = () => void;
 
 type CustomModalProps = React.HTMLAttributes<HTMLDivElement> & {
   removeTag: () => void;
+  setError: setString;
   tag: MembershipTypes | undefined;
 }
 
-export const ModalWrapper: React.SFC<CustomModalProps> = (
+export const ModalWrapper: React.FC<CustomModalProps> = (
   props: CustomModalProps
 ) => {
+
+  const beforeClose: voidFunction = (): void => {
+    props.removeTag();
+    props.setError("");
+  };
+
   return (
     <Modal
       isOpen={props.tag !== undefined}
-      onRequestClose={props.removeTag}
+      onRequestClose={beforeClose}
       contentLabel="Checkout Modal"
       style={modalStyle}
       ariaHideApp={false}
+      closeTimeoutMS={400}
     >
-      <BigCircle />
-      <SmallCircle />
-      <ExitButton onClick={props.removeTag}>
-        <LeftX />
-        <RightX />
-      </ExitButton>
-      {props.children}
+      <div style={{ position: "relative" }}>
+        <ExitButton onClick={beforeClose}>
+          <LeftX />
+          <RightX />
+        </ExitButton>
+        {props.children}
+      </div>
     </Modal>
   );
 }

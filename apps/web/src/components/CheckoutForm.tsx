@@ -97,7 +97,11 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
   };
 
   const slides = [
-    <ModalWrapper {...props}>
+    <ModalWrapper
+      removeTag={props.removeTag}
+      setError={setError}
+      tag={props.tag}
+    >
       <PaymentInformationForm
         stripe={props.stripe}
         setPaymentMethod={setPaymentMethod}
@@ -120,7 +124,11 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
         )}
       </PaymentInformationForm>
     </ModalWrapper>,
-    <ModalWrapper {...props}>
+    <ModalWrapper
+      removeTag={props.removeTag}
+      setError={setError}
+      tag={props.tag}
+    >
       <ReviewInformationForm
         stripe={props.stripe}
         handleError={handleError}
@@ -131,7 +139,11 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
         tag={props.tag}
       />
     </ModalWrapper>,
-    <ModalWrapper {...props}>
+    <ModalWrapper
+      removeTag={props.removeTag}
+      setError={setError}
+      tag={props.tag}
+    >
       <Result
         status="success"
         title="Membership Added!"

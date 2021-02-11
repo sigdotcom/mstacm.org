@@ -16,34 +16,32 @@ const inProgressColor = "#525252";
 const errorColor = "red";
 const completeColor = "#42c0fc";
 
-const createOptions = (fontSize: string, padding?: string) => {
-  return {
-    style: {
-      base: {
-        fontSize,
-        fontWeight: "800",
-        color: "#000000",
-        letterSpacing: "0.025em",
-        fontFamily: "Source Code Pro, monospace",
-        "::placeholder": {
-          color: "#a4a4a4"
-        },
-        padding
-      },
-      invalid: {
-        color: errorColor
+const inputOptions = {
+  style: {
+    base: {
+      fontSize: "18px",
+      fontWeight: "800",
+      color: "#000000",
+      letterSpacing: "0.025em",
+      fontFamily: "Source Code Pro, monospace",
+      "::placeholder": {
+        color: "#a4a4a4"
       }
+    },
+    invalid: {
+      color: errorColor
     }
-  };
+  }
 };
 
 const Header: AnyStyledComponent = styled.h2`
   color: black;
   text-align: left;
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 1.375rem;
+  font-weight: 700;
   margin: 0;
-  padding-right: 4rem;
+  padding-right: 5rem;
+  line-height: 23px;
 `;
 
 const FormContainer: AnyStyledComponent = styled.div`
@@ -57,15 +55,14 @@ const FormContainer: AnyStyledComponent = styled.div`
 
   .StripeElement {
     display: block;
-    height: 50px;
+    height: 35px;
     max-width: 500px;
-    padding: 11px 26px;
-    font-size: 18px;
-    font-family: "Source Code Pro", monospace;
+    padding-top: 5px;
+    padding-left: 20px;
     background: white;
     border: 0;
     outline: 0;
-    border-bottom: 4px solid ${defaultColor};
+    border-bottom: 2px solid ${defaultColor};
     border-radius: 4px;
     transition: .2s ease-in-out border-bottom-color;
   }
@@ -82,7 +79,7 @@ const CardNumberElementContainer: AnyStyledComponent = styled.div`
 
 const ExpiryCvcFlexbox: AnyStyledComponent = styled.div`
   display: flex;
-  margin-bottom: 1rem;
+  margin-bottom: .75rem;
   width: 100%;
 `;
 
@@ -110,10 +107,36 @@ const CardElementLabel: AnyStyledComponent = styled.label`
   margin-top: .8rem;
 `;
 
-const ReviewButton: AnyStyledComponent = styled(PrimaryButton)`
-  margin: 1rem auto .5rem;
+const Buttons: AnyStyledComponent = styled.div`
+  margin: .75rem auto 0;
+  display: flex;
+  flex-direction: row;
+`;
+
+const CancelButton: AnyStyledComponent = styled(PrimaryButton)`
+  background: none;
+  color: #909090;
   font-size: 18px;
-  font-weigth: 800;
+  font-weight: 800;
+  padding: 5px;
+  line-height: 20px;
+  margin-right: 1rem;
+
+  &:hover {
+    background: none;
+    color: #717171;
+  }
+
+  &::after {
+    content: none;
+  }
+`;
+
+const ReviewButton: AnyStyledComponent = styled(PrimaryButton)`
+  font-size: 18px;
+  font-weight: 800;
+  height: 40px;
+  width: 110px;
 `;
 
 type FormProps = React.HTMLAttributes<HTMLDivElement> & {
@@ -138,7 +161,6 @@ export const PaymentInformationForm: React.FC<FormProps> = (
   const [cardExpiryElementColor, setCardExpiryElementColor] = useState<String>(defaultColor);
   const [cardCvcElementColor, setCardCvcElementColor] = useState<String>(defaultColor);
 
-  const [shake, setShake]: [boolean, setBoolean] = useState<boolean>(false);
   const [loading, setLoading]: [boolean, setBoolean] = useState<boolean>(false);
 
   const handleChange = (ev: stripe.elements.ElementChangeResponse): void => {
@@ -208,8 +230,6 @@ export const PaymentInformationForm: React.FC<FormProps> = (
     if (cardNumberElementColor !== completeColor ||
       cardExpiryElementColor !== completeColor ||
       cardCvcElementColor !== completeColor) {
-      setShake(true);
-      setTimeout(() => setShake(false), 300);
       return;
     }
     setLoading(true);
@@ -252,7 +272,7 @@ export const PaymentInformationForm: React.FC<FormProps> = (
         <CardNumberElementContainer color={cardNumberElementColor}>
           <CardElementLabel>Card Number</CardElementLabel>
           <CardNumberElement
-            {...createOptions("18px")}
+            {...inputOptions}
             onChange={handleChange}
             onBlur={handleBlur}
             onFocus={handleFocus}
@@ -263,7 +283,7 @@ export const PaymentInformationForm: React.FC<FormProps> = (
           <CardExpiryElementContainer color={cardExpiryElementColor}>
             <CardElementLabel>Expiration Date</CardElementLabel>
             <CardExpiryElement
-              {...createOptions("18px")}
+              {...inputOptions}
               onChange={handleChange}
               onBlur={handleBlur}
               onFocus={handleFocus}
@@ -273,7 +293,7 @@ export const PaymentInformationForm: React.FC<FormProps> = (
           <CardCVCElementContainer color={cardCvcElementColor}>
             <CardElementLabel>Security Code</CardElementLabel>
             <CardCVCElement
-              {...createOptions("18px")}
+              {...inputOptions}
               onChange={handleChange}
               onBlur={handleBlur}
               onFocus={handleFocus}
@@ -282,13 +302,17 @@ export const PaymentInformationForm: React.FC<FormProps> = (
           </CardCVCElementContainer>
         </ExpiryCvcFlexbox>
         {props.children}
-        <ReviewButton
-          loading={loading}
-          disabled={loading || shake}
-          shake={shake}
-        >
-          REVIEW
-        </ReviewButton>
+        <Buttons>
+          <CancelButton>
+            Cancel
+          </CancelButton>
+          <ReviewButton
+            loading={loading}
+            disabled={loading}
+          >
+            Review
+          </ReviewButton>
+        </Buttons>
       </FormContainer>
     </form >
   );
