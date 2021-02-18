@@ -9,7 +9,7 @@ import styled, { AnyStyledComponent } from "styled-components";
 const modalStyle: any = {
   content: {
     background: "#F3F3F3",
-    padding: "2rem 3rem",
+    padding: "2rem 3rem 1rem",
     width: "340px",
     top: "50%",
     right: "auto",

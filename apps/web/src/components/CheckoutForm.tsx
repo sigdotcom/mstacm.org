@@ -74,10 +74,12 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
 
   const resetForm: asyncVoidFunction = async (): Promise<void> => {
     props.removeTag();
+    setPaymentMethod(undefined);
+    setClientSecret("");
     setTimeout(() => {
-      setError("");
-    }, 400);
-  }
+      setIndex(0);
+      setError(""); }, 400);
+    }
 
   const nextModal: voidFunction = (): void => {
     setIndex(index + 1);
