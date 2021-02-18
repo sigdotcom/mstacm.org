@@ -10,6 +10,7 @@ import {
 import styled, { AnyStyledComponent } from "styled-components";
 
 import { PrimaryButton } from "./PrimaryButton";
+import stripeSVG from "../static/img/stripe/white.svg";
 
 const defaultColor = "#c4c4c4";
 const inProgressColor = "#525252";
@@ -69,6 +70,7 @@ const FormContainer: AnyStyledComponent = styled.div`
 `;
 
 const CardNumberElementContainer: AnyStyledComponent = styled.div`
+  position: relative;
   width: 100%;
   cursor: text;
 
@@ -77,9 +79,19 @@ const CardNumberElementContainer: AnyStyledComponent = styled.div`
   }
 `;
 
+const StripeSVG: AnyStyledComponent = styled.img`
+  position: absolute;
+  width: 68px;
+  height: 15px;
+  top: 14px;
+  right: 0;
+  background: #C4C4C4;
+  border-radius: 4px;
+`;
+
 const ExpiryCvcFlexbox: AnyStyledComponent = styled.div`
   display: flex;
-  margin-bottom: .75rem;
+  margin-bottom: 1rem;
   width: 100%;
 `;
 
@@ -108,27 +120,36 @@ const CardElementLabel: AnyStyledComponent = styled.label`
 `;
 
 const Buttons: AnyStyledComponent = styled.div`
-  margin: .75rem auto 0;
+  position: relative;
+  margin: 1rem auto 0;
   display: flex;
   flex-direction: row;
 `;
 
-const CancelButton: AnyStyledComponent = styled(PrimaryButton)`
+const LineBreak: AnyStyledComponent = styled.div`
+  position: absolute;
+  top: -1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 2px;
+  width: 340px;
+  background: #C4C4C4;
+`;
+
+const CancelButton: AnyStyledComponent = styled.input`
   background: none;
   color: #909090;
+  border: none;
   font-size: 18px;
   font-weight: 800;
-  padding: 5px;
-  line-height: 20px;
-  margin-right: 1rem;
+  padding: 0 8px;
+  margin-right: .75rem;
+  cursor: pointer;
+  transition: 0.2s ease-in-out all;
 
   &:hover {
     background: none;
     color: #717171;
-  }
-
-  &::after {
-    content: none;
   }
 `;
 
@@ -144,6 +165,7 @@ type FormProps = React.HTMLAttributes<HTMLDivElement> & {
   setPaymentMethod: setPaymentMethod;
   getClientSecret: () => Promise<string>;
   handleError: (message: string) => void;
+  resetForm: () => Promise<void>;
   nextModal: () => void;
   clientSecret: string;
 };
@@ -227,9 +249,14 @@ export const PaymentInformationForm: React.FC<FormProps> = (
       return;
     }
 
-    if (cardNumberElementColor !== completeColor ||
-      cardExpiryElementColor !== completeColor ||
-      cardCvcElementColor !== completeColor) {
+    if (cardNumberElementColor !== completeColor) {
+      setCardNumberElementColor(errorColor);
+      return;
+    } else if (cardExpiryElementColor !== completeColor) {
+      setCardExpiryElementColor(errorColor);
+      return;
+    } else if (cardCvcElementColor !== completeColor) {
+      setCardCvcElementColor(errorColor);
       return;
     }
     setLoading(true);
@@ -266,11 +293,12 @@ export const PaymentInformationForm: React.FC<FormProps> = (
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} onReset={props.resetForm}>
       <FormContainer>
         <Header>Payment Information</Header>
         <CardNumberElementContainer color={cardNumberElementColor}>
           <CardElementLabel>Card Number</CardElementLabel>
+          <StripeSVG src={stripeSVG} alt="Powered By Stripe" />
           <CardNumberElement
             {...inputOptions}
             onChange={handleChange}
@@ -303,9 +331,12 @@ export const PaymentInformationForm: React.FC<FormProps> = (
         </ExpiryCvcFlexbox>
         {props.children}
         <Buttons>
-          <CancelButton>
-            Cancel
-          </CancelButton>
+          <LineBreak />
+          <CancelButton
+            type="reset"
+            value="Cancel"
+            disabled={loading}
+          />
           <ReviewButton
             loading={loading}
             disabled={loading}

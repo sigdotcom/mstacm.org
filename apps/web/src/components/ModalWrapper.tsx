@@ -62,12 +62,8 @@ const RightX: AnyStyledComponent = styled(XBar)`
   transform: translate(-50%, -50%) rotate(-45deg);
 `;
 
-type setString = React.Dispatch<React.SetStateAction<string>>;
-type voidFunction = () => void;
-
 type CustomModalProps = React.HTMLAttributes<HTMLDivElement> & {
-  removeTag: () => void;
-  setError: setString;
+  resetForm: () => Promise<void>;
   tag: MembershipTypes | undefined;
 }
 
@@ -75,22 +71,17 @@ export const ModalWrapper: React.FC<CustomModalProps> = (
   props: CustomModalProps
 ) => {
 
-  const beforeClose: voidFunction = (): void => {
-    props.removeTag();
-    props.setError("");
-  };
-
   return (
     <Modal
       isOpen={props.tag !== undefined}
-      onRequestClose={beforeClose}
+      onRequestClose={props.resetForm}
       contentLabel="Checkout Modal"
       style={modalStyle}
       ariaHideApp={false}
       closeTimeoutMS={400}
     >
       <div style={{ position: "relative" }}>
-        <ExitButton onClick={beforeClose}>
+        <ExitButton onClick={props.resetForm}>
           <LeftX />
           <RightX />
         </ExitButton>

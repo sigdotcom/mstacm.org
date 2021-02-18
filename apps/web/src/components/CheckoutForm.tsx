@@ -36,6 +36,7 @@ const ErrorContainer: AnyStyledComponent = styled.div`
   display: flex;
   align-items: center;
   align-content: center;
+  margin-bottom: .5rem;
 
   color: #f56565;
 `;
@@ -52,6 +53,8 @@ type CheckoutFormProps = ReactStripeElements.InjectedStripeProps &
 type setString = React.Dispatch<React.SetStateAction<string>>;
 type setNumber = React.Dispatch<React.SetStateAction<number>>;
 type setPaymentMethod = React.Dispatch<React.SetStateAction<stripe.paymentMethod.PaymentMethod | undefined>>;
+type voidFunction = () => void;
+type asyncVoidFunction = () => Promise<void>;
 
 const CheckoutFormBase: React.FC<CheckoutFormProps> = (
   props: CheckoutFormProps
@@ -69,7 +72,14 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
     setIndex(0);
   };
 
-  const nextModal: () => void = (): void => {
+  const resetForm: asyncVoidFunction = async (): Promise<void> => {
+    props.removeTag();
+    setTimeout(() => {
+      setError("");
+    }, 400);
+  }
+
+  const nextModal: voidFunction = (): void => {
     setIndex(index + 1);
   }
 
@@ -98,8 +108,7 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
 
   const slides = [
     <ModalWrapper
-      removeTag={props.removeTag}
-      setError={setError}
+      resetForm={resetForm}
       tag={props.tag}
     >
       <PaymentInformationForm
@@ -107,6 +116,7 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
         setPaymentMethod={setPaymentMethod}
         getClientSecret={getClientSecret}
         handleError={handleError}
+        resetForm={resetForm}
         nextModal={nextModal}
         clientSecret={clientSecret}
       >
@@ -125,8 +135,7 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
       </PaymentInformationForm>
     </ModalWrapper>,
     <ModalWrapper
-      removeTag={props.removeTag}
-      setError={setError}
+      resetForm={resetForm}
       tag={props.tag}
     >
       <ReviewInformationForm
@@ -140,8 +149,7 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
       />
     </ModalWrapper>,
     <ModalWrapper
-      removeTag={props.removeTag}
-      setError={setError}
+      resetForm={resetForm}
       tag={props.tag}
     >
       <Result

@@ -61,10 +61,7 @@ export const PrimaryButton: React.FC<ButtonProps> = (
 ): JSX.Element => {
   // Need span wrapped due to https://github.com/dimitrisraptis96/react-eva-icons/issues/2
   return (
-    <Button
-      className={props.className}
-      onClick={props.onClick}
-    >
+    <Button {...props}>
       {props.loading && <Loader />}
       {props.children}
     </Button>
