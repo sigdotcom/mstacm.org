@@ -59,7 +59,7 @@ type asyncVoidFunction = () => Promise<void>;
 const CheckoutFormBase: React.FC<CheckoutFormProps> = (
   props: CheckoutFormProps
 ): JSX.Element => {
-  const [intent, setIntent]: [string, setString] = useState<string>("");
+  // const [intent, setIntent]: [string, setString] = useState<string>("");
   const [paymentMethod, setPaymentMethod]: [stripe.paymentMethod.PaymentMethod | undefined, setPaymentMethod] = useState<stripe.paymentMethod.PaymentMethod | undefined>(undefined);
   const [clientSecret, setClientSecret]: [string, setString] = useState<string>("");
   const [error, setError]: [string, setString] = useState<string>("");
@@ -78,11 +78,16 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
     setClientSecret("");
     setTimeout(() => {
       setIndex(0);
-      setError(""); }, 400);
-    }
+      setError("");
+    }, 400);
+  }
 
   const nextModal: voidFunction = (): void => {
     setIndex(index + 1);
+  }
+
+  const prevModal: voidFunction = (): void => {
+    setIndex(index - 1);
   }
 
   const getClientSecret: () => Promise<string> = async (): Promise<string> => {
@@ -143,8 +148,9 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
       <ReviewInformationForm
         stripe={props.stripe}
         handleError={handleError}
-        setIntent={setIntent}
+        // setIntent={setIntent}
         nextModal={nextModal}
+        prevModal={prevModal}
         paymentMethod={paymentMethod!}
         clientSecret={clientSecret}
         tag={props.tag}
@@ -157,7 +163,7 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
       <Result
         status="success"
         title="Membership Added!"
-        subTitle={`Your membership may take 1-5 minutes to show. ref: ${intent}`}
+        subTitle={`Your membership may take 1-5 minutes to show.`}
       />
     </ModalWrapper>
   ]

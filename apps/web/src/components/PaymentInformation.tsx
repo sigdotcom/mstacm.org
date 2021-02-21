@@ -52,7 +52,7 @@ const FormContainer: AnyStyledComponent = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 280px;
+  max-width: 244px;
 
   .StripeElement {
     display: block;
@@ -124,6 +124,7 @@ const Buttons: AnyStyledComponent = styled.div`
   margin: 1rem auto 0;
   display: flex;
   flex-direction: row;
+  justify-content: center;
 `;
 
 const LineBreak: AnyStyledComponent = styled.div`
@@ -156,8 +157,8 @@ const CancelButton: AnyStyledComponent = styled.input`
 const ReviewButton: AnyStyledComponent = styled(PrimaryButton)`
   font-size: 18px;
   font-weight: 800;
-  height: 40px;
-  width: 110px;
+  height: 2.5rem;
+  padding: 0 1.5rem;
 `;
 
 type FormProps = React.HTMLAttributes<HTMLDivElement> & {
