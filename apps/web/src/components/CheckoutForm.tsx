@@ -68,6 +68,7 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
   const [getMembership] = useGetMembershipMutation();
 
   const handleError: (message: string) => void = (message: string): void => {
+    setPaymentMethod(undefined);
     setError(message);
     setIndex(0);
   };
