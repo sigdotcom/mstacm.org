@@ -181,13 +181,14 @@ const LoadingWrapper: AnyStyledComponent = styled.div`
 `;
 
 const LoadingContent: AnyStyledComponent = styled.div`
-  width: 12.75rem;
-  height: 9.375rem;
+  width: 9rem;
+  height: 6rem;
   border-radius: 12px;
   margin-left: 1.25rem;
   background: linear-gradient(
     115deg, #E9EBEE 0%, #F6F7FA 70%
   );
+  transition: all 100ms ease-in-out;
 
   @media all and (min-width: 760px) {
     margin-left: 0;
@@ -199,6 +200,8 @@ const LoadingContent: AnyStyledComponent = styled.div`
 
   @media all and (min-width: 960px) {
     margin-left: 0;
+    width: 12rem;
+    height: 9rem;
   }
 `;
 

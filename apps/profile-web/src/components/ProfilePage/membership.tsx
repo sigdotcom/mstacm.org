@@ -21,52 +21,6 @@ export const ME_MEMBERSHIP_QUERY: any = gql`
   }
 `;
 
-const LoadingComponent: AnyStyledComponent = styled.div`
-  width: 100%;
-  padding: 0 1.25rem;
-
-  .content {
-    height: 3rem;
-    width: 100%;
-    margin: 0 auto 2.5rem;
-    border-radius: 20px;
-    background: linear-gradient(
-      115deg, #E9EBEE 30%, #F6F7FA 80%
-    );
-    transition: all 100ms ease-in-out;
-  }
-
-  @media all and (min-width: 600px) {
-    .content {
-      height: 6rem;
-    }
-  }
-
-  @media all and (min-width: 760px) {
-    padding: 0 4rem;
-  }
-
-  @media all and (min-width: 900px) {
-    padding: 0 1.25rem;
-  }
-
-  @media all and (min-width: 960px) {
-    padding: 0;
-    
-    .content {
-      height: 9.375rem;
-      width: 86%
-      max-width: 80rem;
-    }
-  }
-
-  @media all and (min-width: 1280px) {
-    div {
-      margin-bottom: 4rem;
-    }
-  }
-`;
-
 const MembershipWrapper: AnyStyledComponent = styled.div`
   display: flex;
   flex-direction: column;
@@ -75,6 +29,14 @@ const MembershipWrapper: AnyStyledComponent = styled.div`
   width: 100%;
   padding: 0 1.25rem;
   margin-bottom: 2.5rem;
+
+  @media all and (min-width: 760px) {
+    padding: 0 4rem;
+  }
+
+  @media all and (min-width: 900px) {
+    padding: 0;
+  }
 
   @media all and (min-width: 960px) {
     padding: 0;
@@ -106,14 +68,6 @@ const MembershipMain: AnyStyledComponent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-
-  @media all and (min-width: 760px) {
-    padding: 0 4rem;
-  }
-
-  @media all and (min-width: 960px) {
-    padding: none;
-  }
 `;
 
 const JoinedInfo: AnyStyledComponent = styled.div`
@@ -283,6 +237,52 @@ const RenewLink: AnyStyledComponent = styled.a`
 
   @media all and (min-width: 380px) {
     width: auto;
+  }
+`;
+
+const LoadingComponent: AnyStyledComponent = styled.div`
+  width: 100%;
+  padding: 0 1.25rem;
+
+  .content {
+    height: 3rem;
+    width: 100%;
+    margin: 0 auto 2.5rem;
+    border-radius: 20px;
+    background: linear-gradient(
+      115deg, #E9EBEE 30%, #F6F7FA 80%
+    );
+    transition: all 100ms ease-in-out;
+  }
+
+  @media all and (min-width: 600px) {
+    .content {
+      height: 6rem;
+    }
+  }
+
+  @media all and (min-width: 760px) {
+    padding: 0 4rem;
+  }
+
+  @media all and (min-width: 900px) {
+    padding: 0 1.25rem;
+  }
+
+  @media all and (min-width: 960px) {
+    padding: 0;
+
+    .content {
+      height: 9.375rem;
+      width: 86%
+      max-width: 80rem;
+    }
+  }
+
+  @media all and (min-width: 1280px) {
+    div {
+      margin-bottom: 4rem;
+    }
   }
 `;
 

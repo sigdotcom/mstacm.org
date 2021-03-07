@@ -27,7 +27,7 @@ export const ME_EVENTS_QUERY: any = gql`
 const RecentlyAttendedEventsWrapper: AnyStyledComponent = styled.div`
   display: none;
 
-  @media all and (min-width: 760px) {
+  @media all and (min-width: 600px) {
     display: block;
     width: 100%;
   }
