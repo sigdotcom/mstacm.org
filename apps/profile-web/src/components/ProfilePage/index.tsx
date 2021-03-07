@@ -34,11 +34,8 @@ const AttendedEventsWrapper: AnyStyledComponent = styled.div`
     padding: 0 4rem;
   }
 
-  @media all and (min-width: 900px) {
-    padding: 0;
-  }
-
   @media all and (min-width: 960px) {
+    padding: 0;
     width: 86%
     max-width: 80rem;
   }

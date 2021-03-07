@@ -35,7 +35,7 @@ const MembershipWrapper: AnyStyledComponent = styled.div`
   }
 
   @media all and (min-width: 900px) {
-    padding: 0;
+    padding: 0 1.25rem;
   }
 
   @media all and (min-width: 960px) {

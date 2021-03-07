@@ -69,6 +69,26 @@ const EventBox: AnyStyledComponent = styled.div`
   box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.15);
   padding: 1.875rem 2rem;
   margin-bottom: 2rem;
+
+  @media all and (min-width: 600px) {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+  }
+
+  @media all and (min-width: 760px) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  @media all and (min-width: 900px) {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+  }
+
+  @media all and (min-width: 960px) {
+    margin-left: 0;
+    margin-right: 0;
+  }
 `;
 
 const EventPoster: AnyStyledComponent = styled.div`

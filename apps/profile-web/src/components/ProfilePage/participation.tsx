@@ -188,7 +188,7 @@ const LoadingContent: AnyStyledComponent = styled.div`
   background: linear-gradient(
     115deg, #E9EBEE 0%, #F6F7FA 70%
   );
-  transition: all 100ms ease-in-out;
+  transition: height, width 100ms ease-in-out;
 
   @media all and (min-width: 760px) {
     margin-left: 0;
