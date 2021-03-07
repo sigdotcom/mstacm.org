@@ -46,12 +46,17 @@ const Header: AnyStyledComponent = styled.div`
   padding-left: 1.25rem;
 
   @media all and (min-width: 760px) {
-    padding: 0;
+    padding-left: 0;
+  }
+
+  @media all and (min-width: 900px) {
+    padding-left: 1.25rem;
   }
 
   @media all and (min-width: 960px) {
     line-height: 1.5rem;
     font-size: 1.5rem;
+    padding-left: 0;
   }
 `;
 
@@ -162,8 +167,13 @@ const LoadingContent: AnyStyledComponent = styled.div`
     margin: 0;
   }
 
+  @media all and (min-width: 900px) {
+    margin: 0 1.25rem;
+  }
+
   @media all and (min-width: 960px) {
     height: 14rem;
+    margin: 0;
   }
 `;
 

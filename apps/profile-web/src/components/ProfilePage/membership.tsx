@@ -46,9 +46,13 @@ const LoadingComponent: AnyStyledComponent = styled.div`
     padding: 0 4rem;
   }
 
+  @media all and (min-width: 900px) {
+    padding: 0 1.25rem;
+  }
+
   @media all and (min-width: 960px) {
     padding: 0;
-
+    
     .content {
       height: 9.375rem;
       width: 86%
@@ -102,6 +106,14 @@ const MembershipMain: AnyStyledComponent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
+
+  @media all and (min-width: 760px) {
+    padding: 0 4rem;
+  }
+
+  @media all and (min-width: 960px) {
+    padding: none;
+  }
 `;
 
 const JoinedInfo: AnyStyledComponent = styled.div`

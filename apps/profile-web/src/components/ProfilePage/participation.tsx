@@ -51,12 +51,17 @@ const ParticipationTitle: AnyStyledComponent = styled.div`
   padding-left: 1.25rem;
 
   @media all and (min-width: 760px) {
-    padding: 0;
+    padding-left: 0;
+  }
+
+  @media all and (min-width: 900px) {
+    padding-left: 1.25rem;
   }
 
   @media all and (min-width: 960px) {
     line-height: 1.5rem;
     font-size: 1.5rem;
+    padding-left: 0;
   }
 `;
 
@@ -71,9 +76,14 @@ const MonthStart: AnyStyledComponent = styled.div`
     padding-left: .2rem;
   }
 
+  @media all and (min-width: 900px) {
+    padding-left: 1.45rem;
+  }
+
   @media all and (min-width: 960px) {
     font-size: 1rem;
     margin-bottom: 1rem;
+    padding-left: .2rem;
   }
 `;
 
@@ -87,6 +97,14 @@ const CarouselWrapper: AnyStyledComponent = styled.div`
   @media all and (min-width: 760px) {
     overflow: initial
     white-space: initial;
+    padding: 0;
+  }
+
+  @media all and (min-width: 900px) {
+    padding: 0 1.25rem;
+  }
+
+  @media all and (min-width: 960px) {
     padding: 0;
   }
 
@@ -172,6 +190,14 @@ const LoadingContent: AnyStyledComponent = styled.div`
   );
 
   @media all and (min-width: 760px) {
+    margin-left: 0;
+  }
+
+  @media all and (min-width: 900px) {
+    margin-left: 1.25rem;
+  }
+
+  @media all and (min-width: 960px) {
     margin-left: 0;
   }
 `;
