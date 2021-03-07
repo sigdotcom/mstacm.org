@@ -1,6 +1,5 @@
 import gql from "graphql-tag";
 import React from "react";
-// import React, { useState } from "react";
 import styled, { AnyStyledComponent } from "styled-components";
 import Icon from "react-eva-icons";
 
@@ -25,13 +24,6 @@ export const ME_EVENTS_GROUPS_QUERY: any = gql`
       }
     }
   }
-`;
-
-const LoadingContent: AnyStyledComponent = styled.div`
-  border-radius: 12px;
-  height: 1.875rem;
-  width: 11rem;
-  background: #E9EBEE;
 `;
 
 const HeaderWrapper: AnyStyledComponent = styled.div`
@@ -197,6 +189,7 @@ const UserEmail: AnyStyledComponent = styled.div`
 
 const Groups: AnyStyledComponent = styled.div`
   display: flex;
+  justify-content: center;
   margin: .5rem 0 .8rem;
 
   div:last-child {
@@ -220,28 +213,13 @@ const Group: AnyStyledComponent = styled.div`
 `;
 
 const NavWrapper: AnyStyledComponent = styled.div`
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: auto;
+  display: none;
 
   @media all and (min-width: 960px) {
+    display: block;
+    position: absolute;
     top: 32px;
     right: 32px;
-  }
-`;
-
-const NotificationShortcut: AnyStyledComponent = styled.a`
-  @media all and (min-width: 960px) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 0.625rem;
-    margin-right: .75rem;
   }
 `;
 
@@ -251,10 +229,6 @@ export const ProfileHeader: React.FC<{}> = (): JSX.Element => {
 
   let groupComponents: JSX.Element[] | JSX.Element = [];
   let numEvents = 0;
-
-  if (loading) {
-    groupComponents = <LoadingContent />
-  }
 
   if (!loading && !error && data && data.me && data.me.eventsAttended) {
     numEvents = data.me.eventsAttended.length;
@@ -288,19 +262,10 @@ export const ProfileHeader: React.FC<{}> = (): JSX.Element => {
               <UserLastName>{user.family_name}</UserLastName>
             </Username>
             <UserEmail>{user.email}</UserEmail>
-            {!error && <Groups>{groupComponents}</Groups>}
+            {!error && !loading && <Groups>{groupComponents}</Groups>}
           </UserInfo>
         </ProfileInfo>
         <NavWrapper>
-          <NotificationShortcut href="#">
-            <Icon
-              name="bell"
-              size="medium"
-              fill={
-                window.innerWidth < 960 ? "#087ABB" : "#333333"
-              }
-            />
-          </NotificationShortcut>
           <ProfileOptions />
         </NavWrapper>
       </Header>

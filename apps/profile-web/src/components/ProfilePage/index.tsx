@@ -5,7 +5,6 @@ import { ProfileHeader } from "./profileHeader";
 import { Membership } from "./membership";
 import { Participation } from "./participation";
 import { RecentlyAttendedEvents } from "./recentlyAttendedEvents";
-import { QuickAccess } from "../Navigation/quickAccess";
 
 const ProfileWrapper: AnyStyledComponent = styled.div`
   background: white;
@@ -13,7 +12,6 @@ const ProfileWrapper: AnyStyledComponent = styled.div`
   flex-direction: column;
   align-items: center;
   flex: 1;
-  margin-bottom: 2rem;
 
   @media all and (min-width: 900px) {
     padding-left: 20rem;
@@ -25,11 +23,14 @@ const AttendedEventsWrapper: AnyStyledComponent = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
 
-  @media all and (min-width: 600px) {
+  @media all and (min-width: 500px) {
+    margin-bottom: 2.5rem;
+  }
+
+  @media all and (min-width: 760px) {
     padding: 0 4rem;
-    margin-bottom: 0;
   }
 
   @media all and (min-width: 960px) {
@@ -43,17 +44,6 @@ const AttendedEventsWrapper: AnyStyledComponent = styled.div`
   }
 `;
 
-const QuickAccessMargins: AnyStyledComponent = styled.div`
-  width: 100%;
-  padding: 0 1.25rem;
-  display: flex;
-  justify-content: center;
-
-  @media all and (min-width: 600px) {
-    display: none;
-  }
-`;
-
 export const ProfilePage: React.FC<{}> = () => {
   return (
     <ProfileWrapper>
@@ -63,9 +53,6 @@ export const ProfilePage: React.FC<{}> = () => {
         <Participation />
         <RecentlyAttendedEvents />
       </AttendedEventsWrapper>
-      <QuickAccessMargins>
-        <QuickAccess />
-      </QuickAccessMargins>
     </ProfileWrapper>
   );
 };

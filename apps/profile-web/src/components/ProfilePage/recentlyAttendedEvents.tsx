@@ -25,11 +25,11 @@ export const ME_EVENTS_QUERY: any = gql`
 `;
 
 const RecentlyAttendedEventsWrapper: AnyStyledComponent = styled.div`
-  width: 100%;
   display: none;
 
-  @media all and (min-width: 600px) {
+  @media all and (min-width: 760px) {
     display: block;
+    width: 100%;
   }
 
   div:last-child {
@@ -42,7 +42,12 @@ const Header: AnyStyledComponent = styled.div`
   line-height: 1.25rem;
   font-weight: 800;
   color: black;
-  margin-bottom: 1.5rem;
+  margin-bottom: .75rem;
+  padding-left: 1.25rem;
+
+  @media all and (min-width: 760px) {
+    padding: 0;
+  }
 
   @media all and (min-width: 960px) {
     line-height: 1.5rem;
@@ -122,7 +127,17 @@ const EventDescription: AnyStyledComponent = styled.div`
 `;
 
 const LoadingWrapperWrapper: AnyStyledComponent = styled.div`
-  width: 100%;
+  display: none;
+
+  @media all and (min-width: 500px) {
+    display: block;
+    width: 100%;
+    margin-top: 2.5rem;
+  }
+
+  @media all and (min-width: 1280px) {
+    margin-bottom: 0;
+  }
 `;
 
 const LoadingWrapper: AnyStyledComponent = styled.div`
@@ -138,9 +153,14 @@ const LoadingWrapper: AnyStyledComponent = styled.div`
 const LoadingContent: AnyStyledComponent = styled.div`
   height: 11rem;
   border-radius: 12px;
+  margin: 0 1.25rem;
   background: linear-gradient(
     115deg, #E9EBEE 30%, #F6F7FA 80%
   );
+
+  @media all and (min-width: 760px) {
+    margin: 0;
+  }
 
   @media all and (min-width: 960px) {
     height: 14rem;

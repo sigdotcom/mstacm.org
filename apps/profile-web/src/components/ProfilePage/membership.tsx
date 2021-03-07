@@ -26,17 +26,23 @@ const LoadingComponent: AnyStyledComponent = styled.div`
   padding: 0 1.25rem;
 
   .content {
-    height: 6rem;
+    height: 3rem;
     width: 100%;
-    min-width: 20rem;
-    margin: 1rem auto 2.5rem;
+    margin: 0 auto 2.5rem;
     border-radius: 20px;
     background: linear-gradient(
       115deg, #E9EBEE 30%, #F6F7FA 80%
     );
+    transition: all 100ms ease-in-out;
   }
 
   @media all and (min-width: 600px) {
+    .content {
+      height: 6rem;
+    }
+  }
+
+  @media all and (min-width: 760px) {
     padding: 0 4rem;
   }
 
@@ -64,7 +70,6 @@ const MembershipWrapper: AnyStyledComponent = styled.div`
   align-items: stretch;
   width: 100%;
   padding: 0 1.25rem;
-  min-width: 20rem;
   margin-bottom: 2.5rem;
 
   @media all and (min-width: 960px) {
@@ -80,8 +85,10 @@ const MembershipWrapper: AnyStyledComponent = styled.div`
 
 const MembershipTitle: AnyStyledComponent = styled.div`
   font-size: 1.25rem;
+  line-height: 1.25rem;
   font-weight: 800;
   color: black;
+  margin-bottom: .75rem;
 
   @media all and (min-width: 960px) {
     display: none;
@@ -283,7 +290,14 @@ export const Membership: React.FC<{}> = (): JSX.Element => {
       </LoadingComponent>
     );
   }
-  if (error) return <div />;
+  if (error) {
+    return (
+      <LoadingComponent>
+        <MembershipTitle>Membership</MembershipTitle>
+        <div className="content" />
+      </LoadingComponent>
+    );
+  }
 
   let eventsAttended = 0, yearsSinceJoin = 0;
   let dateJoined = "", graduationDate = "", membershipExpirationDate = "";

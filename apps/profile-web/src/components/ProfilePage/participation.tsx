@@ -31,7 +31,6 @@ const ParticipationWrapper: AnyStyledComponent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: 3rem;
 
   @media all and (min-width: 1280px) {
     margin-bottom: 0;
@@ -51,7 +50,7 @@ const ParticipationTitle: AnyStyledComponent = styled.div`
   white-space: nowrap;
   padding-left: 1.25rem;
 
-  @media all and (min-width: 600px) {
+  @media all and (min-width: 760px) {
     padding: 0;
   }
 
@@ -68,7 +67,7 @@ const MonthStart: AnyStyledComponent = styled.div`
   margin-bottom: .75rem;
   width: 100%;
 
-  @media all and (min-width: 600px) {
+  @media all and (min-width: 760px) {
     padding-left: .2rem;
   }
 
@@ -85,7 +84,7 @@ const CarouselWrapper: AnyStyledComponent = styled.div`
   padding: 0 1.25rem;
   width: 100%;
 
-  @media all and (min-width: 600px) {
+  @media all and (min-width: 760px) {
     overflow: initial
     white-space: initial;
     padding: 0;
@@ -100,7 +99,7 @@ const CarouselWrapper: AnyStyledComponent = styled.div`
 const ClubBox: AnyStyledComponent = styled.div`
   display: inline-block;
   border-radius: 12px;
-  margin: 1rem 1rem 1rem 0;
+  margin: 0 1rem 2rem 0;
   padding: 1.25rem 1rem;
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.15);
   min-width: 8rem;
@@ -110,7 +109,7 @@ const ClubBox: AnyStyledComponent = styled.div`
     margin-left: 0;
   }
 
-  @media all and (min-width: 600px) {
+  @media all and (min-width: 760px) {
     margin-top: 0;
     padding: 1rem;
   }
@@ -158,10 +157,7 @@ const ClubName: AnyStyledComponent = styled.div`
 `;
 
 const LoadingWrapper: AnyStyledComponent = styled.div`
-  margin-bottom: 2.5rem;
-
   @media all and (min-width: 1280px) {
-    margin-bottom: 0;
     margin-right: 4rem;
   }
 `;
@@ -170,9 +166,14 @@ const LoadingContent: AnyStyledComponent = styled.div`
   width: 12.75rem;
   height: 9.375rem;
   border-radius: 12px;
+  margin-left: 1.25rem;
   background: linear-gradient(
     115deg, #E9EBEE 0%, #F6F7FA 70%
   );
+
+  @media all and (min-width: 760px) {
+    margin-left: 0;
+  }
 `;
 
 // const CommunitiesBox: AnyStyledComponent = styled.div`

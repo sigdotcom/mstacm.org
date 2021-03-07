@@ -6,11 +6,8 @@ import { useAuth0 } from "../../utils/react-auth0-wrapper";
 import { Options } from "./options";
 
 const DropdownWrapper = styled.div`
-  position: relative;
-  display: none;
-
   @media all and (min-width: 960px) {
-    display: block;
+    position: relative;
   }
 `;
 
