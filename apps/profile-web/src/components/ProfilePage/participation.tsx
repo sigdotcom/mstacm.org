@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 import React from "react";
 
 import styled, { AnyStyledComponent } from "styled-components";
+import Icon from "react-eva-icons";
 
 import {
   useMeParticipationQuery,
@@ -181,8 +182,8 @@ const LoadingWrapper: AnyStyledComponent = styled.div`
 `;
 
 const LoadingContent: AnyStyledComponent = styled.div`
-  width: 9rem;
-  height: 6rem;
+  width: 7rem;
+  height: 4.5rem;
   border-radius: 12px;
   margin-left: 1.25rem;
   background: linear-gradient(
@@ -200,34 +201,53 @@ const LoadingContent: AnyStyledComponent = styled.div`
 
   @media all and (min-width: 960px) {
     margin-left: 0;
+  }
+
+  @media all and (min-width: 1280px) {
     width: 12rem;
-    height: 9rem;
+    height: 6.5rem;
   }
 `;
 
-// const CommunitiesBox: AnyStyledComponent = styled.div`
-//   padding: 0 1.25rem;
-//   width: 100%;
+const CommunitiesBox: AnyStyledComponent = styled.div`
+  width: 100%;
+  padding: 0 1.25rem;
+  
+  div {
+    width: 100%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    background: #fff;
+    min-width: 17.5rem;
+    max-width: 20rem;
+    height: 7rem;
+    border-radius: 0.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-//   div {
-//     background: #F4F5F8;
-//     width: 100%;
-//     max-width: 20rem;
-//     height: 7rem;
-//     border-radius: 0.75rem;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//   }
+  i {
+    display: flex;
+  }
 
-//   @media all and (min-width: 600px) {
-//     padding: 0;
-//   }
-// `;
+  @media all and (min-width: 760px) {
+    padding: 0;
+  }
 
-// const CommunitiesLink: AnyStyledComponent = styled.a`
-//   font-size: 1rem;
-// `;
+  @media all and (min-width: 900px) {
+    padding: 0 1.25rem;
+  }
+
+  @media all and (min-width: 960px) {
+    padding: 0;
+  }
+`;
+
+const CommunitiesLink: AnyStyledComponent = styled.a`
+  font-size: 1rem;
+  color: #ababab;
+  margin-right: .2rem;
+`;
 
 const COLORS = [
   "#F5DEB3", "#FFC0CB", "#C0F6BF", "#E8BFF6",
@@ -254,21 +274,19 @@ export const Participation: React.FC<{}> = () => {
       </LoadingWrapper>
     );
   } else if (error) {
-    // return (
-    //   <CommunitiesBox>
-    //     <div>
-    //       <CommunitiesLink href="#">
-    //         Find our communities here
-    //       </CommunitiesLink>
-    //     </div>
-    //   </CommunitiesBox>
-    // );
     return (
-      <LoadingWrapper>
-        <ParticipationTitle>Community Participation</ParticipationTitle>
-        <MonthStart>events attended since joined</MonthStart>
-        <LoadingContent />
-      </LoadingWrapper>
+      <CommunitiesBox>
+        <div>
+          <CommunitiesLink href="#">
+            Find our communities here
+          </CommunitiesLink>
+          <Icon
+            name="external-link"
+            size="medium"
+            fill="#ababab"
+          />
+        </div>
+      </CommunitiesBox>
     );
   } else if (data && data.me && data.me.eventsAttended) {
     monthJoined = monthNames[new Date(data.me.dateJoined).getMonth()];

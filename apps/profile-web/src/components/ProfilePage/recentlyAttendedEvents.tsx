@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 import React from "react";
 
 import styled, { AnyStyledComponent } from "styled-components";
+import Icon from "react-eva-icons";
 
 import {
   useMeEventsQuery,
@@ -27,7 +28,7 @@ export const ME_EVENTS_QUERY: any = gql`
 const RecentlyAttendedEventsWrapper: AnyStyledComponent = styled.div`
   display: none;
 
-  @media all and (min-width: 600px) {
+  @media all and (min-width: 400px) {
     display: block;
     width: 100%;
   }
@@ -62,7 +63,6 @@ const Header: AnyStyledComponent = styled.div`
 
 const EventBox: AnyStyledComponent = styled.div`
   display: flex;
-  width: 100%;
   max-width: 40rem;
   background: white;
   border-radius: 12px;
@@ -154,7 +154,7 @@ const EventDescription: AnyStyledComponent = styled.div`
 const LoadingWrapperWrapper: AnyStyledComponent = styled.div`
   display: none;
 
-  @media all and (min-width: 500px) {
+  @media all and (min-width: 400px) {
     display: block;
     width: 100%;
     margin-top: 2.5rem;
@@ -197,20 +197,46 @@ const LoadingContent: AnyStyledComponent = styled.div`
   }
 `;
 
-// const FindEventsBox: AnyStyledComponent = styled.div`
-//   background: #F4F5F8;
-//   width: 100%;
-//   max-width: 20rem;
-//   height: 7rem;
-//   border-radius: 0.75rem;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// `;
+const FindEventsBox: AnyStyledComponent = styled.div`
+  width: 100%;
+  padding: 0 1.25rem;
+  margin-top: 2.5rem;
 
-// const FindEventsLink: AnyStyledComponent = styled.a`
-//   font-size: 1rem;
-// `;
+  div {
+    width: 100%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    background: #fff;
+    min-width: 17.5rem;
+    max-width: 20rem;
+    height: 7rem;
+    border-radius: 0.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  i {
+    display: flex;
+  }
+
+  @media all and (min-width: 760px) {
+    padding: 0;
+  }
+
+  @media all and (min-width: 900px) {
+    padding: 0 1.25rem;
+  }
+
+  @media all and (min-width: 960px) {
+    padding: 0;
+  }
+`;
+
+const FindEventsLink: AnyStyledComponent = styled.a`
+  font-size: 1rem;
+  color: #ababab;
+  margin-right: .2rem;
+`;
 
 export const RecentlyAttendedEvents: React.FC<{}> = () => {
   const { loading, error, data }: MeEventsQueryHookResult = useMeEventsQuery();
@@ -227,20 +253,19 @@ export const RecentlyAttendedEvents: React.FC<{}> = () => {
       </LoadingWrapperWrapper>
     );
   } else if (error) {
-    // return (
-    //   <FindEventsBox>
-    //     <FindEventsLink href="#">
-    //       Find our events here
-    //     </FindEventsLink>
-    //   </FindEventsBox>
-    // );
     return (
-      <LoadingWrapperWrapper>
-        <LoadingWrapper>
-          <Header>Recently Attended Events</Header>
-          <LoadingContent />
-        </LoadingWrapper>
-      </LoadingWrapperWrapper>
+      <FindEventsBox>
+        <div>
+          <FindEventsLink href="#">
+            Find our events here
+          </FindEventsLink>
+          <Icon
+            name="external-link"
+            size="medium"
+            fill="#ababab"
+          />
+        </div>
+      </FindEventsBox>
     );
   } else if (data && data.me && data.me.eventsAttended) {
     eventBoxes = data.me.eventsAttended.map((event: any, index: number): JSX.Element =>

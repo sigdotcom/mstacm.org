@@ -244,20 +244,45 @@ const LoadingComponent: AnyStyledComponent = styled.div`
   width: 100%;
   padding: 0 1.25rem;
 
-  .content {
-    height: 3rem;
+  .membership-content {
+    height: 5.3rem;
     width: 100%;
+    min-width: 17.5rem;
     margin: 0 auto 2.5rem;
     border-radius: 20px;
+    transition: all 100ms;
+  }
+
+  .membership-loading {
     background: linear-gradient(
       115deg, #E9EBEE 30%, #F6F7FA 80%
     );
-    transition: all 100ms ease-in-out;
+  }
+
+  .membership-error {
+    transition: all 500ms;
+    height: 2.7rem !important;
+    background: #F67A7A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+    }
+  }
+
+  @media all and (min-width: 530px) {
+    .membership-content {
+      height: 3.5rem;
+    }
   }
 
   @media all and (min-width: 600px) {
-    .content {
-      height: 6rem;
+    .membership-content {
+      height: 7.5rem;
     }
   }
 
@@ -272,15 +297,15 @@ const LoadingComponent: AnyStyledComponent = styled.div`
   @media all and (min-width: 960px) {
     padding: 0;
 
-    .content {
-      height: 9.375rem;
+    .membership-content {
+      height: 8.125rem;
       width: 86%
       max-width: 80rem;
     }
   }
 
   @media all and (min-width: 1280px) {
-    div {
+    .membership-content {
       margin-bottom: 4rem;
     }
   }
@@ -298,7 +323,7 @@ export const Membership: React.FC<{}> = (): JSX.Element => {
     return (
       <LoadingComponent>
         <MembershipTitle>Membership</MembershipTitle>
-        <div className="content" />
+        <div className="membership-content membership-loading" />
       </LoadingComponent>
     );
   }
@@ -306,7 +331,9 @@ export const Membership: React.FC<{}> = (): JSX.Element => {
     return (
       <LoadingComponent>
         <MembershipTitle>Membership</MembershipTitle>
-        <div className="content" />
+        <div className="membership-content membership-error">
+          <span>Error fetching your membership data.</span>
+        </div>
       </LoadingComponent>
     );
   }
