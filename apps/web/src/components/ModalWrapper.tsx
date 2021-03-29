@@ -17,7 +17,8 @@ const modalStyle: any = {
     transform: "translate(-50%, -50%)",
     borderRadius: "12px",
     overflow: "hidden",
-    border: "none"
+    border: "none",
+    minWidth: "340px"
   },
   overlay: {
     backgroundColor: "rgba(0, 0, 0, .25)"
