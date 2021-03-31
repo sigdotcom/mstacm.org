@@ -9,8 +9,8 @@ import {
 } from "react-stripe-elements";
 import styled, { AnyStyledComponent } from "styled-components";
 
+import { config } from "../config";
 import { PrimaryButton } from "./PrimaryButton";
-import stripeSVG from "../static/img/stripe/white.svg";
 
 const defaultColor = "#c4c4c4";
 const inProgressColor = "#525252";
@@ -73,6 +73,7 @@ const CardNumberElementContainer: AnyStyledComponent = styled.div`
   position: relative;
   width: 100%;
   cursor: text;
+  margin-top: .5rem;
 
   .StripeElement {
     border-bottom-color: ${props => props.color};
@@ -81,9 +82,9 @@ const CardNumberElementContainer: AnyStyledComponent = styled.div`
 
 const StripeSVG: AnyStyledComponent = styled.img`
   position: absolute;
-  width: 68px;
-  height: 15px;
-  top: 14px;
+  width: 95px;
+  height: 21px;
+  top: 8px;
   right: 0;
   background: #C4C4C4;
   border-radius: 4px;
@@ -299,7 +300,7 @@ export const PaymentInformationForm: React.FC<FormProps> = (
         <Header>Payment Information</Header>
         <CardNumberElementContainer color={cardNumberElementColor}>
           <CardElementLabel>Card Number</CardElementLabel>
-          <StripeSVG src={stripeSVG} alt="Powered By Stripe" />
+          <StripeSVG src={`${config.CDN_URI}/static/stripe-badge.png`} alt="Stripe" />
           <CardNumberElement
             {...inputOptions}
             onChange={handleChange}

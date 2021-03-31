@@ -51,7 +51,7 @@ const XBar: AnyStyledComponent = styled.div`
   left: 50%;
   width: 3px;
   height: 28px;
-  border-radius: 30px;
+  border-radius: 60px;
 `;
 
 const LeftX: AnyStyledComponent = styled(XBar)`
