@@ -54,11 +54,12 @@ const XBar: AnyStyledComponent = styled.div`
   border-radius: 60px;
 `;
 
-const LeftX: AnyStyledComponent = styled(XBar)`
+// https://github.com/microsoft/TypeScript/issues/37597
+const LeftX: AnyStyledComponent = styled(XBar as any)`
   transform: translate(-50%, -50%) rotate(45deg);
 `;
 
-const RightX: AnyStyledComponent = styled(XBar)`
+const RightX: AnyStyledComponent = styled(XBar as any)`
   transform: translate(-50%, -50%) rotate(-45deg);
 `;
 
