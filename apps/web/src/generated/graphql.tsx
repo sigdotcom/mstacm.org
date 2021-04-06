@@ -104,7 +104,6 @@ export type Mutation = {
   deleteEvent: EventDeletePayload;
   updateEvent: Event;
   createEvent: Event;
-  addAttendee: Event;
   createGroup: Group;
   createPermission: Permission;
   createRedemptionCode: RedemptionCode;
@@ -169,12 +168,6 @@ export type MutationUpdateEventArgs = {
 export type MutationCreateEventArgs = {
   flier?: Maybe<Scalars['Upload']>;
   data: EventCreateInput;
-};
-
-
-export type MutationAddAttendeeArgs = {
-  eventId: Scalars['Float'];
-  userId: Scalars['String'];
 };
 
 
@@ -298,7 +291,6 @@ export type Query = {
   events: Array<Event>;
   currentEvents: Array<Event>;
   event: Event;
-  eventsWithKey: Array<Event>;
   groups: Array<Group>;
   permissions: Array<Permission>;
   products: Array<Product>;
@@ -435,10 +427,12 @@ export type RedeemRedemptionCodeMutationVariables = Exact<{
 
 export type RedeemRedemptionCodeMutation = (
   { __typename?: 'Mutation' }
-  & { redeemRedemptionCode: (
-    { __typename?: 'RedemptionCode' }
-    & Pick<RedemptionCode, 'id' | 'redeemed'>
-  ) }
+  & {
+    redeemRedemptionCode: (
+      { __typename?: 'RedemptionCode' }
+      & Pick<RedemptionCode, 'id' | 'redeemed'>
+    )
+  }
 );
 
 export type GetMembershipMutationVariables = Exact<{
@@ -448,10 +442,12 @@ export type GetMembershipMutationVariables = Exact<{
 
 export type GetMembershipMutation = (
   { __typename?: 'Mutation' }
-  & { startMembershipTransaction: (
-    { __typename?: 'TransactionPayload' }
-    & Pick<TransactionPayload, 'id' | 'charged' | 'clientSecret'>
-  ) }
+  & {
+    startMembershipTransaction: (
+      { __typename?: 'TransactionPayload' }
+      & Pick<TransactionPayload, 'id' | 'charged' | 'clientSecret'>
+    )
+  }
 );
 
 export type GetCurrentEventsQueryVariables = Exact<{ [key: string]: never; }>;
@@ -459,14 +455,18 @@ export type GetCurrentEventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCurrentEventsQuery = (
   { __typename?: 'Query' }
-  & { currentEvents: Array<(
-    { __typename?: 'Event' }
-    & Pick<Event, 'id' | 'dateCreated' | 'dateHosted' | 'dateExpire' | 'eventTitle' | 'description' | 'location' | 'flierLink' | 'eventLink'>
-    & { hostSig: (
-      { __typename?: 'Sig' }
-      & Pick<Sig, 'name'>
-    ) }
-  )> }
+  & {
+    currentEvents: Array<(
+      { __typename?: 'Event' }
+      & Pick<Event, 'id' | 'dateCreated' | 'dateHosted' | 'dateExpire' | 'eventTitle' | 'description' | 'location' | 'flierLink' | 'eventLink'>
+      & {
+        hostSig: (
+          { __typename?: 'Sig' }
+          & Pick<Sig, 'name'>
+        )
+      }
+    )>
+  }
 );
 
 export type MeExpirationQueryVariables = Exact<{ [key: string]: never; }>;
@@ -474,10 +474,12 @@ export type MeExpirationQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeExpirationQuery = (
   { __typename?: 'Query' }
-  & { me?: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'membershipExpiration'>
-  )> }
+  & {
+    me?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'membershipExpiration'>
+    )>
+  }
 );
 
 
@@ -509,8 +511,8 @@ export type RedeemRedemptionCodeMutationFn = ApolloReactCommon.MutationFunction<
  * });
  */
 export function useRedeemRedemptionCodeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>) {
-        return ApolloReactHooks.useMutation<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>(RedeemRedemptionCodeDocument, baseOptions);
-      }
+  return ApolloReactHooks.useMutation<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>(RedeemRedemptionCodeDocument, baseOptions);
+}
 export type RedeemRedemptionCodeMutationHookResult = ReturnType<typeof useRedeemRedemptionCodeMutation>;
 export type RedeemRedemptionCodeMutationResult = ApolloReactCommon.MutationResult<RedeemRedemptionCodeMutation>;
 export type RedeemRedemptionCodeMutationOptions = ApolloReactCommon.BaseMutationOptions<RedeemRedemptionCodeMutation, RedeemRedemptionCodeMutationVariables>;
@@ -543,8 +545,8 @@ export type GetMembershipMutationFn = ApolloReactCommon.MutationFunction<GetMemb
  * });
  */
 export function useGetMembershipMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<GetMembershipMutation, GetMembershipMutationVariables>) {
-        return ApolloReactHooks.useMutation<GetMembershipMutation, GetMembershipMutationVariables>(GetMembershipDocument, baseOptions);
-      }
+  return ApolloReactHooks.useMutation<GetMembershipMutation, GetMembershipMutationVariables>(GetMembershipDocument, baseOptions);
+}
 export type GetMembershipMutationHookResult = ReturnType<typeof useGetMembershipMutation>;
 export type GetMembershipMutationResult = ApolloReactCommon.MutationResult<GetMembershipMutation>;
 export type GetMembershipMutationOptions = ApolloReactCommon.BaseMutationOptions<GetMembershipMutation, GetMembershipMutationVariables>;
@@ -583,11 +585,11 @@ export const GetCurrentEventsDocument = gql`
  * });
  */
 export function useGetCurrentEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
-      }
+  return ApolloReactHooks.useQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
+}
 export function useGetCurrentEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
-        }
+  return ApolloReactHooks.useLazyQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
+}
 export type GetCurrentEventsQueryHookResult = ReturnType<typeof useGetCurrentEventsQuery>;
 export type GetCurrentEventsLazyQueryHookResult = ReturnType<typeof useGetCurrentEventsLazyQuery>;
 export type GetCurrentEventsQueryResult = ApolloReactCommon.QueryResult<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>;
@@ -615,11 +617,11 @@ export const MeExpirationDocument = gql`
  * });
  */
 export function useMeExpirationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeExpirationQuery, MeExpirationQueryVariables>) {
-        return ApolloReactHooks.useQuery<MeExpirationQuery, MeExpirationQueryVariables>(MeExpirationDocument, baseOptions);
-      }
+  return ApolloReactHooks.useQuery<MeExpirationQuery, MeExpirationQueryVariables>(MeExpirationDocument, baseOptions);
+}
 export function useMeExpirationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeExpirationQuery, MeExpirationQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<MeExpirationQuery, MeExpirationQueryVariables>(MeExpirationDocument, baseOptions);
-        }
+  return ApolloReactHooks.useLazyQuery<MeExpirationQuery, MeExpirationQueryVariables>(MeExpirationDocument, baseOptions);
+}
 export type MeExpirationQueryHookResult = ReturnType<typeof useMeExpirationQuery>;
 export type MeExpirationLazyQueryHookResult = ReturnType<typeof useMeExpirationLazyQuery>;
 export type MeExpirationQueryResult = ApolloReactCommon.QueryResult<MeExpirationQuery, MeExpirationQueryVariables>;
