@@ -17,6 +17,7 @@
     "@react-navigation/bottom-tabs": "^5.8.0",
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.9.0",
+    "@types/styled-components": "^5.1.4",
     "expo": "~39.0.2",
     "expo-asset": "~8.2.0",
     "expo-constants": "~9.2.0",
@@ -31,7 +32,8 @@
     "react-native-gesture-handler": "~1.7.0",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
