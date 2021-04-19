@@ -280,11 +280,11 @@ const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
       return str;
     }
     const subString = str.substr(0, n - 1);
-    return (
-      (useWordBoundary
+    return `${
+      useWordBoundary
         ? subString.substr(0, subString.lastIndexOf(" "))
-        : subString) + "..."
-    );
+        : subString
+    }...`;
   }
 
   const branch = {
@@ -322,7 +322,7 @@ const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
           ""
         ) : (
           <a rel="noopener noreferrer" target="_blank" href={event.flierLink}>
-            <Fly src={event.flierLink} alt={"Flier"} />
+            <Fly src={event.flierLink} alt="Flier" />
           </a>
         )}
 
@@ -353,7 +353,7 @@ const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
             <QRButton onClick={handleQR}>QR</QRButton>
           </Group>
           <Time>
-            {start} - {end} @{" "}
+            {start} -{end} @{" "}
             {event.location.length <= 15 ? (
               event.location
             ) : (

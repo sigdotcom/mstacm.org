@@ -22,8 +22,8 @@ interface IQueryProps {
 const todaysDate = new Date();
 const todaysISO = todaysDate.toISOString();
 const errorData = [
-  //This allows Event data to error to this if it cannot fetch
-  //This will never show as any type of event
+  // This allows Event data to error to this if it cannot fetch
+  // This will never show as any type of event
   {
     id: 1,
     dateCreated: "2019-10-03T18:59:21.955Z",
@@ -52,41 +52,41 @@ const PrevioustList: React.SFC<IQueryProps> = ({
         <h3>Loading...</h3>
       </PageWrapper>
     );
-  } else if (error) {
+  }
+  if (error) {
     return (
       <PageWrapper>
         <h3>{error.toString()}</h3>
       </PageWrapper>
     );
-  } else {
-    const events: IEvent[] = data;
-
-    events
-      .sort(
-        (a: any, b: any) =>
-          new Date(a.dateHosted).getTime() - new Date(b.dateHosted).getTime() //sorts by upcoming - later
-      )
-      .reverse();
-    const previousEventFilter = events.filter(
-      (c: any) =>
-        new Date(c.dateHosted).getTime() -
-          new Date(todaysISO.split("T")[0]).getTime() < //Filters out dates that have passed
-        0
-    );
-    const listElements: JSX.Element[] = previousEventFilter.map(
-      (event: IEvent, index: number) => (
-        <Event event={event} index={index} key={event.id} />
-      )
-    );
-
-    return (
-      <PageWrapper>
-        <List>
-          {listElements.length < 1 ? "No previous events" : listElements}
-        </List>
-      </PageWrapper>
-    );
   }
+  const events: IEvent[] = data;
+
+  events
+    .sort(
+      (a: any, b: any) =>
+        new Date(a.dateHosted).getTime() - new Date(b.dateHosted).getTime() // sorts by upcoming - later
+    )
+    .reverse();
+  const previousEventFilter = events.filter(
+    (c: any) =>
+      new Date(c.dateHosted).getTime() -
+        new Date(todaysISO.split("T")[0]).getTime() < // Filters out dates that have passed
+      0
+  );
+  const listElements: JSX.Element[] = previousEventFilter.map(
+    (event: IEvent, index: number) => (
+      <Event event={event} index={index} key={event.id} />
+    )
+  );
+
+  return (
+    <PageWrapper>
+      <List>
+        {listElements.length < 1 ? "No previous events" : listElements}
+      </List>
+    </PageWrapper>
+  );
 };
 
 const ThisWeekList: React.SFC<IQueryProps> = ({
@@ -100,49 +100,49 @@ const ThisWeekList: React.SFC<IQueryProps> = ({
         <h3>Loading...</h3>
       </PageWrapper>
     );
-  } else if (error) {
+  }
+  if (error) {
     return (
       <PageWrapper>
         <h3>{error.toString()}</h3>
       </PageWrapper>
     );
-  } else {
-    const events: IEvent[] = data;
-    events.sort(
-      (a: any, b: any) =>
-        new Date(a.dateHosted).getTime() - new Date(b.dateHosted).getTime() //sorts by upcoming - later
-    );
-
-    const thisWeekEventFilter = events.filter(
-      (a: any) =>
-        new Date(a.dateHosted.split("T")[0]).getTime() -
-          new Date(a.dateHosted.split("T")[0]).getDay() * 86400000 ===
-        new Date(todaysISO.split("T")[0]).getTime() -
-          new Date(todaysISO.split("T")[0]).getDay() * 86400000 //Finds the monday of our week and the monday of the the events week and tests if its equal
-    );
-    const passedEventFilter = thisWeekEventFilter.filter(
-      (c: any) =>
-        new Date(c.dateHosted).getTime() -
-          new Date(todaysISO.split("T")[0]).getTime() > //Filters out dates that have passed
-        0
-    );
-
-    const listElements: JSX.Element[] = passedEventFilter.map(
-      (event: IEvent, index: number) => (
-        <Event event={event} index={index} key={event.id} />
-      )
-    );
-
-    return (
-      <PageWrapper>
-        <List>
-          {listElements.length < 1
-            ? "No upcoming events this week"
-            : listElements}
-        </List>
-      </PageWrapper>
-    );
   }
+  const events: IEvent[] = data;
+  events.sort(
+    (a: any, b: any) =>
+      new Date(a.dateHosted).getTime() - new Date(b.dateHosted).getTime() // sorts by upcoming - later
+  );
+
+  const thisWeekEventFilter = events.filter(
+    (a: any) =>
+      new Date(a.dateHosted.split("T")[0]).getTime() -
+        new Date(a.dateHosted.split("T")[0]).getDay() * 86400000 ===
+      new Date(todaysISO.split("T")[0]).getTime() -
+        new Date(todaysISO.split("T")[0]).getDay() * 86400000 // Finds the monday of our week and the monday of the the events week and tests if its equal
+  );
+  const passedEventFilter = thisWeekEventFilter.filter(
+    (c: any) =>
+      new Date(c.dateHosted).getTime() -
+        new Date(todaysISO.split("T")[0]).getTime() > // Filters out dates that have passed
+      0
+  );
+
+  const listElements: JSX.Element[] = passedEventFilter.map(
+    (event: IEvent, index: number) => (
+      <Event event={event} index={index} key={event.id} />
+    )
+  );
+
+  return (
+    <PageWrapper>
+      <List>
+        {listElements.length < 1
+          ? "No upcoming events this week"
+          : listElements}
+      </List>
+    </PageWrapper>
+  );
 };
 const NextWeekList: React.SFC<IQueryProps> = ({
   loading,
@@ -155,50 +155,50 @@ const NextWeekList: React.SFC<IQueryProps> = ({
         <h3>Loading...</h3>
       </PageWrapper>
     );
-  } else if (error) {
+  }
+  if (error) {
     return (
       <PageWrapper>
         <h3>{error.toString()}</h3>
       </PageWrapper>
     );
-  } else {
-    const events: IEvent[] = data;
-    events.sort(
-      (a: any, b: any) =>
-        new Date(a.dateHosted).getTime() - new Date(b.dateHosted).getTime() //sorts by upcoming - later
-    );
-
-    const nextWeekEventFilter = events.filter(
-      (a: any) =>
-        new Date(a.dateHosted.split("T")[0]).getTime() -
-          new Date(a.dateHosted.split("T")[0]).getDay() * 86400000 ===
-        new Date(todaysISO.split("T")[0]).getTime() +
-          7 * 86400000 -
-          new Date(todaysISO.split("T")[0]).getDay() * 86400000 //Finds our monday and event monday but 7 days in the future
-    );
-    const passedEventFilter = nextWeekEventFilter.filter(
-      (c: any) =>
-        new Date(c.dateHosted).getTime() -
-          new Date(todaysISO.split("T")[0]).getTime() >
-        0
-    );
-
-    const listElements: JSX.Element[] = passedEventFilter.map(
-      (event: IEvent, index: number) => (
-        <Event event={event} index={index} key={event.id} />
-      )
-    );
-
-    return (
-      <PageWrapper>
-        <List>
-          {listElements.length < 1
-            ? "No upcoming events next week"
-            : listElements}
-        </List>
-      </PageWrapper>
-    );
   }
+  const events: IEvent[] = data;
+  events.sort(
+    (a: any, b: any) =>
+      new Date(a.dateHosted).getTime() - new Date(b.dateHosted).getTime() // sorts by upcoming - later
+  );
+
+  const nextWeekEventFilter = events.filter(
+    (a: any) =>
+      new Date(a.dateHosted.split("T")[0]).getTime() -
+        new Date(a.dateHosted.split("T")[0]).getDay() * 86400000 ===
+      new Date(todaysISO.split("T")[0]).getTime() +
+        7 * 86400000 -
+        new Date(todaysISO.split("T")[0]).getDay() * 86400000 // Finds our monday and event monday but 7 days in the future
+  );
+  const passedEventFilter = nextWeekEventFilter.filter(
+    (c: any) =>
+      new Date(c.dateHosted).getTime() -
+        new Date(todaysISO.split("T")[0]).getTime() >
+      0
+  );
+
+  const listElements: JSX.Element[] = passedEventFilter.map(
+    (event: IEvent, index: number) => (
+      <Event event={event} index={index} key={event.id} />
+    )
+  );
+
+  return (
+    <PageWrapper>
+      <List>
+        {listElements.length < 1
+          ? "No upcoming events next week"
+          : listElements}
+      </List>
+    </PageWrapper>
+  );
 };
 
 const Future: React.SFC<IQueryProps> = ({
@@ -212,40 +212,40 @@ const Future: React.SFC<IQueryProps> = ({
         <h3>Loading...</h3>
       </PageWrapper>
     );
-  } else if (error) {
+  }
+  if (error) {
     return (
       <PageWrapper>
         <h3>{error.toString()}</h3>
       </PageWrapper>
     );
-  } else {
-    const events: IEvent[] = data;
-    events.sort(
-      (a: any, b: any) =>
-        new Date(a.dateHosted).getTime() - new Date(b.dateHosted).getTime() //sorts by new dates to old dates
-    );
-
-    const futureEventFilter = events.filter(
-      (c: any) =>
-        new Date(c.dateHosted.split("T")[0]).getTime() >
-        new Date(todaysISO.split("T")[0]).getTime() +
-          13 * 86400000 -
-          new Date(todaysISO.split("T")[0]).getDay() * 86400000 //Filters outs previous, this week, and next week dates
-    );
-
-    const listElements: JSX.Element[] = futureEventFilter.map(
-      (event: IEvent, index: number) => (
-        <Event event={event} index={index} key={event.id} />
-      )
-    );
-
-    return (
-      <PageWrapper>
-        <List>
-          {listElements.length < 1 ? "No upcoming future events" : listElements}
-        </List>
-      </PageWrapper>
-    );
   }
+  const events: IEvent[] = data;
+  events.sort(
+    (a: any, b: any) =>
+      new Date(a.dateHosted).getTime() - new Date(b.dateHosted).getTime() // sorts by new dates to old dates
+  );
+
+  const futureEventFilter = events.filter(
+    (c: any) =>
+      new Date(c.dateHosted.split("T")[0]).getTime() >
+      new Date(todaysISO.split("T")[0]).getTime() +
+        13 * 86400000 -
+        new Date(todaysISO.split("T")[0]).getDay() * 86400000 // Filters outs previous, this week, and next week dates
+  );
+
+  const listElements: JSX.Element[] = futureEventFilter.map(
+    (event: IEvent, index: number) => (
+      <Event event={event} index={index} key={event.id} />
+    )
+  );
+
+  return (
+    <PageWrapper>
+      <List>
+        {listElements.length < 1 ? "No upcoming future events" : listElements}
+      </List>
+    </PageWrapper>
+  );
 };
 export { PrevioustList, ThisWeekList, NextWeekList, Future, errorData };

@@ -1354,6 +1354,7 @@ export const MeExpirationDocument = gql`
     }
   }
 `;
+
 export type GetCurrentEventsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetCurrentEventsQuery = { __typename?: "Query" } & {
