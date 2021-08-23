@@ -1,10 +1,9 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class DynamicCommunities1599961667168 implements MigrationInterface {
     name = 'DynamicCommunities1599961667168'
 
     public async up(queryRunner: QueryRunner): Promise<any> {
-        await queryRunner.query(`ALTER TABLE "sig" ADD "topic" character varying`, undefined);
         await queryRunner.query(`ALTER TABLE "sig" ADD "website" character varying`, undefined);
         await queryRunner.query(`ALTER TABLE "sig" ADD "email" character varying`, undefined);
         await queryRunner.query(`ALTER TABLE "sig" ADD "discordLink" character varying`, undefined);
@@ -27,7 +26,6 @@ export class DynamicCommunities1599961667168 implements MigrationInterface {
                                                   "logoLink" = 'comp.png',
                                                   "logoLinkDark" = 'comp-dark.png',
                                                   website = 'https://comp.mstacm.org',
-                                                  topic = 'Comp'
                                                   WHERE name = 'Competition'`, undefined);
         await queryRunner.query(`UPDATE "sig" SET color = 'orange',
                                                   description = 'ACM Security helps develop the cybersecurity profession for the student body of Missouri University of Science and Technology by sponsoring high-quality workshops and lectures from both local and national industry professionals, as well as hosting on campus security events and competitions.',
@@ -81,7 +79,7 @@ export class DynamicCommunities1599961667168 implements MigrationInterface {
                                                             'acm@mst.edu',
                                                             'arcade.png',
                                                             'arcade-dark.png')`, undefined);
-        
+
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {
@@ -92,7 +90,6 @@ export class DynamicCommunities1599961667168 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "sig" DROP COLUMN "discordLink"`, undefined);
         await queryRunner.query(`ALTER TABLE "sig" DROP COLUMN "email"`, undefined);
         await queryRunner.query(`ALTER TABLE "sig" DROP COLUMN "website"`, undefined);
-        await queryRunner.query(`ALTER TABLE "sig" DROP COLUMN "topic"`, undefined);
     }
 
 }

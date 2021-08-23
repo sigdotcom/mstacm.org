@@ -20,9 +20,6 @@ export class SigResolver extends ResourceResolver<resourceType>(
 
   @Query(() => [Sig])
   protected async getSigs(): Promise<Sig[]> {
-    console.log("This query is being used");
     return this.repository.find();
   }
-
-
 }

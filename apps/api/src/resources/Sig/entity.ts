@@ -19,10 +19,6 @@ export class Sig extends BaseEntity {
   @Field()
   @PrimaryColumn()
   public name: string;
-  
-  @Field({nullable: true})
-  @Column({nullable: true})
-  public topic: string; //shorthand version of the original name
 
   @Field()
   @CreateDateColumn({
@@ -34,32 +30,32 @@ export class Sig extends BaseEntity {
   @Column()
   public description: string;
 
-  @Field({nullable: true})
-  @Column({nullable: true})
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   public website: string;
 
-  @Field({nullable: true})
-  @Column({nullable: true})
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   public email: string;
 
-  @Field({nullable: true})
-  @Column({nullable: true})
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   public discordLink: string;
 
-  @Field({nullable: true})
-  @Column({nullable: true})
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   public color: string;
 
-  @Field({nullable: true})
-  @Column({nullable: true})
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   public logoLink: string;
 
-  @Field({nullable: true})
-  @Column({nullable: true})
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   public logoLinkDark: string;
 
-  @Field({nullable: true})
-  @Column({default: true})
+  @Field({ nullable: true })
+  @Column({ default: true })
   public display: boolean;
 
   @Field(() => [User])

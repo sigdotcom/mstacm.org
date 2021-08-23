@@ -3,9 +3,11 @@ import React from "react";
 import { Element } from "react-scroll";
 import styled, { AnyStyledComponent } from "styled-components";
 import Icon from "react-eva-icons";
-import { Sig as ISIG,
-         useGetSigsQuery,
-         GetSigsQueryHookResult } from "../../../../generated/graphql";
+import {
+  Sig as ISIG,
+  useGetSigsQuery,
+  GetSigsQueryHookResult
+} from "../../../../generated/graphql";
 import { SIGsDisplay } from "./SIGsDisplay";
 
 
@@ -59,51 +61,42 @@ const Line: AnyStyledComponent = styled.hr`
 `;
 
 const SIGs: React.FC<{}> = (): JSX.Element => {
-  const result: GetSigsQueryHookResult = useGetSigsQuery();
-  let SIGsData: ISIG[] = [];
-  var isLoading;
-  if (result.data && result.data.sigs) {
-    SIGsData = result.data.sigs.filter(sig => sig.display) as ISIG [];
-    SIGsData.sort(
-      (a: ISIG, b: ISIG) =>
-      {
-        let filterResult;
-        if(a.name.toLowerCase() > b.name.toLowerCase()) filterResult = 1;
-        else if(a.name.toLowerCase() < b.name.toLowerCase()) filterResult = -1;
-        else filterResult = 0;
-        return filterResult;
-      });
-    isLoading = false;
-  } else {
-    isLoading = true;
+  const { loading, error, data }: GetSigsQueryHookResult = useGetSigsQuery();
+  console.log(loading, error, data);
+  let SIGsComponent = <span>Loading</span>;  // by default probably loading
+
+  if (!loading) {
+    if (error || !data?.sigs) {
+      SIGsComponent = <span>Error</span>;
+    } else {
+      SIGsComponent = <SIGsDisplay
+        sigs={data.sigs.filter(sig => sig.display) as ISIG[]}
+      />;
+    }
   }
 
   return (
-      <Element name="communities">
-        <PageConstraint>
-          <SIGsWrapper>
-            <Heading>
-              <Icon name="people" size="large" fill="#777" />
-              {' '}
-              Our Communities
-            </Heading>
-            <Description>
-              Members of our communities (formerly known as SIGs) hone their
-              computing skills in special topics, listed below, and work towards
-              highly specialized goals in development and career-making. Click on
-              the topic to learn more about the community and find out how to get
-              involved!
-            </Description>
-            { isLoading 
-              ? <div />
-              : <SIGsDisplay sigs={SIGsData}/>
-            }
-            
-          </SIGsWrapper>
-          <Line />
-        </PageConstraint>
-      </Element>
-    );
+    <Element name="communities">
+      <PageConstraint>
+        <SIGsWrapper>
+          <Heading>
+            <Icon name="people" size="large" fill="#777" />
+            {' '}
+            Our Communities
+          </Heading>
+          <Description>
+            Members of our communities (formerly known as SIGs) hone their
+            computing skills in special topics, listed below, and work towards
+            highly specialized goals in development and career-making. Click on
+            the topic to learn more about the community and find out how to get
+            involved!
+          </Description>
+          {SIGsComponent}
+        </SIGsWrapper>
+        <Line />
+      </PageConstraint>
+    </Element>
+  );
 };
 
 export { SIGs };
