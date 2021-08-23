@@ -4,6 +4,7 @@ import { Layout, Menu, PageHeader, Spin } from "antd";
 
 import { ToolList } from "./Tools";
 import { Events } from "./screens/Events";
+import { EventData } from "./screens/EventData";
 import { Membership } from "./screens/Membership";
 import { RedemptionCodes } from "./screens/RedemptionCodes";
 import { config } from "./config";
@@ -21,7 +22,8 @@ const MainContent: React.SFC<{}> = (): JSX.Element => {
   return (
     <Switch>
       <Route exact={true} path="/" component={ToolList} />
-      <Route path="/events" component={Events} />
+      <Route path="/events/:eventId" component={EventData} />
+      <Route path="/events/" component={Events} />
       <Route path="/membership" component={Membership} />
       <Route path="/redemption" component={RedemptionCodes} />
       <Route component={NotFound} />

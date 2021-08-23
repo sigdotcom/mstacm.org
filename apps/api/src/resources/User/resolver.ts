@@ -167,6 +167,31 @@ export class UserResolver extends ResourceResolver<resourceType>(
     return event.save();
   }
 
+  @Authorized()
+  @Mutation((_: void) => Event)
+  public async recordInterest(
+    @Ctx() context: IContext,
+    @Arg("eventId") eventId: number,
+    //@Arg("userId") userId: string, //for testing purposes
+  ): Promise<Event> {
+    const curUser: User | undefined = context.state.user;
+    //const curUser: User | undefined = await User.findOneOrFail({ id: userId }); //also for testing purposes
+
+    const event: Event = await Event.findOneOrFail({ id: eventId });
+    let users: User[] = await event.usersInterested;
+
+    if(curUser == null)
+      return event;
+
+    for(let i = 0; i < users.length; i++)
+      if(users[i].id == curUser.id)
+        return event;
+
+    users.push(await User.findOneOrFail({ id: curUser.id }));
+    event.usersInterested = users;
+    return event.save();
+  }
+
   @Query((_: void) => resource, { nullable: true })
   protected async me(@Ctx() context: IContext) {
     const user: User | undefined = context.state.user;

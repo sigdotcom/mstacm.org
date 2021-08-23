@@ -1,10 +1,10 @@
 import { AuthenticationError, UserInputError } from "apollo-server";
-import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Authorized, Ctx, Mutation, Query, Resolver, FieldResolver, Root } from "type-graphql";
 import {
   DeepPartial,
   getRepository,
   MoreThanOrEqual,
-  Repository
+  Repository,
 } from "typeorm";
 
 import { GraphQLUpload } from "graphql-upload";
@@ -203,5 +203,41 @@ export class EventResolver {
   @Query(() => [Event])
   protected async eventsWithKey(@Arg("urlKey", () => String) urlKey: string): Promise<Event[]> {
     return this.repository.find({ urlKey });
+  }
+
+  @Query(() => [User])
+  protected async getAttendees(@Arg("urlKey", () => String) urlKey: string): Promise<User[]> {
+    const event: Event = await Event.findOneOrFail({ urlKey: urlKey });
+    let users: User[] = await event.attendees;
+    
+    return users;
+  }
+
+  @Query(() => [User])
+  protected async getInterestedUsers(@Arg("urlKey", () => String) urlKey: string): Promise<User[]> {
+    const event: Event = await Event.findOneOrFail({ urlKey: urlKey });
+    let users: User[] = await event.usersInterested;
+    
+    return users;
+  }
+
+  @Query(() => [Event])
+  protected async yearEvents(): Promise<Event[]> {
+    const startDate: Date = new Date(Date.now());
+    startDate.setMonth(7);
+    startDate.setDate(0); //August 1st, {year}
+    return this.repository.find({
+      where: {
+        dateExpire: MoreThanOrEqual(startDate)
+      }
+    });
+  }
+
+  @FieldResolver((_: void) => Number, { nullable: false })
+  public async numAttendees(
+    @Root() event: Event,
+  ): Promise<number | undefined> {
+    const attendeeList: User[] = await event.attendees;
+    return attendeeList.length;
   }
 }

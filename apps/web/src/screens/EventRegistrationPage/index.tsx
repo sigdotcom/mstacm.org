@@ -17,4 +17,21 @@ const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
   );
 };
 
-export { EventRegistration }
+const EventInterest: React.FC<{match: any}> = ({match}: any) => {
+  useEffect(() => {
+    window.location.replace(redirectUrl);
+  }, []);
+
+  const eventID: string | null = match.params.eventId;
+
+  const redirectUrl: string = "https://profile.mstacm.org/interest/" + eventID;
+
+  if(eventID === null)
+    return <p>Something went wrong while redirecting to your event.</p>;
+
+  return (
+    null
+  );
+};
+
+export { EventRegistration, EventInterest }
