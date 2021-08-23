@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { message } from "antd";
-import { useMeQuery, 
-         useEventsQuery,
-         useAttendEventMutation,
-         useRecordInterestMutation,
-         Event as IEvent } from "../../generated/graphql";
+import {
+  useMeQuery,
+  useEventsQuery,
+  useAttendEventMutation,
+  useRecordInterestMutation,
+  Event as IEvent
+} from "../../generated/graphql";
 
-const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
+const EventRegistration: React.FC<{ match: any }> = ({ match }: any) => {
   //style sheets for output
   const divStyle = {
     margin: "auto",
@@ -37,12 +39,12 @@ const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
     fontWeight: 100,
     fontStyle: "italic",
   }
-  
+
   const {
     loading: userLoading,
     error: userError,
   }: any = useMeQuery();
-  
+
   const {
     loading: eventLoading,
     error: eventError,
@@ -77,9 +79,9 @@ const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
 
   //once all mutations/queries are loaded, the actual attendance is tracked
   useEffect(() => {
-    if(curEvents && attendEvent && result.data) {
-      if(result.data.me.id !== null)
-        if(getEventId(eventUrlKey) !== -1) {
+    if (curEvents && attendEvent && result.data) {
+      if (result.data.me.id !== null)
+        if (getEventId(eventUrlKey) !== -1) {
           attendEvent({
             variables: {
               eventId: Number(getEventId(eventUrlKey))
@@ -103,10 +105,10 @@ const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
     return -1;
   };
 
-  if(eventLoading || eventError || userLoading || userError)
+  if (eventLoading || eventError || userLoading || userError)
     return <p>Loading...</p>
 
-  if(result.data == null || getEventId(eventUrlKey) == -1 || !attendEvent)
+  if (result.data == null || getEventId(eventUrlKey) == -1 || !attendEvent)
     return (
       <div style={divStyle}>
         <p style={errorStyle}>An error has occured.</p>
@@ -124,7 +126,7 @@ const EventRegistration: React.FC<{match: any}> = ({match}: any) => {
   );
 };
 
-const EventInterest: React.FC<{match: any}> = ({match}: any) => {
+const EventInterest: React.FC<{ match: any }> = ({ match }: any) => {
   //style sheets for output
   const divStyle = {
     margin: "auto",
@@ -155,12 +157,12 @@ const EventInterest: React.FC<{match: any}> = ({match}: any) => {
     fontWeight: 100,
     fontStyle: "italic",
   }
-  
+
   const {
     loading: userLoading,
     error: userError,
   }: any = useMeQuery();
-  
+
   const {
     loading: eventLoading,
     error: eventError,
@@ -175,7 +177,6 @@ const EventInterest: React.FC<{match: any}> = ({match}: any) => {
 
   const onRecordInterestError: (e: Error) => void = (e: Error): void => {
     message.error("Upload failed. Please try again.");
-    console.log(e);
   };
 
   useEffect(() => {
@@ -200,9 +201,9 @@ const EventInterest: React.FC<{match: any}> = ({match}: any) => {
 
   //once all mutations/queries are loaded, the actual attendance is tracked
   useEffect(() => {
-    if(curEvents && recordInterest && result.data) {
-      if(result.data.me.id !== null)
-        if(getEventId(eventUrlKey) !== -1) {
+    if (curEvents && recordInterest && result.data) {
+      if (result.data.me.id !== null)
+        if (getEventId(eventUrlKey) !== -1) {
           try {
             recordInterest({
               variables: {
@@ -210,7 +211,7 @@ const EventInterest: React.FC<{match: any}> = ({match}: any) => {
               }
             });
           }
-          catch(e) {
+          catch (e) {
             onRecordInterestError(e);
           }
         }
@@ -231,10 +232,10 @@ const EventInterest: React.FC<{match: any}> = ({match}: any) => {
     return -1;
   };
 
-  if(eventLoading || eventError || userLoading || userError)
+  if (eventLoading || eventError || userLoading || userError)
     return <p>Loading...</p>
 
-  if(result.data == null || getEventId(eventUrlKey) == -1 || !recordInterest)
+  if (result.data == null || getEventId(eventUrlKey) == -1 || !recordInterest)
     return (
       <div style={divStyle}>
         <p style={errorStyle}>An error has occured.</p>
