@@ -93,9 +93,17 @@ const Membership: React.FC = (): JSX.Element => {
   // TODO: move to global state
   const result: MeExpirationQueryHookResult = useMeExpirationQuery();
   let expirationDate: string | undefined;
+  let expirationEpoch: number;
+  const todayEpoch = new Date().setHours(0,0,0,0)
 
   if (result.data && result.data.me) {
     expirationDate = result.data.me.membershipExpiration;
+    expirationEpoch = new Date(result.data.me.membershipExpiration).setHours(0,0,0,0)
+
+    if((expirationEpoch - todayEpoch) < 0){
+      expirationDate = undefined;
+    }
+
   }
 
   const removeTag: () => void = (): void => {
