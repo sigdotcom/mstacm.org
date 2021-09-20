@@ -5,6 +5,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import moment from "moment";
 import styled, { AnyStyledComponent } from "styled-components";
+import { CSVLink } from "react-csv";
 
 import { IStyles } from "./IStyles";
 import { IUser } from "./interfaces";
@@ -46,6 +47,11 @@ const DeleteConfirmation: AnyStyledComponent = styled.div`
 
 const ShirtResetButton: AnyStyledComponent = styled.button`
   margin-bottom: 25px;
+`;
+
+const DownloadCSV: AnyStyledComponent = styled.button`
+  margin-bottom: 25px;
+  float: right;
 `;
 
 const Membership: React.FC<{}> = () => {
@@ -327,6 +333,33 @@ const Membership: React.FC<{}> = () => {
     }
   };
 
+  const downloadCSV = () => {
+    const fileHeaders = [
+      { label: "Name", key: "fullName" },
+      { label: "Email", key: "email" },
+      { label: "Status", key: "isActive"},
+      { label: "Expiration", key: "membershipExpiration"},
+      { label: "ACM Shirt", key: "shirtReceived"}
+    ];
+    const CSVLinkStyles = {
+      color: "inherit"
+    };
+    const formattedUsers = users.map(row => ({
+      ...row,
+      isActive: statusActive(row.membershipExpiration)
+    }))
+    .map(row => ({
+      ...row,
+      membershipExpiration: moment(row.membershipExpiration).format("MM/DD/YYYY") === "Invalid date" ? "N/A" : moment(row.membershipExpiration).format("MM/DD/YYYY")
+    }))
+    .map(row => ({
+      ...row,
+      shirtReceived: row.shirtReceived ? "Received" : "Not Received"
+    }));
+    
+    return <CSVLink style={CSVLinkStyles} data={formattedUsers} headers={fileHeaders} filename={"acm-members.csv"}>Download CSV</CSVLink>;
+  };
+
   const getShirtStatus: Function = () => {
     for (let i = 0; i < users.length; i++) {
       if (users[i].id === userId) {
@@ -486,6 +519,10 @@ const Membership: React.FC<{}> = () => {
       <ShirtResetButton style={btnStyles} onClick={() => resetAllShirts()}>
         Reset Shirt Status
       </ShirtResetButton>
+
+      <DownloadCSV>
+        {downloadCSV()}
+      </DownloadCSV>
 
       <Table dataSource={users} columns={columns} />
       <Modal
