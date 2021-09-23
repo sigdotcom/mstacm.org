@@ -7,7 +7,7 @@ license = "MPL-2.0"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-ansible = "^2.9.6"
+ansible = "^4.2.0"
 requests = "^2.23.0"
 cryptography = "^2.8"
 
