@@ -58,36 +58,28 @@ const Membership: React.FC<{}> = () => {
   const [
     updateExpirationDate,
     {
-      loading: expirationLoading,
-      error: expirationError,
-      data: expirationData,
+      error: expirationError
     },
   ]: any = useUpdateExpirationDateMutation();
 
   const [
     updateShirtReceived,
     {
-      loading: updateShirtLoading,
-      error: updateShirtError,
-      data: updateShirtData,
+      error: updateShirtError
     },
   ]: any = useUpdateShirtReceivedMutation();
 
   const [
     updateDeleteMember,
     {
-      loading: deleteMemberLoading,
-      error: deleteMemberError,
-      data: deleteMemberData,
+      error: deleteMemberError
     },
   ]: any = useDeleteMemberMutation();
 
   const [
     updateResetShirts,
     {
-      loading: resetShirtsLoading,
-      error: resetShirtsError,
-      data: resetShirtsData,
+      error: resetShirtsError
     },
   ]: any = useResetShirtReceivedMutation();
 
@@ -111,9 +103,7 @@ const Membership: React.FC<{}> = () => {
 
   useEffect(() => {
     // Events for member data query
-    if (memberLoading) {
-      message.info("Member Data Loading");
-    } else if (memberError) {
+    if (memberError) {
       message.info("An error occured loading member data.");
     } else if (memberData) {
       const usersData: IUser[] = memberData.users.map((user: User) => ({
@@ -122,53 +112,36 @@ const Membership: React.FC<{}> = () => {
         fullName: `${user.firstName} ${user.lastName}`,
       }));
       setUsers(usersData);
-      message.success("Member data loaded.");
     }
   }, [memberData, memberLoading, memberError]);
 
   useEffect(() => {
     // Events for shirt update mutation
-    if (updateShirtLoading) {
-      message.info("Update Shirt Data Loading");
-    } else if (updateShirtError) {
+    if (updateShirtError) {
       message.info("An error occured loading shirt mutation data.");
-    } else if (updateShirtData) {
-      message.success("Update shirt success.");
     }
-  }, [updateShirtData, updateShirtError, updateShirtLoading]);
+  }, [updateShirtError]);
 
   useEffect(() => {
     // Events for update expiration mutation
-    if (expirationLoading) {
-      message.info("Expiration Data Loading");
-    } else if (expirationError) {
+    if (expirationError) {
       message.info("An error occured loading expiration mutation data.");
-    } else if (expirationData) {
-      message.success("Expiration date update success.");
     }
-  }, [expirationData, expirationLoading, expirationError]);
+  }, [expirationError]);
 
   useEffect(() => {
     // Events for delete member mutation
-    if (deleteMemberLoading) {
-      message.info("Delete Member Data Loading");
-    } else if (deleteMemberError) {
+    if (deleteMemberError) {
       message.info("An error occured loading delete member mutation data.");
-    } else if (deleteMemberData) {
-      message.success("Member deletion succeeded.");
     }
-  }, [deleteMemberData, deleteMemberError, deleteMemberLoading]);
+  }, [deleteMemberError]);
 
   useEffect(() => {
     // Events for resetting all shirts mutation
-    if (resetShirtsLoading) {
-      message.info("Shirt Reset Data Loading");
-    } else if (resetShirtsError) {
+    if (resetShirtsError) {
       message.info("An error occured loading shirt reset mutation data.");
-    } else if (resetShirtsData) {
-      message.success("Shirt reset succeeded.");
     }
-  }, [resetShirtsData, resetShirtsError, resetShirtsLoading]);
+  }, [resetShirtsError]);
 
   useEffect(() => {
     getShirtStatus();
