@@ -419,9 +419,17 @@ const Membership: React.FC<{}> = () => {
     {
       title: "Status",
       key: "status",
-      render: (record: IUser) => (
-        <span>{statusActive(record.membershipExpiration)}</span>
-      ),
+      render: (record: IUser) => {
+        const status = statusActive(record.membershipExpiration);
+        let color;
+        if (status === "Active") {
+          color = "green"
+        }
+        else if (status === "Expired") {
+          color = "red"
+        }
+        return <span style={{color: color}}>{status}</span>
+    },
     },
     {
       title: "Expiration",
