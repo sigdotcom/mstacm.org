@@ -273,7 +273,7 @@ const Membership: React.FC<{}> = () => {
         if (curExpDate) {
           try {
             new Date(curExpDate);
-            users[i].membershipExpiration = curExpDate;
+            users[i].membershipExpiration = curExpDate.replaceAll("-", "/");
             updateExpirationDate({
               variables: { date: curExpDate, id: userId },
             });
