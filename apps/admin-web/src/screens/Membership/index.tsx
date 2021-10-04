@@ -6,7 +6,6 @@ import Highlighter from "react-highlight-words";
 import moment from "moment";
 import styled, { AnyStyledComponent } from "styled-components";
 
-import { IStyles } from "./IStyles";
 import { IUser } from "./interfaces";
 import {
   useUpdateExpirationDateMutation,
@@ -17,11 +16,9 @@ import {
   User,
 } from "../../generated/graphql";
 
-const btnStyles: IStyles = {
-  display: "inline-block",
-  cursor: "pointer",
-  marginLeft: "9px",
-};
+const EditModalHeader: AnyStyledComponent = styled.div`
+  margin-bottom: 15px;
+`;
 
 const EditInputs: AnyStyledComponent = styled.input`
   margin-left: 20px;
@@ -32,20 +29,12 @@ const EditCol: AnyStyledComponent = styled.div`
   margin-bottom: 10px;
 `;
 
-const ConfirmButton: AnyStyledComponent = styled.button`
-  margin-left: 20px;
-`;
-
 const DeleteYes: AnyStyledComponent = styled.button`
   margin-right: 10px;
 `;
 
 const DeleteConfirmation: AnyStyledComponent = styled.div`
   margin: 10px;
-`;
-
-const ShirtResetButton: AnyStyledComponent = styled.button`
-  margin-bottom: 25px;
 `;
 
 const Membership: React.FC<{}> = () => {
@@ -183,7 +172,12 @@ const Membership: React.FC<{}> = () => {
   const name: Function = (id: string) => {
     for (let i = 0; i < users.length; i++) {
       if (users[i].id === id) {
-        return users[i].fullName;
+        if (users[i].fullName === "null null") {
+          return "";
+        }
+        else {
+          return users[i].fullName;
+        }
       }
     }
     return "";
@@ -459,9 +453,9 @@ const Membership: React.FC<{}> = () => {
 
   return (
     <div>
-      <ShirtResetButton style={btnStyles} onClick={() => resetAllShirts()}>
+      <Button style={{marginBottom: "20px"}} onClick={() => resetAllShirts()}>
         Reset Shirt Status
-      </ShirtResetButton>
+      </Button>
 
       <Table dataSource={users} columns={columns} />
       <Modal
@@ -469,10 +463,14 @@ const Membership: React.FC<{}> = () => {
         footer={null}
         onCancel={handleCancel}
       >
-        <div>
-          <strong>{name(userId)}</strong>
-        </div>
-        <div>{email(userId)}</div>
+        <EditModalHeader>
+          <div>
+            <strong>{name(userId)}</strong>
+          </div>
+          <div>
+            {email(userId)}
+          </div>
+        </EditModalHeader>
         <hr />
         <div>
           <EditCol>
@@ -495,12 +493,9 @@ const Membership: React.FC<{}> = () => {
 
           <hr />
 
-          {/* <button style={btnStyles} onClick={deleteAction()}>
-            Delete
-          </button> */}
-          <ConfirmButton style={btnStyles} onClick={saveAction}>
+          <Button onClick={() => {saveAction()}}>
             Confirm
-          </ConfirmButton>
+          </Button>
         </div>
       </Modal>
       <Modal
