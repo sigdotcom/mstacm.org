@@ -407,7 +407,7 @@ const Membership: React.FC<{}> = () => {
       key: "name",
       ...getColumnSearchProps("fullName"),
       render: (record: IUser) => (
-        <span>{`${record.firstName} ${record.lastName}`}</span>
+        <span>{`${record.firstName === null ? "" : record.firstName} ${record.lastName === null ? "" : record.lastName}`}</span>
       ),
     },
     {
