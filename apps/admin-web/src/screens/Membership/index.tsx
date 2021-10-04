@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import { Table, Input, Button, Modal, DatePicker, message } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { Table, Input, Dropdown, Button, Menu, Modal, DatePicker, message } from "antd";
+import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import moment from "moment";
 import styled, { AnyStyledComponent } from "styled-components";
@@ -236,14 +236,6 @@ const Membership: React.FC<{}> = () => {
   const handleNo: Function = () => {
     return (): void => {
       handleCancelDelete();
-      handleVisibility();
-    };
-  };
-
-  const deleteAction: Function = () => {
-    return (): void => {
-      handleCancel();
-      handleVisibilityDelete();
     };
   };
 
@@ -439,25 +431,28 @@ const Membership: React.FC<{}> = () => {
       ),
     },
     {
-      title: "Edit",
-      key: "edit",
-      render: (record: IUser) => (
-        <button
-          style={btnStyles}
-          onClick={() => {
-            setUserId(record.id);
-            handleVisibility();
-          }}
-        >
-          Edit
-        </button>
-      ),
-    },
-    {
       title: "ACM Shirt",
       key: "acm shirt",
       render: (record: IUser) => (
         <span>{record.shirtReceived ? "Received" : "Not Received"}</span>
+      ),
+    },
+    {
+      key: "edit",
+      render: (record: IUser) => (
+        <Dropdown.Button overlay={
+          <Menu>
+            <Menu.Item icon={<UserOutlined />} onClick={() => {
+              setUserId(record.id);
+              handleVisibility();
+            }}>
+              Edit
+            </Menu.Item>
+            <Menu.Item icon={<UserOutlined />} style={{color: "red"}} onClick={() => {handleVisibilityDelete()}}>
+              Delete
+            </Menu.Item>
+          </Menu>
+        }></Dropdown.Button>
       ),
     },
   ];
@@ -500,9 +495,9 @@ const Membership: React.FC<{}> = () => {
 
           <hr />
 
-          <button style={btnStyles} onClick={deleteAction()}>
+          {/* <button style={btnStyles} onClick={deleteAction()}>
             Delete
-          </button>
+          </button> */}
           <ConfirmButton style={btnStyles} onClick={saveAction}>
             Confirm
           </ConfirmButton>
