@@ -13,7 +13,7 @@ const PaneWrapper: any = styled.div`
   @media only screen and (min-width: 810px) {
     border-top: none;
     border-left: 2px solid #ddd;
-    margin-left: 35px;
+    : 35px;
     padding: 35px 25px 35px 45px;
   }
 `;
@@ -61,7 +61,7 @@ const SIGDiscord = styled.a`
   background: #42c0fc;
   border: none;
   border-radius: 30px;
-  margin-left: 20px;
+  //margin-left: 20px;
   color: #fff;
   font-size: 17px;
   font-family: "Nunito Sans", sans-serif;
@@ -99,6 +99,12 @@ const SIGEmail: any = styled.a`
 
 const ButtonRow: any = styled.div`
   display: flex;
+  flex-direction: column-reverse;
+  gap: 1rem;
+  
+  @media screen and (min-width: 400px) {
+    flex-direction: row;
+  }
 `;
 
 const Row: any = styled.div`

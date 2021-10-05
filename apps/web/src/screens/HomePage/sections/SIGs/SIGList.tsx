@@ -12,7 +12,7 @@ const SIGListWrapper: any = styled.ul`
   flex-wrap: wrap;
   align-content: flex-start;
   flex: 1;
-  min-width: 340px;
+  //min-width: 340px;
 `;
 
 const Item: any = styled.li`
@@ -20,8 +20,9 @@ const Item: any = styled.li`
   transition: ease-in-out 0.1s all;
   cursor: pointer;
   height: 50px;
-  min-width: 155px;
+  //min-width: 155px;
   max-width: 200px;
+  font-size: 11px;
   width: calc(50% - 15px);
   display: flex;
   align-items: center;
@@ -35,6 +36,9 @@ const Item: any = styled.li`
 
   h3 {
     margin: 0;
+  }
+  @media screen and (min-width: 400px) {
+    font-size: 16px;
   }
 `;
 
