@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import { Table, Input, Dropdown, Button, Menu, Modal, DatePicker, message } from "antd";
-import { SearchOutlined, UserOutlined } from "@ant-design/icons";
+import { Table, Input, Dropdown, Button, Menu, Modal, DatePicker, Checkbox, message } from "antd";
+import { SearchOutlined, UserOutlined, LockOutlined, UnlockOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import moment from "moment";
 import styled, { AnyStyledComponent } from "styled-components";
@@ -75,6 +75,7 @@ const Membership: React.FC<{}> = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [searchedColumn, setSearchedColumn] = useState<string>("");
   const [searchInput, setSearchInput] = useState<any>("");
+  const [shirtReceivedLocked, setShirtReceivedLocked] = useState<boolean>(true);
 
   const [editMembershipVisible, setEditMembershipVisible] = useState(false);
 
@@ -152,6 +153,10 @@ const Membership: React.FC<{}> = () => {
   const handleCancelDelete: () => void = (): void => {
     setEditMembershipVisibleDelete(false);
   };
+
+  const handleShirtReceivedLocked: () => void = (): void => {
+    setShirtReceivedLocked(!shirtReceivedLocked);
+  }; 
 
   const statusActive: (expirationDate: string) => string = (
     expirationDate: string
@@ -425,16 +430,25 @@ const Membership: React.FC<{}> = () => {
       ),
     },
     {
-      title: "ACM Shirt",
+      title: () => {
+      return (<span>
+        ACM Shirt 
+        <LockOutlined onClick={handleShirtReceivedLocked} title="Locked" style={{display: (shirtReceivedLocked ? "inline-block" : "none"), cursor: "pointer", fontSize: "16px", marginLeft: "7px"}} />
+        <UnlockOutlined onClick={handleShirtReceivedLocked} title="Unlocked" style={{display: (shirtReceivedLocked ? "none" : "inline-block"), cursor: "pointer", fontSize: "16px", marginLeft: "7px"}} />
+      </span>)
+      },
       key: "acm shirt",
       render: (record: IUser) => (
-        <span>{record.shirtReceived ? "Received" : "Not Received"}</span>
+        <Checkbox onChange={() => {
+          console.log(record.id);
+          setCurShirtStatus(!curShirtStatus)
+        }} checked={curShirtStatus} disabled={shirtReceivedLocked} />
       ),
     },
     {
       key: "edit",
       render: (record: IUser) => (
-        <Dropdown.Button overlay={
+        <Dropdown.Button trigger={['click']} overlay={
           <Menu>
             <Menu.Item icon={<UserOutlined />} onClick={() => {
               setUserId(record.id);
@@ -488,6 +502,7 @@ const Membership: React.FC<{}> = () => {
               value={curExpDate ? moment(curExpDate) : null}
               onChange={changeDate}
               placeholder="Select Expiration Date"
+              style={{width: "100%"}}
             />
           </EditCol>
 
