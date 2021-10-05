@@ -29,7 +29,7 @@ const Logo = styled.img`
 const MenuItems = styled.div`
   display: none;
 
-  @media screen and (min-width: 700px) {
+  @media screen and (min-width: 800px) {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -47,11 +47,11 @@ const MenuItem = styled.div`
 
 const SignIn = styled.button`
   background-color: #f4f5f8;
-  z-index: 1337;
+  z-index: 1337;  //normal is 1337
   transition: 0.2s ease-in-out;
   font-weight: bold;
   border-radius: 30px;
-  padding: 10px 40px
+  padding: 10px 25px
   font-size: 17px;
   color: #2d9cdb;
   border: 3px solid #2d9cdb;
