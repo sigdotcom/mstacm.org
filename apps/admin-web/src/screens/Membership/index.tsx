@@ -20,10 +20,6 @@ const EditModalHeader: AnyStyledComponent = styled.div`
   margin-bottom: 15px;
 `;
 
-const EditInputs: AnyStyledComponent = styled.input`
-  margin-left: 20px;
-`;
-
 const EditCol: AnyStyledComponent = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
@@ -438,11 +434,14 @@ const Membership: React.FC<{}> = () => {
       </span>)
       },
       key: "acm shirt",
+      align: "center" as "center",
       render: (record: IUser) => (
         <Checkbox onChange={() => {
-          console.log(record.id);
-          setCurShirtStatus(!curShirtStatus)
-        }} checked={curShirtStatus} disabled={shirtReceivedLocked} />
+          setUserId(record.id);
+          changeShirtReceived();
+          setCurShirtStatus(!curShirtStatus);
+          saveAction();
+        }} checked={record.shirtReceived} disabled={shirtReceivedLocked} />
       ),
     },
     {
@@ -488,21 +487,11 @@ const Membership: React.FC<{}> = () => {
         <hr />
         <div>
           <EditCol>
-            <span>Picked Up Shirt:</span>
-            <EditInputs
-              type="checkbox"
-              checked={curShirtStatus}
-              onChange={changeShirtReceived}
-            />
-          </EditCol>
-
-          <EditCol>
             <span>Membership Expiration Date: </span>
             <DatePicker
               value={curExpDate ? moment(curExpDate) : null}
               onChange={changeDate}
               placeholder="Select Expiration Date"
-              style={{width: "100%"}}
             />
           </EditCol>
 
