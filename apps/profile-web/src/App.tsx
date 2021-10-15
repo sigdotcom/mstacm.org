@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
-import Icon from "react-eva-icons";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import { SideBar } from "./components/Navigation/sideBar";
+import SideBar from "./components/Navigation/sideBar";
 import { ProfilePage } from "./components/ProfilePage";
 import { EventRegistration } from "./components/EventRegistration";
 import { config } from "./config";
@@ -15,7 +14,6 @@ const Layout: AnyStyledComponent = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  background: white;
   font-family: "Nunito Sans";
 `;
 
@@ -90,26 +88,7 @@ const App: React.FC = (): JSX.Element => {
   return (
     <BrowserRouter>
       <Layout>
-        <SideBar>
-          <li>
-            <Link to="/">
-              <Icon
-                name="calendar-outline"
-                size="medium"
-              />
-              <span>Profile</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/">
-              <Icon
-                name="people-outline"
-                size="medium"
-              />
-              <span>Settings</span>
-            </Link>
-          </li>
-        </SideBar>
+        <SideBar />
         <MainContent />
       </Layout>
     </BrowserRouter>

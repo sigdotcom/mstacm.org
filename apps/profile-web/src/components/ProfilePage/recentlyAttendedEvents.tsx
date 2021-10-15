@@ -27,10 +27,10 @@ export const ME_EVENTS_QUERY: any = gql`
 
 const RecentlyAttendedEventsWrapper: AnyStyledComponent = styled.div`
   display: none;
+  width: 100%;
 
   @media all and (min-width: 400px) {
     display: block;
-    width: 100%;
   }
 
   div:last-child {
@@ -153,15 +153,16 @@ const EventDescription: AnyStyledComponent = styled.div`
 
 const LoadingWrapperWrapper: AnyStyledComponent = styled.div`
   display: none;
+  width: 100%;
+  margin-top: 2.5rem;
 
   @media all and (min-width: 400px) {
     display: block;
-    width: 100%;
-    margin-top: 2.5rem;
   }
 
   @media all and (min-width: 1280px) {
     margin-bottom: 0;
+    margin-top: 0;
   }
 `;
 
@@ -176,7 +177,7 @@ const LoadingWrapper: AnyStyledComponent = styled.div`
 `;
 
 const LoadingContent: AnyStyledComponent = styled.div`
-  height: 11rem;
+  height: 8rem;
   border-radius: 12px;
   margin: 0 1.25rem;
   background: linear-gradient(
@@ -192,23 +193,34 @@ const LoadingContent: AnyStyledComponent = styled.div`
   }
 
   @media all and (min-width: 960px) {
-    height: 14rem;
     margin: 0;
+  }
+`;
+
+const ErrorWrapper: AnyStyledComponent = styled.div`
+  display: none;
+  width: 100%;
+  margin-top: 2.5rem;
+
+  @media all and (min-width: 400px) {
+    display: block;
+  }
+
+  @media all and (min-width: 1280px) {
+    margin-top: 0;
   }
 `;
 
 const FindEventsBox: AnyStyledComponent = styled.div`
   width: 100%;
   padding: 0 1.25rem;
-  margin-top: 2.5rem;
 
   div {
     width: 100%;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
     background: #fff;
     min-width: 17.5rem;
-    max-width: 20rem;
-    height: 7rem;
+    height: 8rem;
     border-radius: 0.75rem;
     display: flex;
     justify-content: center;
@@ -254,18 +266,21 @@ export const RecentlyAttendedEvents: React.FC<{}> = () => {
     );
   } else if (error) {
     return (
-      <FindEventsBox>
-        <div>
-          <FindEventsLink href="#">
-            Find our events here
-          </FindEventsLink>
-          <Icon
-            name="external-link"
-            size="medium"
-            fill="#ababab"
-          />
-        </div>
-      </FindEventsBox>
+      <ErrorWrapper>
+        <Header>Recently Attended Events</Header>
+        <FindEventsBox>
+          <div>
+            <FindEventsLink href="#">
+              Find our events here
+            </FindEventsLink>
+            <Icon
+              name="external-link"
+              size="medium"
+              fill="#ababab"
+            />
+          </div>
+        </FindEventsBox>
+      </ErrorWrapper>
     );
   } else if (data && data.me && data.me.eventsAttended) {
     eventBoxes = data.me.eventsAttended.map((event: any, index: number): JSX.Element =>

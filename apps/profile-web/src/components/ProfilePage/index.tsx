@@ -7,16 +7,11 @@ import { Participation } from "./participation";
 import { RecentlyAttendedEvents } from "./recentlyAttendedEvents";
 
 const ProfileWrapper: AnyStyledComponent = styled.div`
+  width: 100%;
   background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
-  transition: padding-left .1s ease-out;
-
-  @media all and (min-width: 900px) {
-    padding-left: 20rem;
-  }
 `;
 
 const AttendedEventsWrapper: AnyStyledComponent = styled.div`

@@ -1,118 +1,109 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { useWindowSize } from "react-use";
+import { slide as Menu } from "react-burger-menu";
 import styled, { AnyStyledComponent } from "styled-components";
+import logo from "./acm-logo.png";
+import { NavButton } from "./common/NavButton";
+import { NavDropDownContent } from "./common/NavDropdown/NavDropDownContent";
+import { NavDropDown } from "./common/NavDropdown/NavDropDown";
 
-import { config } from "../../config";
+const Center: AnyStyledComponent = styled.div`
+	padding-top: 40px;
+	width: 230px;
+	background-color: #087abb;
+	height: 100vh;
+	overflow: hidden;
+	font-family: Nunito Sans;
+	display: flex;
+	position: fixed;
+	// border-radius: 0px 50px 50px 0px;
+	color: white;
+	flex-direction: column;
+  
+	@media (max-width: 1530px) {
+		width: 100%;
+		position: relative;
+	}
+`;
 
-import { QuickAccess } from "./quickAccess";
+const Side: AnyStyledComponent = styled.ul`
+	padding-left: 0;
+`;
 
-const SideBarWrapper: AnyStyledComponent = styled.div`
-  position: fixed;
-  left: -20rem;
-  width: 20rem;
-  height: 100vh;
-  background: #087ABB;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 0 3.125rem 3.125rem 0;
-  padding-bottom: 2rem;
-  transition: left .1s ease-out;
-  z-index: 9;
+const Acmtext: AnyStyledComponent = styled.div`
+	font-family: Nunito Sans;
+	font-style: normal;
+	font-weight: bold;
+	user-select: none;
 
-  @media all and (min-width: 900px) {
-    left: 0;
+	font-size: 24px;
+`;
+
+const Acm: AnyStyledComponent = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-bottom: 100px;
+`;
+
+const Img = styled.img`
+	height: 40px;
+	width: 40px;
+	margin-right: 10px;
+	user-select: none;
+`;
+
+function SideBar() {
+  const [link, setLink] = useState();
+  const linkCallback = (data: any) => {
+    setLink(data);
+  };
+
+  const { width } = useWindowSize();
+
+  const smallMenu = width <= 600 ? 180 : 300;
+
+  const content = (
+    <div>
+      <Acm>
+        <Img src={logo}></Img>
+        <Acmtext>S&amp;T ACM</Acmtext>
+      </Acm>
+
+      <Side>
+        <NavDropDown
+          linkData={link}
+          navTitle="Events"
+          navLink="/events/upcoming"
+        >
+          <NavDropDownContent
+            dropDownTitle="Upcoming"
+            dropDownLink="/events/upcoming"
+            siblingCallBack={linkCallback}
+          />
+          <NavDropDownContent
+            dropDownTitle="Previous"
+            dropDownLink="/events/previous"
+            siblingCallBack={linkCallback}
+          />
+        </NavDropDown>
+        <NavButton text="Membership" link="/membership"></NavButton>
+        <NavButton text="Redemption" link="/redemption" />
+      </Side>
+    </div>
+  );
+
+  if (width <= 1530) {
+    return (
+      <Menu width={smallMenu}>
+        <Center>
+          {content}
+        </Center>
+      </Menu>
+    );
+  } else {
+    return <Center>{content}</Center>;
   }
-`;
-
-const FillBorderCurveBackground: AnyStyledComponent = styled.div`
-  background: #F4F5F8;
-  position: absolute;
-  width: 100%;
-  height: 4rem;
-  top: 0;
-  left: 0;
-  z-index: -9;
-`;
-
-const LogoWrapper: AnyStyledComponent = styled.div`
-  padding: 2rem 0 5.625rem 3.75rem;
-  background: #087ABB;
-  display: flex;
-  align-items: center;
-  border-radius: 0 3.125rem 0 0;
-  width: 100%;
-`;
-
-const LogoImg: AnyStyledComponent = styled.img`
-  width: 3.5rem;
-  height: 3.5rem;
-  margin-right: .625rem;
-`;
-
-const LogoText: AnyStyledComponent = styled.div`
-  font-size: 24px;
-  font-weight: bold;
-  color: white;
-`;
-
-const LinksWrapper: AnyStyledComponent = styled.ul`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-
-  a {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    height: 3.625rem;
-    background: #087ABB;
-    padding: 0 0 0 3.75rem;
-    border-radius: 2.5rem 0 0 2.5rem;
-    transition: all .2s ease-in-out;
-  }.navibar li.active a:hover {
-  color: #b3b3b3; /*the default color*/
 }
 
-  a:focus {
-    background: #F4F5F8;
-
-    span {
-      color: #087ABB;
-    }
-
-    &:hover {
-      background: #F4F5F8;
-    }
-  }
-
-  a:hover {
-    background: #076aa3;
-  }
-
-  span {
-    margin-left: .5rem;
-    font-size: 20px;
-    color: white;
-  }
-`;
-
-export const SideBar: React.FC<{}> = ({ children }) => {
-  return (
-    <SideBarWrapper>
-      <FillBorderCurveBackground />
-      <LogoWrapper>
-        <LogoImg src={`${config.CDN_URI}/static/acm-logo-white.png`} />
-        <LogoText>S&T ACM</LogoText>
-      </LogoWrapper>
-      <LinksWrapper>
-        {children}
-      </LinksWrapper>
-      <div style={{ height: "100%" }} />
-      <QuickAccess />
-    </SideBarWrapper>
-  );
-};
+export default SideBar;

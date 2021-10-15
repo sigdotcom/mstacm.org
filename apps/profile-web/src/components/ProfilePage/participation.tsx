@@ -209,26 +209,9 @@ const LoadingContent: AnyStyledComponent = styled.div`
   }
 `;
 
-const CommunitiesBox: AnyStyledComponent = styled.div`
+const ErrorWrapper: AnyStyledComponent = styled.div`
   width: 100%;
   padding: 0 1.25rem;
-  
-  div {
-    width: 100%;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    background: #fff;
-    min-width: 17.5rem;
-    max-width: 20rem;
-    height: 7rem;
-    border-radius: 0.75rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  i {
-    display: flex;
-  }
 
   @media all and (min-width: 760px) {
     padding: 0;
@@ -240,6 +223,27 @@ const CommunitiesBox: AnyStyledComponent = styled.div`
 
   @media all and (min-width: 960px) {
     padding: 0;
+  }
+`;
+
+const CommunitiesBox: AnyStyledComponent = styled.div`
+  width: 100%;
+  
+  div {
+    width: 100%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    background: #fff;
+    min-width: 17.5rem;
+    max-width: 20rem;
+    height: 8rem;
+    border-radius: 0.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  i {
+    display: flex;
   }
 `;
 
@@ -275,18 +279,22 @@ export const Participation: React.FC<{}> = () => {
     );
   } else if (error) {
     return (
-      <CommunitiesBox>
-        <div>
-          <CommunitiesLink href="#">
-            Find our communities here
-          </CommunitiesLink>
-          <Icon
-            name="external-link"
-            size="medium"
-            fill="#ababab"
-          />
-        </div>
-      </CommunitiesBox>
+      <ErrorWrapper>
+        <ParticipationTitle>Community Participation</ParticipationTitle>
+        <MonthStart>events attended since joined</MonthStart>
+        <CommunitiesBox>
+          <div>
+            <CommunitiesLink href="#">
+              Find our communities here
+            </CommunitiesLink>
+            <Icon
+              name="external-link"
+              size="medium"
+              fill="#ababab"
+            />
+          </div>
+        </CommunitiesBox>
+      </ErrorWrapper>
     );
   } else if (data && data.me && data.me.eventsAttended) {
     monthJoined = monthNames[new Date(data.me.dateJoined).getMonth()];

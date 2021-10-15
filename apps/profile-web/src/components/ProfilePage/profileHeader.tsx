@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 import React from "react";
 import styled, { AnyStyledComponent } from "styled-components";
-import Icon from "react-eva-icons";
+// import Icon from "react-eva-icons";
 
 import { useAuth0 } from "../../utils/react-auth0-wrapper";
 
@@ -97,22 +97,22 @@ const ProfilePicture: AnyStyledComponent = styled.img`
   }
 `;
 
-const EditProfileShortcut: AnyStyledComponent = styled.a`
-  display: none;
-  align-items: center;
-  justify-content: center;
+// const EditProfileShortcut: AnyStyledComponent = styled.a`
+//   display: none;
+//   align-items: center;
+//   justify-content: center;
 
-  @media all and (min-width: 600px) {
-    display: flex;
-  }
-`;
+//   @media all and (min-width: 600px) {
+//     display: flex;
+//   }
+// `;
 
-const EditProfileText: AnyStyledComponent = styled.div`
-  color: #777777;
-  font-size: .875rem;
-  font-weight: 800;
-  margin-right: .4rem;
-`;
+// const EditProfileText: AnyStyledComponent = styled.div`
+//   color: #777777;
+//   font-size: .875rem;
+//   font-weight: 800;
+//   margin-right: .4rem;
+// `;
 
 const UserInfo: AnyStyledComponent = styled.div`
   display: flex;
@@ -247,14 +247,14 @@ export const ProfileHeader: React.FC<{}> = (): JSX.Element => {
         <ProfileInfo>
           <PictureWrapper>
             <ProfilePicture src={user.picture} alt="ProfilePicture" />
-            <EditProfileShortcut href="#">
+            {/* <EditProfileShortcut href="#">
               <EditProfileText>Edit profile</EditProfileText>
               <Icon
                 name="edit"
                 size="medium"
                 fill="#777777"
               />
-            </EditProfileShortcut>
+            </EditProfileShortcut> */}
           </PictureWrapper>
           <UserInfo>
             <Username>
