@@ -133,6 +133,7 @@ const Membership: React.FC<{}> = () => {
   useEffect(() => {
     getShirtStatus();
     getExpirationDate();
+    saveAction();
   }, [userId]);
 
   const handleVisibility: () => void = (): void => {
@@ -277,9 +278,9 @@ const Membership: React.FC<{}> = () => {
     handleCancel();
   };
 
-  const changeShirtReceived: Function = () => {
-    setCurShirtStatus(!curShirtStatus);
-  };
+  // const changeShirtReceived: Function = () => {
+  //   setCurShirtStatus(!curShirtStatus);
+  // };
 
   const resetAllShirts: Function = () => {
     updateResetShirts();
@@ -463,11 +464,9 @@ const Membership: React.FC<{}> = () => {
       key: "acm shirt",
       align: "center" as "center",
       render: (record: IUser) => (
-        <Checkbox onChange={() => {
-          setUserId(record.id);
-          changeShirtReceived();
-          setCurShirtStatus(!curShirtStatus);
-          saveAction();
+        <Checkbox onClick={() => {
+            setUserId(record.id);
+            setCurShirtStatus(!record.shirtReceived);
         }} checked={record.shirtReceived} disabled={shirtReceivedLocked} />
       ),
     },
@@ -478,6 +477,8 @@ const Membership: React.FC<{}> = () => {
           <Menu>
             <Menu.Item icon={<UserOutlined />} onClick={() => {
               setUserId(record.id);
+              setCurShirtStatus(record.shirtReceived);
+              setCurExpDate(record.membershipExpiration);
               handleVisibility();
             }}>
               Edit
