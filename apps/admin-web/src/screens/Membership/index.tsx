@@ -134,6 +134,7 @@ const Membership: React.FC<{}> = () => {
     getShirtStatus();
     getExpirationDate();
     saveAction();
+    setUserId("null");
   }, [userId]);
 
   const handleVisibility: () => void = (): void => {
@@ -259,7 +260,7 @@ const Membership: React.FC<{}> = () => {
             id: userId,
           },
         });
-        if (curExpDate) {
+        if (curExpDate != "null") {
           try {
             new Date(curExpDate);
             users[i].membershipExpiration = curExpDate.replaceAll("-", "/");
