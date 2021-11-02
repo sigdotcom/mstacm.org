@@ -26,10 +26,6 @@ const EditCol: AnyStyledComponent = styled.div`
   margin-bottom: 10px;
 `;
 
-// const DeleteYes: AnyStyledComponent = styled.button`
-//   margin-right: 10px;
-// `;
-
 const DeleteConfirmation: AnyStyledComponent = styled.div`
   margin: 10px;
 `;
@@ -254,7 +250,6 @@ const Membership: React.FC<{}> = () => {
   };
 
   const saveAction: Function = () => {
-    console.log("Save Action");
     for (let i = 0; i < users.length; i++) {
       if (users[i].id === userId.toString()) {
         users[i].shirtReceived = curShirtStatus;
@@ -282,10 +277,6 @@ const Membership: React.FC<{}> = () => {
 
     handleCancel();
   };
-
-  // const changeShirtReceived: Function = () => {
-  //   setCurShirtStatus(!curShirtStatus);
-  // };
 
   const resetAllShirts: Function = () => {
     updateResetShirts();
@@ -489,7 +480,10 @@ const Membership: React.FC<{}> = () => {
             }}>
               Edit
             </Menu.Item>
-            <Menu.Item icon={<UserOutlined />} style={{color: "red"}} onClick={() => {handleVisibilityDelete()}}>
+            <Menu.Item icon={<UserOutlined />} style={{color: "red"}} onClick={() => {
+                handleVisibilityDelete();
+                setUserId(record.id);
+              }}>
               Delete
             </Menu.Item>
           </Menu>
