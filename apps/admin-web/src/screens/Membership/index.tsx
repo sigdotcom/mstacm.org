@@ -228,7 +228,7 @@ const Membership: React.FC<{}> = () => {
     )
       return "N/A";
     try {
-      return new Date(expirationDate).toLocaleDateString("en-US");
+      return new Date(expirationDate.replace(/-/g, '\/').replace(/T.+/, '')).toLocaleDateString("en-US");
     } catch {
       return "N/A";
     }
@@ -527,7 +527,7 @@ const Membership: React.FC<{}> = () => {
           <EditCol>
             <span>Membership Expiration Date: </span>
             <DatePicker
-              value={curExpDate ? moment(curExpDate) : null}
+              value={curExpDate.replace(/-/g, '\/').replace(/T.+/, '') ? moment(curExpDate.replace(/-/g, '\/').replace(/T.+/, '')) : null}
               onChange={changeDate}
               placeholder="Select Expiration Date"
             />
