@@ -26,9 +26,9 @@ const EditCol: AnyStyledComponent = styled.div`
   margin-bottom: 10px;
 `;
 
-const DeleteYes: AnyStyledComponent = styled.button`
-  margin-right: 10px;
-`;
+// const DeleteYes: AnyStyledComponent = styled.button`
+//   margin-right: 10px;
+// `;
 
 const DeleteConfirmation: AnyStyledComponent = styled.div`
   margin: 10px;
@@ -77,6 +77,8 @@ const Membership: React.FC<{}> = () => {
   const [editMembershipVisible, setEditMembershipVisible] = useState(false);
 
   const [userId, setUserId] = useState("");
+
+  const [checkingShirtStatus, setCheckingShirtStatus] = useState(false);
 
   const [
     editMembershipVisibleDelete,
@@ -135,7 +137,8 @@ const Membership: React.FC<{}> = () => {
     getExpirationDate();
     saveAction();
     setUserId("null");
-  }, [userId]);
+    setCheckingShirtStatus(false);
+  }, [checkingShirtStatus]);
 
   const handleVisibility: () => void = (): void => {
     setEditMembershipVisible(true);
@@ -251,6 +254,7 @@ const Membership: React.FC<{}> = () => {
   };
 
   const saveAction: Function = () => {
+    console.log("Save Action");
     for (let i = 0; i < users.length; i++) {
       if (users[i].id === userId.toString()) {
         users[i].shirtReceived = curShirtStatus;
@@ -466,6 +470,7 @@ const Membership: React.FC<{}> = () => {
       align: "center" as "center",
       render: (record: IUser) => (
         <Checkbox onClick={() => {
+            setCheckingShirtStatus(true);
             setUserId(record.id);
             setCurShirtStatus(!record.shirtReceived);
         }} checked={record.shirtReceived} disabled={shirtReceivedLocked} />
@@ -542,8 +547,8 @@ const Membership: React.FC<{}> = () => {
       >
         <div>Are you sure you want to delete this user?</div>
         <DeleteConfirmation>
-          <DeleteYes onClick={deleteUser(userId)}>Yes</DeleteYes>
-          <button onClick={handleNo()}>No</button>
+          <Button style={{marginRight: 10}} onClick={deleteUser(userId)}>Yes</Button>
+          <Button onClick={handleNo()}>No</Button>
         </DeleteConfirmation>
       </Modal>
     </div>
