@@ -10,6 +10,17 @@ import { PageConstraint } from "../../../../components/PageConstraint";
 
 const SIGsData: ISIG[] = [
   {
+    color: "#299DDC",
+    desc:
+      "Our goal is to enrich the college experience and foster the next generation of innovators by hosting talks, competitions, and workshops that provide real-world learning opportunities and networking.",
+    discord: "https://discord.gg/cQyXztZ",
+    email: "acm@mst.edu",
+    logoLink: "acm.png",
+    logoLinkDark: "acm-dark.png",
+    name: "General",
+    website: "https://mstacm.org"
+  },
+  {
     color: "skyblue",
     desc:
       "Interested in software engineering, web development, or development operations? In ACM Web, we build industry-grade websites using top software engineering practices. ACM Web is developing the https://mstacm.org/ website and much more. Moreover, we host workshops on various skills in web development, Typescript, and Git.",
@@ -96,7 +107,18 @@ const SIGsData: ISIG[] = [
     logoLinkDark: "arcade-dark.png",
     name: "Arcade",
     website: "https://discord.gg/RZCYUpT"
-  }
+  },
+  {
+    color: "lime",
+    desc:
+      "A community of graduate students doing computing related work.",
+    discord: "https://discord.gg/xWt5BVE",
+    email: "acm@mst.edu",
+    logoLink: "grad.png",
+    logoLinkDark: "grad-dark.png",
+    name: "Grad",
+    website: "https://discord.gg/xWt5BVE"
+  },
 
 ];
 
