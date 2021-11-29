@@ -36,7 +36,7 @@ const SIGsData: ISIG[] = [
     desc:
       "ACM Security helps develop the cybersecurity profession for the student body of Missouri University of Science and Technology by sponsoring high-quality workshops and lectures from both local and natinal industry professionals, as well as hosting on campus security events and competitions.",
     discord: "https://discord.gg/BfPyeHw",
-    email: "sigsec@mst.edu",
+    email: "crawlins@mst.edu",
     logoLink: "sec.png",
     logoLinkDark: "sec-dark.png",
     name: "Security",
