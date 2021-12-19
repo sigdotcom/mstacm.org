@@ -3,61 +3,80 @@ import styled, { AnyStyledComponent } from "styled-components";
 import { useLocation, Link } from "react-router-dom";
 
 interface INavButtonProps {
-	text: string;
-	link: string;
+  text: string;
+  link: string;
+  image: string;
 }
 const ButtonText: AnyStyledComponent = styled.div`
-	display: flex;
-	font-family: Nunito Sans;
-	padding-left: 50px;
-	padding-top: 20px;
-	font-size: 24px;
+  display: flex;
+  font-family: Nunito Sans;
+  padding-left: 30px;
+  padding-top: 20px;
+  font-size: 24px;
 
-	user-select: none;
-	cursor: pointer;
-	@media (max-width: 600px) {
-		padding-left: 20px;
-		padding-top: 20px;
-		font-size: 18px;
-	}
+  user-select: none;
+  cursor: pointer;
+  @media (max-width: 600px) {
+    padding-left: 20px;
+    padding-top: 20px;
+    font-size: 18px;
+  }
 `;
 
+const Img = styled.img`
+  height: 20px;
+  width: 20px;
+
+  margin-right: 10px;
+
+  margin-top: 7px;
+  user-select: none;
+`;
+const ImageGroup: AnyStyledComponent = styled.div``;
+
 const NavButton: FunctionComponent<INavButtonProps> = ({
-	text,
-	link,
-	children,
+  text,
+  link,
+  children,
+  image,
 }): JSX.Element => {
-	const [background, setBackground] = useState("#087abb");
-	const [color, setColor] = useState("white");
-	useEffect(() => {
-		if (location.pathname === link) {
-			setBackground("#f4f5f8");
-			setColor("#087abb");
-		} else {
-			setBackground("#087abb");
-			setColor("white");
-		}
-	});
-	const location = useLocation();
+  const [background, setBackground] = useState("#087abb");
+  const [color, setColor] = useState("white");
+  useEffect(() => {
+    if (location.pathname === link) {
+      setBackground("#f4f5f8");
+      setColor("#087abb");
+    } else {
+      setBackground("#087abb");
+      setColor("white");
+    }
+  });
+  const location = useLocation();
 
-	const active: React.CSSProperties = {
-		backgroundColor: background,
-		color: color,
-		transition: "all 0.17s ease-in-out",
-	};
+  const active: React.CSSProperties = {
+    backgroundColor: background,
+    color: color,
+    transition: "all 0.17s ease-in-out",
+  };
 
-	return (
-		<div>
-			<div>
-				<Link to={link}>
-					<div style={active}>
-						<ButtonText>{text}</ButtonText>
-						{children}
-					</div>
-				</Link>
-			</div>
-		</div>
-	);
+  return (
+    <div>
+      <div>
+        <Link to={link}>
+          <div style={active}>
+            <ImageGroup>
+              <ButtonText>
+                <Img src={image} />
+                {text}
+              </ButtonText>
+            </ImageGroup>
+
+            {children}
+          </div>
+        </Link>
+      </div>
+    </div>
+  );
 };
 
 export { NavButton };

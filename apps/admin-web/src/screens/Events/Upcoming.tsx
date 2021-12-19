@@ -1,4 +1,5 @@
 import React from "react";
+import gql from "graphql-tag";
 
 import { EventData } from "./EventData";
 import styled, { AnyStyledComponent } from "styled-components";
@@ -13,6 +14,25 @@ import {
   GetCurrentEventsQueryHookResult,
   useGetCurrentEventsQuery,
 } from "../../generated/graphql";
+export const GET_CURRENT_EVENTS_QUERY: any = gql`
+  query getCurrentEvents {
+    currentEvents {
+      id
+      dateCreated
+      dateHosted
+      dateExpire
+      hostSig {
+        name
+      }
+      eventTitle
+      description
+      location
+      flierLink
+      eventLink
+    }
+  }
+`;
+
 
 const Grid: AnyStyledComponent = styled.div`
   height: 100vh;
