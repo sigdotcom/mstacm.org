@@ -161,43 +161,7 @@ const Fly = styled.img`
     display: none;
   }
 `;
-const TooltipText = styled.div`
-  visibility: hidden;
-  width: 160px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-  position: absolute;
-  z-index: 7;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -80px;
-  font-size: 15px;
-  &:after {
-    content: " ";
-    position: absolute;
-    top: 100%; /* At the bottom of the tooltip */
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: black transparent transparent transparent;
-  }
-  @media (max-width: 900px) {
-    font-size: 5px;
-    width: 80px;
-    margin-left: -40px;
-  }
-`;
-const Tooltip = styled.div`
-  position: relative;
-  display: inline-block;
-  &: hover ${TooltipText}{
-    visibility: visible;
-  }
-`;
+
 const Link = styled.a`
   display: inline-block;
   padding-left: 5px;
@@ -328,16 +292,7 @@ const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
 
         <Constraint>
           <Group>
-            <Title>
-              {event.eventTitle.length <= 25 ? (
-                event.eventTitle
-              ) : (
-                <Tooltip>
-                  {truncate(event.eventTitle, 25, false)}
-                  <TooltipText>{event.eventTitle}</TooltipText>
-                </Tooltip>
-              )}
-            </Title>
+            <Title>{truncate(event.eventTitle, 25, false)}</Title>
             <div style={branch}>{event.hostSig.name}</div>
             {event.eventLink === null ? (
               ""
@@ -353,15 +308,7 @@ const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
             <QRButton onClick={handleQR}>QR</QRButton>
           </Group>
           <Time>
-            {start} -{end} @{" "}
-            {event.location.length <= 15 ? (
-              event.location
-            ) : (
-              <Tooltip>
-                {truncate(event.location, 15, false)}
-                <TooltipText>{event.location}</TooltipText>
-              </Tooltip>
-            )}
+            {start} -{end} @ {truncate(event.location, 15, false)}
           </Time>
           <Description>{truncate(event.description, 128, false)}</Description>
           <ButtonGroup>
