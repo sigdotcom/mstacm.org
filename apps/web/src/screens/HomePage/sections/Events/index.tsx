@@ -6,7 +6,6 @@ import { PageConstraint } from "../../../../components/PageConstraint";
 
 import { Checkbox } from "./Checkbox";
 import { Event } from "./Event";
-
 import { config } from "../../../../config";
 
 import {
