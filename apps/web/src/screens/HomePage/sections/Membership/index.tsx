@@ -16,7 +16,7 @@ import { BenefitBlock, IBenefitBlockProps } from "./BenefitBlock";
 import benefits from "./benefits.json";
 import { ConfirmationContainer } from "./ConfirmationContainer";
 import { TierContainer } from "./TierContainer";
-import { useAuth0 } from "../../../../utils/react-auth0-wrapper";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const ME_EXPIRATION_QUERY: any = gql`
   query MeExpiration {
@@ -94,13 +94,13 @@ const Membership: React.FC = (): JSX.Element => {
   const result: MeExpirationQueryHookResult = useMeExpirationQuery();
   let expirationDate: string | undefined;
   let expirationEpoch: number;
-  const todayEpoch = new Date().setHours(0,0,0,0)
+  const todayEpoch = new Date().setHours(0, 0, 0, 0)
 
   if (result.data && result.data.me) {
     expirationDate = result.data.me.membershipExpiration;
-    expirationEpoch = new Date(result.data.me.membershipExpiration).setHours(0,0,0,0)
+    expirationEpoch = new Date(result.data.me.membershipExpiration).setHours(0, 0, 0, 0)
 
-    if((expirationEpoch - todayEpoch) < 0){
+    if ((expirationEpoch - todayEpoch) < 0) {
       expirationDate = undefined;
     }
 

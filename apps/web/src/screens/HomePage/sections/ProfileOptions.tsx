@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { useAuth0 } from "../../../utils/react-auth0-wrapper";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import { Options } from "./Options";
 
@@ -57,7 +57,7 @@ const TriangleRight = styled.div`
 `;
 
 const ProfileOptions: React.FC<{}> = (): JSX.Element => {
-  const { loading, user } = useAuth0();
+  const { isLoading, user } = useAuth0();
 
   const [down, setDown] = React.useState(false);
 
@@ -72,8 +72,8 @@ const ProfileOptions: React.FC<{}> = (): JSX.Element => {
           }
         }}
       >
-        {!loading && <Picture src={user.picture} alt="Profile"></Picture>}
-        {!loading && <Name>{user.name}</Name>}
+        {!isLoading && <Picture src={user?.picture} alt="Profile"></Picture>}
+        {!isLoading && <Name>{user?.name}</Name>}
         {down ? <TriangleRight /> : <TriangleDown />}
       </ProfileDisplay>
       {down && <Options />}

@@ -8,7 +8,8 @@ import { App } from "./App";
 import { config } from "./config";
 import registerServiceWorker from "./registerServiceWorker";
 import { client } from "./utils/apollo";
-import { Auth0Provider, onRedirectCallback } from "./utils/react-auth0-wrapper";
+import { Auth0Provider } from "@auth0/auth0-react";
+import { onRedirectCallback } from "./utils/react-auth0-wrapper";
 
 import "react-toastify/dist/ReactToastify.min.css";
 import "./static/css/App.css";
@@ -21,8 +22,8 @@ toast.configure({
 ReactDOM.render(
   <Auth0Provider
     domain={config.AUTH0_DOMAIN}
-    client_id={config.AUTH0_CLIENT_ID}
-    redirect_uri={window.location.origin}
+    clientId={config.AUTH0_CLIENT_ID}
+    redirectUri={window.location.origin}
     audience={config.AUTH0_AUDIENCE}
     onRedirectCallback={onRedirectCallback}
   >

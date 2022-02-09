@@ -10,7 +10,7 @@ import {
   RedeemRedemptionCodeMutation,
   useRedeemRedemptionCodeMutation
 } from "../../generated/graphql";
-import { useAuth0 } from "../../utils/react-auth0-wrapper";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import { Toast } from "../../components/Toast";
 import { Events } from "./sections/Events";
@@ -39,11 +39,11 @@ const NavHeroWrapper = styled.div`
 const HomePage: React.FC<RouteComponentProps> = ({
   history
 }: RouteComponentProps) => {
-  const { loading, isAuthenticated, loginWithRedirect } = useAuth0();
+  const { isLoading, isAuthenticated, loginWithRedirect } = useAuth0();
   const [redeemCode] = useRedeemRedemptionCodeMutation();
 
   useEffect(() => {
-    if (loading) {
+    if (isLoading) {
       return;
     }
 
@@ -125,7 +125,7 @@ const HomePage: React.FC<RouteComponentProps> = ({
     // Because of the !code && !storedCode, we know at least one must
     // be valid
     runRedeemCode(redemptionCode || (storedCode as string));
-  }, [loading, isAuthenticated, loginWithRedirect, redeemCode]);
+  }, [isLoading, isAuthenticated, loginWithRedirect, redeemCode]);
 
   return (
     <div>

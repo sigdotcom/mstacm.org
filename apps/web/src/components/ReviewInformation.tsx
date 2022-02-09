@@ -1,7 +1,7 @@
 // ReviewInformation.js
 import React, { useState } from "react";
 
-import { useAuth0 } from "../utils/react-auth0-wrapper";
+import { useAuth0 } from "@auth0/auth0-react";
 import styled, { AnyStyledComponent } from "styled-components";
 import { ReactStripeElements } from "react-stripe-elements";
 
@@ -129,7 +129,7 @@ export const ReviewInformationForm: React.FC<TempNameProps> = (
   props: TempNameProps
 ): JSX.Element => {
   const [loadingPayment, setLoadingPayment]: [boolean, setBoolean] = useState<boolean>(false);
-  const { loading, user } = useAuth0();
+  const { isLoading, user } = useAuth0();
 
   const handleSubmit: (ev: React.FormEvent) => void = async (
     ev: React.FormEvent
@@ -169,7 +169,7 @@ export const ReviewInformationForm: React.FC<TempNameProps> = (
     <form onSubmit={handleSubmit} onReset={props.prevModal}>
       <FormContainer>
         <Header>Review</Header>
-        {!loading && <Name>{user.name}</Name>}
+        {!isLoading && <Name>{user?.name}</Name>}
         <CardNumber>xxxx xxxx xxxx {1234
           // props.paymentMethod.card ? props.paymentMethod.card.last4 : "xxxx"
         }</CardNumber>
@@ -183,7 +183,7 @@ export const ReviewInformationForm: React.FC<TempNameProps> = (
           <BackButton
             type="reset"
             value="Back"
-            disabled={loading}
+            disabled={isLoading}
           />
           <PurchaseButton
             disabled={loadingPayment}

@@ -5,7 +5,7 @@ import ReactGA from 'react-ga';
 
 import { config } from "./config";
 import { HomePage, NotFoundPage, EventRegistration } from "./screens";
-import { useAuth0 } from "./utils/react-auth0-wrapper";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import "./static/css/App.css";
 
@@ -26,20 +26,20 @@ if (process.env.NODE_ENV === "production") {
 
 
 const App: React.FC<{}> = (): JSX.Element => {
-  const { loading, isAuthenticated, getTokenSilently } = useAuth0();
+  const { isLoading, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
-    if (loading || !isAuthenticated) {
+    if (isLoading || !isAuthenticated) {
       return;
     }
 
     const setToken: () => void = async (): Promise<void> => {
-      const token: string = (await getTokenSilently()) || "";
+      const token: string = (await getAccessTokenSilently()) || "";
       localStorage.setItem(config.ACCESS_TOKEN_KEY, token);
     };
 
     setToken();
-  }, [loading, isAuthenticated, getTokenSilently]);
+  }, [isLoading, isAuthenticated, getAccessTokenSilently]);
 
   return (
     <BrowserRouter>

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { useAuth0 } from "../../../utils/react-auth0-wrapper";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Dropdown = styled.div`
   position: absolute;

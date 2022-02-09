@@ -3,7 +3,7 @@ import { Link } from "react-scroll";
 import styled from "styled-components";
 
 import { PageConstraint } from "../../../components/PageConstraint";
-import { useAuth0 } from "../../../utils/react-auth0-wrapper";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import { config } from "../../../config";
 

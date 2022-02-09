@@ -2,7 +2,7 @@ import React from "react";
 import styled, { AnyStyledComponent } from "styled-components";
 
 import { PrimaryButton } from "../../../../components/PrimaryButton";
-import { useAuth0 } from "../../../../utils/react-auth0-wrapper";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const MembershipTierContainer: AnyStyledComponent = styled.div`
   display: flex;
@@ -47,7 +47,7 @@ interface ITierContainerProps {
   onClick?: () => void;
 }
 
-export const TierContainer: React.SFC<ITierContainerProps> = (
+export const TierContainer: React.FC<ITierContainerProps> = (
   props: ITierContainerProps
 ): JSX.Element => {
   const { isAuthenticated }: { isAuthenticated: boolean } = useAuth0();
