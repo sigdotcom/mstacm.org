@@ -66,8 +66,8 @@ The entire page requires the GraphQL API to be running.  Please view the [API
 Installation Instructions](../api/README.md) for more information.
 
 Before running the page locally, make sure docker is up and running (just open up
-the docker desktop app that you installed in the Prerequisite step above. Once
-docker is running, navigate to the apps directory and start docker using
+using the docker desktop app that you installed in the Prerequisite step above).
+Once docker is running, navigate to the apps directory and start docker using
 
 ### `docker-compose up`
 
