@@ -80,10 +80,13 @@ In the project directory (resume-portal/), you can run:
 Runs the app in the development mode.<br /> Open
 [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-If you get an error saying something like:
-TypeError: Cannot read properties of undefined...
+Once the resume page is up and running, you have to upload resumes. To do
+this, start up the profile page (refer to readme in profile-web/) and upload
+a resume. Then, refresh (or restart) the resume page and you should see your
+uploaded resume.
 
-Make sure your environment variables are configured. You'll need to get those
+If you get an error when uploading a resume in the profile page, make
+sure your environment variables are configured. You'll need to get those
 from Digital Ocean so reach out to one of the chairs of ACM-Web. Once your
 files are updated, refer to step 4 in Installation in the api readme.
 
