@@ -10,6 +10,7 @@
     "graphql-tag": "^2.10.1",
     "qrcode.react": "^1.0.0",
     "react": "^16.7.0",
+    "react-csv": "^2.0.3",
     "react-dom": "^16.7.0",
     "react-highlight-words": "^0.16.0",
     "react-router-dom": "^5.1.2",
@@ -49,7 +50,6 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "jest-watch-typeahead": "^0.4.0",
     "prettier": "^1.18.2",
-    "react-csv": "^2.0.3",
     "typescript": "^3.2.4"
   },
   "browserslist": [
