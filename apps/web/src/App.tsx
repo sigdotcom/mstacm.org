@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 import React, { useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ReactGA from 'react-ga';
 
 import { config } from "./config";
@@ -43,11 +43,11 @@ const App: React.FC<{}> = (): JSX.Element => {
 
   return (
     <BrowserRouter>
-      <Switch>
-        <Route exact={true} path="/" component={HomePage} />
-        <Route path="/e/:eventId" component={EventRegistration} />
-        <Route component={NotFoundPage} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/e/:eventId" element={<EventRegistration />} />
+        <Route element={<NotFoundPage />} />
+      </Routes>
     </BrowserRouter>
   );
 };

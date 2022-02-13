@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 
 import { ExecutionResult } from "@apollo/react-common";
@@ -36,9 +35,7 @@ const NavHeroWrapper = styled.div`
   }
 `;
 
-const HomePage: React.FC<RouteComponentProps> = ({
-  history
-}: RouteComponentProps) => {
+const HomePage: React.FC = () => {
   const { isLoading, isAuthenticated, loginWithRedirect } = useAuth0();
   const [redeemCode] = useRedeemRedemptionCodeMutation();
 
