@@ -3,9 +3,9 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ReactGA from 'react-ga';
 
+import { useAuth0 } from "@auth0/auth0-react";
 import { config } from "./config";
 import { HomePage, NotFoundPage, EventRegistration } from "./screens";
-import { useAuth0 } from "@auth0/auth0-react";
 
 import "./static/css/App.css";
 
