@@ -4,12 +4,12 @@ import styled from "styled-components";
 import { ExecutionResult } from "@apollo/react-common";
 import { toast } from "react-toastify";
 
+import { useAuth0 } from "@auth0/auth0-react";
 import { config } from "../../config";
 import {
   RedeemRedemptionCodeMutation,
   useRedeemRedemptionCodeMutation
 } from "../../generated/graphql";
-import { useAuth0 } from "@auth0/auth0-react";
 
 import { Toast } from "../../components/Toast";
 import { Events } from "./sections/Events";
@@ -91,7 +91,7 @@ const HomePage: React.FC = () => {
             />
           );
           queryParams.delete(config.REDEMPTION_QUERY_PARAM_KEY);
-          history.push("/?" + queryParams.toString());
+          history.push(`/?${queryParams.toString()}`);
 
           localStorage.removeItem(config.REDEMPTION_CODE_KEY);
         } else {
@@ -115,7 +115,6 @@ const HomePage: React.FC = () => {
             fill={"red"}
           />
         );
-        return;
       }
     };
 

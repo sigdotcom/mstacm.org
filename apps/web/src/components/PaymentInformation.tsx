@@ -254,16 +254,20 @@ export const PaymentInformationForm: React.FC<FormProps> = (
     if (cardNumberElementColor !== completeColor) {
       setCardNumberElementColor(errorColor);
       return;
-    } else if (cardExpiryElementColor !== completeColor) {
+    }
+
+    if (cardExpiryElementColor !== completeColor) {
       setCardExpiryElementColor(errorColor);
       return;
-    } else if (cardCvcElementColor !== completeColor) {
+    }
+
+    if (cardCvcElementColor !== completeColor) {
       setCardCvcElementColor(errorColor);
       return;
     }
     setLoading(true);
 
-    let clientSecret = props.clientSecret;
+    let { clientSecret } = props;
     if (!clientSecret) {
       clientSecret = await props.getClientSecret()
       if (!clientSecret) {

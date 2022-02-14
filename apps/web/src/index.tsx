@@ -4,11 +4,11 @@ import * as ReactDOM from "react-dom";
 
 import { StripeProvider } from "react-stripe-elements";
 import { toast } from "react-toastify";
+import { Auth0Provider } from "@auth0/auth0-react";
 import { App } from "./App";
 import { config } from "./config";
 import registerServiceWorker from "./registerServiceWorker";
 import { client } from "./utils/apollo";
-import { Auth0Provider } from "@auth0/auth0-react";
 import { onRedirectCallback } from "./utils/react-auth0-wrapper";
 
 import "react-toastify/dist/ReactToastify.min.css";

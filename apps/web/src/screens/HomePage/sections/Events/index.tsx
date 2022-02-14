@@ -245,6 +245,26 @@ const Events: React.FC<{}> = (): JSX.Element => {
     setFilters(newFilters);
   };
 
+  // Get the total number of events that should be shown with the given filter
+  const countEvents: () => number = (): number => {
+    let count: number = 0;
+
+    if (
+      filters.every((filter: boolean) => {
+        return filter === false;
+      })
+    ) {
+      count = events.length;
+    } else {
+      for (const e of events) {
+        if (filters[FILTER_TYPES.indexOf(e.hostSig.name)]) {
+          count += 1;
+        }
+      }
+    }
+    return count;
+  };
+
   // Check if default number of events should be shown
   const showDefault: () => boolean = (): boolean => {
     return countEvents() <= DEFAULT_EVENTS_TO_DISPLAY;
@@ -266,26 +286,6 @@ const Events: React.FC<{}> = (): JSX.Element => {
       return true;
     }
     return false;
-  };
-
-  // Get the total number of events that should be shown with the given filter
-  const countEvents: () => number = (): number => {
-    let count: number = 0;
-
-    if (
-      filters.every((filter: boolean) => {
-        return filter === false;
-      })
-    ) {
-      count = events.length;
-    } else {
-      for (const e of events) {
-        if (filters[FILTER_TYPES.indexOf(e.hostSig.name)]) {
-          count += 1;
-        }
-      }
-    }
-    return count;
   };
 
   return (

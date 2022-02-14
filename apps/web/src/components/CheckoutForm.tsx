@@ -101,7 +101,7 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
       handleError(e.message);
       return "";
     }
-    const data = result.data;
+    const { data } = result;
 
     if (!data) {
       if (result.errors)
@@ -109,9 +109,9 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
 
       return "";
     }
-    const clientSecret = data.startMembershipTransaction.clientSecret;
-    setClientSecret(clientSecret);
-    return clientSecret;
+    const newClientSecret = data.startMembershipTransaction.clientSecret;
+    setClientSecret(newClientSecret);
+    return newClientSecret;
   };
 
   const slides = [
@@ -164,7 +164,7 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
       <Result
         status="success"
         title="Membership Added!"
-        subTitle={`Your membership may take 1-5 minutes to show.`}
+        subTitle="Your membership may take 1-5 minutes to show."
       />
     </ModalWrapper>
   ]
