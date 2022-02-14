@@ -98,7 +98,7 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
         variables: { membershipType: props.tag }
       });
     } catch (e) {
-      handleError(e.message);
+      if (e instanceof Error) handleError(e.message);
       return "";
     }
     const { data } = result;

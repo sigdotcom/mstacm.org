@@ -105,16 +105,19 @@ const HomePage: React.FC = () => {
           return;
         }
       } catch (e) {
-        if (e.message.includes("expired")) {
-          localStorage.removeItem(config.REDEMPTION_CODE_KEY);
+        if (e instanceof Error) {
+          if (e.message.includes("expired")) {
+            localStorage.removeItem(config.REDEMPTION_CODE_KEY);
+          }
+          toast(
+            <Toast
+              iconName={"alert-circle-outline"}
+              message={e.message}
+              fill={"red"}
+            />
+          );
         }
-        toast(
-          <Toast
-            iconName={"alert-circle-outline"}
-            message={e.message}
-            fill={"red"}
-          />
-        );
+        // TODO: what do we do if e isn't Error?
       }
     };
 
