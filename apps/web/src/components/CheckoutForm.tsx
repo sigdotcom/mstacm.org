@@ -4,7 +4,6 @@ import gql from "graphql-tag";
 import React, { useState } from "react";
 import Icon from "react-eva-icons";
 
-import { ExecutionResult } from "@apollo/react-common";
 import {
   Elements,
   injectStripe,
@@ -13,7 +12,6 @@ import {
 import styled, { AnyStyledComponent } from "styled-components";
 
 import {
-  GetMembershipMutation,
   MembershipTypes,
   useGetMembershipMutation
 } from "../generated/graphql";
@@ -92,26 +90,24 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
   }
 
   const getClientSecret: () => Promise<string> = async (): Promise<string> => {
-    let result: ExecutionResult<GetMembershipMutation>;
     try {
-      result = await getMembership({
+      const { data, error: mutationError } = await getMembership({
         variables: { membershipType: props.tag }
       });
+
+      if (!data) {
+        if (mutationError)
+          handleError(mutationError || "Unknown Error occurred.");
+
+        return "";
+      }
+      const newClientSecret = data.startMembershipTransaction.clientSecret;
+      setClientSecret(newClientSecret);
+      return newClientSecret;
     } catch (e) {
       if (e instanceof Error) handleError(e.message);
       return "";
     }
-    const { data } = result;
-
-    if (!data) {
-      if (result.errors)
-        handleError(result.errors[0].message || "Unknown Error occurred.");
-
-      return "";
-    }
-    const newClientSecret = data.startMembershipTransaction.clientSecret;
-    setClientSecret(newClientSecret);
-    return newClientSecret;
   };
 
   const slides = [

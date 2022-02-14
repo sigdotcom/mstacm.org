@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-import { ExecutionResult } from "@apollo/react-common";
 import { toast } from "react-toastify";
 
 import { useAuth0 } from "@auth0/auth0-react";
@@ -73,14 +72,12 @@ const HomePage: React.FC = () => {
     const runRedeemCode: (code: string) => void = async (
       code: string
     ): Promise<void> => {
-      let result: ExecutionResult<RedeemRedemptionCodeMutation>;
-
       try {
-        result = await redeemCode({
+        const { data } = await redeemCode({
           variables: { code }
         });
 
-        if (result.data && result.data.redeemRedemptionCode.redeemed === true) {
+        if (data?.redeemRedemptionCode.redeemed === true) {
           toast(
             <Toast
               iconName={"alert-circle-outline"}
@@ -91,7 +88,7 @@ const HomePage: React.FC = () => {
             />
           );
           queryParams.delete(config.REDEMPTION_QUERY_PARAM_KEY);
-          history.push(`/?${queryParams.toString()}`);
+          // history.push(`/?${queryParams.toString()}`);
 
           localStorage.removeItem(config.REDEMPTION_CODE_KEY);
         } else {

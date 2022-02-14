@@ -1,4 +1,4 @@
-import { ApolloProvider } from "@apollo/react-hooks";
+import { ApolloProvider } from "@apollo/client";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
