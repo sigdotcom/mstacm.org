@@ -1,4 +1,3 @@
-import gql from "graphql-tag";
 import React, { useState } from "react";
 import { Element } from "react-scroll";
 import styled, { AnyStyledComponent } from "styled-components";
@@ -8,23 +7,15 @@ import Icon from "react-eva-icons";
 import { CheckoutForm } from "../../../../components/CheckoutForm";
 import { PageConstraint } from "../../../../components/PageConstraint";
 import {
-  MeExpirationQueryHookResult,
-  MembershipTypes,
-  useMeExpirationQuery
-} from "../../../../generated/graphql";
+  MeExpirationDocument,
+  MembershipTypes
+} from "../../../../graphql-operations";
+import { useQuery } from "@apollo/client";
 import { BenefitBlock, IBenefitBlockProps } from "./BenefitBlock";
 import benefits from "./benefits.json";
 import { ConfirmationContainer } from "./ConfirmationContainer";
 import { TierContainer } from "./TierContainer";
 import { useAuth0 } from "@auth0/auth0-react";
-
-export const ME_EXPIRATION_QUERY: any = gql`
-  query MeExpiration {
-    me {
-      membershipExpiration
-    }
-  }
-`;
 
 const MembershipWrapper: AnyStyledComponent = styled.div`
   margin: auto;
@@ -91,7 +82,7 @@ const Membership: React.FC = (): JSX.Element => {
   );
 
   // TODO: move to global state
-  const result: MeExpirationQueryHookResult = useMeExpirationQuery();
+  const result = useQuery(MeExpirationDocument);
   let expirationDate: string | undefined;
   let expirationEpoch: number;
   const todayEpoch = new Date().setHours(0, 0, 0, 0)

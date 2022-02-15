@@ -4,7 +4,7 @@ import HTMLEllipses from "react-lines-ellipsis/lib/html";
 import styled from "styled-components";
 
 import { config } from "../../../../config";
-import { Event as IEvent } from "../../../../generated/graphql";
+import { Event as IEvent } from "../../../../graphql-operations";
 
 const MOBILE_BREAKPOINT: string = "1001px";
 
@@ -244,16 +244,16 @@ const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
   const time: string =
     event.dateHosted === event.dateExpire
       ? eventDate.toLocaleString("default", {
-          hour: "numeric",
-          minute: "numeric"
-        })
+        hour: "numeric",
+        minute: "numeric"
+      })
       : `${eventDate.toLocaleString("default", {
-          hour: "numeric",
-          minute: "numeric"
-        })} - ${eventEndDate.toLocaleString("default", {
-          hour: "numeric",
-          minute: "numeric"
-        })}`;
+        hour: "numeric",
+        minute: "numeric"
+      })} - ${eventEndDate.toLocaleString("default", {
+        hour: "numeric",
+        minute: "numeric"
+      })}`;
 
   const flierLink: string = event.flierLink
     ? event.flierLink
@@ -288,10 +288,10 @@ const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
       <VerticalLine />
       <div>
         <Juxta>
-        <EventName>{event.eventTitle}</EventName>
-        {event && event.eventLink &&
-        <EventLink href={event.eventLink} target="_blank"
-          rel="noopener noreferrer">Link <Icon name="external-link-outline" size="medium" /></EventLink>}
+          <EventName>{event.eventTitle}</EventName>
+          {event && event.eventLink &&
+            <EventLink href={event.eventLink} target="_blank"
+              rel="noopener noreferrer">Link <Icon name="external-link-outline" size="medium" /></EventLink>}
         </Juxta>
         <div style={{ marginBottom: "10px" }}>
           <Time>

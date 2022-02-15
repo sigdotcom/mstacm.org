@@ -1,6 +1,5 @@
 // CheckoutForm.js
 import { Result } from "antd";
-import gql from "graphql-tag";
 import React, { useState } from "react";
 import Icon from "react-eva-icons";
 
@@ -11,24 +10,12 @@ import {
 } from "react-stripe-elements";
 import styled, { AnyStyledComponent } from "styled-components";
 
-import {
-  MembershipTypes,
-  useGetMembershipMutation
-} from "../generated/graphql";
+import { GetMembershipDocument, MembershipTypes } from "../graphql-operations";
+import { useMutation } from "@apollo/client";
 import { PaymentInformationForm } from "./PaymentInformation";
 import { ReviewInformationForm } from "./ReviewInformation";
 import { IconContainer } from "./IconContainer";
 import { ModalWrapper } from "./ModalWrapper";
-
-export const GET_MEMBERSHIP: any = gql`
-  mutation GetMembership($membershipType: MembershipTypes!) {
-    startMembershipTransaction(membershipType: $membershipType) {
-      id
-      charged
-      clientSecret
-    }
-  }
-`;
 
 const ErrorContainer: AnyStyledComponent = styled.div`
   display: flex;
@@ -63,7 +50,7 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
   const [error, setError]: [string, setString] = useState<string>("");
   const [index, setIndex]: [number, setNumber] = useState<number>(0);
 
-  const [getMembership] = useGetMembershipMutation();
+  const [getMembership] = useMutation(GetMembershipDocument);
 
   const handleError: (message: string) => void = (message: string): void => {
     setPaymentMethod(undefined);
@@ -91,14 +78,13 @@ const CheckoutFormBase: React.FC<CheckoutFormProps> = (
 
   const getClientSecret: () => Promise<string> = async (): Promise<string> => {
     try {
-      const { data, error: mutationError } = await getMembership({
+      const { data } = await getMembership({
         variables: { membershipType: props.tag }
       });
 
       if (!data) {
-        if (mutationError)
-          handleError(mutationError || "Unknown Error occurred.");
-
+        // TODO: get error message
+        handleError("Unknown Error occurred.");
         return "";
       }
       const newClientSecret = data.startMembershipTransaction.clientSecret;

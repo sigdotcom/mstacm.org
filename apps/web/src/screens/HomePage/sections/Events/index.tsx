@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import gql from "graphql-tag";
 import styled, { AnyStyledComponent } from "styled-components";
 
 import { Element } from "react-scroll";
@@ -13,29 +12,10 @@ import { Event } from "./Event";
 import { config } from "../../../../config";
 
 import {
-  Event as IEvent,
-  GetCurrentEventsQueryHookResult,
-  useGetCurrentEventsQuery
-} from "../../../../generated/graphql";
-
-export const GET_CURRENT_EVENTS_QUERY: any = gql`
-  query getCurrentEvents {
-    currentEvents {
-      id
-      dateCreated
-      dateHosted
-      dateExpire
-      hostSig {
-        name
-      }
-      eventTitle
-      description
-      location
-      flierLink
-      eventLink
-    }
-  }
-`;
+  GetCurrentEventsDocument,
+  Event as IEvent
+} from "../../../../graphql-operations";
+import { useQuery } from "@apollo/client";
 
 const MOBILE_BREAKPOINT: string = "1001px";
 
@@ -206,9 +186,9 @@ const CALENDAR_LINK: string =
   "https://calendar.google.com/calendar/embed?src=mst.edu_7u3stm8bn7l2umuastep5fmbl0%40group.calendar.google.com&ctz=America%2FChicago";
 
 const Events: React.FC<{}> = (): JSX.Element => {
-  const result: GetCurrentEventsQueryHookResult = useGetCurrentEventsQuery();
+  const result = useQuery(GetCurrentEventsDocument);
   let events: IEvent[] = [];
-  if (result.data && result.data.currentEvents) {
+  if (result.data?.currentEvents) {
     events = result.data.currentEvents as IEvent[];
     events.sort(
       (a: IEvent, b: IEvent) =>

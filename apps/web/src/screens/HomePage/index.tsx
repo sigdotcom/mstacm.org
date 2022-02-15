@@ -5,10 +5,8 @@ import { toast } from "react-toastify";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import { config } from "../../config";
-import {
-  RedeemRedemptionCodeMutation,
-  useRedeemRedemptionCodeMutation
-} from "../../generated/graphql";
+import { RedeemRedemptionCodeDocument } from "../../graphql-operations";
+import { useMutation } from "@apollo/client";
 
 import { Toast } from "../../components/Toast";
 import { Events } from "./sections/Events";
@@ -36,7 +34,7 @@ const NavHeroWrapper = styled.div`
 
 const HomePage: React.FC = () => {
   const { isLoading, isAuthenticated, loginWithRedirect } = useAuth0();
-  const [redeemCode] = useRedeemRedemptionCodeMutation();
+  const [redeemCode] = useMutation(RedeemRedemptionCodeDocument);
 
   useEffect(() => {
     if (isLoading) {

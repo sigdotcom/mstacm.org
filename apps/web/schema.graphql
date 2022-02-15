@@ -1,0 +1,286 @@
+"""
+Direct the client to resolve this field locally, either from the cache or local resolvers.
+"""
+directive @client(
+  """
+  When true, the client will never use the cache for this value. See
+  https://www.apollographql.com/docs/react/essentials/local-state/#forcing-resolvers-with-clientalways-true
+  """
+  always: Boolean
+) on FIELD | FRAGMENT_DEFINITION | INLINE_FRAGMENT
+
+"""
+Export this locally resolved field as a variable to be used in the remainder of this query. See
+https://www.apollographql.com/docs/react/essentials/local-state/#using-client-fields-as-variables
+"""
+directive @export(
+  """The variable name to export this field as."""
+  as: String!
+) on FIELD
+
+"""
+Specify a custom store key for this result. See
+https://www.apollographql.com/docs/react/advanced/caching/#the-connection-directive
+"""
+directive @connection(
+  """Specify the store key."""
+  key: String!
+
+  """
+  An array of query argument names to include in the generated custom store key.
+  """
+  filter: [String!]
+) on FIELD
+
+type Query {
+  user(id: String!): User!
+  users: [User!]!
+  sig(id: String!): Sig!
+  sigs: [Sig!]!
+  events: [Event!]!
+  currentEvents: [Event!]!
+  event(id: Float!): Event!
+  eventsWithKey(urlKey: String!): [Event!]!
+  groups: [Group!]!
+  permissions: [Permission!]!
+  products: [Product!]!
+  redemptionCodes: [RedemptionCode!]!
+  resumes: [Resume!]!
+  transactions: [Transaction!]!
+  me: User
+}
+
+type User {
+  id: ID!
+  firstName: String
+  lastName: String
+  email: String!
+  emailVerified: Boolean!
+  profilePictureUrl: String!
+  graduationDate: DateTime
+  shirtReceived: Boolean
+  isSuperAdmin: Boolean
+  dateJoined: DateTime!
+  membershipExpiration: DateTime
+  isActive: Boolean
+  resume: Resume
+  permissions: [Permission!]
+  groups: [Group!]!
+  eventsAttended: [Event!]
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+type Resume {
+  id: ID!
+  url: String!
+  added: DateTime!
+  user: User!
+}
+
+type Permission {
+  name: ID!
+  users: [User!]!
+  redemptionCodes: [RedemptionCode!]!
+}
+
+type RedemptionCode {
+  id: ID!
+  redeemed: Boolean
+  expirationDate: DateTime!
+  transaction: Transaction
+  permissions: [Permission!]!
+  groups: [Group!]!
+}
+
+type Transaction {
+  id: ID!
+  intent: String
+  charged: Float
+  paymentType: String!
+  status: String!
+  user: User!
+  purchases: [Purchase!]!
+  redemptionCode: RedemptionCode!
+}
+
+type Purchase {
+  id: ID!
+  quantity: Float!
+  product: Product!
+  transaction: [Transaction!]!
+}
+
+type Product {
+  tag: ID!
+  displayName: String!
+  description: String!
+  statementDescriptor: String
+  price: Float!
+}
+
+type Group {
+  name: String!
+  users: [User!]!
+  permissions: [Permission!]!
+  redemptionCodes: [RedemptionCode!]!
+}
+
+type Event {
+  id: ID!
+  dateCreated: DateTime!
+  dateHosted: DateTime!
+  dateExpire: DateTime!
+  creator: User!
+  hostSig: Sig!
+  eventTitle: String!
+  description: String!
+  location: String!
+  flierLink: String
+  eventLink: String
+  urlKey: String
+  attendees: [User!]
+}
+
+type Sig {
+  name: String!
+  dateFounded: DateTime!
+  description: String!
+  users: [User!]!
+  hostedEvents: [Event!]!
+}
+
+type Mutation {
+  createUser(data: UserCreateInput!): User!
+  updateUser(data: UserUpdateInput!, id: String!): User!
+  deleteUser(id: String!): UserDeletePayload!
+  createSig(data: SigCreateInput!): Sig!
+  updateSig(data: SigUpdateInput!, id: String!): Sig!
+  deleteSig(id: String!): SigDeletePayload!
+  deleteEvent(id: Float!): EventDeletePayload!
+  updateEvent(flier: Upload, data: EventUpdateInput, id: Float!): Event!
+  createEvent(flier: Upload, data: EventCreateInput!): Event!
+  addAttendee(eventId: Float!, userId: String!): Event!
+  createGroup(permissionIds: [String!]!, name: String!): Group!
+  createPermission(data: PermissionCreateInput!): Permission!
+  createRedemptionCode(groupIds: [String!], permissionIds: [String!], productTags: [String!]): RedemptionCode!
+  redeemRedemptionCode(redemptionCode: String!): RedemptionCode!
+  deleteResume: User!
+  uploadResume(lastName: String!, firstName: String!, graduationDate: DateTime!, resume: Upload!): Resume!
+  startMembershipTransaction(membershipType: MembershipTypes!): TransactionPayload!
+  startProductTransaction(purchase: PurchaseInput!): TransactionPayload!
+  addUserToGroups(groupIds: [String!]!, userId: String!): User!
+  addPermissionsToUser(permissionIds: [String!]!, userId: String!): User!
+  updateExpirationDate(newExpirationDate: DateTime!, userId: String!): User!
+  updateShirtReceived(updatedShirtStatus: Boolean!, userId: String!): User!
+  resetShirtReceived: [User!]!
+  attendEvent(eventId: Float!): Event!
+}
+
+input UserCreateInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  sub: String!
+}
+
+input UserUpdateInput {
+  firstName: String
+  lastName: String
+  email: String
+}
+
+type UserDeletePayload {
+  firstName: String
+}
+
+input SigCreateInput {
+  name: String!
+  description: String!
+}
+
+input SigUpdateInput {
+  name: String
+  description: String
+}
+
+type SigDeletePayload {
+  name: String
+}
+
+type EventDeletePayload {
+  id: Float
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input EventUpdateInput {
+  eventTitle: String
+  dateHosted: DateTime
+  dateExpire: DateTime
+  description: String
+  location: String
+  flierLink: String
+  eventLink: String
+  hostSig: String!
+}
+
+input EventCreateInput {
+  eventTitle: String!
+  dateHosted: DateTime!
+  dateExpire: DateTime!
+  description: String!
+  location: String!
+  flierLink: String
+  eventLink: String
+  hostSig: String!
+}
+
+input PermissionCreateInput {
+  name: String!
+}
+
+"""Different types of ACM memberships one can have."""
+enum MembershipTypes {
+  YEARLY
+  SEMESTERLY
+}
+
+type TransactionPayload {
+  id: String!
+  charged: Float
+  clientSecret: String!
+}
+
+input PurchaseInput {
+  quantity: Int = 1
+  tag: String!
+}
+
+type Extension {
+  code: ErrorCodes!
+}
+
+"""The potential errors codes that will be sent to a user."""
+enum ErrorCodes {
+  INTERNAL_SERVER_ERROR
+  RESOURCE_NOT_FOUND
+  UNAUTHENTICATED
+  BAD_USER_INPUT
+}
+
+type MembershipProduct {
+  tag: MembershipTypes!
+}
+
+type PermissionDeletePayload {
+  name: String
+}
+
+input PermissionUpdateInput {
+  name: String
+}

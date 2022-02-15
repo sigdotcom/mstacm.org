@@ -57,6 +57,10 @@ module.exports = {
     "react/self-closing-comp": 0,
     "react/function-component-definition": 0,
     "import/newline-after-import": 0,
+    "import/no-extraneous-dependencies": 0,
+    "no-alert": 0,
+    "no-console": 0,
+    "no-param-reassign": 0,
   },
   settings: {
     "import/resolver": {

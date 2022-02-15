@@ -24,8 +24,8 @@
     "styled-components": "^5.3.3"
   },
   "scripts": {
-    "types:generate": "graphql-codegen --config codegen.yml",
-    "types:watch": "graphql-codegen --config codegen.yml -w",
+    "types:generate": "graphql-codegen",
+    "types:watch": "graphql-codegen -w",
     "run": "react-scripts start",
     "start": "npm-run-all -p types:watch run",
     "build": "yarn types:generate; react-scripts build",
@@ -34,10 +34,9 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.6.1",
-    "@graphql-codegen/introspection": "^2.1.1",
+    "@graphql-codegen/typed-document-node": "^2.2.3",
     "@graphql-codegen/typescript": "^2.4.3",
     "@graphql-codegen/typescript-operations": "^2.3.0",
-    "@graphql-codegen/typescript-react-apollo": "^3.2.5",
     "@types/debug": "^4.1.7",
     "@types/jest": "^27.4.0",
     "@types/node": "^17.0.17",
@@ -50,6 +49,7 @@
     "@types/styled-components": "^5.1.22",
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
+    "add": "^2.0.6",
     "eslint": "^8.9.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^16.1.0",
@@ -61,7 +61,8 @@
     "jest-watch-typeahead": "^1.0.0",
     "npm-run-all": "^4.1.5",
     "ts-jest": "^27.1.3",
-    "typescript": "^4.5.5"
+    "typescript": "^4.5.5",
+    "yarn": "^1.22.17"
   },
   "browserslist": [
     ">0.5%",

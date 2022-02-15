@@ -3,7 +3,7 @@ import React from "react";
 import Modal from "react-modal";
 
 import styled, { AnyStyledComponent } from "styled-components";
-import { MembershipTypes } from "../generated/graphql";
+import { MembershipTypes } from "../graphql-operations";
 
 const modalStyle: any = {
   content: {

@@ -1,10 +1,9 @@
-schema: "http://localhost/graphql"
-documents: "./src/**/*.{graphql,ts,tsx}"
+# schema: "http://localhost/graphql"
+schema: schema.graphql
+documents: "./src/documents.graphql"
 generates:
-  ./src/generated/graphql.tsx:
+  ./src/graphql-operations.ts:
     plugins:
-      - 'typescript'
-      - 'typescript-operations'
-      - 'typescript-react-apollo'
-    config:
-      apolloReactHooksImportFrom: "@apollo/client"
+      - typescript
+      - typescript-operations
+      - typed-document-node

@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import styled, { AnyStyledComponent } from "styled-components";
 import { ReactStripeElements } from "react-stripe-elements";
 
-import { MembershipTypes } from "../generated/graphql";
+import { MembershipTypes } from "../graphql-operations";
 import { PrimaryButton } from "./PrimaryButton";
 
 const FormContainer: AnyStyledComponent = styled.div`

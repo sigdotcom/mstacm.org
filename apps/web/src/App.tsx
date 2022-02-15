@@ -1,4 +1,3 @@
-import gql from "graphql-tag";
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ReactGA from 'react-ga';
@@ -8,15 +7,6 @@ import { config } from "./config";
 import { HomePage, NotFoundPage, EventRegistration } from "./screens";
 
 import "./static/css/App.css";
-
-export const REDEEM_MEMBERSHIP: any = gql`
-  mutation RedeemRedemptionCode($code: String!) {
-    redeemRedemptionCode(redemptionCode: $code) {
-      id
-      redeemed
-    }
-  }
-`;
 
 if (process.env.NODE_ENV === "production") {
 

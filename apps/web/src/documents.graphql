@@ -1,0 +1,39 @@
+# https://github.com/dotansimha/graphql-typed-document-node#:~:text=ResultOf%3Ctypeof%20MyQueryDocument%3E)-,VariablesOf,-%2D%20a%20utils%20for
+
+mutation RedeemRedemptionCode($code: String!) {
+  redeemRedemptionCode(redemptionCode: $code) {
+    id
+    redeemed
+  }
+}
+
+mutation GetMembership($membershipType: MembershipTypes!) {
+  startMembershipTransaction(membershipType: $membershipType) {
+    id
+    charged
+    clientSecret
+  }
+}
+
+query getCurrentEvents {
+  currentEvents {
+    id
+    dateCreated
+    dateHosted
+    dateExpire
+    hostSig {
+      name
+    }
+    eventTitle
+    description
+    location
+    flierLink
+    eventLink
+  }
+}
+
+query MeExpiration {
+  me {
+    membershipExpiration
+  }
+}
