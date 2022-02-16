@@ -11,33 +11,17 @@ interface IResumeCardProps {
   user: User;
 }
 
-const ResumeHover: AnyStyledComponent = styled.div`
-  transition: 0.3s;
-  opacity: 0;
-  position: absolute;
-  top: 450px;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  text-align: center;
-  color: black;
-  user-select: none;
-  font-weight: 500;
-`;
-
 const ResumeClickArea: AnyStyledComponent = styled.div`
   transition: 0.3s;
+  color: rgba(0, 0, 0, 0);
+  text-align: center;
+  padding-top: 263px; // 275px - 12px (height/2 - font size/2)
 `;
 
 const Container: AnyStyledComponent = styled.div`
   &:hover ${ResumeClickArea} {
-    background-color: black;
-    opacity: 0.2;
-    cursor: pointer;
-  }
-
-  &:hover ${ResumeHover} {
-    opacity: 1;
+    background-color: rgba(0,0,0,0.2);
+    color: black;
     cursor: pointer;
   }
 `;
@@ -92,8 +76,9 @@ const ResumeCard: React.FC<IResumeCardProps> = (props) => {
             backgroundColor: ""
           }}
           onClick={toggleResumePreview}
-        />
-        <ResumeHover>Click to expand</ResumeHover>
+        >
+          Click to Expand
+        </ResumeClickArea>
         <div
           style={{
             width: PDF_WIDTH,
