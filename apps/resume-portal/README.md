@@ -38,6 +38,7 @@ To get a local copy up and running follow these simple steps.
 + [Git](https://git-scm.com/download/)
 + [NodeJS](https://nodejs.org/)
 + [Yarn](https://yarnpkg.com/)
++ [Docker](https://docs.docker.com/get-docker/)
 
 ### Installation
  
@@ -64,12 +65,30 @@ yarn install
 The entire page requires the GraphQL API to be running.  Please view the [API
 Installation Instructions](../api/README.md) for more information.
 
-In the project directory, you can run:
+Before running the page locally, make sure docker is up and running (just open up
+using the docker desktop app that you installed in the Prerequisite step above).
+Once docker is running, navigate to the apps directory and start docker using
+
+### `docker-compose up`
+
+For more detailed steps, refer to the readme file in the api directory.
+
+In the project directory (resume-portal/), you can run:
 
 ### `yarn start`
 
 Runs the app in the development mode.<br /> Open
 [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+Once the resume page is up and running, you have to upload resumes. To do
+this, start up the profile page (refer to readme in profile-web/) and upload
+a resume. Then, refresh (or restart) the resume page and you should see your
+uploaded resume.
+
+If you get an error when uploading a resume in the profile page, make
+sure your environment variables are configured. You'll need to get those
+from Digital Ocean so reach out to one of the chairs of ACM-Web. Once your
+files are updated, refer to step 4 in Installation in the api readme.
 
 The page will reload if you make edits.<br /> You will also see any lint errors
 in the console.
