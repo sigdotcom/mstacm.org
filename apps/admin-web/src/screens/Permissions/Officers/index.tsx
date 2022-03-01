@@ -1,8 +1,8 @@
 import React from "react";
 import styled, { AnyStyledComponent } from "styled-components";
 import { Menu, Dropdown } from 'antd';
-// import { DownOutlined } from '@ant-design/icons';
 import { OfficersHeader } from "./OfficersHeader";
+import { OfficersList } from "./OfficersList";
 
 const PageWrapper: AnyStyledComponent = styled.div`
   padding-left: 70px;
@@ -43,10 +43,11 @@ const CommunitiesDropDown: AnyStyledComponent = styled.div`
 	padding: 10px;
   margin-left: 15px;
 	user-select: none;
-	background-color: white;
+	background: transparent;
 	border-radius: 12px;
 	padding-top: 10px;
 	box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
+  border: solid .5px rgb(0, 0, 0, 0.1);
   font-weight: bold;
   font-size: 20px;
   text-align: center;
@@ -123,6 +124,7 @@ const Officers: React.SFC<{}> = (): JSX.Element => {
           </Dropdown>
         </CommunitiesDropDown>
       </Filters>
+      <OfficersList />
 		</PageWrapper>
 	);
 };
