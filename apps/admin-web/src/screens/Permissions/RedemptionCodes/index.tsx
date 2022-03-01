@@ -7,7 +7,7 @@ import {
 	useGetGroupsQuery,
 	useGetProductsQuery,
 	useGetPermissionsQuery,
-} from "../../generated/graphql";
+} from "../../../generated/graphql";
 
 const Box: AnyStyledComponent = styled.div`
 	height: auto;

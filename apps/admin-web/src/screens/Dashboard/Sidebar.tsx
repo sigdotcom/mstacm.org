@@ -103,11 +103,28 @@ function Sidebar() {
           text="Membership"
           link="/membership"
         ></NavButton>
-        <NavButton
+        <NavDropDown
+          linkData={link}
+          navTitle="Permissions"
+          navLink="/permissions/officers"
           image="https://img.icons8.com/material-outlined/24/000000/data-configuration.png"
-          text="Redemption"
-          link="/redemption"
-        />
+        >
+          <NavDropDownContent
+            dropDownTitle="Officers"
+            dropDownLink="/permissions/officers"
+            siblingCallBack={linkCallback}
+          />
+          <NavDropDownContent
+            dropDownTitle="Groups"
+            dropDownLink="/permissions/groups"
+            siblingCallBack={linkCallback}
+          />
+          <NavDropDownContent
+            dropDownTitle="Redemption"
+            dropDownLink="/permissions/redemption"
+            siblingCallBack={linkCallback}
+          />
+        </NavDropDown>
       </Side>
     </div>
   );

@@ -4,7 +4,9 @@ import { Upcoming } from "../Events/Upcoming";
 import { Previous } from "../Events/Previous";
 import { Membership } from "../Membership";
 import { ToolList } from "../../tools/Tools";
-import { RedemptionCodes } from "../RedemptionCodes";
+import { Officers } from "../Permissions/Officers";
+import { Groups } from "../Permissions/Groups";
+import { RedemptionCodes } from "../Permissions/RedemptionCodes";
 
 const NotFound: React.FC<{}> = (): JSX.Element => {
   return <h1>You are lost!</h1>;
@@ -17,7 +19,9 @@ const Main: React.SFC<{}> = (): JSX.Element => {
       <Route path="/events/upcoming" component={Upcoming} />
       <Route path="/events/previous" component={Previous} />
       <Route path="/membership" component={Membership} />
-      <Route path="/redemption" component={RedemptionCodes} />
+      <Route path="/permissions/officers" component={Officers} />
+      <Route path="/permissions/groups" component={Groups} />
+      <Route path="/permissions/redemption" component={RedemptionCodes} />
       <Route component={NotFound} />
     </Switch>
   );
