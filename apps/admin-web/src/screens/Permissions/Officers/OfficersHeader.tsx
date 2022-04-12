@@ -105,6 +105,7 @@ const SearchInput = styled(Input)`
 const OfficersHeader: React.SFC<{}> = (): JSX.Element => {
 	const addOfficer: () => void = (): void => {
 		console.log("Officer Added");
+		// implement add officer logic here
 	};
 
 	return (
