@@ -1,4 +1,5 @@
 import React from "react";
+import { Input } from 'antd';
 import styled from "styled-components";
 import { ProfileOptions } from "../../Dashboard/Profile";
 
@@ -38,7 +39,7 @@ const Group = styled.div`
 	align-items: center;
 `;
 const Log = styled.div`
-	display: inline-block;
+  display: inline-block;
   position: absolute;
   right: 175px;
 	@media (max-width: 1530px) {
@@ -87,6 +88,20 @@ const AddOfficerButton = styled.button`
 		font-size: 13px;
 	}
 `;
+const SearchInput = styled(Input)`
+	display: inline-block;
+	width: 260px;
+	background: transparent;
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	border-bottom: solid 1px black;
+	border-radius: 0;
+	&:focus {
+        box-shadow: none;
+    }
+]`;
+
 const OfficersHeader: React.SFC<{}> = (): JSX.Element => {
 	const addOfficer: () => void = (): void => {
 		console.log("Officer Added");
@@ -97,6 +112,7 @@ const OfficersHeader: React.SFC<{}> = (): JSX.Element => {
 			<Group>
 				<HeaderText>Officers</HeaderText>
 				<AddOfficerButton onClick={addOfficer}>Add Officer</AddOfficerButton>
+				<SearchInput placeholder="&#128269; Search" />
 				<Log>
 					<ProfileOptions />
 				</Log>

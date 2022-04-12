@@ -1,38 +1,54 @@
 import React from "react";
 import styled, { AnyStyledComponent } from "styled-components";
 import { OfficerCard } from "./OfficerCard";
+import ClayProfile from "./common/clay.png";
+
 
 export interface IOfficer {
+  img: string;
   firstName: string;
   lastName: string;
+  role: string;
 }
 
 const OfficersList: React.SFC<{}> = (): JSX.Element => {
   // dummy data
   const officersData: IOfficer[] = [
     {
+      "img": ClayProfile,
       "firstName": "Carter",
-      "lastName": "Wagner"
+      "lastName": "Wagner",
+      "role": "Web Chair"
     },
     {
+      "img": ClayProfile,
       "firstName": "Carter",
-      "lastName": "Wagner"
+      "lastName": "Wagner",
+      "role": "Web Chair"
     },
     {
+      "img": ClayProfile,
       "firstName": "Carter",
-      "lastName": "Wagner"
+      "lastName": "Wagner",
+      "role": "Web Chair"
     },
     {
+      "img": ClayProfile,
       "firstName": "Carter",
-      "lastName": "Wagner"
+      "lastName": "Wagner",
+      "role": "Web Chair"
     },
     {
+      "img": ClayProfile,
       "firstName": "Carter",
-      "lastName": "Wagner"
+      "lastName": "Wagner",
+      "role": "Web Chair"
     },
     {
+      "img": ClayProfile,
       "firstName": "Carter",
-      "lastName": "Wagner"
+      "lastName": "Wagner",
+      "role": "Web Chair"
     }
   ];
 
