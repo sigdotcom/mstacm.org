@@ -7,8 +7,7 @@ import moment from "moment";
 import styled, { AnyStyledComponent } from "styled-components";
 import { CSVLink } from "react-csv";
 
-import { IStyles } from "./IStyles";
-import { IUser } from "./interfaces";
+import { IUser, IStyles } from "./interfaces";
 import {
 	useUpdateExpirationDateMutation,
 	useMembersQuery,

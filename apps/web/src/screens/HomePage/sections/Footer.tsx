@@ -278,7 +278,7 @@ const Footer: React.FC<{}> = (): JSX.Element => {
               alt="ACM Web Logo"
               src={`${config.CDN_URI}/static/web_footer.png`}
             />
-            <h2>Copyright © 2021 ACM Web.</h2>
+            <h2>Copyright © {new Date().getFullYear()} ACM Web.</h2>
           </Copyright>
         </Wrapper>
       </PageConstraint>
