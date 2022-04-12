@@ -1,6 +1,8 @@
 // import { Icon, Spin } from "antd";
-import React from "react";
+import React, { useState } from "react";
+import styled, { AnyStyledComponent } from "styled-components";
 
+import { Modal } from "antd";
 import { timeSince, toSemester } from "../../utils/time";
 import { User } from "../../utils/types";
 import { ActionBar } from "../ActionBar";
@@ -9,10 +11,46 @@ interface IResumeCardProps {
   user: User;
 }
 
-const ResumeCard: React.FC<IResumeCardProps> = props => {
+const ResumeHover: AnyStyledComponent = styled.div`
+  transition: 0.3s;
+  opacity: 0;
+  position: absolute;
+  top: 450px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  color: black;
+  user-select: none;
+  font-weight: 500;
+`;
+
+const ResumeClickArea: AnyStyledComponent = styled.div`
+  transition: 0.3s;
+`;
+
+const Container: AnyStyledComponent = styled.div`
+  &:hover ${ResumeClickArea} {
+    background-color: black;
+    opacity: 0.2;
+    cursor: pointer;
+  }
+
+  &:hover ${ResumeHover} {
+    opacity: 1;
+    cursor: pointer;
+  }
+`;
+
+const ResumeCard: React.FC<IResumeCardProps> = (props) => {
   const user = props.user;
   const firstName = user.firstName || "Unknown";
   const lastName = user.lastName || "Unknown";
+  const [resumeFull, setResumeFull] = useState(false);
+
+  const toggleResumePreview = (): void => {
+    setResumeFull(!resumeFull);
+  };
 
   if (!user.resume) {
     throw new Error("Passed invalid added time.");
@@ -22,6 +60,8 @@ const ResumeCard: React.FC<IResumeCardProps> = props => {
   const PDF_HEIGHT = 550;
 
   const PDF_URL = user.resume.url;
+  const PDF_URL_DISABLED =
+    user.resume.url + "#toolbar=0&navpanes=0&scrollbar=0&statusbar=0&nozoom=1";
   const PROFILE_URL = user.profilePictureUrl;
 
   const FULL_NAME = `${firstName} ${lastName}`;
@@ -37,31 +77,61 @@ const ResumeCard: React.FC<IResumeCardProps> = props => {
 
   return (
     <div
-      style={{ width: PDF_WIDTH }}
+      style={{ width: PDF_WIDTH, zIndex: 0 }}
       className="rounded overflow-hidden shadow-lg m-6 bg-white text-2xl"
     >
-      <div
+      <Container
         className="flex items-center content-center justify-center"
         style={{ width: PDF_WIDTH, height: PDF_HEIGHT }}
       >
-        <object
-          data={PDF_URL}
-          type="application/pdf"
-          width="100%"
-          height="100%"
+        <ResumeClickArea
+          style={{
+            position: "absolute",
+            width: PDF_WIDTH,
+            height: PDF_HEIGHT,
+            backgroundColor: ""
+          }}
+          onClick={toggleResumePreview}
+        />
+        <ResumeHover>Click to expand</ResumeHover>
+        <div
+          style={{
+            width: PDF_WIDTH,
+            height: 14000,
+            marginTop: 13450,
+            zIndex: -1
+          }}
         >
-          <a href={PDF_URL}>Resume URL</a>
-        </object>
-      </div>
-      <div className="px-6 py-1 flex">
+          <object
+            data={PDF_URL_DISABLED}
+            type="application/pdf"
+            width="100%"
+            height="100%"
+          >
+            <a href={PDF_URL}>Resume URL</a>
+          </object>
+        </div>
+        <Modal
+          visible={resumeFull}
+          footer={null}
+          onCancel={toggleResumePreview}
+          width="90%"
+          style={{ top: "5vh", padding: 0 }}
+          bodyStyle={{ height: "90vh", padding: 40 }}
+        >
+          <object
+            data={PDF_URL}
+            type="application/pdf"
+            width="100%"
+            height="100%"
+          >
+            <a href={PDF_URL}>Resume URL</a>
+          </object>
+        </Modal>
+      </Container>
+      <div className="px-6 py-1 flex" style={{ backgroundColor: "white" }}>
         <div className="w-2/12 flex flex-col items-center z-50 -my-12">
-          <img
-            width="96"
-            height="96"
-            className="rounded-full"
-            src={PROFILE_URL}
-            alt="Avatar"
-          />
+          <img className="rounded-full" src={PROFILE_URL} />
         </div>
         <div className="w-8/12 text-xl flex justify-center content-center leading-normal">
           <p style={{ textAlign: "center" }} className="my-2">

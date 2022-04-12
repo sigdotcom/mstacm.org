@@ -25,12 +25,11 @@ const EventWrapper = styled.div`
 
   @media all and (min-width: ${MOBILE_BREAKPOINT}) {
     flex-direction: row;
-    margin-left: 5px;
+    padding-left: 5px;
   }
 `;
 
 const EventName = styled.h1`
-  width: 95%;
   text-transform: uppercase;
   font-style: normal;
   font-weight: bold;
@@ -173,6 +172,36 @@ const Description = styled.div`
   }
 `;
 
+const Juxta = styled.div`
+  display: flex;
+`;
+const EventLink = styled.a`
+  margin-left: 15px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #376b83;
+  transition: color ease-in-out .2s;
+
+  & i svg {
+    transition: fill ease-in-out .2s;
+    fill: #376b83 !important;
+  }
+
+  &:hover, &:focus {
+    & i svg {
+      fill: #679bb3 !important;
+    }
+    color: #679bb3 !important;
+  }
+
+  & i {
+    margin-left: 5px;
+    display: flex;
+  }
+`;
+
 const NUM_DESC_LINES: number = 3;
 
 const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
@@ -258,7 +287,12 @@ const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
       </div>
       <VerticalLine />
       <div>
+        <Juxta>
         <EventName>{event.eventTitle}</EventName>
+        {event && event.eventLink &&
+        <EventLink href={event.eventLink} target="_blank"
+          rel="noopener noreferrer">Link <Icon name="external-link-outline" size="medium" /></EventLink>}
+        </Juxta>
         <div style={{ marginBottom: "10px" }}>
           <Time>
             <img

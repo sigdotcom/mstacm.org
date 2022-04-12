@@ -230,7 +230,7 @@ const Footer: React.FC<{}> = (): JSX.Element => {
                   ACM Hack
                 </a>
                 <a
-                  href="https://acmsigsec.mst.edu/"
+                  href="https://acmsec.mst.edu/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -278,7 +278,7 @@ const Footer: React.FC<{}> = (): JSX.Element => {
               alt="ACM Web Logo"
               src={`${config.CDN_URI}/static/web_footer.png`}
             />
-            <h2>Copyright © 2019 ACM Web.</h2>
+            <h2>Copyright © 2021 ACM Web.</h2>
           </Copyright>
         </Wrapper>
       </PageConstraint>

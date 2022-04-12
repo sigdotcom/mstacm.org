@@ -1,9 +1,12 @@
-import gql from "graphql-tag";
 import React, { useState } from "react";
-import { Element } from "react-scroll";
-import styled from "styled-components";
-import { PageConstraint } from "../../../../components/PageConstraint";
 
+import gql from "graphql-tag";
+import styled, { AnyStyledComponent } from "styled-components";
+
+import { Element } from "react-scroll";
+import Icon from "react-eva-icons";
+
+import { PageConstraint } from "../../../../components/PageConstraint";
 import { Checkbox } from "./Checkbox";
 import { Event } from "./Event";
 import { config } from "../../../../config";
@@ -35,7 +38,7 @@ export const GET_CURRENT_EVENTS_QUERY: any = gql`
 
 const MOBILE_BREAKPOINT: string = "1001px";
 
-const Wrapper = styled.div`
+const Wrapper: AnyStyledComponent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -43,6 +46,9 @@ const Wrapper = styled.div`
   width: 100%;
   padding: 20px 0 100px 0;
   background: #fff;
+  margin: auto;
+  max-width: 1200px;
+  padding: 0 5%;
 
   button {
     transition: 0.2s ease-in-out;
@@ -72,8 +78,6 @@ const Wrapper = styled.div`
   }
 
   @media all and (min-width: ${MOBILE_BREAKPOINT}) {
-    padding: 50px 0;
-
     button:focus:hover {
       background: #2d9cdb;
       color: #fff;
@@ -81,7 +85,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const FilterWrapper = styled.div`
+const FilterWrapper: AnyStyledComponent = styled.div`
   display: none;
 
   h3 {
@@ -113,16 +117,15 @@ const FilterWrapper = styled.div`
     background: #f7f7f7;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border: 1px rgba(0, 0, 0, 0.25) solid;
-    margin-left: 50px;
   }
 `;
 
-const Sigs = styled.div`
+const Sigs: AnyStyledComponent = styled.div`
   display: flex;
   height: 300px;
 `;
 
-const ImgWrapper = styled.div`
+const ImgWrapper: AnyStyledComponent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -131,13 +134,13 @@ const ImgWrapper = styled.div`
   margin-top: 8px;
 `;
 
-const ImgImg = styled.img`
+const ImgImg: AnyStyledComponent = styled.img`
   width: 25px;
   height: 25px;
   border-radius: 50%;
 `;
 
-const SigWrapper = styled.div`
+const SigWrapper: AnyStyledComponent = styled.div`
   padding: 5px;
   height: 325px;
   display: flex;
@@ -145,7 +148,7 @@ const SigWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const CheckBoxWrapper = styled.div`
+const CheckBoxWrapper: AnyStyledComponent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -154,20 +157,37 @@ const CheckBoxWrapper = styled.div`
   margin-left: 10px;
 `;
 
-const EventsWrapper = styled.div`
+const EventsWrapper: AnyStyledComponent = styled.div`
   display: flex;
   flex-direction: column;
   width: 95%;
   margin-left: 2.5%;
-  margin-right: 2.5%;
   overflow-x: hidden;
   overflow-y: hidden;
+
+  @media all and (max-width: ${MOBILE_BREAKPOINT}) {
+  margin-left: 0;
+  }
 `;
 
-const CalendarLink = styled.a`
+const CalendarLink: AnyStyledComponent = styled.a`
   margin: auto;
   color: #ababab;
   font-size: 20px;
+`;
+
+const Heading: AnyStyledComponent = styled.h1`
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-size: 23px;
+  & i {
+    margin-right: 10px;
+  }
+`;
+
+const Description: AnyStyledComponent = styled.p`
+  margin-bottom: 20px;
+  font-size: 19px;
 `;
 
 const FILTER_TYPES: string[] = [
@@ -271,6 +291,16 @@ const Events: React.FC<{}> = (): JSX.Element => {
     <Element name="events">
       <PageConstraint>
         <Wrapper>
+          <Heading>
+            <Icon name="calendar" size="large" fill="#777" />
+            Events
+          </Heading>
+          <Description>
+            By participating in ACM events, you gain exposure to the many
+            fields of computer science, learn skills in important areas, and
+            gain opportunities to work with and learn about our sponsors and
+            other lucritive companies who want to hire our students.
+          </Description>
           <div style={{ display: "flex", width: "100%" }}>
             <FilterWrapper>
               <h3>Filter</h3>

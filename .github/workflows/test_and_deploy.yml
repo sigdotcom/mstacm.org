@@ -3,7 +3,7 @@ name: Test and Deploy the Application
 on: [push]
 
 env:
-  terraform_version: 0.13.0
+  terraform_version: 0.14.3
   TF_WORKSPACE: production
   TF_VAR_do_token: ${{ secrets.DO_ACCESS_TOKEN }}
   TF_VAR_spaces_access_id: ${{ secrets.DO_SPACES_ACCESS_ID }}
@@ -183,7 +183,7 @@ jobs:
       run: poetry install
       working-directory: ${{ env.working_directory }}
 
-    - uses: hashicorp/setup-terraform@v1.1.0
+    - uses: hashicorp/setup-terraform@v1.3.2
       with:
         terraform_version: ${{ env.terraform_version }}
         cli_config_credentials_token: ${{ secrets.TF_CLOUD_TOKEN }}
@@ -193,7 +193,7 @@ jobs:
       working-directory: ${{ env.working_directory }}
 
     - name: Setup deployment SSH key
-      uses: webfactory/ssh-agent@v0.2.0
+      uses: webfactory/ssh-agent@v0.4.1
       with:
         ssh-private-key: ${{ secrets.DEPLOY_SSH_PRIV_KEY }}
 

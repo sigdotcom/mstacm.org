@@ -1,6 +1,5 @@
 import gql from "graphql-tag";
 import React, { useState } from "react";
-import Modal from "react-modal";
 import { Element } from "react-scroll";
 import styled, { AnyStyledComponent } from "styled-components";
 
@@ -16,7 +15,7 @@ import {
 import { BenefitBlock, IBenefitBlockProps } from "./BenefitBlock";
 import benefits from "./benefits.json";
 import { ConfirmationContainer } from "./ConfirmationContainer";
-import { Header, TierContainer } from "./TierContainer";
+import { TierContainer } from "./TierContainer";
 import { useAuth0 } from "../../../../utils/react-auth0-wrapper";
 
 export const ME_EXPIRATION_QUERY: any = gql`
@@ -36,6 +35,14 @@ const MembershipWrapper: AnyStyledComponent = styled.div`
   font-family: "Nunito Sans"
 `;
 
+const Line: AnyStyledComponent = styled.hr`
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 100px 0;
+`;
+
 const Heading: AnyStyledComponent = styled.h1`
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
@@ -48,14 +55,6 @@ const Heading: AnyStyledComponent = styled.h1`
 const Description: AnyStyledComponent = styled.p`
   margin-bottom: 20px;
   font-size: 19px;
-`;
-
-const Line: AnyStyledComponent = styled.hr`
-  border: 0;
-  height: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  margin: 100px 0;
 `;
 
 const TierList: AnyStyledComponent = styled.div`
@@ -90,27 +89,21 @@ const Membership: React.FC = (): JSX.Element => {
       return <BenefitBlock {...benefit} key={index} />;
     }
   );
-  const modalStyle: any = {
-    content: {
-      padding: "0",
-      minWidth: "350px",
-      width: "380px",
-      height: "380px",
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)"
-    }
-  };
 
   // TODO: move to global state
   const result: MeExpirationQueryHookResult = useMeExpirationQuery();
   let expirationDate: string | undefined;
+  let expirationEpoch: number;
+  const todayEpoch = new Date().setHours(0,0,0,0)
 
   if (result.data && result.data.me) {
     expirationDate = result.data.me.membershipExpiration;
+    expirationEpoch = new Date(result.data.me.membershipExpiration).setHours(0,0,0,0)
+
+    if((expirationEpoch - todayEpoch) < 0){
+      expirationDate = undefined;
+    }
+
   }
 
   const removeTag: () => void = (): void => {
@@ -123,7 +116,7 @@ const Membership: React.FC = (): JSX.Element => {
   const setYearly: voidFunction = (): void => {
     if (!isAuthenticated) {
       loginWithRedirect({
-	redirect_uri: `${window.location.origin}/#membership`
+        redirect_uri: `${window.location.origin}/#membership`
       });
     } else {
       setTag(MembershipTypes.Yearly);
@@ -133,7 +126,7 @@ const Membership: React.FC = (): JSX.Element => {
   const setSemesterly: voidFunction = (): void => {
     if (!isAuthenticated) {
       loginWithRedirect({
-	redirect_uri: `${window.location.origin}/#membership`
+        redirect_uri: `${window.location.origin}/#membership`
       });
     } else {
       setTag(MembershipTypes.Semesterly);
@@ -144,15 +137,11 @@ const Membership: React.FC = (): JSX.Element => {
     <Element name="membership">
       <MembershipWrapper>
         <Line id="membership" />
-        <Modal
-          isOpen={tag !== undefined}
-          onRequestClose={removeTag}
-          contentLabel="Example Modal"
-          style={modalStyle}
-        >
-          <Header>{tag}</Header>
-          <CheckoutForm tag={tag!} onSuccess={refetchMe} />
-        </Modal>
+        <CheckoutForm
+          removeTag={removeTag}
+          onSuccess={refetchMe}
+          tag={tag!}
+        />
         <PageConstraint>
           <Heading>
             <Icon name="people" size="large" fill="#777" /> Become a Member
@@ -164,7 +153,11 @@ const Membership: React.FC = (): JSX.Element => {
           <BenefitList>{membershipBenefits}</BenefitList>
           {!expirationDate && (
             <TierList>
-              <TierContainer onClick={setYearly} title={"Yearly"} cost={"20"} />
+              <TierContainer
+                onClick={setYearly}
+                title={"Yearly"}
+                cost={"20"}
+              />
               <TierContainer
                 onClick={setSemesterly}
                 title={"Semesterly"}

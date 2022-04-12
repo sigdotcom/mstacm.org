@@ -6,7 +6,6 @@ import Icon from "react-eva-icons";
 
 import { ExecutionResult } from "@apollo/react-common";
 import {
-  CardElement,
   Elements,
   injectStripe,
   ReactStripeElements
@@ -18,8 +17,10 @@ import {
   MembershipTypes,
   useGetMembershipMutation
 } from "../generated/graphql";
+import { PaymentInformationForm } from "./PaymentInformation";
+import { ReviewInformationForm } from "./ReviewInformation";
 import { IconContainer } from "./IconContainer";
-import { PrimaryButton } from "./PrimaryButton";
+import { ModalWrapper } from "./ModalWrapper";
 
 export const GET_MEMBERSHIP: any = gql`
   mutation GetMembership($membershipType: MembershipTypes!) {
@@ -31,176 +32,102 @@ export const GET_MEMBERSHIP: any = gql`
   }
 `;
 
-const createOptions = (fontSize: string, padding?: string) => {
-  return {
-    style: {
-      base: {
-        fontSize,
-        borderRadius: "20px",
-        width: "100%",
-        color: "#424770",
-        letterSpacing: "0.025em",
-        fontFamily: "Source Code Pro, monospace",
-        "::placeholder": {
-          color: "#aab7c4"
-        },
-        padding
-      },
-      invalid: {
-        color: "#9e2146"
-      }
-    }
-  };
-};
-
-const FormContainer: AnyStyledComponent = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-
-  margin: 3rem 1rem 0 1rem;
-`;
-
-const ElementContainer: AnyStyledComponent = styled.div`
-  width: 100%;
-  input,
-  .StripeElement {
-    display: block;
-    margin: 10px 0 20px 0;
-    max-width: 500px;
-    padding: 8px 12px;
-    font-size: 1em;
-    font-family: "Source Code Pro", monospace;
-    box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px,
-      rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
-    border: 0;
-    outline: 0;
-    border-radius: 0.5rem;
-    background: white;
-  }
-`;
-
 const ErrorContainer: AnyStyledComponent = styled.div`
   display: flex;
   align-items: center;
   align-content: center;
+  margin-bottom: .5rem;
 
   color: #f56565;
 `;
 
 interface ICheckoutFormProps {
-  tag: MembershipTypes;
   onSuccess?: () => void;
+  removeTag: () => void;
+  tag: MembershipTypes;
 }
 
-type CheckoutProps = ReactStripeElements.InjectedStripeProps &
+type CheckoutFormProps = ReactStripeElements.InjectedStripeProps &
   ICheckoutFormProps;
 
 type setString = React.Dispatch<React.SetStateAction<string>>;
-type setBoolean = React.Dispatch<React.SetStateAction<boolean>>;
+type setNumber = React.Dispatch<React.SetStateAction<number>>;
+type setPaymentMethod = React.Dispatch<React.SetStateAction<stripe.paymentMethod.PaymentMethod | undefined>>;
+type voidFunction = () => void;
+type asyncVoidFunction = () => Promise<void>;
 
-const CheckoutFormBase: React.FC<CheckoutProps> = (
-  props: CheckoutProps
+const CheckoutFormBase: React.FC<CheckoutFormProps> = (
+  props: CheckoutFormProps
 ): JSX.Element => {
-  const [cardElement, setCardElement] = useState<any>(undefined);
-  const [intent, setIntent]: [string, setString] = useState<string>("");
-  const [clientSecret, setClientSecret]: [string, setString] = useState<string>(
-    ""
-  );
+  // const [intent, setIntent]: [string, setString] = useState<string>("");
+  const [paymentMethod, setPaymentMethod]: [stripe.paymentMethod.PaymentMethod | undefined, setPaymentMethod] = useState<stripe.paymentMethod.PaymentMethod | undefined>(undefined);
+  const [clientSecret, setClientSecret]: [string, setString] = useState<string>("");
   const [error, setError]: [string, setString] = useState<string>("");
-  const [success, setSuccess]: [boolean, setBoolean] = useState<boolean>(false);
-  const [loading, setLoading]: [boolean, setBoolean] = useState<boolean>(false);
+  const [index, setIndex]: [number, setNumber] = useState<number>(0);
 
   const [getMembership] = useGetMembershipMutation();
 
   const handleError: (message: string) => void = (message: string): void => {
-    setLoading(false);
+    setPaymentMethod(undefined);
     setError(message);
+    setIndex(0);
   };
 
-  const handleSubmit: (ev: React.FormEvent) => void = async (
-    ev: React.FormEvent
-  ): Promise<void> => {
-    // We don't want to let default form submission happen here, which would refresh the page.
-    ev.preventDefault();
-    setLoading(true);
-    if (!props.stripe) {
-      handleError("Stripe.js hasn't loaded yet.");
-      return;
-    }
-    let secret: string = clientSecret;
-
-    if (!secret) {
-      let result: ExecutionResult<GetMembershipMutation>;
-      try {
-        result = await getMembership({
-          variables: { membershipType: props.tag }
-        });
-      } catch (e) {
-        handleError(e.message);
-        return;
-      }
-
-      const data = result.data;
-
-      if (!data) {
-        if (result.errors) {
-          handleError(result.errors[0].message || "Unknown Error occurred.");
-        }
-
-        return;
-      }
-      secret = data.startMembershipTransaction.clientSecret;
-      setClientSecret(secret);
-    }
-
-    const response: stripe.PaymentIntentResponse = await props.stripe.handleCardPayment(
-      secret,
-      cardElement
-    );
-
-    if (response.error) {
-      handleError(response.error.message || "Unknown error occurred");
-
-      return;
-    }
-
-    if (!response.paymentIntent) {
-      handleError("Unknown error occurred");
-
-      return;
-    }
-
-    setIntent(response.paymentIntent.id);
-    setLoading(false);
-    setSuccess(true);
-  };
-
-  if (success) {
-    if (props.onSuccess) {
-      props.onSuccess();
-    }
-
-    return (
-      <Result
-        status="success"
-        title="Membership Added!"
-        subTitle={`Your membership may take 1-5 minutes to show. ref: ${intent}`}
-      />
-    );
+  const resetForm: asyncVoidFunction = async (): Promise<void> => {
+    props.removeTag();
+    setPaymentMethod(undefined);
+    setClientSecret("");
+    setTimeout(() => {
+      setIndex(0);
+      setError("");
+    }, 400);
   }
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <FormContainer>
-        <label style={{ width: "100%", fontSize: "16px" }}>
-          Card details
-          <ElementContainer>
-            <CardElement {...createOptions("18px")} onReady={setCardElement} />
-          </ElementContainer>
-        </label>
+  const nextModal: voidFunction = (): void => {
+    setIndex(index + 1);
+  }
+
+  const prevModal: voidFunction = (): void => {
+    setIndex(index - 1);
+  }
+
+  const getClientSecret: () => Promise<string> = async (): Promise<string> => {
+    let result: ExecutionResult<GetMembershipMutation>;
+    try {
+      result = await getMembership({
+        variables: { membershipType: props.tag }
+      });
+    } catch (e) {
+      handleError(e.message);
+      return "";
+    }
+    const data = result.data;
+
+    if (!data) {
+      if (result.errors)
+        handleError(result.errors[0].message || "Unknown Error occurred.");
+
+      return "";
+    }
+    const clientSecret = data.startMembershipTransaction.clientSecret;
+    setClientSecret(clientSecret);
+    return clientSecret;
+  };
+
+  const slides = [
+    <ModalWrapper
+      resetForm={resetForm}
+      tag={props.tag}
+    >
+      <PaymentInformationForm
+        stripe={props.stripe}
+        setPaymentMethod={setPaymentMethod}
+        getClientSecret={getClientSecret}
+        handleError={handleError}
+        resetForm={resetForm}
+        nextModal={nextModal}
+        clientSecret={clientSecret}
+      >
         {error !== "" && (
           <ErrorContainer>
             <IconContainer>
@@ -213,19 +140,41 @@ const CheckoutFormBase: React.FC<CheckoutProps> = (
             <span style={{ marginLeft: ".5rem" }}>{error}</span>
           </ErrorContainer>
         )}
-        <PrimaryButton
-          loading={loading}
-          disabled={loading}
-          style={{ margin: "2rem auto" }}
-        >
-          Purchase
-        </PrimaryButton>
-      </FormContainer>
-    </form>
+      </PaymentInformationForm>
+    </ModalWrapper>,
+    <ModalWrapper
+      resetForm={resetForm}
+      tag={props.tag}
+    >
+      <ReviewInformationForm
+        stripe={props.stripe}
+        handleError={handleError}
+        // setIntent={setIntent}
+        nextModal={nextModal}
+        prevModal={prevModal}
+        paymentMethod={paymentMethod!}
+        clientSecret={clientSecret}
+        tag={props.tag}
+      />
+    </ModalWrapper>,
+    <ModalWrapper
+      resetForm={resetForm}
+      tag={props.tag}
+    >
+      <Result
+        status="success"
+        title="Membership Added!"
+        subTitle={`Your membership may take 1-5 minutes to show.`}
+      />
+    </ModalWrapper>
+  ]
+
+  return (
+    slides[index]
   );
 };
 
-const InjectedCheckoutForm: React.ComponentType<CheckoutProps> = injectStripe(
+const InjectedCheckoutForm: React.ComponentType<ICheckoutFormProps> = injectStripe(
   CheckoutFormBase
 );
 

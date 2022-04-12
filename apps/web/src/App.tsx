@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import ReactGA from 'react-ga';
 
 import { config } from "./config";
 import { HomePage, NotFoundPage, EventRegistration } from "./screens";
@@ -16,6 +17,13 @@ export const REDEEM_MEMBERSHIP: any = gql`
     }
   }
 `;
+
+if (process.env.NODE_ENV === "production") {
+
+  ReactGA.initialize('UA-105827065-1');
+  ReactGA.pageview(window.location.pathname + window.location.search);
+}
+
 
 const App: React.FC<{}> = (): JSX.Element => {
   const { loading, isAuthenticated, getTokenSilently } = useAuth0();
