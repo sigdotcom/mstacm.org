@@ -48,6 +48,7 @@ const Wrapper: AnyStyledComponent = styled.div`
   padding: 20px 0 100px 0;
   background: #fff;
   margin: auto;
+  margin-bottom: 100px;
   max-width: 1200px;
   padding: 0 5%;
 
