@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ToolList: React.SFC<{}> = (): JSX.Element => {
+const ToolList: React.FC<{}> = (): JSX.Element => {
   return (
     <div>
       <h2>Tools:</h2>
