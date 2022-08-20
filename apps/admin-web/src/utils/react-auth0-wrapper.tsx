@@ -1,5 +1,15 @@
 // Taken from https://github.com/auth0/auth0-spa-js/issues/135#issuecomment-518012692
-import createAuth0Client, { PopupLoginOptions, RedirectLoginResult, getIdTokenClaimsOptions, IdToken, RedirectLoginOptions, GetTokenSilentlyOptions, GetTokenWithPopupOptions, LogoutOptions, Auth0ClientOptions } from "@auth0/auth0-spa-js";
+import createAuth0Client, {
+  PopupLoginOptions,
+  RedirectLoginResult,
+  getIdTokenClaimsOptions,
+  IdToken,
+  RedirectLoginOptions,
+  GetTokenSilentlyOptions,
+  GetTokenWithPopupOptions,
+  LogoutOptions,
+  Auth0ClientOptions,
+} from "@auth0/auth0-spa-js";
 import Auth0Client from "@auth0/auth0-spa-js/dist/typings/Auth0Client";
 import React, { useContext, useEffect, useState } from "react";
 
@@ -32,7 +42,7 @@ export const Auth0Provider = ({
   ...initOptions
 }: Auth0ProviderOptions & Auth0ClientOptions) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<any>();
   const [auth0Client, setAuth0] = useState<Auth0Client>();
   const [loading, setLoading] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
@@ -96,6 +106,7 @@ export const Auth0Provider = ({
         popupOpen,
         loginWithPopup,
         handleRedirectCallback,
+        // @ts-ignore
         getIdTokenClaims: (o: getIdTokenClaimsOptions | undefined) =>
           auth0Client!.getIdTokenClaims(o),
         loginWithRedirect: (o: RedirectLoginOptions) =>
@@ -104,7 +115,7 @@ export const Auth0Provider = ({
           auth0Client!.getTokenSilently(o),
         getTokenWithPopup: (o: GetTokenWithPopupOptions | undefined) =>
           auth0Client!.getTokenWithPopup(o),
-        logout: (o: LogoutOptions | undefined) => auth0Client!.logout(o)
+        logout: (o: LogoutOptions | undefined) => auth0Client!.logout(o),
       }}
     >
       {children}

@@ -3,6 +3,8 @@ import * as ApolloReactCommon from '@apollo/react-common';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -428,6 +430,21 @@ export type UserUpdateInput = {
   email?: Maybe<Scalars['String']>;
 };
 
+export type GetCurrentEventsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCurrentEventsQuery = (
+  { __typename?: 'Query' }
+  & { currentEvents: Array<(
+    { __typename?: 'Event' }
+    & Pick<Event, 'id' | 'dateCreated' | 'dateHosted' | 'dateExpire' | 'eventTitle' | 'description' | 'location' | 'flierLink' | 'eventLink'>
+    & { hostSig: (
+      { __typename?: 'Sig' }
+      & Pick<Sig, 'name'>
+    ) }
+  )> }
+);
+
 export type SigsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -563,9 +580,9 @@ export type DeleteMemberMutation = (
 );
 
 export type CreateCodeMutationVariables = Exact<{
-  groups?: Maybe<Array<Scalars['String']>>;
-  permissions?: Maybe<Array<Scalars['String']>>;
-  products?: Maybe<Array<Scalars['String']>>;
+  groups?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  permissions?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  products?: Maybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
 
@@ -621,6 +638,49 @@ export type GetProductsQuery = (
 );
 
 
+export const GetCurrentEventsDocument = gql`
+    query getCurrentEvents {
+  currentEvents {
+    id
+    dateCreated
+    dateHosted
+    dateExpire
+    hostSig {
+      name
+    }
+    eventTitle
+    description
+    location
+    flierLink
+    eventLink
+  }
+}
+    `;
+
+/**
+ * __useGetCurrentEventsQuery__
+ *
+ * To run a query within a React component, call `useGetCurrentEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCurrentEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCurrentEventsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCurrentEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
+      }
+export function useGetCurrentEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>(GetCurrentEventsDocument, baseOptions);
+        }
+export type GetCurrentEventsQueryHookResult = ReturnType<typeof useGetCurrentEventsQuery>;
+export type GetCurrentEventsLazyQueryHookResult = ReturnType<typeof useGetCurrentEventsLazyQuery>;
+export type GetCurrentEventsQueryResult = ApolloReactCommon.QueryResult<GetCurrentEventsQuery, GetCurrentEventsQueryVariables>;
 export const SigsDocument = gql`
     query sigs {
   sigs {
