@@ -71,16 +71,18 @@ const App: React.FC<{}> = (): JSX.Element => {
   }
 
   return (
-    <BrowserRouter>
-      <Grid>
-        <Content>
-          <Main />
-        </Content>
-        <Menu>
-          <Sidebar />
-        </Menu>
-      </Grid>
-    </BrowserRouter>
+    <div>
+      <BrowserRouter>
+        <Grid>
+          <Content>
+            <Main />
+          </Content>
+          <Menu>
+            <Sidebar />
+          </Menu>
+        </Grid>
+      </BrowserRouter>
+    </div>
   );
 };
 
