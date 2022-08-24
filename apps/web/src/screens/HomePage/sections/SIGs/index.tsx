@@ -54,17 +54,6 @@ const SIGsData: ISIG[] = [
     website: "https://acmsec.mst.edu"
   },
   {
-    color: "pink",
-    desc:
-      "ACM Game develops and hosts artificial intelligence programming competitions on S&T's campus in Rolla, Missouri. We utilize many programming languages, tools and development strategies standard to the Computer Science Industry.  Our members gain valuable experience on one of our five development teams: Arena, Game, Public Relations, Visualizer, and Web. ACM Game offers experience working on a real team, with fellow students and mentors to learn and grow as a software developer. We accept new members of all skill levels and majors, so don't hesitate to contact us.",
-    discord: "https://discord.gg/xdXwxup",
-    email: "siggame@mst.edu",
-    logoLink: "game.png",
-    logoLinkDark: "game-dark.png",
-    name: "Game",
-    website: "http://siggame.io/"
-  },
-  {
     color: "lavender",
     desc:
       "ACM Data is a data focused org covering topics like Data Science, Data Mining, Data Analytics, and Data Engineering. Data Science, commonly seen as a combination of most data professions, is a new field with an infinite landscape. Our goal is to catalyze a new era of Data Science by using our curiosity to explore this landscape and push new standards. In ACM Data, we participate in competition sites such as Kaggle, tell stories using data, learn what’s new in Data Science, and whatever is necessary to be cutting edge.",
@@ -105,7 +94,7 @@ const SIGsData: ISIG[] = [
     email: "acm@mst.edu",
     logoLink: "arcade.png",
     logoLinkDark: "arcade-dark.png",
-    name: "Arcade",
+    name: "Game",
     website: "https://discord.gg/RZCYUpT"
   },
   {
