@@ -193,7 +193,7 @@ jobs:
       working-directory: ${{ env.working_directory }}
 
     - name: Setup deployment SSH key
-      uses: webfactory/ssh-agent@v0.4.1
+      uses: webfactory/ssh-agent@v0.5.4
       with:
         ssh-private-key: ${{ secrets.DEPLOY_SSH_PRIV_KEY }}
 
