@@ -3,7 +3,7 @@ name: Test and Deploy the Application
 on: [push]
 
 env:
-  terraform_version: 0.14.3
+  terraform_version: 1.3.0
   TF_WORKSPACE: production
   TF_VAR_do_token: ${{ secrets.DO_ACCESS_TOKEN }}
   TF_VAR_spaces_access_id: ${{ secrets.DO_SPACES_ACCESS_ID }}
