@@ -10,6 +10,17 @@ import { PageConstraint } from "../../../../components/PageConstraint";
 
 const SIGsData: ISIG[] = [
   {
+    color: "#299DDC",
+    desc:
+      "Our goal is to enrich the college experience and foster the next generation of innovators by hosting talks, competitions, and workshops that provide real-world learning opportunities and networking.",
+    discord: "https://discord.gg/cQyXztZ",
+    email: "acm@mst.edu",
+    logoLink: "acm.png",
+    logoLinkDark: "acm-dark.png",
+    name: "General",
+    website: "https://mstacm.org"
+  },
+  {
     color: "skyblue",
     desc:
       "Interested in software engineering, web development, or development operations? In ACM Web, we build industry-grade websites using top software engineering practices. ACM Web is developing the https://mstacm.org/ website and much more. Moreover, we host workshops on various skills in web development, Typescript, and Git.",
@@ -36,22 +47,11 @@ const SIGsData: ISIG[] = [
     desc:
       "ACM Security helps develop the cybersecurity profession for the student body of Missouri University of Science and Technology by sponsoring high-quality workshops and lectures from both local and natinal industry professionals, as well as hosting on campus security events and competitions.",
     discord: "https://discord.gg/BfPyeHw",
-    email: "sigsec@mst.edu",
+    email: "crawlins@mst.edu",
     logoLink: "sec.png",
     logoLinkDark: "sec-dark.png",
     name: "Security",
     website: "https://acmsec.mst.edu"
-  },
-  {
-    color: "pink",
-    desc:
-      "ACM Game develops and hosts artificial intelligence programming competitions on S&T's campus in Rolla, Missouri. We utilize many programming languages, tools and development strategies standard to the Computer Science Industry.  Our members gain valuable experience on one of our five development teams: Arena, Game, Public Relations, Visualizer, and Web. ACM Game offers experience working on a real team, with fellow students and mentors to learn and grow as a software developer. We accept new members of all skill levels and majors, so don't hesitate to contact us.",
-    discord: "https://discord.gg/xdXwxup",
-    email: "siggame@mst.edu",
-    logoLink: "game.png",
-    logoLinkDark: "game-dark.png",
-    name: "Game",
-    website: "http://siggame.io/"
   },
   {
     color: "lavender",
@@ -94,9 +94,20 @@ const SIGsData: ISIG[] = [
     email: "acm@mst.edu",
     logoLink: "arcade.png",
     logoLinkDark: "arcade-dark.png",
-    name: "Arcade",
+    name: "Game",
     website: "https://discord.gg/RZCYUpT"
-  }
+  },
+  {
+    color: "lime",
+    desc:
+      "A community of graduate students doing computing related work.",
+    discord: "https://discord.gg/xWt5BVE",
+    email: "acm@mst.edu",
+    logoLink: "grad.png",
+    logoLinkDark: "grad-dark.png",
+    name: "Grad",
+    website: "https://discord.gg/xWt5BVE"
+  },
 
 ];
 
