@@ -12,7 +12,7 @@ const EventWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 100%
+  width: 100%;
   margin-bottom: 10px;
 
   p {
@@ -241,16 +241,25 @@ const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
 
   const eventDate: Date = new Date(event.dateHosted);
   const eventEndDate: Date = new Date(event.dateExpire);
+  console.log("date hosted: ", event.dateHosted.slice(0, 10));
+  console.log("date expire: ", event.dateExpire.slice(0, 10));
   const time: string =
-    event.dateHosted === event.dateExpire
-      ? eventDate.toLocaleString("default", {
-          hour: "numeric",
-          minute: "numeric"
-        })
-      : `${eventDate.toLocaleString("default", {
+    event.dateHosted.slice(0, 10) === event.dateExpire.slice(0, 10)
+      ? `${eventDate.toLocaleString("default", {
           hour: "numeric",
           minute: "numeric"
         })} - ${eventEndDate.toLocaleString("default", {
+          hour: "numeric",
+          minute: "numeric"
+        })}`
+      : `${eventDate.toLocaleString("default", {
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric"
+        })} - ${eventEndDate.toLocaleString("default", {
+          month: "short",
+          day: "numeric",
           hour: "numeric",
           minute: "numeric"
         })}`;

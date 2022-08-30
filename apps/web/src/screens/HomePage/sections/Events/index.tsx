@@ -47,6 +47,7 @@ const Wrapper: AnyStyledComponent = styled.div`
   padding: 20px 0 100px 0;
   background: #fff;
   margin: auto;
+  margin-bottom: 100px;
   max-width: 1200px;
   padding: 0 5%;
 
@@ -54,7 +55,7 @@ const Wrapper: AnyStyledComponent = styled.div`
     transition: 0.2s ease-in-out;
     font-weight: bold;
     border-radius: 30px;
-    padding: 10px 40px
+    padding: 10px 40px;
     font-size: 17px;
     color: #2d9cdb;
     border: 3px solid #2d9cdb;
@@ -308,7 +309,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
                 <ImgWrapper>
                   <ImgImg src={`${config.CDN_URI}/static/comp-dark.png`} />
                   <ImgImg src={`${config.CDN_URI}/static/data-dark.png`} />
-                  <ImgImg src={`${config.CDN_URI}/static/game-dark.png`} />
+                  <ImgImg src={`${config.CDN_URI}/static/arcade-dark.png`} />
                   <ImgImg src={`${config.CDN_URI}/static/acm-dark.png`} />
                   <ImgImg src={`${config.CDN_URI}/static/hack-dark.png`} />
                   <ImgImg src={`${config.CDN_URI}/static/sec-dark.png`} />
