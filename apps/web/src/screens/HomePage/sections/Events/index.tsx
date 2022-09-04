@@ -15,7 +15,7 @@ import { config } from "../../../../config";
 import {
   Event as IEvent,
   GetCurrentEventsQueryHookResult,
-  useGetCurrentEventsQuery
+  useGetCurrentEventsQuery,
 } from "../../../../generated/graphql";
 
 export const GET_CURRENT_EVENTS_QUERY: any = gql`
@@ -168,14 +168,8 @@ const EventsWrapper: AnyStyledComponent = styled.div`
   overflow-y: hidden;
 
   @media all and (max-width: ${MOBILE_BREAKPOINT}) {
-  margin-left: 0;
+    margin-left: 0;
   }
-`;
-
-const CalendarLink: AnyStyledComponent = styled.a`
-  margin: auto;
-  color: #ababab;
-  font-size: 20px;
 `;
 
 const Heading: AnyStyledComponent = styled.h1`
@@ -199,8 +193,21 @@ const FILTER_TYPES: string[] = [
   "General",
   "Hack",
   "Security",
-  "Women"
+  "Women",
 ];
+
+const CalendarLink: AnyStyledComponent = styled.a`
+  margin: auto;
+  color: #ababab;
+  font-size: 20px;
+`;
+
+const CalendarText: AnyStyledComponent = styled.div`
+  margin: auto;
+  color: #ababab;
+  font-size: 20px;
+`;
+const CalendarButton: AnyStyledComponent = styled.button``;
 
 const DEFAULT_EVENTS_TO_DISPLAY: number = 3;
 const CALENDAR_LINK: string =
@@ -298,10 +305,10 @@ const Events: React.FC<{}> = (): JSX.Element => {
             Events
           </Heading>
           <Description>
-            By participating in ACM events, you gain exposure to the many
-            fields of computer science, learn skills in important areas, and
-            gain opportunities to work with and learn about our sponsors and
-            other lucritive companies who want to hire our students.
+            By participating in ACM events, you gain exposure to the many fields
+            of computer science, learn skills in important areas, and gain
+            opportunities to work with and learn about our sponsors and other
+            lucritive companies who want to hire our students.
           </Description>
           <div style={{ display: "flex", width: "100%" }}>
             <FilterWrapper>
@@ -380,14 +387,18 @@ const Events: React.FC<{}> = (): JSX.Element => {
                 .map((event: IEvent, i: number) => {
                   return <Event {...event} key={i} />;
                 })}
+              <CalendarText>
+                {result.loading
+                  ? "Loading events... Click here to take a look at our full calendar for more details."
+                  : "We have no events scheduled with this filter. Click here to take a look at our full calendar for more details."}
+              </CalendarText>
+
               <CalendarLink
                 style={{ display: noFilteredEvents() ? "" : "none" }}
                 href={CALENDAR_LINK}
                 target="_blank"
               >
-                {result.loading
-                  ? "Loading events... Click here to take a look at our full calendar for more details."
-                  : "We have no events scheduled with this filter. Click here to take a look at our full calendar for more details."}
+                <CalendarButton>View Calendar</CalendarButton>
               </CalendarLink>
             </EventsWrapper>
           </div>
@@ -404,7 +415,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
               display: noFilteredEvents() ? "none" : "",
               fontSize: "15px",
               margin: "-10px auto 0 auto",
-              paddingTop: showDefault() ? "50px" : ""
+              paddingTop: showDefault() ? "50px" : "",
             }}
             href={CALENDAR_LINK}
             target="_blank"
