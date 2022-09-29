@@ -95,7 +95,7 @@ const SIGsData: ISIG[] = [
     logoLink: "arcade.png",
     logoLinkDark: "arcade-dark.png",
     name: "Game",
-    website: "https://discord.gg/RZCYUpT"
+    
   },
   {
     color: "lime",
@@ -106,7 +106,7 @@ const SIGsData: ISIG[] = [
     logoLink: "grad.png",
     logoLinkDark: "grad-dark.png",
     name: "Grad",
-    website: "https://discord.gg/xWt5BVE"
+    
   },
 
 ];
