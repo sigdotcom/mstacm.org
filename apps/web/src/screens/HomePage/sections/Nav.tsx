@@ -92,6 +92,9 @@ const Nav: React.FC<{}> = (): JSX.Element => {
               <Link to="membership" smooth={true}>
                 <MenuItem>Membership</MenuItem>
               </Link>
+              <Link to="shop" href="https://shop.mstacm.org">
+                <MenuItem>Shop</MenuItem>
+              </Link>
             </MenuItems>
           </NavRow>
           {isAuthenticated ? (
