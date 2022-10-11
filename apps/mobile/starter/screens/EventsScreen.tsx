@@ -3,10 +3,10 @@ import { StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 
-export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
+export default function EventsScreen({ navigation }: RootTabScreenProps<'Events'>) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Home</Text>
+      <Text style={styles.title}>Events</Text>
     </View>
   );
 }

@@ -12,7 +12,7 @@ import { ColorSchemeName, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import HomeScreen from '../screens/HomeScreen';
+import EventsScreen from '../screens/EventsScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -51,15 +51,15 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Events"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={({ navigation }: RootTabScreenProps<'Home'>) => ({
-          title: 'Home',
+        name="Events"
+        component={EventsScreen}
+        options={({ navigation }: RootTabScreenProps<'Events'>) => ({
+          title: 'Events',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         })}
       />

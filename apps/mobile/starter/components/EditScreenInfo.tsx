@@ -17,7 +17,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
         </Text>
 
         <View
-          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
+          style={[styles.codeHighlightContainer, styles.eventsScreenFilename]}
           darkColor="rgba(255,255,255,0.05)"
           lightColor="rgba(0,0,0,0.05)">
           <MonoText>{path}</MonoText>
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 50,
   },
-  homeScreenFilename: {
+  eventsScreenFilename: {
     marginVertical: 7,
   },
   codeHighlightContainer: {

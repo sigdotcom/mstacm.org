@@ -15,9 +15,9 @@ const linking: LinkingOptions<RootStackParamList> = {
     screens: {
       Root: {
         screens: {
-          Home: {
+          Events: {
             screens: {
-              HomeScreen: 'one',
+              EventsScreen: 'one',
             },
           },
         },
