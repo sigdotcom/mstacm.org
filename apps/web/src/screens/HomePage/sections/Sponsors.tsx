@@ -100,11 +100,20 @@ const Sponsors: React.FC<{}> = (): JSX.Element => {
         </Sponsor>
         <Logos>
           <a
-            href="https://www.auth0.com/"
+            href ="https://www.nucor.com/"
             target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img alt="Auth0 Logo" src={`${config.CDN_URI}/static/auth0.png`} />
+            rel="noopener noreffer">
+
+            <img alt="Nucor Logo" src={`${config.CDN_URI}/static/Nucor.png`} />
+
+          </a>
+          <a
+            href ="https://www.hunter.com/"
+            target="_blank"
+            rel="noopener noreffer">
+
+            <img alt="Hunter Engineering Logo" src={`${config.CDN_URI}/static/HunterEngineering.png`} />
+
           </a>
           <a
             href="https://www.att.com/"
@@ -124,16 +133,6 @@ const Sponsors: React.FC<{}> = (): JSX.Element => {
             />
           </a>
           <a
-            href="https://www.netlify.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              alt="Netlify Logo"
-              src={`${config.CDN_URI}/static/netlify.png`}
-            />
-          </a>
-          <a
             href="http://tradebot.com/"
             target="_blank"
             rel="noopener noreferrer"
@@ -141,16 +140,6 @@ const Sponsors: React.FC<{}> = (): JSX.Element => {
             <img
               alt="Tradebot Logo"
               src={`${config.CDN_URI}/static/tradebot.png`}
-            />
-          </a>
-          <a
-            href="http://digitalocean.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              alt="DigitalOcean Logo"
-              src={`${config.CDN_URI}/static/digitalocean.svg`}
             />
           </a>
         </Logos>
