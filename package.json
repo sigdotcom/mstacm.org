@@ -6,9 +6,7 @@
     "lerna": "^3.17.0"
   },
   "name": "mstacm.org",
-  "dependencies": {
-    "yarn": "^1.22.19"
-  },
+  "dependencies": {},
   "workspaces": {
     "packages": [
       "apps/admin-web",
