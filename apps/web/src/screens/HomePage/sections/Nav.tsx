@@ -89,9 +89,6 @@ const Nav: React.FC<{}> = (): JSX.Element => {
               <Link to="sponsors" smooth={true}>
                 <MenuItem>Sponsors</MenuItem>
               </Link>
-              <Link to="membership" smooth={true}>
-                <MenuItem>Membership</MenuItem>
-              </Link>
             </MenuItems>
           </NavRow>
           {isAuthenticated ? (
