@@ -16,7 +16,7 @@ import { Toast } from "../../components/Toast";
 import { Events } from "./sections/Events";
 import { Footer } from "./sections/Footer";
 import Hero from "./sections/Hero";
-import { Membership } from "./sections/Membership";
+// import { Membership } from "./sections/Membership";
 import { Nav } from "./sections/Nav";
 import { ResumeBanner } from "./sections/ResumeBanner";
 import { SIGs } from "./sections/SIGs";
@@ -136,7 +136,7 @@ const HomePage: React.FC<RouteComponentProps> = ({
       </NavHeroWrapper>
       <SIGs />
       <Events />
-      <Membership />
+      {/* <Membership /> */}
       <Sponsors />
       <Footer />
     </div>

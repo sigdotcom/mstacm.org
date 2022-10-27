@@ -12,7 +12,7 @@ const EventWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 100%
+  width: 100%;
   margin-bottom: 10px;
 
   p {
@@ -246,11 +246,19 @@ const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
   const time: string =
     event.dateHosted.slice(0, 10) === event.dateExpire.slice(0, 10)
       ? `${eventDate.toLocaleString("default", {
+<<<<<<< HEAD
           hour: "numeric",
           minute: "numeric"
         })} - ${eventEndDate.toLocaleString("default", {
           hour: "numeric",
           minute: "numeric"
+=======
+          hour: "numeric",
+          minute: "numeric"
+        })} - ${eventEndDate.toLocaleString("default", {
+          hour: "numeric",
+          minute: "numeric"
+>>>>>>> e50705367627a57605ca1993cd591ddc2bcf2371
         })}`
       : `${eventDate.toLocaleString("default", {
           month: "short",

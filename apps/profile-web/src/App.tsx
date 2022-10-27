@@ -112,7 +112,7 @@ const App: React.FC = (): JSX.Element => {
           <Content style={{ margin: "24px 16px 0" }}>
             <MainContent />
           </Content>
-          <Footer style={{ textAlign: "center" }}>S&T ACM 2019</Footer>
+          <Footer style={{ textAlign: "center" }}>S&T ACM { new Date().getFullYear() }</Footer>
         </Layout>
       </Layout>
     </BrowserRouter>
