@@ -1,5 +1,4 @@
 import * as WebBrowser from 'expo-web-browser';
-import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import Colors from '../constants/Colors';
@@ -18,7 +17,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
         </Text>
 
         <View
-          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
+          style={[styles.codeHighlightContainer, styles.eventsScreenFilename]}
           darkColor="rgba(255,255,255,0.05)"
           lightColor="rgba(0,0,0,0.05)">
           <MonoText>{path}</MonoText>
@@ -50,40 +49,12 @@ function handleHelpPress() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
   getStartedContainer: {
     alignItems: 'center',
     marginHorizontal: 50,
   },
-  homeScreenFilename: {
+  eventsScreenFilename: {
     marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
   },
   codeHighlightContainer: {
     borderRadius: 3,

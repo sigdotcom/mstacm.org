@@ -214,7 +214,7 @@ const Footer: React.FC<{}> = (): JSX.Element => {
                   ACM Data
                 </a>
                 <a
-                  href="https://siggame.io/"
+                  href="https://game.mstacm.org/#/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
