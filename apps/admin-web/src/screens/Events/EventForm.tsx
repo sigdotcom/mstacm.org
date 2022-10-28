@@ -203,6 +203,17 @@ const EventForm: React.FC<IEventFormProps> = ({
         <Input />
       </Form.Item>
       <Form.Item
+        name="presenter"
+        label="Presenter"
+        rules={[
+          {
+            message: "Please input the Presenter's name!",
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
         name="link"
         label="Event Link"
         extra="Website, form, or other link to event."
