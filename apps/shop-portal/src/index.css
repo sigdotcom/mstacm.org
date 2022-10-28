@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+}
+
+.App {
+    background-color: #f4f5f8;
+    height: 100vh;
+}
+
+.NavBar {
+    background-color: red;
+    padding-left: 20%;
+    padding-right: 20%;
+    border: 2px solid blue;
+    display: inline-block;
+}
+
+.ShoppingCart {
+    width: 30px;
+}
