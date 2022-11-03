@@ -140,6 +140,7 @@ const ImgImg: AnyStyledComponent = styled.img`
   width: 25px;
   height: 25px;
   border-radius: 50%;
+  filter: grayscale(100%);
 `;
 
 const SigWrapper: AnyStyledComponent = styled.div`
@@ -308,13 +309,13 @@ const Events: React.FC<{}> = (): JSX.Element => {
               <h3>Filter</h3>
               <Sigs>
                 <ImgWrapper>
-                  <ImgImg src={`${config.CDN_URI}/static/comp-dark.png`} />
-                  <ImgImg src={`${config.CDN_URI}/static/data-dark.png`} />
-                  <ImgImg src={`${config.CDN_URI}/static/arcade-dark.png`} />
+                  <ImgImg src={`${config.CDN_URI}/static/comp-updated.png`} />
+                  <ImgImg src={`${config.CDN_URI}/static/data-updated.png`} />
+                  <ImgImg src={`${config.CDN_URI}/static/game-updated.png`} />
                   <ImgImg src={`${config.CDN_URI}/static/acm-dark.png`} />
-                  <ImgImg src={`${config.CDN_URI}/static/hack-dark.png`} />
-                  <ImgImg src={`${config.CDN_URI}/static/sec-dark.png`} />
-                  <ImgImg src={`${config.CDN_URI}/static/acm-w-dark.png`} />
+                  <ImgImg src={`${config.CDN_URI}/static/hack-updated.png`} />
+                  <ImgImg src={`${config.CDN_URI}/static/security-updated.png`} />
+                  <ImgImg src={`${config.CDN_URI}/static/women-updated.png`} />
                 </ImgWrapper>
                 <SigWrapper>
                   <h4>ACM Comp</h4>

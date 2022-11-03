@@ -43,6 +43,7 @@ const Logo: any = styled.img`
   height: 34px;
   border-radius: 50%;
   margin: 0 10px 0 10px;
+  filter: grayscale(100%);
 `;
 
 function SIGListItem(props: any): any {
