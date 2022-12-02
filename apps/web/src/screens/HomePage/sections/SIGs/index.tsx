@@ -108,6 +108,17 @@ const SIGsData: ISIG[] = [
     name: "Grad",
     website: "https://discord.gg/xWt5BVE"
   },
+  {
+    color: "gold",
+    desc:
+      "ACM Entrepreneurship is an organization that focuses on two main goals. The first is to provide exposure to students from any majors through hands-on learning in their fields of interest with our virtual companies and our external projects. The second goal is to foster entrepreneurial mindset by allowing students to come up with innovative ideas for our virtual companies, by providing support for students' startups. We welcome everyone and help our members build the technical as well as the soft skills that are sought in the professional world.",
+    discord: "https://discord.gg/PUHXUVMPWR",
+    email: "acm@mst.edu",
+    logoLink: "grad.png",
+    logoLinkDark: "grad-dark.png",
+    name: "Entrepreneurship",
+    website: "https://discord.gg/PUHXUVMPWR"
+  },
 
 ];
 

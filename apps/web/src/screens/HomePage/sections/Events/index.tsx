@@ -315,6 +315,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
                   <ImgImg src={`${config.CDN_URI}/static/hack-dark.png`} />
                   <ImgImg src={`${config.CDN_URI}/static/sec-dark.png`} />
                   <ImgImg src={`${config.CDN_URI}/static/acm-w-dark.png`} />
+                  <ImgImg src={`${config.CDN_URI}/static/acm-w-dark.png`} />
                 </ImgWrapper>
                 <SigWrapper>
                   <h4>ACM Comp</h4>
@@ -324,6 +325,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
                   <h4>ACM Hack</h4>
                   <h4>ACM Sec</h4>
                   <h4>ACM-W</h4>
+                  <h4>ACM-E</h4>
                 </SigWrapper>
                 <CheckBoxWrapper>
                   <Checkbox
