@@ -1,5 +1,6 @@
 * {
     margin: 0;
+    /* background-image: url("https://cdn.mstacm.org/static/acm-logo-large.svg"); */
 }
 
 .App {
@@ -18,3 +19,4 @@
 .ShoppingCart {
     width: 30px;
 }
+
