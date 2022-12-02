@@ -19,6 +19,9 @@ export class EventCreateInput /*implements Partial<Event> */ {
   @Field()
   public location: string;
 
+  @Field()
+  public presenter: string;
+
   @Field({ nullable: true })
   public flierLink: string;
 
@@ -45,6 +48,9 @@ export class EventUpdateInput /*implements Partial<Event> */ {
 
   @Field({ nullable: true })
   public location: string;
+
+  @Field({ nullable: true })
+  public presenter: string;
 
   @Field({ nullable: true })
   public flierLink: string;

@@ -65,6 +65,10 @@ export class Event extends BaseEntity {
   @Column()
   public location: string;
 
+  @Field()
+  @Column()
+  public presenter: string;
+
   /*@ManyToOne(type => Product, product => product.events)
   @JoinColumn({
     nullable: true

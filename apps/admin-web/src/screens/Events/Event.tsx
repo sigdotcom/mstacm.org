@@ -308,7 +308,7 @@ const Event: React.FC<IEventProps> = (props: IEventProps): JSX.Element => {
             <QRButton onClick={handleQR}>QR</QRButton>
           </Group>
           <Time>
-            {start} -{end} @ {truncate(event.location, 15, false)}
+            {start} -{end} @ {truncate(event.location, 15, false)} TestText {event.presenter}
           </Time>
           <Description>{truncate(event.description, 128, false)}</Description>
           <ButtonGroup>

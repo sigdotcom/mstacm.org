@@ -22,6 +22,7 @@ export const GET_EVENTS: any = gql`
       eventTitle
       description
       location
+      presenter
       flierLink
       eventLink
       hostSig {

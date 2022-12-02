@@ -312,10 +312,10 @@ const Event: React.SFC<IEvent> = (event: IEvent): JSX.Element => {
           </Time>
           <Time>
             <img
-              alt=" LUKE MYSZKA LUKE MYSZKA LUKE MYSZKA LUKE MYSZKA LUKE MYSZKA    ICON      "
-              src={`${config.CDN_URI}/static/          (MEGAPHONE.pngHERE)           `}
+              alt="Presenter Icon"
+              src={`${config.CDN_URI}/static/presenter.png`}
             />
-            <h2>{event.location}</h2>
+            <h2>{event.presenter}</h2>
           </Time>
           <Time>
             <img alt="Time Icon" src={`${config.CDN_URI}/static/clock.png`} />

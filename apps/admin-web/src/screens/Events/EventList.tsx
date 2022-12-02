@@ -36,6 +36,7 @@ const errorData = [
     description:
       "Join ACM-W and ACM Hack for a night of painting happy little trees while following a Bob Ross tutorial with friends. Not very good at painting? Well, no fear! Bob Ross was an American painter known for hosting a tv series on painting techniques for beginners. Easels and paint will be provided, but you must RSVP at https://tinyurl.com/y52roqb6.",
     location: "Toomey 254",
+    presenter: "Nick Fuller",
     flierLink: "https://cdn.mstacm.org/events/acmw_bob_ross_painting_night.png",
     eventLink: "https://cdn.mstacm.org/events/acmw_bob_ross_painting_night.png",
   },

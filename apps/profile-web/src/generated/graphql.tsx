@@ -36,6 +36,7 @@ export type Event = {
   eventTitle: Scalars['String'];
   description: Scalars['String'];
   location: Scalars['String'];
+  presenter: Scalars['String'];
   flierLink?: Maybe<Scalars['String']>;
   eventLink?: Maybe<Scalars['String']>;
   urlKey?: Maybe<Scalars['String']>;
@@ -48,6 +49,7 @@ export type EventCreateInput = {
   dateExpire: Scalars['DateTime'];
   description: Scalars['String'];
   location: Scalars['String'];
+  presenter: Scalars['String'];
   flierLink?: Maybe<Scalars['String']>;
   eventLink?: Maybe<Scalars['String']>;
   hostSig: Scalars['String'];
@@ -64,6 +66,7 @@ export type EventUpdateInput = {
   dateExpire?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   location?: Maybe<Scalars['String']>;
+  presenter?: Maybe<Scalars['String']>;
   flierLink?: Maybe<Scalars['String']>;
   eventLink?: Maybe<Scalars['String']>;
   hostSig: Scalars['String'];
@@ -435,7 +438,7 @@ export type EventsQuery = (
   { __typename?: 'Query' }
   & { events: Array<(
     { __typename?: 'Event' }
-    & Pick<Event, 'id' | 'dateCreated' | 'dateHosted' | 'dateExpire' | 'eventTitle' | 'description' | 'location' | 'flierLink' | 'eventLink' | 'urlKey'>
+    & Pick<Event, 'id' | 'dateCreated' | 'dateHosted' | 'dateExpire' | 'eventTitle' | 'description' | 'location' | 'presenter' |'flierLink' | 'eventLink' | 'urlKey'>
     & { hostSig: (
       { __typename?: 'Sig' }
       & Pick<Sig, 'name'>
@@ -500,6 +503,7 @@ export const EventsDocument = gql`
     eventTitle
     description
     location
+    presenter
     flierLink
     eventLink
     urlKey

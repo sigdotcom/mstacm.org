@@ -31,6 +31,7 @@ export const GET_CURRENT_EVENTS_QUERY: any = gql`
       eventTitle
       description
       location
+      presenter
       flierLink
       eventLink
     }

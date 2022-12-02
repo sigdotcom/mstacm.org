@@ -71,6 +71,7 @@ const EventForm: React.FC<IEventFormProps> = ({
         description: values.description,
         hostSig: values.community,
         location: values.location,
+        presenter: values.presenter,
         eventLink: values.link,
         eventTitle: values.title,
         dateHosted: values.dateHosted,
@@ -90,6 +91,7 @@ const EventForm: React.FC<IEventFormProps> = ({
         description: values.description,
         hostSig: values.community,
         location: values.location,
+        presenter: values.presenter,
         eventLink: values.link,
         eventTitle: values.title,
         dateHosted: values.dateHosted,
@@ -131,6 +133,7 @@ const EventForm: React.FC<IEventFormProps> = ({
       description: values.description,
       hostSig: { name: values.community },
       location: values.location,
+      presenter: values.presenter,
       eventLink: values.link,
       eventTitle: values.title,
       dateHosted: values.dateHosted,
@@ -147,6 +150,7 @@ const EventForm: React.FC<IEventFormProps> = ({
         title: event?.eventTitle,
         description: event?.description,
         location: event?.location,
+        presenter: event?.presenter,
         link: event?.eventLink,
         dateRange: [moment(event?.dateHosted), moment(event?.dateExpire)],
       }}
@@ -207,10 +211,11 @@ const EventForm: React.FC<IEventFormProps> = ({
         label="Presenter"
         rules={[
           {
-            message: "Please input the Presenter's name!",
+            message: "Please input the presenter's name!",
           },
         ]}
       >
+  
         <Input />
       </Form.Item>
       <Form.Item

@@ -37,6 +37,14 @@ export class dynamicEvents1568916003044 implements MigrationInterface {
       `ALTER TABLE "event" ALTER COLUMN "location" SET NOT NULL`
     );
 
+    // Change presenter to be a not nullable variable length.
+    await queryRunner.query(
+      `ALTER TABLE "event" ALTER COLUMN "presenter" TYPE character varying`
+    );
+    await queryRunner.query(
+      `ALTER TABLE "event" ALTER COLUMN "presenter" SET NOT NULL`
+    );
+
     // Change flierLink to be variable length.
     await queryRunner.query(
       `ALTER TABLE "event" ALTER COLUMN "flierLink" TYPE character varying`
@@ -83,7 +91,23 @@ export class dynamicEvents1568916003044 implements MigrationInterface {
       `ALTER TABLE "event" ALTER COLUMN "location" SET NOT NULL`
     );
 
+    // Change presenter to be maximum of 100 characters and not nullable.
+    await queryRunner.query(
+      `ALTER TABLE "event" ALTER COLUMN "presenter" TYPE character varying(100)`
+    );
+    await queryRunner.query(
+      `ALTER TABLE "event" ALTER COLUMN "presenter" SET NOT NULL`
+    );
+
     // Change location to be maximum of 300 characters and not nullable.
+    await queryRunner.query(
+      `ALTER TABLE "event" ALTER COLUMN "description" TYPE character varying(300)`
+    );
+    await queryRunner.query(
+      `ALTER TABLE "event" ALTER COLUMN "description" SET NOT NULL`
+    );
+
+    // Change presenter to be maximum of 300 characters and not nullable.
     await queryRunner.query(
       `ALTER TABLE "event" ALTER COLUMN "description" TYPE character varying(300)`
     );
