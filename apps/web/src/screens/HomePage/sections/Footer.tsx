@@ -186,18 +186,7 @@ const Footer: React.FC<{}> = (): JSX.Element => {
         <HLine />
         <Wrapper>
           <Links>
-            <PageLinks>
-              <Link to="communities" smooth={true}>
-                Communities
-              </Link>
-              <Link to="events" smooth={true}>
-                Events
-              </Link>
-              <Link to="sponsors" smooth={true}>
-                Sponsors
-              </Link>
-            </PageLinks>
-            <Communities>
+          <Communities>
               <div>
                 <a
                   href="https://acmcomp.mst.edu"
@@ -219,6 +208,13 @@ const Footer: React.FC<{}> = (): JSX.Element => {
                   rel="noopener noreferrer"
                 >
                   ACM Game
+                </a>
+                <a
+                  href="https://discord.gg/PUHXUVMPWR"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  ACM-E
                 </a>
               </div>
               <div>
@@ -245,6 +241,17 @@ const Footer: React.FC<{}> = (): JSX.Element => {
                 </a>
               </div>
             </Communities>
+            <PageLinks>
+              <Link to="communities" smooth={true}>
+                Communities
+              </Link>
+              <Link to="events" smooth={true}>
+                Events
+              </Link>
+              <Link to="sponsors" smooth={true}>
+                Sponsors
+              </Link>
+            </PageLinks>
             <Info>
               <div>
                 <a

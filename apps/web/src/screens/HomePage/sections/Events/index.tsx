@@ -370,6 +370,12 @@ const Events: React.FC<{}> = (): JSX.Element => {
                       toggleCheckbox(6);
                     }}
                   />
+                  <Checkbox
+                    checked={filters[7]}
+                    onClick={() => {
+                      toggleCheckbox(7);
+                    }}
+                  />
                 </CheckBoxWrapper>
               </Sigs>
             </FilterWrapper>
