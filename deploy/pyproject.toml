@@ -9,7 +9,7 @@ license = "MPL-2.0"
 python = "^3.8"
 ansible = "^2.9.6"
 requests = "^2.23.0"
-cryptography = "^2.8"
+cryptography = "^39.0"
 
 [tool.poetry.dev-dependencies]
 ansible-lint = "^4.2.0"
