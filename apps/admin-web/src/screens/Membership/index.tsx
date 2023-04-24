@@ -1,7 +1,22 @@
 import React, { useState, useEffect } from "react";
 
-import { Table, Input, Dropdown, Button, Menu, Modal, DatePicker, Checkbox, message } from "antd";
-import { SearchOutlined, UserOutlined, LockOutlined, UnlockOutlined } from "@ant-design/icons";
+import {
+  Table,
+  Input,
+  Dropdown,
+  Button,
+  Menu,
+  Modal,
+  DatePicker,
+  Checkbox,
+  message,
+} from "antd";
+import {
+  SearchOutlined,
+  UserOutlined,
+  LockOutlined,
+  UnlockOutlined,
+} from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import moment from "moment";
 import styled, { AnyStyledComponent } from "styled-components";
@@ -39,30 +54,22 @@ const Membership: React.FC<{}> = () => {
 
   const [
     updateExpirationDate,
-    {
-      error: expirationError
-    },
+    { error: expirationError },
   ]: any = useUpdateExpirationDateMutation();
 
   const [
     updateShirtReceived,
-    {
-      error: updateShirtError
-    },
+    { error: updateShirtError },
   ]: any = useUpdateShirtReceivedMutation();
 
   const [
     updateDeleteMember,
-    {
-      error: deleteMemberError
-    },
+    { error: deleteMemberError },
   ]: any = useDeleteMemberMutation();
 
   const [
     updateResetShirts,
-    {
-      error: resetShirtsError
-    },
+    { error: resetShirtsError },
   ]: any = useResetShirtReceivedMutation();
 
   const [searchText, setSearchText] = useState<string>("");
@@ -154,7 +161,7 @@ const Membership: React.FC<{}> = () => {
 
   const handleShirtReceivedLocked: () => void = (): void => {
     setShirtReceivedLocked(!shirtReceivedLocked);
-  }; 
+  };
 
   const statusActive: (expirationDate: string) => string = (
     expirationDate: string
@@ -177,8 +184,7 @@ const Membership: React.FC<{}> = () => {
       if (users[i].id === id) {
         if (users[i].fullName === "null null") {
           return "";
-        }
-        else {
+        } else {
           return users[i].fullName;
         }
       }
@@ -224,7 +230,9 @@ const Membership: React.FC<{}> = () => {
     )
       return "N/A";
     try {
-      return new Date(expirationDate.replace(/-/g, '\/').replace(/T.+/, '')).toLocaleDateString("en-US");
+      return new Date(
+        expirationDate.replace(/-/g, "/").replace(/T.+/, "")
+      ).toLocaleDateString("en-US");
     } catch {
       return "N/A";
     }
@@ -289,27 +297,41 @@ const Membership: React.FC<{}> = () => {
     const fileHeaders = [
       { label: "Name", key: "fullName" },
       { label: "Email", key: "email" },
-      { label: "Status", key: "isActive"},
-      { label: "Expiration", key: "membershipExpiration"},
-      { label: "ACM Shirt", key: "shirtReceived"}
+      { label: "Status", key: "isActive" },
+      { label: "Expiration", key: "membershipExpiration" },
+      { label: "ACM Shirt", key: "shirtReceived" },
     ];
     const CSVLinkStyles = {
-      color: "inherit"
+      color: "inherit",
     };
-    const formattedUsers = users.map(row => ({
-      ...row,
-      isActive: statusActive(row.membershipExpiration)
-    }))
-    .map(row => ({
-      ...row,
-      membershipExpiration: moment(row.membershipExpiration).format("MM/DD/YYYY") === "Invalid date" ? "N/A" : moment(row.membershipExpiration).format("MM/DD/YYYY")
-    }))
-    .map(row => ({
-      ...row,
-      shirtReceived: row.shirtReceived ? "Received" : "Not Received"
-    }));
-    
-    return <CSVLink style={CSVLinkStyles} data={formattedUsers} headers={fileHeaders} filename={"acm-members.csv"}>Download CSV</CSVLink>;
+    const formattedUsers = users
+      .map((row) => ({
+        ...row,
+        isActive: statusActive(row.membershipExpiration),
+      }))
+      .map((row) => ({
+        ...row,
+        membershipExpiration:
+          moment(row.membershipExpiration).format("MM/DD/YYYY") ===
+          "Invalid date"
+            ? "N/A"
+            : moment(row.membershipExpiration).format("MM/DD/YYYY"),
+      }))
+      .map((row) => ({
+        ...row,
+        shirtReceived: row.shirtReceived ? "Received" : "Not Received",
+      }));
+
+    return (
+      <CSVLink
+        style={CSVLinkStyles}
+        data={formattedUsers}
+        headers={fileHeaders}
+        filename={"acm-members.csv"}
+      >
+        Download CSV
+      </CSVLink>
+    );
   };
 
   const getShirtStatus: Function = () => {
@@ -412,13 +434,15 @@ const Membership: React.FC<{}> = () => {
     setSearchText("");
   };
 
-  const columns = [
+  const columns: {}[] = [
     {
       title: "Name",
       key: "name",
       ...getColumnSearchProps("fullName"),
       render: (record: IUser) => (
-        <span>{`${record.firstName === null ? "" : record.firstName} ${record.lastName === null ? "" : record.lastName}`}</span>
+        <span>{`${record.firstName === null ? "" : record.firstName} ${
+          record.lastName === null ? "" : record.lastName
+        }`}</span>
       ),
     },
     {
@@ -434,13 +458,12 @@ const Membership: React.FC<{}> = () => {
         const status = statusActive(record.membershipExpiration);
         let color;
         if (status === "Active") {
-          color = "green"
+          color = "green";
+        } else if (status === "Expired") {
+          color = "red";
         }
-        else if (status === "Expired") {
-          color = "red"
-        }
-        return <span style={{color: color}}>{status}</span>
-    },
+        return <span style={{ color: color }}>{status}</span>;
+      },
     },
     {
       title: "Expiration",
@@ -451,56 +474,88 @@ const Membership: React.FC<{}> = () => {
     },
     {
       title: () => {
-      return (<span>
-        ACM Shirt 
-        <LockOutlined onClick={handleShirtReceivedLocked} title="Locked" style={{display: (shirtReceivedLocked ? "inline-block" : "none"), cursor: "pointer", fontSize: "16px", marginLeft: "7px"}} />
-        <UnlockOutlined onClick={handleShirtReceivedLocked} title="Unlocked" style={{display: (shirtReceivedLocked ? "none" : "inline-block"), cursor: "pointer", fontSize: "16px", marginLeft: "7px"}} />
-      </span>)
+        return (
+          <span>
+            ACM Shirt
+            <LockOutlined
+              onClick={handleShirtReceivedLocked}
+              title="Locked"
+              style={{
+                display: shirtReceivedLocked ? "inline-block" : "none",
+                cursor: "pointer",
+                fontSize: "16px",
+                marginLeft: "7px",
+              }}
+            />
+            <UnlockOutlined
+              onClick={handleShirtReceivedLocked}
+              title="Unlocked"
+              style={{
+                display: shirtReceivedLocked ? "none" : "inline-block",
+                cursor: "pointer",
+                fontSize: "16px",
+                marginLeft: "7px",
+              }}
+            />
+          </span>
+        );
       },
       key: "acm shirt",
       align: "center" as "center",
       render: (record: IUser) => (
-        <Checkbox onClick={() => {
+        <Checkbox
+          onClick={() => {
             setCheckingShirtStatus(true);
             setUserId(record.id);
             setCurShirtStatus(!record.shirtReceived);
-        }} checked={record.shirtReceived} disabled={shirtReceivedLocked} />
+          }}
+          checked={record.shirtReceived}
+          disabled={shirtReceivedLocked}
+        />
       ),
     },
     {
       key: "edit",
       render: (record: IUser) => (
-        <Dropdown.Button trigger={['click']} overlay={
-          <Menu>
-            <Menu.Item icon={<UserOutlined />} onClick={() => {
-              setUserId(record.id);
-              setCurShirtStatus(record.shirtReceived);
-              setCurExpDate(record.membershipExpiration);
-              handleVisibility();
-            }}>
-              Edit
-            </Menu.Item>
-            <Menu.Item icon={<UserOutlined />} style={{color: "red"}} onClick={() => {
-                handleVisibilityDelete();
-                setUserId(record.id);
-              }}>
-              Delete
-            </Menu.Item>
-          </Menu>
-        }></Dropdown.Button>
+        <Dropdown.Button
+          trigger={["click"]}
+          overlay={
+            <Menu>
+              <Menu.Item
+                icon={<UserOutlined />}
+                onClick={() => {
+                  setUserId(record.id);
+                  setCurShirtStatus(record.shirtReceived);
+                  setCurExpDate(record.membershipExpiration);
+                  handleVisibility();
+                }}
+              >
+                Edit
+              </Menu.Item>
+              <Menu.Item
+                icon={<UserOutlined />}
+                style={{ color: "red" }}
+                onClick={() => {
+                  handleVisibilityDelete();
+                  setUserId(record.id);
+                }}
+              >
+                Delete
+              </Menu.Item>
+            </Menu>
+          }
+        ></Dropdown.Button>
       ),
     },
   ];
 
   return (
     <div>
-      <Button style={{marginBottom: "20px"}} onClick={() => resetAllShirts()}>
+      <Button style={{ marginBottom: "20px" }} onClick={() => resetAllShirts()}>
         Reset Shirt Status
       </Button>
 
-      <Button style={{float: "right"}}>
-        {downloadCSV()}
-      </Button>
+      <Button style={{ float: "right" }}>{downloadCSV()}</Button>
 
       <Table dataSource={users} columns={columns} />
       <Modal
@@ -512,16 +567,18 @@ const Membership: React.FC<{}> = () => {
           <div>
             <strong>{name(userId)}</strong>
           </div>
-          <div>
-            {email(userId)}
-          </div>
+          <div>{email(userId)}</div>
         </EditModalHeader>
         <hr />
         <div>
           <EditCol>
             <span>Membership Expiration Date: </span>
             <DatePicker
-              value={curExpDate.replace(/-/g, '\/').replace(/T.+/, '') ? moment(curExpDate.replace(/-/g, '\/').replace(/T.+/, '')) : null}
+              value={
+                curExpDate.replace(/-/g, "/").replace(/T.+/, "")
+                  ? moment(curExpDate.replace(/-/g, "/").replace(/T.+/, ""))
+                  : null
+              }
               onChange={changeDate}
               placeholder="Select Expiration Date"
             />
@@ -529,7 +586,11 @@ const Membership: React.FC<{}> = () => {
 
           <hr />
 
-          <Button onClick={() => {saveAction()}}>
+          <Button
+            onClick={() => {
+              saveAction();
+            }}
+          >
             Confirm
           </Button>
         </div>
@@ -541,7 +602,9 @@ const Membership: React.FC<{}> = () => {
       >
         <div>Are you sure you want to delete this user?</div>
         <DeleteConfirmation>
-          <Button style={{marginRight: 10}} onClick={deleteUser(userId)}>Yes</Button>
+          <Button style={{ marginRight: 10 }} onClick={deleteUser(userId)}>
+            Yes
+          </Button>
           <Button onClick={handleNo()}>No</Button>
         </DeleteConfirmation>
       </Modal>

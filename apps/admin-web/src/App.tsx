@@ -1,42 +1,46 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
-import { Layout, Menu, PageHeader, Spin } from "antd";
-
-import { ToolList } from "./Tools";
-import { Events } from "./screens/Events";
-import { Membership } from "./screens/Membership";
-import { RedemptionCodes } from "./screens/RedemptionCodes";
+import { Spin } from "antd";
+import { BrowserRouter } from "react-router-dom";
+import styled, { AnyStyledComponent } from "styled-components";
 import { config } from "./config";
 import "./static/css/App.css";
-
 import { useAuth0 } from "./utils/react-auth0-wrapper";
+import Sidebar from "./screens/Dashboard/Sidebar";
+import Main from "./screens/Dashboard/Main";
 
-const { Header, Content, Footer, Sider } = Layout;
+const Grid: AnyStyledComponent = styled.div`
+  height: 100vh;
+  display: grid;
+  width: 100vw;
+  margin: auto;
+  grid-template-columns: repeat(16, 1fr);
+  grid-template-rows: auto;
+  grid-template-areas: "m m c c c c c c c c c c c c c c";
+  @media (max-width:  1530px) {
+    grid-template-columns: 1fr
+    grid-template-areas: 
+            "m"
+            "c";
+    grid-template-rows: 0px auto;
+    
+  }
+`;
+const Content: AnyStyledComponent = styled.div`
+  grid-area: c;
+`;
+const Menu: AnyStyledComponent = styled.div`
+  grid-area: m;
+  @media (max-width: 1530px) {
+    grid-area: m;
+  }
+`;
 
-const NotFound: React.FC<{}> = (): JSX.Element => {
-  return <h1>You are lost!</h1>;
-};
-
-const MainContent: React.SFC<{}> = (): JSX.Element => {
-  return (
-    <Switch>
-      <Route exact={true} path="/" component={ToolList} />
-      <Route path="/events" component={Events} />
-      <Route path="/membership" component={Membership} />
-      <Route path="/redemption" component={RedemptionCodes} />
-      <Route component={NotFound} />
-    </Switch>
-  );
-};
-
-const App: React.SFC<{}> = (): JSX.Element => {
+const App: React.FC<{}> = (): JSX.Element => {
   const {
     loading,
     isAuthenticated,
     getTokenSilently,
     loginWithRedirect,
-    logout,
-    user,
   } = useAuth0();
 
   useEffect(() => {
@@ -62,68 +66,24 @@ const App: React.SFC<{}> = (): JSX.Element => {
     }
   }, [loading, isAuthenticated, getTokenSilently]);
 
-  const onLogoutClick: () => void = (): void => {
-    logout({ returnTo: config.REDIRECT_PAGE_URI });
-  };
-
   if (loading || !isAuthenticated) {
     return <Spin size="large" className="load-page" tip="Loading..." />;
   }
 
   return (
-    <BrowserRouter>
-      <Layout>
-        <Sider
-          breakpoint="md"
-          collapsedWidth="0"
-          onBreakpoint={undefined}
-          onCollapse={undefined}
-        >
-          <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={["events"]}>
-            <Menu.Item key="events">
-              <Link to="/events">
-                <span className="nav-text">Events</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="membership">
-              <Link to="/membership">
-                <span className="nav-text">Membership Tool</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="redemption">
-              <Link to="/redemption">
-                <span className="nav-text">Redemption Codes</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item onClick={onLogoutClick} key="signOut">
-              <span className="nav-text">Sign Out</span>
-            </Menu.Item>
-          </Menu>
-        </Sider>
-        <Layout>
-          <Header style={{ background: "#fff", padding: 0 }}>
-            <PageHeader
-              backIcon={false}
-              title={`Hello, ${user.name}. Welcome to your Admin Dashboard`}
-            />
-          </Header>
-          <Content style={{ margin: "24px 16px 0" }}>
-            <MainContent />
-            <Footer style={{ textAlign: "center" }}>S&T ACM 2019</Footer>
+    <div>
+      <BrowserRouter>
+        <Grid>
+          <Content>
+            <Main />
           </Content>
-        </Layout>
-      </Layout>
-    </BrowserRouter>
+          <Menu>
+            <Sidebar />
+          </Menu>
+        </Grid>
+      </BrowserRouter>
+    </div>
   );
 };
-
-/*
- * Future Routes
-        <Route exact={true} path="/membership" component={Membership} />
-        <Route exact={true} path="/sigs" component={Sigs} />
-        <Route exact={true} path="/sponsors" component={Sponsors} />
-        <Route exact={true} path="/products" component={Products} />
-*/
 
 export { App };
