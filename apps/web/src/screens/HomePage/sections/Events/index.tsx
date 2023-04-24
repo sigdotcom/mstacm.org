@@ -9,13 +9,12 @@ import Icon from "react-eva-icons";
 import { PageConstraint } from "../../../../components/PageConstraint";
 import { Checkbox } from "./Checkbox";
 import { Event } from "./Event";
-
 import { config } from "../../../../config";
 
 import {
   Event as IEvent,
   GetCurrentEventsQueryHookResult,
-  useGetCurrentEventsQuery
+  useGetCurrentEventsQuery,
 } from "../../../../generated/graphql";
 
 export const GET_CURRENT_EVENTS_QUERY: any = gql`
@@ -199,7 +198,7 @@ const FILTER_TYPES: string[] = [
   "General",
   "Hack",
   "Security",
-  "Women"
+  "Women",
 ];
 
 const DEFAULT_EVENTS_TO_DISPLAY: number = 3;
@@ -404,7 +403,7 @@ const Events: React.FC<{}> = (): JSX.Element => {
               display: noFilteredEvents() ? "none" : "",
               fontSize: "15px",
               margin: "-10px auto 0 auto",
-              paddingTop: showDefault() ? "50px" : ""
+              paddingTop: showDefault() ? "50px" : "",
             }}
             href={CALENDAR_LINK}
             target="_blank"

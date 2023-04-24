@@ -9,3 +9,8 @@ export interface IUser {
   shirtReceived: boolean; //eventually, not optional
 }
 
+export interface IStyles {
+  display: string;
+  cursor: string;
+  marginLeft: string;
+}

@@ -1,4 +1,4 @@
-const IS_PROD = process.env.NODE_ENV === "production";
+const IS_PROD = process.env.NODE_ENV === "dev";
 const ROOT_DIR = IS_PROD ? "build" : "src";
 
 module.exports = {

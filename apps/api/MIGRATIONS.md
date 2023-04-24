@@ -10,107 +10,110 @@ into the shape of the new schema.
 
 1. Purge your development database and turn off the api.
 
-    **If you are using `docker`:**
+   **If you are using `docker`:**
 
-    ```bash
-    docker-compose down
-    ```
+   ```bash
+   docker-compose down
+   ```
 
-    **If you are running a local `PostgreSQL` database:**
+   **If you are running a local `PostgreSQL` database:**
 
-    Drop the database.
+   Drop the database.
 
 2. Remove SSL support from TypeORM in "production" mode
 
    Comment out [this line in ormconfig.js](ormconfig.js#L29)
-   
+
    ```js
-     // ssl: IS_PROD ? true : false
+   // ssl: IS_PROD ? true : false
    ```
 
 3. Recreate the database and start `api` in "production" mode.
-    You must start `api` in "production mode" so that you will not have database
-    synchronization enabled, which ensures the database is always the same as
-    the schema and is useful for debugging.
+   You must start `api` in "production mode" so that you will not have database
+   synchronization enabled, which ensures the database is always the same as
+   the schema and is useful for debugging.
 
-    **If you are using `docker`:**
-    1. Comment out [this line in docker-compose.override.yml](../docker-compose.override.yml#L16)
+   **If you are using `docker`:**
 
-        ```yaml
-        phoenix_web:
-            # command: bash -c "yarn build && yarn start:prod"
-            command: yarn start:dev # <--- This line
-        ```
+   1. Comment out [this line in docker-compose.override.yml](../docker-compose.override.yml#L16)
 
-        > The line runs the api in development mode
+      ```yaml
+      phoenix_web:
+        # command: bash -c "yarn build && yarn start:prod"
+        command: yarn start:dev # <--- This line
+      ```
 
-    2. Uncomment [the previous line in docker-compose.override.yml](../docker-compose.override.yml#L15)
+      > The line runs the api in development mode
 
-        ```yaml
-        phoenix_web:
-            command: bash -c "yarn build && yarn start:prod" # <--- This line
-            # command: yarn start:dev
-        ```
+   2. Uncomment [the previous line in docker-compose.override.yml](../docker-compose.override.yml#L15)
 
-        > The line builds and runs `api` in production mode instead
+      ```yaml
+      phoenix_web:
+        command: bash -c "yarn build && yarn start:prod" # <--- This line
+        # command: yarn start:dev
+      ```
 
-    3. Start `api` and the database with `docker-compose`:
+      > The line builds and runs `api` in production mode instead
 
-        ```bash
-        docker-compose up
-        ```
+   3. Start `api` and the database with `docker-compose`:
 
-    **If you are running the database and `api` locally:**
-    1. Remake the `phoenix` database
-    2. Build and start `api` in production mode
+      ```bash
+      docker-compose up
+      ```
 
-        ```bash
-        yarn build && yarn start:prod
-        ```
+   **If you are running the database and `api` locally:**
 
-    ----
-    What these changes do is skip [three lines in main.ts](src/main.ts#L24)
-    which cause the synchronization each time the `api` starts by setting the
-    `NODE_ENV` environment variable to "production".
+   1. Remake the `phoenix` database
+   2. Build and start `api` in production mode
+
+      ```bash
+      yarn build && yarn start:prod
+      ```
+
+   ***
+
+   What these changes do is skip [three lines in main.ts](src/main.ts#L24)
+   which cause the synchronization each time the `api` starts by setting the
+   `NODE_ENV` environment variable to "production".
 
 4. Your database is now out of sync with your code, which is good.
 
-    **Verify that the changes you have made to the database schema are not
-    present in the database now.**
+   **Verify that the changes you have made to the database schema are not
+   present in the database now.**
 
-    > You can either query using `psql` from the command line or use a gui like
-    `postico` for macOS or `pgadmin` for windows.
+   > You can either query using `psql` from the command line or use a gui like
+   > `postico` for macOS or `pgadmin` for windows.
 
 5. Generate the automatic migration using `typeorm`
 
-    ```bash
-    yarn typeorm migration:generate -n <feature-name>
-    ```
+   ```bash
+   yarn typeorm migration:generate -n <feature-name>
+   ```
 
-    where `<feature-name>` is a simple name for what changed.
-    (Ex. UserShirts for a feature where users now have shirts in the database)
+   where `<feature-name>` is a simple name for what changed.
+   (Ex. UserShirts for a feature where users now have shirts in the database)
 
 6. Run new migrations
-   
+
    ```bash
     yarn typeorm migration:run
-    ```
+   ```
 
-6. Check that the database now looks as it should, and edit the migration file
-    located in [the migrations folder](src/migrations) to make sure that
-    only the parts of the schema **you changed** are being modified.
+7. Check that the database now looks as it should, and edit the migration file
+   located in [the migrations folder](src/migrations) to make sure that
+   only the parts of the schema **you changed** are being modified.
 
-    > Any `DROP`s in the `up` function generated by `typeorm` are a sign of bad
-    news. There is also a few lines involving the product table and a field
-    becoming numeric that are not supposed to be in there but always are added
-    due to a bug. These should be removed.
+   > Any `DROP`s in the `up` function generated by `typeorm` are a sign of bad
+   > news. There is also a few lines involving the product table and a field
+   > becoming numeric that are not supposed to be in there but always are added
+   > due to a bug. These should be removed.
 
-    If the migration is wrong it is up to you to amend the SQL queries to make
-    the migration work as it needs to.
+   If the migration is wrong it is up to you to amend the SQL queries to make
+   the migration work as it needs to.
 
-7. Test your migration
+8. Test your migration
 
-    Rerun the steps to delete and rebuild the database by hand and make sure
-    that the default entries are all looking as expected and no errors occur.
-    This is a dry run on a development database of exactly what will happen in
-    production.
+   Rerun the steps to delete and rebuild the database by hand and make sure
+   that the default entries are all looking as expected and no errors occur.
+   This is a dry run on a development database of exactly what will happen in
+   production.
